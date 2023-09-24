@@ -9,3 +9,5 @@ unsigned int NUM_QUADS=(SCREEN_WIDTH/10)*(SCREEN_HEIGHT/10);
 unsigned int MAX_QUADS=10000;
 unsigned int MAX_VERTICES=4*MAX_QUADS;
 unsigned int MAX_INDICES=6*MAX_QUADS;
+
+int DRAW_CALLS=0;

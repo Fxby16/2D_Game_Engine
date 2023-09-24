@@ -86,6 +86,8 @@ int MaxTextureImageUnits;
     //std::cout<<MaxTextureImageUnits<<'\n';
 
     while(!glfwWindowShouldClose(window)){
+        renderer.Clear();
+
         glfwPollEvents();
         float x=0.0f,y=0.0f; //creating data for the vertex buffer
         for(int i=0;i<NUM_QUADS;i++){
@@ -95,12 +97,15 @@ int MaxTextureImageUnits;
                 x=0;
                 y+=10;
             }
+            if(y>=SCREEN_HEIGHT){
+                y=0;
+                x=0;
+            }
         }
 
+        renderer.Draw();
         Renderer::ImGui_Start_Frame();
         Renderer::ImGui_Body();
-        renderer.Clear();
-        renderer.Draw();
         Renderer::ImGui_End_Frame();
 
         glfwSwapBuffers(window);

@@ -19,10 +19,10 @@ void Renderer::Render(float x,float y,float w,float h,float texID){
     buffer[Num_Vertices+3]=d;
     Num_Vertices+=4;
 
-    /*if(Num_Vertices==MAX_VERTICES){ 
+    if(Num_Vertices==MAX_VERTICES){ 
         Draw();
         Num_Vertices=0;
-    }*/
+    }
 }
 
 void Renderer::GetMaxTextureSlots(){
@@ -31,6 +31,10 @@ void Renderer::GetMaxTextureSlots(){
 }
 
 void Renderer::Draw(){
+    if(Num_Vertices==0)
+        return;
+    DRAW_CALLS+=1;
+
     VA.Bind();
     VA.AddBuffer(VB,VBL);
     VB.SetData(0,(float *)buffer.data(),Num_Vertices/4);
@@ -42,6 +46,8 @@ void Renderer::Draw(){
 }
 
 void Renderer::Clear() const{
+    DRAW_CALLS=0;
+
     glClearColor(0.0f,0.0f,0.0f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
@@ -67,9 +73,10 @@ void Renderer::ImGui_Body(){
     lastFrame = currentFrame;
 
     ImGui::Begin("Window");
+    ImGui::SliderInt("NUM_QUADS",(int *)&NUM_QUADS,0,100000);
     double FPS=1.0/deltaTime;
     ImGui::Text("FPS: %.1f",FPS);
-    ImGui::Text("NUM_QUADS: %d",NUM_QUADS);
+    ImGui::Text("DRAW CALLS: %d",DRAW_CALLS);
     if(ImGui::Checkbox("V-Sync",&v_sync)){
         glfwSwapInterval(v_sync); //v-sync
     }

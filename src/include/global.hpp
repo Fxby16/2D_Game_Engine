@@ -10,3 +10,5 @@ extern unsigned int NUM_QUADS;
 extern unsigned int MAX_QUADS;
 extern unsigned int MAX_VERTICES;
 extern unsigned int MAX_INDICES;
+
+extern int DRAW_CALLS;
