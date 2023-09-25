@@ -12,6 +12,8 @@
 #include <shader.hpp>
 #include <global.hpp>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class Renderer{
 private:
     VertexBuffer VB;
@@ -20,10 +22,12 @@ private:
     VertexBufferLayout VBL;
     std::vector<Vertex>buffer;
     unsigned int Num_Vertices;
-public:
     Shader base_shader;
-
-    Renderer(): VB(MAX_QUADS),buffer(MAX_VERTICES),Num_Vertices(0),base_shader("resources/shaders/base/vertex.glsl","resources/shaders/base/fragment.glsl"){}
+    glm::mat4 proj;
+    int slots[32];
+    bool buffer_init;
+public:
+    Renderer();
     void AddLayout(unsigned int type,unsigned int count,bool normalized);
     void Render(float x,float y,float w,float h,float texID);
 

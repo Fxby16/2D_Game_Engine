@@ -11,7 +11,6 @@
 #include <global.hpp>
 
 #include <string>
-#include <glm/gtc/matrix_transform.hpp>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
@@ -65,8 +64,6 @@ int main(){{
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-glm::mat4 proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f); //normalize windows coordinates to opengl coordinates
-
 Renderer renderer;
     Renderer::ImGui_Init(window);
 
@@ -75,11 +72,7 @@ Renderer renderer;
     renderer.AddLayout(GL_FLOAT,1,false);
 
 Texture texture("resources/textures/cicciogamer89.jpg");
-    texture.Bind();
-int ids[]={0,1};
-    renderer.base_shader.Bind();
-    renderer.base_shader.SetUniformMat4f("u_PM",proj); //set projection matrix
-    renderer.base_shader.SetUniform1iv("texID",ids,2);
+    texture.Bind(0);
 
 int MaxTextureImageUnits;
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits); 
