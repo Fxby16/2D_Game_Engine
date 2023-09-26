@@ -39,7 +39,7 @@ int main(){{
     #endif
     glfwWindowHint(GLFW_RESIZABLE,false);
 
-    GLFWwindow *window=glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT,"Test",nullptr,nullptr);
+    window=glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT,"Test",nullptr,nullptr);
     if(window==NULL){
         std::cout<<"Failed to create GLFW window"<< std::endl;
         glfwTerminate();
@@ -65,17 +65,12 @@ int main(){{
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
 Renderer renderer;
-    Renderer::ImGui_Init(window);
-
-    renderer.AddLayout(GL_FLOAT,2,false);
-    renderer.AddLayout(GL_FLOAT,2,false);
-    renderer.AddLayout(GL_FLOAT,1,false);
 
 Texture texture("resources/textures/cicciogamer89.jpg");
     texture.Bind(0);
 
-int MaxTextureImageUnits;
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits); 
+//int MaxTextureImageUnits;
+//    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits); 
     //std::cout<<MaxTextureImageUnits<<'\n';
 
     while(!glfwWindowShouldClose(window)){

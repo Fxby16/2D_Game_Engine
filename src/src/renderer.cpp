@@ -7,13 +7,20 @@
 
 static int MaxTextureSlots=-1;
 
-Renderer::Renderer(): VB(MAX_QUADS),buffer(MAX_VERTICES),Num_Vertices(0),base_shader("resources/shaders/base/vertex.glsl","resources/shaders/base/fragment.glsl"),buffer_init(false){
+Renderer::Renderer(): VB(MAX_QUADS),buffer(MAX_VERTICES),Num_Vertices(0),base_shader("resources/shaders/base/vertex.glsl","resources/shaders/base/fragment.glsl"){
     proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
     for(int i=0;i<32;i++)
         slots[i]=i;
     base_shader.Bind();
     base_shader.SetUniformMat4f("u_PM",proj); //set projection matrix
     base_shader.SetUniform1iv("texID",slots,32);
+
+    Renderer::ImGui_Init(window);
+
+    AddLayout(GL_FLOAT,2,false);
+    AddLayout(GL_FLOAT,2,false);
+    AddLayout(GL_FLOAT,1,false);
+    VA.AddBuffer(VB,VBL);
 }
 
 void Renderer::AddLayout(unsigned int type,unsigned int count,bool normalized){
@@ -40,10 +47,6 @@ void Renderer::GetMaxTextureSlots(){
 }
 
 void Renderer::Draw(){
-    if(!buffer_init){
-        VA.AddBuffer(VB,VBL);
-        buffer_init=true;
-    }
     if(Num_Vertices==0)
         return;
     DRAW_CALLS+=1;

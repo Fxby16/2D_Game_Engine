@@ -25,7 +25,6 @@ private:
     Shader base_shader;
     glm::mat4 proj;
     int slots[32];
-    bool buffer_init;
 public:
     Renderer();
     void AddLayout(unsigned int type,unsigned int count,bool normalized);

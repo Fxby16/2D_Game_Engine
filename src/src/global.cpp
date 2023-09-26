@@ -1,3 +1,9 @@
+#ifndef GLFW_INCLUDE_NONE
+#define GLFW_INCLUDE_NONE
+#endif
+
+#include <GLFW/glfw3.h>
+
 double deltaTime=0.0;
 double lastFrame=0.0;
 bool v_sync=true;
@@ -11,3 +17,5 @@ unsigned int MAX_VERTICES=4*MAX_QUADS;
 unsigned int MAX_INDICES=6*MAX_QUADS;
 
 int DRAW_CALLS=0;
+
+GLFWwindow *window;
