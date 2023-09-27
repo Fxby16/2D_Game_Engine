@@ -5,6 +5,8 @@
 #endif
 #include <GLFW/glfw3.h>
 
+extern double FPS;
+extern double currentFrame;
 extern double deltaTime;
 extern double lastFrame;
 extern bool v_sync;

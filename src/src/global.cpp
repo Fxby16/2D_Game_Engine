@@ -4,6 +4,8 @@
 
 #include <GLFW/glfw3.h>
 
+double FPS;
+double currentFrame;
 double deltaTime=0.0;
 double lastFrame=0.0;
 bool v_sync=true;

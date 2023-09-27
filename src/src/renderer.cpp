@@ -83,17 +83,23 @@ void Renderer::ImGui_Start_Frame(){
 }
 
 void Renderer::ImGui_Body(){
-    double currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
+    currentFrame=glfwGetTime();
+    deltaTime=currentFrame-lastFrame;
+    lastFrame=currentFrame;
 
     ImGui::Begin("Window");
     ImGui::SliderInt("NUM_QUADS",(int *)&NUM_QUADS,0,100000);
-    double FPS=1.0/deltaTime;
+
+    ImGui::SliderInt("MAX_QUADS",(int *)&MAX_QUADS,1,10000);
+    MAX_VERTICES=4*MAX_QUADS;
+    MAX_INDICES=6*MAX_QUADS;
+
+    FPS=1.0/deltaTime;
     ImGui::Text("FPS: %.1f",FPS);
+
     ImGui::Text("DRAW CALLS: %d",DRAW_CALLS);
     if(ImGui::Checkbox("V-Sync",&v_sync)){
-        glfwSwapInterval(v_sync); //v-sync
+        glfwSwapInterval(v_sync);
     }
     ImGui::End();
 }
