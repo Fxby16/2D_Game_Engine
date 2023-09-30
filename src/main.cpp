@@ -66,30 +66,32 @@ int main(){{
 
 Renderer renderer;
 
-Texture texture("resources/textures/cicciogamer89.jpg");
+Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
     texture.Bind(0);
-
+SpriteSheet spritesheet("resources/textures/player.png",32,32,GL_NEAREST,GL_NEAREST);
+    spritesheet.Bind(1);
 //int MaxTextureImageUnits;
 //    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits); 
     //std::cout<<MaxTextureImageUnits<<'\n';
-
+auto [a,b,c,d]=VertexBuffer::CreateQuadSpriteSheet(100,100,spritesheet.GetWidth(),spritesheet.GetHeight(),spritesheet.GetTileWidth(),spritesheet.GetTileHeight(),0,1,4,1);
     while(!glfwWindowShouldClose(window)){
         renderer.Clear();
 
         glfwPollEvents();
-        float x=0.0f,y=0.0f; //creating data for the vertex buffer
-        for(int i=0;i<NUM_QUADS;i++){
-            renderer.Render(x,y,10.0f,10.0f,0.0f);
-            x+=10;
-            if(x>=SCREEN_WIDTH){
-                x=0;
-                y+=10;
-            }
-            if(y>=SCREEN_HEIGHT){
-                y=0;
-                x=0;
-            }
-        }
+        //float x=0.0f,y=0.0f; //creating data for the vertex buffer
+        //for(int i=0;i<NUM_QUADS;i++){
+        //    renderer.Render(x,y,10.0f,10.0f,0.0f);
+        //    x+=10;
+        //    if(x>=SCREEN_WIDTH){
+        //        x=0;
+        //        y+=10;
+        //    }
+        //    if(y>=SCREEN_HEIGHT){
+        //        y=0;
+        //        x=0;
+        //    }
+        //}
+        renderer.Render(a,b,c,d);
 
         renderer.Draw();
         Renderer::ImGui_Start_Frame();

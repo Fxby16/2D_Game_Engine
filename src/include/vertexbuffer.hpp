@@ -34,7 +34,8 @@ public:
      * \param data the data of the quad to set
     */
     void SetData(unsigned int quad_index,float *data,unsigned int num_quads);
-    static std::array<Vertex,4> CreateQuad(float x,float y,float w,float h,float texID);
+    static std::array<Vertex,4> CreateQuad(float x,float y,float w,float h,float scale,float texID);
+    static std::array<Vertex,4> CreateQuadSpriteSheet(float x,float y,float width,float height,float tile_width,float tile_height,float row,float col,float scale,float texID);
     void Bind() const;
     void Unbind() const;
 };

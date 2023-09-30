@@ -26,9 +26,20 @@ private:
     glm::mat4 proj;
     int slots[32];
 public:
+    /**
+     * init the renderer
+     * call Render() to render textures. when you finished call draw
+    */
     Renderer();
+    /**
+     * add attribute for the current vertex buffer
+     * \param type a GL_TYPE
+     * \param count the number of elements for this attribute
+     * \param normalized if the data has to be normalized
+    */
     void AddLayout(unsigned int type,unsigned int count,bool normalized);
-    void Render(float x,float y,float w,float h,float texID);
+    void Render(float x,float y,float w,float h,float scale,float texID);
+    void Render(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
 
     void GetMaxTextureSlots();
     void Clear() const;

@@ -1,17 +1,16 @@
 #include <texture.hpp>
 
 #include <stb_image.h>
-#include <glad/glad.h>
 
-Texture::Texture(const std::string &path): ID(0),filepath(path),local_buffer(nullptr),width(0),height(0),BPP(0){
+Texture::Texture(const std::string &path,GLint mag_filter,GLint min_filter): ID(0),filepath(path),local_buffer(nullptr),width(0),height(0),BPP(0){
     stbi_set_flip_vertically_on_load(1);
     local_buffer=stbi_load(path.c_str(),&width,&height,&BPP,4);
 
     glGenTextures(1,&ID);
     glBindTexture(GL_TEXTURE_2D,ID);
 
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,min_filter);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,mag_filter);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
 
@@ -32,4 +31,12 @@ void Texture::Bind(unsigned int slot) const{
 
 void Texture::Unbind() const{
     glBindTexture(GL_TEXTURE_2D,0);
+}
+
+void SpriteSheet::Bind(unsigned int slot) const{
+    t.Bind(slot);
+}
+
+void SpriteSheet::Unbind() const{
+    t.Unbind();
 }

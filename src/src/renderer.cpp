@@ -3,8 +3,6 @@
 
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-
 static int MaxTextureSlots=-1;
 
 Renderer::Renderer(): VB(MAX_QUADS),buffer(MAX_VERTICES),Num_Vertices(0),base_shader("resources/shaders/base/vertex.glsl","resources/shaders/base/fragment.glsl"){
@@ -27,8 +25,21 @@ void Renderer::AddLayout(unsigned int type,unsigned int count,bool normalized){
     VBL.Push(type,count,normalized);
 }
 
-void Renderer::Render(float x,float y,float w,float h,float texID){
-    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,texID);
+void Renderer::Render(float x,float y,float w,float h,float scale,float texID){
+    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,scale,texID);
+    buffer[Num_Vertices]=a;
+    buffer[Num_Vertices+1]=b;
+    buffer[Num_Vertices+2]=c;
+    buffer[Num_Vertices+3]=d;
+    Num_Vertices+=4;
+
+    if(Num_Vertices==MAX_VERTICES){ 
+        Draw();
+        Num_Vertices=0;
+    }
+}
+
+void Renderer::Render(Vertex a,Vertex b,Vertex c,Vertex d){
     buffer[Num_Vertices]=a;
     buffer[Num_Vertices+1]=b;
     buffer[Num_Vertices+2]=c;
@@ -50,7 +61,7 @@ void Renderer::Draw(){
     if(Num_Vertices==0)
         return;
     DRAW_CALLS+=1;
-
+    
     VA.Bind();
     VB.SetData(0,(float *)buffer.data(),Num_Vertices/4);
     base_shader.Bind();
