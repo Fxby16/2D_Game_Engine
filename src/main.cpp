@@ -1,108 +1,57 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <iostream>
-#include <vertexarray.hpp>
 #include <renderer.hpp>
-#include <indexbuffer.hpp>
-#include <vertexbuffer.hpp>
-#include <vertexbufferlayout.hpp>
-#include <texture.hpp>
-#include <global.hpp>
+#include <examples.hpp>
+#include <glfw.hpp>
 
-#include <string>
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw.h>
-#include <imgui/imgui_impl_opengl3.h>
-
-void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam){
-    fprintf(stderr,"GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-    (type==GL_DEBUG_TYPE_ERROR?"** GL ERROR **":""),type,severity,message);
-}
-
-void framebuffer_size_callback(GLFWwindow *window,int width,int height){
-    glViewport(0,0,width,height);
-}  
-
-void key_callback(GLFWwindow *window,int key,int scancode,int action,int mode){
-    if(key==GLFW_KEY_Q && action==GLFW_PRESS)
-        glfwSetWindowShouldClose(window,true);
-}
-
-int main(){{
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
-    #ifdef __APPLE__
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,GL_TRUE);
-    #endif
-    glfwWindowHint(GLFW_RESIZABLE,false);
-
-    window=glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT,"Test",nullptr,nullptr);
-    if(window==NULL){
-        std::cout<<"Failed to create GLFW window"<< std::endl;
-        glfwTerminate();
+int main(){
+    if(InitGlfwWindow()<0)
         return -1;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); //v-sync
-
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        std::cout<<"Failed to initialize GLAD"<< std::endl;
-        return -1;
-    } 
-
-    glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
-    glfwSetKeyCallback(window,key_callback);
-    //enable debug output
-    glEnable(GL_DEBUG_OUTPUT);
-    glDebugMessageCallback(MessageCallback,0);
-
-    glViewport(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-
+{
 Renderer renderer;
-
 Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
-    texture.Bind(0);
 SpriteSheet spritesheet("resources/textures/player.png",32,32,GL_NEAREST,GL_NEAREST);
+    texture.Bind(0);
     spritesheet.Bind(1);
-//int MaxTextureImageUnits;
-//    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits); 
-    //std::cout<<MaxTextureImageUnits<<'\n';
-auto [a,b,c,d]=VertexBuffer::CreateQuadSpriteSheet(100,100,spritesheet.GetWidth(),spritesheet.GetHeight(),spritesheet.GetTileWidth(),spritesheet.GetTileHeight(),0,1,4,1);
+
+bool menus[2];
+    memset(menus,0,sizeof(menus));
+
     while(!glfwWindowShouldClose(window)){
         renderer.Clear();
+        Renderer::ImGui_Start_Frame();
+        Renderer::ImGui_Performance();
 
         glfwPollEvents();
-        //float x=0.0f,y=0.0f; //creating data for the vertex buffer
-        //for(int i=0;i<NUM_QUADS;i++){
-        //    renderer.Render(x,y,10.0f,10.0f,0.0f);
-        //    x+=10;
-        //    if(x>=SCREEN_WIDTH){
-        //        x=0;
-        //        y+=10;
-        //    }
-        //    if(y>=SCREEN_HEIGHT){
-        //        y=0;
-        //        x=0;
-        //    }
-        //}
-        renderer.Render(a,b,c,d);
 
-        renderer.Draw();
-        Renderer::ImGui_Start_Frame();
-        Renderer::ImGui_Body();
+        if(menus[0])
+            Examples::BatchRendering(renderer);
+        else if(menus[1])
+            Examples::Spritesheet(renderer,spritesheet);
+    
+        ImGui::SetNextWindowSize(ImVec2(0,0));
+        ImGui::Begin("Menu",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+        if(ImGui::BeginMenu("Examples")){
+            if(ImGui::MenuItem("Batch Rendering")){
+                memset(menus,0,sizeof(menus));
+                menus[0]=true;
+            }
+            if(ImGui::MenuItem("SpriteSheet")){
+                memset(menus,0,sizeof(menus));
+                menus[1]=true;
+            }
+            if(ImGui::MenuItem("None"))
+                memset(menus,0,sizeof(menus));
+            ImGui::EndMenu();
+        }
+        ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH-ImGui::GetWindowWidth(),0));
+        ImGui::End();
+
         Renderer::ImGui_End_Frame();
 
         glfwSwapBuffers(window);
     }
-}
-    Renderer::ImGui_Close();
 
+    Renderer::ImGui_Close();
+}
     glfwTerminate();
     return 0;
 }

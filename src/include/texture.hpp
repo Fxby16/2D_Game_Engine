@@ -7,7 +7,7 @@
 #include <glad/glad.h>
 
 class Texture{
-private:
+protected:
     unsigned int ID;
     std::string filepath;
     unsigned char *local_buffer;
@@ -27,20 +27,16 @@ public:
     inline int GetHeight() const{ return height; }
 };
 
-class SpriteSheet{
+class SpriteSheet : public Texture{
 private:
-    Texture t;
     int tile_width;
     int tile_height;
 public:
     SpriteSheet(const std::string &path,unsigned int tile_width,unsigned int tile_height,GLint mag_filter,GLint min_filter)
-    :t(path,mag_filter,min_filter),tile_width(tile_width),tile_height(tile_height){}
-
-    void Bind(unsigned int slot=0) const;
-    void Unbind() const;
+    :Texture(path,mag_filter,min_filter),tile_width(tile_width),tile_height(tile_height){}
 
     inline int GetTileWidth() const{ return tile_width; }
     inline int GetTileHeight() const{ return tile_height; }
-    inline int GetWidth() const{ return t.GetWidth(); }
-    inline int GetHeight() const{ return t.GetHeight(); }
+
+    std::array<Vertex,4> CreateQuadSpriteSheet(float x,float y,float row,float col,float scale,float texID);
 };
