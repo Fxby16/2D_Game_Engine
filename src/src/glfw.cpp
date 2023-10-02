@@ -52,4 +52,5 @@ int InitGlfwWindow(){
 
     //int MaxTextureImageUnits;
     //glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits);
+    return 0;
 }

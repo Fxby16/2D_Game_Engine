@@ -5,10 +5,12 @@
 int main(){
     if(InitGlfwWindow()<0)
         return -1;
+
+    ImGui::CreateContext();
 {
 Renderer renderer;
 Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
-SpriteSheet spritesheet("resources/textures/player.png",32,32,GL_NEAREST,GL_NEAREST);
+SpriteSheet spritesheet("resources/textures/player.png",32,28,GL_NEAREST,GL_NEAREST);
     texture.Bind(0);
     spritesheet.Bind(1);
 
@@ -18,6 +20,7 @@ bool menus[2];
     while(!glfwWindowShouldClose(window)){
         renderer.Clear();
         Renderer::ImGui_Start_Frame();
+        Renderer::ImGui_Theme();
         Renderer::ImGui_Performance();
 
         glfwPollEvents();

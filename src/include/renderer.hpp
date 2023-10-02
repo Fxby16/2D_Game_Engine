@@ -45,6 +45,7 @@ public:
     void Clear() const;
     void Draw();
     static void ImGui_Init(GLFWwindow *window);
+    static void ImGui_Theme();
     static void ImGui_Start_Frame();
     static void ImGui_Performance();
     static void ImGui_End_Frame();
