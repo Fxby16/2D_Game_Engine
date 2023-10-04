@@ -41,7 +41,9 @@ public:
     void Render(float x,float y,float w,float h,float scale,float texID);
     void Render(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
 
-    void GetMaxTextureSlots();
+    static bool cmp(const Vertex &v1,const Vertex &v2){ return v1.texID<v2.texID; }
+
+    int GetMaxTextureSlots();
     void Clear() const;
     void Draw();
     static void ImGui_Init(GLFWwindow *window);

@@ -13,6 +13,7 @@ protected:
     unsigned char *local_buffer;
     int width,height,BPP;
 public:
+    Texture(){}
     /**
      * create a 2d texture from the given image
      * \param path the path to the image
@@ -25,6 +26,7 @@ public:
 
     inline int GetWidth() const{ return width; }
     inline int GetHeight() const{ return height; }
+    inline unsigned int GetTexID() const{ return ID; }
 };
 
 class SpriteSheet : public Texture{

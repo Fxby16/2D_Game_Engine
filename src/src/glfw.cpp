@@ -50,7 +50,5 @@ int InitGlfwWindow(){
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-    //int MaxTextureImageUnits;
-    //glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits);
     return 0;
 }

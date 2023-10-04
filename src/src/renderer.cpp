@@ -1,9 +1,8 @@
 #include <renderer.hpp>
 #include <vector>
+#include <algorithm>
 
 #include <GLFW/glfw3.h>
-
-static int MaxTextureSlots=-1;
 
 Renderer::Renderer(): VB(MAX_QUADS),buffer(MAX_VERTICES),Num_Vertices(0),base_shader("resources/shaders/base/vertex.glsl","resources/shaders/base/fragment.glsl"){
     proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
@@ -52,22 +51,54 @@ void Renderer::Render(Vertex a,Vertex b,Vertex c,Vertex d){
     }
 }
 
-void Renderer::GetMaxTextureSlots(){
-    if(MaxTextureSlots==-1)
-        glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&MaxTextureSlots);
+int Renderer::GetMaxTextureSlots(){
+    int MaxTextureSlots;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&MaxTextureSlots);
+    return MaxTextureSlots;
 }
 
 void Renderer::Draw(){
     if(Num_Vertices==0)
         return;
-    DRAW_CALLS+=1;
-    
+
+int lastChecked=-1;
+int slot=-1;
+int lastIndex=0;
+int MaxTextureSlots=GetMaxTextureSlots();
+
+    std::stable_sort(begin(buffer),begin(buffer)+Num_Vertices,cmp); //sorting textures by id to reduce the times you have to bind new textures
     VA.Bind();
-    VB.SetData(0,(float *)buffer.data(),Num_Vertices/4);
     base_shader.Bind();
     IB.Bind();
-    IB.Set(Num_Vertices/4);
-    glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr);
+    
+    for(int i=0;i<Num_Vertices;i++){
+        if(buffer[i].texID!=lastChecked){ //new texture
+            if(slot<MaxTextureSlots-1){ //slot available, change last id checked, increment slot and update the vertex
+                lastChecked=buffer[i].texID;
+                ++slot;
+                glActiveTexture(GL_TEXTURE0+slot);
+                glBindTexture(GL_TEXTURE_2D,lastChecked);
+                buffer[i].texID=(float)slot;
+            }else{ //no slots available
+                VB.SetData(0,(float *)&buffer[lastIndex],(i-lastIndex)/4); //send the data to the vertex buffer
+                IB.Set((i-lastIndex)/4); //send the indices to the index buffer
+                glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr); //draw
+                lastIndex=i; //update starting point for the next batch
+                lastChecked=buffer[i].texID;
+                slot=0;
+                buffer[i].texID=(float)slot;
+                DRAW_CALLS++;
+            }
+        }else{ //same texture, just update the vertex
+            buffer[i].texID=(float)slot;
+        }
+    }
+    if(Num_Vertices-lastIndex>0){ //if there are some vertices remaining, render them
+        VB.SetData(0,(float *)&buffer[lastIndex],(Num_Vertices-lastIndex)/4);
+        IB.Set((Num_Vertices-lastIndex)/4);
+        glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr);
+        DRAW_CALLS++;
+    }
     Num_Vertices=0;
 }
 

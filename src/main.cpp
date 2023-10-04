@@ -2,6 +2,8 @@
 #include <examples.hpp>
 #include <glfw.hpp>
 
+#include <iostream>
+
 int main(){
     if(InitGlfwWindow()<0)
         return -1;
@@ -11,10 +13,12 @@ int main(){
 Renderer renderer;
 Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
 SpriteSheet spritesheet("resources/textures/player.png",32,28,GL_NEAREST,GL_NEAREST);
-    texture.Bind(0);
-    spritesheet.Bind(1);
+    
+std::vector<Texture*>t(40);
+    for(int i=0;i<40;i++) //using new because when it copies the object, it calls the destructor and delete the texture. will be manually deleted at the end
+        t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i+1)+".png",GL_NEAREST,GL_NEAREST);
 
-bool menus[2];
+bool menus[3];
     memset(menus,0,sizeof(menus));
 
     while(!glfwWindowShouldClose(window)){
@@ -26,9 +30,11 @@ bool menus[2];
         glfwPollEvents();
 
         if(menus[0])
-            Examples::BatchRendering(renderer);
+            Examples::BatchRendering(renderer,texture);
         else if(menus[1])
             Examples::Spritesheet(renderer,spritesheet);
+        else if(menus[2])
+            Examples::BatchingMultipleTextures(renderer,t);
     
         ImGui::SetNextWindowSize(ImVec2(0,0));
         ImGui::Begin("Menu",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -40,6 +46,10 @@ bool menus[2];
             if(ImGui::MenuItem("SpriteSheet")){
                 memset(menus,0,sizeof(menus));
                 menus[1]=true;
+            }
+            if(ImGui::MenuItem("Batching Multiple Textures")){
+                memset(menus,0,sizeof(menus));
+                menus[2]=true;
             }
             if(ImGui::MenuItem("None"))
                 memset(menus,0,sizeof(menus));
@@ -54,6 +64,8 @@ bool menus[2];
     }
 
     Renderer::ImGui_Close();
+    for(int i=0;i<40;i++)
+        delete t[i];
 }
     glfwTerminate();
     return 0;
