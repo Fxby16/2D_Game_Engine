@@ -18,6 +18,8 @@ Renderer::Renderer(): VB(MAX_QUADS),buffer(MAX_VERTICES),Num_Vertices(0),base_sh
     AddLayout(GL_FLOAT,2,false);
     AddLayout(GL_FLOAT,1,false);
     VA.AddBuffer(VB,VBL);
+
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&MaxTextureSlots);
 }
 
 void Renderer::AddLayout(unsigned int type,unsigned int count,bool normalized){
@@ -51,12 +53,6 @@ void Renderer::Render(Vertex a,Vertex b,Vertex c,Vertex d){
     }
 }
 
-int Renderer::GetMaxTextureSlots(){
-    int MaxTextureSlots;
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&MaxTextureSlots);
-    return MaxTextureSlots;
-}
-
 void Renderer::Draw(){
     if(Num_Vertices==0)
         return;
@@ -64,7 +60,6 @@ void Renderer::Draw(){
 int lastChecked=-1;
 int slot=-1;
 int lastIndex=0;
-int MaxTextureSlots=GetMaxTextureSlots();
 
     std::stable_sort(begin(buffer),begin(buffer)+Num_Vertices,cmp); //sorting textures by id to reduce the times you have to bind new textures
     VA.Bind();

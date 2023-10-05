@@ -2,8 +2,6 @@
 #include <examples.hpp>
 #include <glfw.hpp>
 
-#include <iostream>
-
 int main(){
     if(InitGlfwWindow()<0)
         return -1;
@@ -12,10 +10,10 @@ int main(){
 {
 Renderer renderer;
 Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
-SpriteSheet spritesheet("resources/textures/player.png",32,28,GL_NEAREST,GL_NEAREST);
+SpriteSheet spritesheet("resources/textures/spritesheet.png",32,32,GL_NEAREST,GL_NEAREST);
     
-std::vector<Texture*>t(40);
-    for(int i=0;i<40;i++) //using new because when it copies the object, it calls the destructor and delete the texture. will be manually deleted at the end
+std::vector<Texture*>t(368);
+    for(int i=0;i<t.size();i++) //using new because when it copies the object, it calls the destructor and delete the texture. will be manually deleted at the end
         t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i+1)+".png",GL_NEAREST,GL_NEAREST);
 
 bool menus[3];

@@ -6,11 +6,11 @@ else
 endif
 
 CC := g++
-CINCLUDES := -I include/ -I include/imgui/
+CINCLUDES := -I include/ -I include/vendor/imgui/ -I include/vendor
 CLIBRARIES := -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 TARGET := main
 
-SRCS := $(wildcard *.cpp src/*.c* src/imgui/*.cpp)
+SRCS := $(wildcard *.cpp src/vendor/imgui/*.cpp src/vendor/*.c src/*.cpp)
 
 all: $(TARGET)
 $(TARGET): $(SRCS)

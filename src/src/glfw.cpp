@@ -46,6 +46,8 @@ int InitGlfwWindow(){
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(MessageCallback,0);
 
+    printf("%s\n%s\n",(char *)glGetString(GL_VERSION),(char *)glGetString(GL_RENDERER));
+
     glViewport(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);

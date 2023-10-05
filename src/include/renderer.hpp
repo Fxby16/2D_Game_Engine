@@ -25,6 +25,7 @@ private:
     Shader base_shader;
     glm::mat4 proj;
     int slots[32];
+    int MaxTextureSlots;
 public:
     /**
      * init the renderer
@@ -43,7 +44,6 @@ public:
 
     static bool cmp(const Vertex &v1,const Vertex &v2){ return v1.texID<v2.texID; }
 
-    int GetMaxTextureSlots();
     void Clear() const;
     void Draw();
     static void ImGui_Init(GLFWwindow *window);

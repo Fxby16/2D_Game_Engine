@@ -35,14 +35,14 @@ static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HE
 void Examples::Spritesheet(Renderer &renderer,SpriteSheet &spritesheet){
 static unsigned int row=0,col=0;
 static float scale=1.0f;
-auto [a,b,c,d]=spritesheet.CreateQuadSpriteSheet(100,100,row,col,scale,(float)spritesheet.GetTexID());
+auto [a,b,c,d]=spritesheet.CreateQuadSpriteSheet(SCREEN_WIDTH/2-(32*scale)/2,SCREEN_HEIGHT/2-(32*scale)/2,row,col,scale,(float)spritesheet.GetTexID());
     renderer.Render(a,b,c,d);
     renderer.Draw();
 
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("Spritesheet",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-    ImGui::SliderInt("Row",(int *)&row,0,10);
-    ImGui::SliderInt("Col",(int *)&col,0,10);
+    ImGui::SliderInt("Row",(int *)&row,0,(672/32)-1);
+    ImGui::SliderInt("Col",(int *)&col,0,(704/32)-1);
     ImGui::SliderFloat("Scale",&scale,0.0f,10.0f);
     ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
     ImGui::End();
@@ -53,7 +53,7 @@ static unsigned int IMAGE_WIDTH=10,IMAGE_HEIGHT=10;
 static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HEIGHT);
     float x=0.0f,y=0.0f; //creating data for the vertex buffer
     for(int i=0;i<NUM_QUADS;i++){
-        renderer.Render(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,(float)t[i%40]->GetTexID());
+        renderer.Render(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,(float)t[i%t.size()]->GetTexID());
         x+=IMAGE_WIDTH;
         if(x>=SCREEN_WIDTH){
             x=0;
