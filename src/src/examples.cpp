@@ -6,7 +6,7 @@ static unsigned int IMAGE_WIDTH=10,IMAGE_HEIGHT=10;
 static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HEIGHT);
     float x=0.0f,y=0.0f; //creating data for the vertex buffer
     for(int i=0;i<NUM_QUADS;i++){
-        renderer.Render(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,(float)texture.GetTexID());
+        renderer.Render(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)texture.GetTexID());
         x+=IMAGE_WIDTH;
         if(x>=SCREEN_WIDTH){
             x=0;
@@ -35,7 +35,7 @@ static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HE
 void Examples::Spritesheet(Renderer &renderer,SpriteSheet &spritesheet){
 static unsigned int row=0,col=0;
 static float scale=1.0f;
-auto [a,b,c,d]=spritesheet.CreateQuadSpriteSheet(SCREEN_WIDTH/2-(32*scale)/2,SCREEN_HEIGHT/2-(32*scale)/2,row,col,scale,(float)spritesheet.GetTexID());
+auto [a,b,c,d]=spritesheet.CreateQuadSpriteSheet(SCREEN_WIDTH/2-(32*scale)/2,SCREEN_HEIGHT/2-(32*scale)/2,row,col,scale,1.0f,(float)spritesheet.GetTexID());
     renderer.Render(a,b,c,d);
     renderer.Draw();
 
@@ -53,7 +53,7 @@ static unsigned int IMAGE_WIDTH=10,IMAGE_HEIGHT=10;
 static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HEIGHT);
     float x=0.0f,y=0.0f; //creating data for the vertex buffer
     for(int i=0;i<NUM_QUADS;i++){
-        renderer.Render(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,(float)t[i%t.size()]->GetTexID());
+        renderer.Render(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)t[i%t.size()]->GetTexID());
         x+=IMAGE_WIDTH;
         if(x>=SCREEN_WIDTH){
             x=0;
@@ -70,6 +70,21 @@ static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HE
     ImGui::Begin("Batching Multiple Textures",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
     ImGui::Text("DRAW CALLS: %d",DRAW_CALLS);
+    ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
+    ImGui::End();
+}
+
+void Examples::DepthTest(Renderer &renderer,Texture &t1,Texture &t2){
+static unsigned int depth1=1,depth2=0;
+    renderer.Render(SCREEN_WIDTH/2-160,SCREEN_HEIGHT/2-160,32,32,10,depth1,t1.GetTexID());
+    renderer.Render(SCREEN_WIDTH/2-80,SCREEN_HEIGHT/2-80,32,32,10,depth2,t2.GetTexID());
+    renderer.Draw();
+
+    ImGui::SetNextWindowSize(ImVec2(0,0));
+    ImGui::Begin("Batching Multiple Textures",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+
+    ImGui::SliderInt("Depth 1:",(int *)&depth1,0,1);
+    ImGui::SliderInt("Depth 2:",(int *)&depth2,0,1);
     ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
     ImGui::End();
 }

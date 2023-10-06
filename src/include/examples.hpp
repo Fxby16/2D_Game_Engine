@@ -8,4 +8,5 @@ public:
     static void BatchRendering(Renderer &renderer,Texture &texture);
     static void Spritesheet(Renderer &renderer,SpriteSheet &spritesheet);
     static void BatchingMultipleTextures(Renderer &renderer,std::vector<Texture*>&t);
+    static void DepthTest(Renderer &renderer,Texture &t1,Texture &t2);
 };

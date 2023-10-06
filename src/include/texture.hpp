@@ -40,5 +40,5 @@ public:
     inline int GetTileWidth() const{ return tile_width; }
     inline int GetTileHeight() const{ return tile_height; }
 
-    std::array<Vertex,4> CreateQuadSpriteSheet(float x,float y,float row,float col,float scale,float texID);
+    std::array<Vertex,4> CreateQuadSpriteSheet(float x,float y,float row,float col,float scale,float depth,float texID);
 };

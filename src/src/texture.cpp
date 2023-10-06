@@ -33,25 +33,29 @@ void Texture::Unbind() const{
     glBindTexture(GL_TEXTURE_2D,0);
 }
 
-std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float row,float col,float scale,float texID){
+std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float row,float col,float scale,float depth,float texID){
     Vertex v1;
     v1.Position={x,y};
     v1.TexCoords={(col*tile_width)/width,(row*tile_height)/height};
+    v1.depth=depth;
     v1.texID=texID;
 
     Vertex v2;
     v2.Position={x,y+tile_height*scale};
     v2.TexCoords={(col*tile_width)/width,((row+1)*tile_height)/height};
+    v2.depth=depth;
     v2.texID=texID;
 
     Vertex v3;
     v3.Position={x+tile_width*scale,y+tile_height*scale};
     v3.TexCoords={((col+1)*tile_width)/width,((row+1)*tile_height)/height};
+    v3.depth=depth;
     v3.texID=texID;
 
     Vertex v4;
     v4.Position={x+tile_width*scale,y};
     v4.TexCoords={((col+1)*tile_width)/width,(row*tile_height)/height};
+    v4.depth=depth;
     v4.texID=texID;
     
     return {v1,v2,v3,v4};

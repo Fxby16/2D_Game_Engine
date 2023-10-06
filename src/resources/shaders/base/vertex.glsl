@@ -2,7 +2,8 @@
 
 layout(location = 0) in vec4 position;
 layout(location = 1) in vec2 texCoord;
-layout(location = 2) in float T_Index;
+layout(location = 2) in float depth;
+layout(location = 3) in float T_Index;
 
 out vec2 v_TexCoord;
 out float Tex_Index;

@@ -16,7 +16,7 @@ std::vector<Texture*>t(368);
     for(int i=0;i<t.size();i++) //using new because when it copies the object, it calls the destructor and delete the texture. will be manually deleted at the end
         t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i+1)+".png",GL_NEAREST,GL_NEAREST);
 
-bool menus[3];
+bool menus[4];
     memset(menus,0,sizeof(menus));
 
     while(!glfwWindowShouldClose(window)){
@@ -33,6 +33,8 @@ bool menus[3];
             Examples::Spritesheet(renderer,spritesheet);
         else if(menus[2])
             Examples::BatchingMultipleTextures(renderer,t);
+        else if(menus[3])
+            Examples::DepthTest(renderer,*t[0],*t[10]);
     
         ImGui::SetNextWindowSize(ImVec2(0,0));
         ImGui::Begin("Menu",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -48,6 +50,10 @@ bool menus[3];
             if(ImGui::MenuItem("Batching Multiple Textures")){
                 memset(menus,0,sizeof(menus));
                 menus[2]=true;
+            }
+            if(ImGui::MenuItem("Depth")){
+                memset(menus,0,sizeof(menus));
+                menus[3]=true;
             }
             if(ImGui::MenuItem("None"))
                 memset(menus,0,sizeof(menus));

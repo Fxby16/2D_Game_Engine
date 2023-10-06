@@ -14,6 +14,7 @@ struct Vec2{
 struct Vertex{
     Vec2 Position;
     Vec2 TexCoords;
+    float depth;
     float texID;
 };
 
@@ -34,7 +35,7 @@ public:
      * \param data the data of the quad to set
     */
     void SetData(unsigned int quad_index,float *data,unsigned int num_quads);
-    static std::array<Vertex,4> CreateQuad(float x,float y,float w,float h,float scale,float texID);
+    static std::array<Vertex,4> CreateQuad(float x,float y,float w,float h,float scale,float depth,float texID);
     void Bind() const;
     void Unbind() const;
 };

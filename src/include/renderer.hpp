@@ -39,10 +39,14 @@ public:
      * \param normalized if the data has to be normalized
     */
     void AddLayout(unsigned int type,unsigned int count,bool normalized);
-    void Render(float x,float y,float w,float h,float scale,float texID);
+    void Render(float x,float y,float w,float h,float scale,float depth,float texID);
     void Render(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
 
-    static bool cmp(const Vertex &v1,const Vertex &v2){ return v1.texID<v2.texID; }
+    static bool cmp(const Vertex &v1,const Vertex &v2){
+        if(v1.depth!=v2.depth)
+            return v1.depth>v2.depth;
+        return v1.texID<v2.texID; 
+    }
 
     void Clear() const;
     void Draw();
