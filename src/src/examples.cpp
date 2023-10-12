@@ -1,6 +1,5 @@
 #include <examples.hpp>
 #include <global.hpp>
-#include <iostream>
 
 void Examples::BatchRendering(Renderer &renderer,Texture &texture){
 static unsigned int IMAGE_WIDTH=10,IMAGE_HEIGHT=10;
