@@ -1,5 +1,5 @@
 # 2D Game Engine
-A work-in-progress 2D game engine made in c++ using opengl.
+A work-in-progress 2D game engine made in c++ and opengl.
 
 ## Build
 Run `make` to get the executable. If not specified, the program will be compiled in debug mode. To get better performance use `make DEBUG=0`
