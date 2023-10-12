@@ -4,98 +4,162 @@
 
 #include <GLFW/glfw3.h>
 
-Renderer::Renderer(): VB(MAX_QUADS),buffer(MAX_VERTICES),Num_Vertices(0),base_shader("resources/shaders/base/vertex.glsl","resources/shaders/base/fragment.glsl"){
+Renderer::Renderer(): VB_T(MAX_VERTICES),VB_P(MAX_VERTICES),VB_L(MAX_VERTICES),buffer_T(MAX_VERTICES),
+    buffer_P(MAX_VERTICES),buffer_L(MAX_VERTICES),
+    shader_T("resources/shaders/textures/vertex.glsl","resources/shaders/textures/fragment.glsl"),
+    shader_P("resources/shaders/points/vertex.glsl","resources/shaders/points/fragment.glsl"),
+    shader_L("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl"),
+    Num_Vertices_T(0),Num_Vertices_P(0),Num_Vertices_L(0){
+
     proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
     for(int i=0;i<32;i++)
         slots[i]=i;
-    base_shader.Bind();
-    base_shader.SetUniformMat4f("u_PM",proj); //set projection matrix
-    base_shader.SetUniform1iv("texID",slots,32);
 
     Renderer::ImGui_Init(window);
 
-    AddLayout(GL_FLOAT,2,false);
-    AddLayout(GL_FLOAT,2,false);
-    AddLayout(GL_FLOAT,1,false);
-    AddLayout(GL_FLOAT,1,false);
-    VA.AddBuffer(VB,VBL);
+    AddLayout(VBL_T,VA_T,GL_FLOAT,2,false);
+    AddLayout(VBL_T,VA_T,GL_FLOAT,2,false);
+    AddLayout(VBL_T,VA_T,GL_FLOAT,1,false);
+    AddLayout(VBL_T,VA_T,GL_FLOAT,1,false);
+    VA_T.AddBuffer(VB_T,VBL_T);
+
+    AddLayout(VBL_P,VA_P,GL_FLOAT,2,false);
+    AddLayout(VBL_P,VA_P,GL_FLOAT,4,false);
+    VA_P.AddBuffer(VB_P,VBL_P);
+    
+    AddLayout(VBL_L,VA_L,GL_FLOAT,2,false);
+    AddLayout(VBL_L,VA_L,GL_FLOAT,4,false);
+    VA_L.AddBuffer(VB_L,VBL_L);
+
+    shader_P.Bind();
+    shader_P.SetUniformMat4f("u_PM",proj);
+
+    shader_L.Bind();
+    shader_L.SetUniformMat4f("u_PM",proj);
+
+    shader_T.Bind();
+    shader_T.SetUniformMat4f("u_PM",proj);
+    shader_T.SetUniform1iv("texID",slots,32);
+
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_PROGRAM_POINT_SIZE);
+    glDepthMask(false);
+    glLineWidth(5);
 
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&MaxTextureSlots);
 }
 
-void Renderer::AddLayout(unsigned int type,unsigned int count,bool normalized){
+void Renderer::AddLayout(VertexBufferLayout &VBL,VertexArray &VA,unsigned int type,unsigned int count,bool normalized){
     VBL.Push(type,count,normalized);
 }
 
-void Renderer::Render(float x,float y,float w,float h,float scale,float depth,float texID){
+void Renderer::RenderTexture(float x,float y,float w,float h,float scale,float depth,float texID){
     auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,scale,depth,texID);
-    buffer[Num_Vertices]=a;
-    buffer[Num_Vertices+1]=b;
-    buffer[Num_Vertices+2]=c;
-    buffer[Num_Vertices+3]=d;
-    Num_Vertices+=4;
+    buffer_T[Num_Vertices_T]=a;
+    buffer_T[Num_Vertices_T+1]=b;
+    buffer_T[Num_Vertices_T+2]=c;
+    buffer_T[Num_Vertices_T+3]=d;
+    Num_Vertices_T+=4;
 
-    if(Num_Vertices==MAX_VERTICES){ 
+    if(Num_Vertices_T==MAX_VERTICES){ 
         Draw();
-        Num_Vertices=0;
+        Num_Vertices_T=0;
     }
 }
 
-void Renderer::Render(Vertex a,Vertex b,Vertex c,Vertex d){
-    buffer[Num_Vertices]=a;
-    buffer[Num_Vertices+1]=b;
-    buffer[Num_Vertices+2]=c;
-    buffer[Num_Vertices+3]=d;
-    Num_Vertices+=4;
+void Renderer::RenderQuad(Vertex a,Vertex b,Vertex c,Vertex d){
+    buffer_T[Num_Vertices_T]=a;
+    buffer_T[Num_Vertices_T+1]=b;
+    buffer_T[Num_Vertices_T+2]=c;
+    buffer_T[Num_Vertices_T+3]=d;
+    Num_Vertices_T+=4;
 
-    if(Num_Vertices==MAX_VERTICES){ 
+    if(Num_Vertices_T==MAX_VERTICES)
         Draw();
-        Num_Vertices=0;
-    }
 }
 
-void Renderer::Draw(){
-    if(Num_Vertices==0)
+void Renderer::RenderPoint(float x,float y,float r,float g,float b,float a){
+    buffer_P[Num_Vertices_P].pos={x,y};
+    buffer_P[Num_Vertices_P].color={r,g,b,a};
+    ++Num_Vertices_P;
+
+    if(Num_Vertices_P==MAX_VERTICES)
+        Draw();
+}
+
+void Renderer::RenderLine(float x1,float y1,float x2,float y2,float *color){
+    buffer_L[Num_Vertices_L].pos={x1,y1};
+    buffer_L[Num_Vertices_L].color={color[0],color[1],color[2],color[3]};
+    buffer_L[Num_Vertices_L+1].pos={x2,y2};
+    buffer_L[Num_Vertices_L+1].color=buffer_L[Num_Vertices_L].color;
+    Num_Vertices_L+=2;
+
+    if(Num_Vertices_L==MAX_VERTICES)
+        Draw();
+}
+
+void Renderer::Draw(){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect depth input for subsequent vertices
+    if(Num_Vertices_T==0 && Num_Vertices_P==0 && Num_Vertices_L==0)
         return;
 
 int lastChecked=-1;
 int slot=-1;
 int lastIndex=0;
 
-    std::stable_sort(begin(buffer),begin(buffer)+Num_Vertices,cmp); //sorting textures by id to reduce the times you have to bind new textures
-    VA.Bind();
-    base_shader.Bind();
-    IB.Bind();
-    
-    for(int i=0;i<Num_Vertices;i++){
-        if(buffer[i].texID!=lastChecked){ //new texture
-            if(slot<MaxTextureSlots-1){ //slot available, change last id checked, increment slot and update the vertex
-                lastChecked=buffer[i].texID;
-                ++slot;
-                glActiveTexture(GL_TEXTURE0+slot);
-                glBindTexture(GL_TEXTURE_2D,lastChecked);
-                buffer[i].texID=(float)slot;
-            }else{ //no slots available
-                VB.SetData(0,(float *)&buffer[lastIndex],(i-lastIndex)/4); //send the data to the vertex buffer
-                IB.Set((i-lastIndex)/4); //send the indices to the index buffer
-                glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr); //draw
-                lastIndex=i; //update starting point for the next batch
-                lastChecked=buffer[i].texID;
-                slot=0;
-                buffer[i].texID=(float)slot;
-                DRAW_CALLS++;
+    if(Num_Vertices_T>0){ //draw textures
+        std::stable_sort(begin(buffer_T),begin(buffer_T)+Num_Vertices_T,cmp); //sorting textures by id to reduce the times you have to bind new textures
+        VA_T.Bind();
+        VB_T.Bind();
+        shader_T.Bind();
+        IB.Bind();
+
+        for(int i=0;i<Num_Vertices_T;i++){
+            if(buffer_T[i].texID!=lastChecked){ //new texture
+                if(slot<MaxTextureSlots-1){ //slot available, change last id checked, increment slot and update the vertex
+                    lastChecked=buffer_T[i].texID;
+                    ++slot;
+                    glActiveTexture(GL_TEXTURE0+slot);
+                    glBindTexture(GL_TEXTURE_2D,lastChecked);
+                    buffer_T[i].texID=(float)slot;
+                }else{ //no slots available
+                    VB_T.SetData(0,(float *)&buffer_T[lastIndex],i-lastIndex,sizeof(Vertex)); //send the data to the vertex buffer
+                    IB.Set((i-lastIndex)); //send the indices to the index buffer
+                    glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr); //draw
+                    lastIndex=i; //update starting point for the next batch
+                    lastChecked=buffer_T[i].texID;
+                    slot=0;
+                    buffer_T[i].texID=(float)slot;
+                    DRAW_CALLS++;
+                }
+            }else{ //same texture, just update the vertex
+                buffer_T[i].texID=(float)slot;
             }
-        }else{ //same texture, just update the vertex
-            buffer[i].texID=(float)slot;
+        }
+        if(Num_Vertices_T-lastIndex>0){ //if there are some vertices remaining, render them
+            VB_T.SetData(0,(float *)&buffer_T[lastIndex],Num_Vertices_T-lastIndex,sizeof(Vertex));
+            IB.Set((Num_Vertices_T-lastIndex));
+            glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr);
+            DRAW_CALLS++;
         }
     }
-    if(Num_Vertices-lastIndex>0){ //if there are some vertices remaining, render them
-        VB.SetData(0,(float *)&buffer[lastIndex],(Num_Vertices-lastIndex)/4);
-        IB.Set((Num_Vertices-lastIndex)/4);
-        glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr);
-        DRAW_CALLS++;
+
+    if(Num_Vertices_P>0){
+        VA_P.Bind();
+        VB_P.Bind();
+        shader_P.Bind();
+        VB_P.SetData(0,(float *)&buffer_P[0],Num_Vertices_P,sizeof(LinePointVertex));
+        glDrawArrays(GL_POINTS,0,Num_Vertices_P);
     }
-    Num_Vertices=0;
+
+    if(Num_Vertices_L>0){
+        VA_L.Bind();    
+        VB_L.Bind();
+        shader_L.Bind();
+        VB_L.SetData(0,(float *)&buffer_L[0],Num_Vertices_L,sizeof(LinePointVertex));
+        glDrawArrays(GL_LINES,0,Num_Vertices_L);
+    }
+
+    Num_Vertices_T=Num_Vertices_P=Num_Vertices_L=0;
 }
 
 void Renderer::Clear() const{

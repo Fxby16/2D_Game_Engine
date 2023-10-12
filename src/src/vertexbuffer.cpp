@@ -2,10 +2,10 @@
 
 #include <glad/glad.h>
 
-VertexBuffer::VertexBuffer(unsigned int num_quads){
+VertexBuffer::VertexBuffer(unsigned int num_vertices){
     glGenBuffers(1,&ID);
     glBindBuffer(GL_ARRAY_BUFFER,ID);
-    glBufferData(GL_ARRAY_BUFFER,num_quads*4*sizeof(Vertex),nullptr,GL_DYNAMIC_DRAW); //allocate 4 vertices for every quad
+    glBufferData(GL_ARRAY_BUFFER,num_vertices*sizeof(Vertex),nullptr,GL_DYNAMIC_DRAW); //allocate 4 vertices for every quad
 }
 
 VertexBuffer::~VertexBuffer(){
@@ -48,6 +48,6 @@ std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,fl
     return {v1,v2,v3,v4};
 }
 
-void VertexBuffer::SetData(unsigned int quad_index,float *data,unsigned int num_quads){
-    glBufferSubData(GL_ARRAY_BUFFER,quad_index*sizeof(Vertex)*4,sizeof(Vertex)*4*num_quads,(const void *)data);
+void VertexBuffer::SetData(unsigned int vertex_index,float *data,unsigned int num_vertices,unsigned int VertexSize){
+    glBufferSubData(GL_ARRAY_BUFFER,vertex_index*sizeof(Vertex),VertexSize*num_vertices,(const void *)data);
 }

@@ -24,6 +24,12 @@ void VertexArray::AddBuffer(const VertexBuffer &vb,const VertexBufferLayout &lay
     }
 }
 
+void VertexArray::DisableAttribs(const VertexBufferLayout &layout){
+    const auto &elements=layout.GetElements();
+    for(unsigned int i=0;i<elements.size();i++)
+        glDisableVertexAttribArray(i);
+}
+
 void VertexArray::Bind() const{
     glBindVertexArray(ID);
 }

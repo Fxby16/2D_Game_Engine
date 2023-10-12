@@ -12,11 +12,11 @@ Renderer renderer;
 Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
 SpriteSheet spritesheet("resources/textures/spritesheet.png",32,32,GL_NEAREST,GL_NEAREST);
     
-std::vector<Texture*>t(368);
+std::vector<Texture*>t(457);
     for(int i=0;i<t.size();i++) //using new because when it copies the object, it calls the destructor and delete the texture. will be manually deleted at the end
-        t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i+1)+".png",GL_NEAREST,GL_NEAREST);
+        t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i)+".png",GL_NEAREST,GL_NEAREST);
 
-bool menus[4];
+bool menus[5];
     memset(menus,0,sizeof(menus));
 
     while(!glfwWindowShouldClose(window)){
@@ -35,6 +35,8 @@ bool menus[4];
             Examples::BatchingMultipleTextures(renderer,t);
         else if(menus[3])
             Examples::DepthTest(renderer,*t[0],*t[10]);
+        else if(menus[4])
+            Examples::LinesPoints(renderer);
     
         ImGui::SetNextWindowSize(ImVec2(0,0));
         ImGui::Begin("Menu",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -54,6 +56,10 @@ bool menus[4];
             if(ImGui::MenuItem("Depth")){
                 memset(menus,0,sizeof(menus));
                 menus[3]=true;
+            }
+            if(ImGui::MenuItem("Lines/Points")){
+                memset(menus,0,sizeof(menus));
+                menus[4]=true;
             }
             if(ImGui::MenuItem("None"))
                 memset(menus,0,sizeof(menus));

@@ -33,4 +33,8 @@ public:
     void Push(unsigned int type,unsigned int count,bool normalized);
     inline const std::vector<VertexBufferElement> &GetElements() const{ return Elements; };
     inline unsigned int GetStride() const{ return stride; };
+    inline void Clear(){
+        Elements.clear();
+        stride=0;
+    }
 };

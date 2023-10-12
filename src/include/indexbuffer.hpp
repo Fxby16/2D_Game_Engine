@@ -12,7 +12,7 @@ public:
     IndexBuffer();
     ~IndexBuffer();
 
-    void Set(unsigned int num_quads);
+    void Set(unsigned int num_elem);
 
     void Bind() const;
     void Unbind() const;

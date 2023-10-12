@@ -16,20 +16,33 @@
 
 class Renderer{
 private:
-    VertexBuffer VB;
-    VertexArray VA;
+    VertexBuffer VB_T; //vertex buffer for textures
+    VertexBuffer VB_P; //vertex buffer for points
+    VertexBuffer VB_L; //vertex buffer for lines
+    VertexArray VA_T; //vertex array for textures
+    VertexArray VA_P; //vertex array for points
+    VertexArray VA_L; //vertex array for lines
     IndexBuffer IB;
-    VertexBufferLayout VBL;
-    std::vector<Vertex>buffer;
-    unsigned int Num_Vertices;
-    Shader base_shader;
+    VertexBufferLayout VBL_T; //vertex buffer layout for textures
+    VertexBufferLayout VBL_P; //vertex buffer layout for points
+    VertexBufferLayout VBL_L; //vertex buffer layout for lines
+    std::vector<Vertex>buffer_T; //buffer for textures
+    std::vector<LinePointVertex>buffer_P; //buffer for point
+    std::vector<LinePointVertex>buffer_L; //buffer for lines
+    Shader shader_T; //shader for textures
+    Shader shader_P; //shader for round points
+    Shader shader_L; //shader for lines
+    
+    unsigned int Num_Vertices_T;
+    unsigned int Num_Vertices_P;
+    unsigned int Num_Vertices_L;
     glm::mat4 proj;
     int slots[32];
     int MaxTextureSlots;
 public:
     /**
      * init the renderer
-     * call Render() to render textures. when you finished call draw
+     * call Render() to render textures. when you finished call Draw()
     */
     Renderer();
     /**
@@ -38,9 +51,14 @@ public:
      * \param count the number of elements for this attribute
      * \param normalized if the data has to be normalized
     */
-    void AddLayout(unsigned int type,unsigned int count,bool normalized);
-    void Render(float x,float y,float w,float h,float scale,float depth,float texID);
-    void Render(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
+   /**
+    * add vertex buffer attribute. call VertexArray::AddBuffer() to apply the attributes to the vertex array
+   */
+    void AddLayout(VertexBufferLayout &VBL,VertexArray &VA,unsigned int type,unsigned int count,bool normalized);
+    void RenderTexture(float x,float y,float w,float h,float scale,float depth,float texID);
+    void RenderQuad(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
+    void RenderPoint(float x,float y,float r,float g,float b,float a);
+    void RenderLine(float x1,float y1,float x2,float y2,float *color);
 
     static bool cmp(const Vertex &v1,const Vertex &v2){
         if(v1.depth!=v2.depth)

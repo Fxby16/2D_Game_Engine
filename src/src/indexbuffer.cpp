@@ -14,9 +14,9 @@ IndexBuffer::~IndexBuffer(){
     glDeleteBuffers(1,&ID);
 }
 
-void IndexBuffer::Set(unsigned int num_quads){
+void IndexBuffer::Set(unsigned int num_elem){
     Bind();
-    NumElem=num_quads*6;
+    NumElem=num_elem/4*6;
     unsigned int offset=0;
     for(int i=0;i<NumElem;i+=6){
         indices[i+0]=offset;
