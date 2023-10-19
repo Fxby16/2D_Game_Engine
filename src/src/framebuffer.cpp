@@ -22,6 +22,7 @@ Framebuffer::Framebuffer(){
 }
 
 Framebuffer::~Framebuffer(){
+    glDeleteTextures(1,&colorbufferID);
     glDeleteFramebuffers(1,&framebufferID);
 }
 

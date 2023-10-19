@@ -26,7 +26,7 @@ bool menus[6];
         
         Renderer::ImGui_Start_Frame();
         Renderer::ImGui_Theme();
-        Renderer::ImGui_Performance();
+        Renderer::ImGui_Content();
 
         glfwPollEvents();
 

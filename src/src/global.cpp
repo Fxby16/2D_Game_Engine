@@ -20,3 +20,9 @@ unsigned int MAX_INDICES=6*MAX_QUADS;
 int DRAW_CALLS=0;
 
 GLFWwindow *window;
+bool framebuffer_update=false;
+bool proj_update=false;
+
+namespace WindowInfo{
+    bool isFullScreen=false;
+}

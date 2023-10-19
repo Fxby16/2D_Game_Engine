@@ -35,7 +35,7 @@ private:
     Shader shader_L; //shader for lines
     Shader shader_post_processing;
     unsigned int postprocessing_index;
-    Framebuffer framebuffer;
+    Framebuffer *framebuffer;
     
     unsigned int Num_Vertices_T;
     unsigned int Num_Vertices_P;
@@ -49,6 +49,7 @@ public:
      * call Render() to render textures. when you finished call Draw()
     */
     Renderer();
+    ~Renderer();
     /**
      * add attribute for the current vertex buffer
      * \param type a GL_TYPE
@@ -81,7 +82,7 @@ public:
     static void ImGui_Init(GLFWwindow *window);
     static void ImGui_Theme();
     static void ImGui_Start_Frame();
-    static void ImGui_Performance();
+    static void ImGui_Content();
     static void ImGui_End_Frame();
     static void ImGui_Close();
 };

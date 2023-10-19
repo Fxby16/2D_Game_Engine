@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include <GLFW/glfw3.h>
-#include <iostream>
+#include <glfw.hpp>
 
 Renderer::Renderer(): VB_T(MAX_VERTICES),VB_P(MAX_VERTICES),VB_L(MAX_VERTICES),buffer_T(MAX_VERTICES),
     buffer_P(MAX_VERTICES),buffer_L(MAX_VERTICES),
@@ -12,6 +12,8 @@ Renderer::Renderer(): VB_T(MAX_VERTICES),VB_P(MAX_VERTICES),VB_L(MAX_VERTICES),b
     shader_L("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl"),
     shader_post_processing("resources/shaders/textures/vertex.glsl","resources/shaders/post_processing/fragment.glsl"),
     postprocessing_index(std::numeric_limits<unsigned int>::max()),Num_Vertices_T(0),Num_Vertices_P(0),Num_Vertices_L(0){
+
+    framebuffer=new Framebuffer();
 
     proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
     for(int i=0;i<32;i++)
@@ -54,6 +56,10 @@ Renderer::Renderer(): VB_T(MAX_VERTICES),VB_P(MAX_VERTICES),VB_L(MAX_VERTICES),b
     glLineWidth(5);
 
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&MaxTextureSlots);
+}
+
+Renderer::~Renderer(){
+    delete framebuffer;
 }
 
 void Renderer::AddLayout(VertexBufferLayout &VBL,VertexArray &VA,unsigned int type,unsigned int count,bool normalized){
@@ -106,14 +112,35 @@ void Renderer::RenderLine(float x1,float y1,float x2,float y2,float *color){
 }
 
 void Renderer::StartScene(){
-    framebuffer.Bind();
+    if(proj_update){
+        proj_update=false;
+        proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
+
+        shader_P.Bind();
+        shader_P.SetUniformMat4f("u_PM",proj);
+
+        shader_L.Bind();
+        shader_L.SetUniformMat4f("u_PM",proj);
+
+        shader_T.Bind();
+        shader_T.SetUniformMat4f("u_PM",proj);
+
+        shader_post_processing.Bind();
+        shader_post_processing.SetUniformMat4f("u_PM",proj);
+    }
+    if(framebuffer_update){
+        framebuffer_update=false;
+        delete framebuffer;
+        framebuffer=new Framebuffer();
+    }
+    framebuffer->Bind();
     Clear();
 }
 
 void Renderer::DrawScene(){
-    framebuffer.Unbind();
+    framebuffer->Unbind();
     Clear();
-    RenderTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,framebuffer.getColorbufferID());
+    RenderTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,framebuffer->getColorbufferID());
     Draw(true);
 }
 
@@ -313,7 +340,7 @@ void Renderer::ImGui_Start_Frame(){
     ImGui::NewFrame();
 }
 
-void Renderer::ImGui_Performance(){
+void Renderer::ImGui_Content(){
     ImGui::SetNextWindowPos(ImVec2(0,0));
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("FPS",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
@@ -325,9 +352,11 @@ void Renderer::ImGui_Performance(){
     ImGui::Text("FPS: %.1f",FPS);
     ImGui::Text("Frame Time: %.4f",deltaTime*1000);
 
-    if(ImGui::Checkbox("V-Sync",&v_sync)){
+    if(ImGui::Checkbox("V-Sync",&v_sync))
         glfwSwapInterval(v_sync);
-    }
+    
+    if(ImGui::Checkbox("Fullscreen",&WindowInfo::isFullScreen))
+        ToggleFullScreen();
     ImGui::End();
 }
 

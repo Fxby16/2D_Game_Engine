@@ -4,6 +4,7 @@
 void Examples::BatchRendering(Renderer &renderer,Texture &texture){
 static unsigned int IMAGE_WIDTH=10,IMAGE_HEIGHT=10;
 static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HEIGHT);
+
     float x=0.0f,y=0.0f; //creating data for the vertex buffer
     for(int i=0;i<NUM_QUADS;i++){
         renderer.RenderTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)texture.GetTexID());
@@ -50,7 +51,9 @@ auto [a,b,c,d]=spritesheet.CreateQuadSpriteSheet(SCREEN_WIDTH/2-(32*scale)/2,SCR
 
 void Examples::BatchingMultipleTextures(Renderer &renderer,std::vector<Texture*>&t){
 static unsigned int IMAGE_WIDTH=20,IMAGE_HEIGHT=20;
-static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HEIGHT);
+static unsigned int NUM_QUADS;
+    NUM_QUADS=(float)ceil(((float)SCREEN_WIDTH/(float)IMAGE_WIDTH)*((float)SCREEN_HEIGHT/(float)IMAGE_HEIGHT));
+    
     float x=0.0f,y=0.0f; //creating data for the vertex buffer
     for(int i=0;i<NUM_QUADS;i++){
         renderer.RenderTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)t[i%t.size()]->GetTexID());

@@ -1,6 +1,8 @@
 #include <glfw.hpp>
 #include <cstdio>
 
+bool isFullScreen=false;
+
 void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam){
     if(type==GL_DEBUG_TYPE_ERROR)
         fprintf(stderr,"[[GL ERROR]]  Type: 0x%x  Severity: 0x%x  Message: %s\n",type,severity,message);
@@ -8,11 +10,18 @@ void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum sever
 
 void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *window,int width,int height){
     glViewport(0,0,width,height);
+    framebuffer_update=true;
+    proj_update=true;
+    SCREEN_WIDTH=width;
+    SCREEN_HEIGHT=height;
 }  
 
 void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mode){
     if(key==GLFW_KEY_Q && action==GLFW_PRESS)
         glfwSetWindowShouldClose(window,true);
+
+    if(key==GLFW_KEY_F && action==GLFW_PRESS)
+        ToggleFullScreen();
 }
 
 int InitGlfwWindow(){
@@ -53,4 +62,14 @@ int InitGlfwWindow(){
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
     return 0;
+}
+
+void ToggleFullScreen(){
+    const GLFWvidmode *mode=glfwGetVideoMode(glfwGetPrimaryMonitor());
+    if(isFullScreen)
+        glfwSetWindowMonitor(window,nullptr,mode->width/2-BASE_SCREEN_WIDTH/2,mode->height/2-BASE_SCREEN_HEIGHT/2,BASE_SCREEN_WIDTH,BASE_SCREEN_HEIGHT,GLFW_DONT_CARE);
+    else
+        glfwSetWindowMonitor(window,glfwGetPrimaryMonitor(),0,0,mode->width,mode->height,GLFW_DONT_CARE);
+    isFullScreen=!isFullScreen;
+    WindowInfo::isFullScreen=isFullScreen;
 }
