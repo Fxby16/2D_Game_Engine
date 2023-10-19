@@ -43,7 +43,7 @@ auto [a,b,c,d]=spritesheet.CreateQuadSpriteSheet(SCREEN_WIDTH/2-(32*scale)/2,SCR
     ImGui::Begin("Spritesheet",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
     ImGui::SliderInt("Row",(int *)&row,0,(672/32)-1);
     ImGui::SliderInt("Col",(int *)&col,0,(704/32)-1);
-    ImGui::SliderFloat("Scale",&scale,0.0f,10.0f);
+    ImGui::SliderFloat("Scale",&scale,0.0f,15.0f);
     ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
     ImGui::End();
 }
@@ -111,6 +111,28 @@ static float line_colors[4]={255,255,255,1};
     ImGui::SliderInt("LINE_Y2:",(int *)&line_y2,0,SCREEN_HEIGHT);
     ImGui::ColorEdit4("POINT COLOR:",&point_colors[0]);
     ImGui::ColorEdit4("LINE COLOR:",&line_colors[0]);
+    ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
+    ImGui::End();
+}
+
+void Examples::PostProcessing(Renderer &renderer,Texture &t){
+    renderer.RenderTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,t.GetTexID());
+    renderer.Draw();
+
+    ImGui::SetNextWindowSize(ImVec2(0,0));
+    ImGui::Begin("Post Processing",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+    if(ImGui::Button("Invert Color")){
+        renderer.SetPostProcessing("InvertColor");
+    }
+    if(ImGui::Button("Green Channel")){
+        renderer.SetPostProcessing("GreenChannel");
+    }
+    if(ImGui::Button("Gray Scale")){
+        renderer.SetPostProcessing("GrayScale");
+    }
+    if(ImGui::Button("None")){
+        renderer.SetPostProcessing(nullptr);
+    }
     ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
     ImGui::End();
 }

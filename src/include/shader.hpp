@@ -7,8 +7,8 @@
 class Shader{
 private:
     std::unordered_map<std::string,int>Uniforms_Cache;
-public:
     unsigned int ID;
+public:
     /**
      * \param VertexShaderPath path to the file that contains the vertex shader
      * \param FragmentShaderPath path to the file that contains the fragment shader
@@ -17,6 +17,7 @@ public:
     ~Shader();
     void Bind() const;
     void Unbind() const;
+    inline unsigned int getID(){ return ID; }
     /**
      * \param vertexSourceCode a string containing the vertex shader
      * \param fragmentSourceCode a string containing the fragment shader

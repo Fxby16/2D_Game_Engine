@@ -9,6 +9,7 @@
 #include <vertexarray.hpp>
 #include <vertexbuffer.hpp>
 #include <indexbuffer.hpp>
+#include <framebuffer.hpp>
 #include <shader.hpp>
 #include <global.hpp>
 
@@ -32,6 +33,9 @@ private:
     Shader shader_T; //shader for textures
     Shader shader_P; //shader for round points
     Shader shader_L; //shader for lines
+    Shader shader_post_processing;
+    unsigned int postprocessing_index;
+    Framebuffer framebuffer;
     
     unsigned int Num_Vertices_T;
     unsigned int Num_Vertices_P;
@@ -66,8 +70,14 @@ public:
         return v1.texID<v2.texID; 
     }
 
+    void StartScene();
+    void DrawScene();
+
     void Clear() const;
-    void Draw();
+    void Draw(bool finalScene=false);
+    void SetPostProcessing(const char *uniformName);
+    void PostProcessing();
+
     static void ImGui_Init(GLFWwindow *window);
     static void ImGui_Theme();
     static void ImGui_Start_Frame();

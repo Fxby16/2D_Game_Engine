@@ -6,11 +6,11 @@ void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum sever
         fprintf(stderr,"[[GL ERROR]]  Type: 0x%x  Severity: 0x%x  Message: %s\n",type,severity,message);
 }
 
-void framebuffer_size_callback(GLFWwindow *window,int width,int height){
+void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *window,int width,int height){
     glViewport(0,0,width,height);
 }  
 
-void key_callback(GLFWwindow *window,int key,int scancode,int action,int mode){
+void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mode){
     if(key==GLFW_KEY_Q && action==GLFW_PRESS)
         glfwSetWindowShouldClose(window,true);
 }
@@ -40,8 +40,8 @@ int InitGlfwWindow(){
         return -1;
     } 
 
-    glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
-    glfwSetKeyCallback(window,key_callback);
+    glfwSetFramebufferSizeCallback(window,FramebufferSizeCallback);
+    glfwSetKeyCallback(window,KeyCallback);
     //enable debug output
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(MessageCallback,0);

@@ -1,6 +1,7 @@
 #include <renderer.hpp>
 #include <examples.hpp>
 #include <glfw.hpp>
+#include <framebuffer.hpp>
 
 int main(){
     if(InitGlfwWindow()<0)
@@ -10,17 +11,19 @@ int main(){
 {
 Renderer renderer;
 Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
+Texture texture2("resources/textures/smurf_cat.jpg",GL_LINEAR,GL_LINEAR);
 SpriteSheet spritesheet("resources/textures/spritesheet.png",32,32,GL_NEAREST,GL_NEAREST);
-    
+
 std::vector<Texture*>t(457);
     for(int i=0;i<t.size();i++) //using new because when it copies the object, it calls the destructor and delete the texture. will be manually deleted at the end
         t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i)+".png",GL_NEAREST,GL_NEAREST);
 
-bool menus[5];
+bool menus[6];
     memset(menus,0,sizeof(menus));
 
     while(!glfwWindowShouldClose(window)){
-        renderer.Clear();
+        renderer.StartScene();
+        
         Renderer::ImGui_Start_Frame();
         Renderer::ImGui_Theme();
         Renderer::ImGui_Performance();
@@ -37,6 +40,8 @@ bool menus[5];
             Examples::DepthTest(renderer,*t[0],*t[10]);
         else if(menus[4])
             Examples::LinesPoints(renderer);
+        else if(menus[5])
+            Examples::PostProcessing(renderer,texture2);
     
         ImGui::SetNextWindowSize(ImVec2(0,0));
         ImGui::Begin("Menu",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -61,6 +66,10 @@ bool menus[5];
                 memset(menus,0,sizeof(menus));
                 menus[4]=true;
             }
+            if(ImGui::MenuItem("Post Processing")){
+                memset(menus,0,sizeof(menus));
+                menus[5]=true;
+            }
             if(ImGui::MenuItem("None"))
                 memset(menus,0,sizeof(menus));
             ImGui::EndMenu();
@@ -68,8 +77,8 @@ bool menus[5];
         ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH-ImGui::GetWindowWidth(),0));
         ImGui::End();
 
+        renderer.DrawScene();
         Renderer::ImGui_End_Frame();
-
         glfwSwapBuffers(window);
     }
 

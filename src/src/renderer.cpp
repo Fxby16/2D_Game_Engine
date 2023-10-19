@@ -3,13 +3,15 @@
 #include <algorithm>
 
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 Renderer::Renderer(): VB_T(MAX_VERTICES),VB_P(MAX_VERTICES),VB_L(MAX_VERTICES),buffer_T(MAX_VERTICES),
     buffer_P(MAX_VERTICES),buffer_L(MAX_VERTICES),
     shader_T("resources/shaders/textures/vertex.glsl","resources/shaders/textures/fragment.glsl"),
     shader_P("resources/shaders/points/vertex.glsl","resources/shaders/points/fragment.glsl"),
     shader_L("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl"),
-    Num_Vertices_T(0),Num_Vertices_P(0),Num_Vertices_L(0){
+    shader_post_processing("resources/shaders/textures/vertex.glsl","resources/shaders/post_processing/fragment.glsl"),
+    postprocessing_index(std::numeric_limits<unsigned int>::max()),Num_Vertices_T(0),Num_Vertices_P(0),Num_Vertices_L(0){
 
     proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
     for(int i=0;i<32;i++)
@@ -41,9 +43,14 @@ Renderer::Renderer(): VB_T(MAX_VERTICES),VB_P(MAX_VERTICES),VB_L(MAX_VERTICES),b
     shader_T.SetUniformMat4f("u_PM",proj);
     shader_T.SetUniform1iv("texID",slots,32);
 
+    shader_post_processing.Bind();
+    shader_post_processing.SetUniformMat4f("u_PM",proj);
+    shader_post_processing.SetUniform1iv("texID",slots,32);
+
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_PROGRAM_POINT_SIZE);
     glDepthMask(false);
+    glPointSize(5);
     glLineWidth(5);
 
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&MaxTextureSlots);
@@ -98,7 +105,19 @@ void Renderer::RenderLine(float x1,float y1,float x2,float y2,float *color){
         Draw();
 }
 
-void Renderer::Draw(){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect depth input for subsequent vertices
+void Renderer::StartScene(){
+    framebuffer.Bind();
+    Clear();
+}
+
+void Renderer::DrawScene(){
+    framebuffer.Unbind();
+    Clear();
+    RenderTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,framebuffer.getColorbufferID());
+    Draw(true);
+}
+
+void Renderer::Draw(bool finalScene){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect depth input for subsequent vertices
     if(Num_Vertices_T==0 && Num_Vertices_P==0 && Num_Vertices_L==0)
         return;
 
@@ -110,8 +129,12 @@ int lastIndex=0;
         std::stable_sort(begin(buffer_T),begin(buffer_T)+Num_Vertices_T,cmp); //sorting textures by id to reduce the times you have to bind new textures
         VA_T.Bind();
         VB_T.Bind();
-        shader_T.Bind();
         IB.Bind();
+
+        if(postprocessing_index!=std::numeric_limits<unsigned int>::max() && finalScene)
+            PostProcessing();
+        else
+            shader_T.Bind();
 
         for(int i=0;i<Num_Vertices_T;i++){
             if(buffer_T[i].texID!=lastChecked){ //new texture
@@ -146,7 +169,12 @@ int lastIndex=0;
     if(Num_Vertices_P>0){
         VA_P.Bind();
         VB_P.Bind();
-        shader_P.Bind();
+
+        if(postprocessing_index!=std::numeric_limits<unsigned int>::max() && finalScene)
+            PostProcessing();
+        else
+            shader_P.Bind();
+
         VB_P.SetData(0,(float *)&buffer_P[0],Num_Vertices_P,sizeof(LinePointVertex));
         glDrawArrays(GL_POINTS,0,Num_Vertices_P);
     }
@@ -154,7 +182,12 @@ int lastIndex=0;
     if(Num_Vertices_L>0){
         VA_L.Bind();    
         VB_L.Bind();
-        shader_L.Bind();
+
+        if(postprocessing_index!=std::numeric_limits<unsigned int>::max() && finalScene)
+            PostProcessing();
+        else
+            shader_L.Bind();
+
         VB_L.SetData(0,(float *)&buffer_L[0],Num_Vertices_L,sizeof(LinePointVertex));
         glDrawArrays(GL_LINES,0,Num_Vertices_L);
     }
@@ -167,6 +200,19 @@ void Renderer::Clear() const{
 
     glClearColor(0.0f,0.0f,0.0f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Renderer::SetPostProcessing(const char *uniformName){
+    if(uniformName==nullptr){
+        postprocessing_index=std::numeric_limits<unsigned int>::max();
+        return;
+    }
+    postprocessing_index=glGetSubroutineIndex(shader_post_processing.getID(),GL_FRAGMENT_SHADER,uniformName);;
+}
+
+void Renderer::PostProcessing(){
+    shader_post_processing.Bind();
+    glUniformSubroutinesuiv(GL_FRAGMENT_SHADER,1,&postprocessing_index);
 }
 
 void Renderer::ImGui_Init(GLFWwindow *window){
