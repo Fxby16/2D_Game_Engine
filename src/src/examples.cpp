@@ -95,9 +95,9 @@ static unsigned int depth1=1,depth2=0;
 
 void Examples::LinesPoints(Renderer &renderer){
 static unsigned int point_x=600,point_y=250;
-static float point_colors[4]={255,255,255,1};
+static float point_colors[4]={1.0f,1.0f,1.0f,1.0f};
 static unsigned int line_x1=100,line_y1=100,line_x2=500,line_y2=300;
-static float line_colors[4]={255,255,255,1};
+static float line_colors[4]={1.0f,1.0f,1.0f,1.0f};
 
     renderer.RenderLine(line_x1,line_y1,line_x2,line_y2,&line_colors[0]);
     renderer.RenderPoint(point_x,point_y,point_colors[0],point_colors[1],point_colors[2],point_colors[3]);
@@ -136,6 +136,24 @@ void Examples::PostProcessing(Renderer &renderer,Texture &t){
     if(ImGui::Button("None")){
         renderer.SetPostProcessing(nullptr);
     }
+    ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
+    ImGui::End();
+}
+
+void Examples::Text(TextRenderer &textrenderer){
+static float color[3]={1.0f,1.0f,1.0f};
+static int x=300,y=500;
+static float scale=1.0f;
+static char buffer[200];
+    textrenderer.RenderText(buffer,x,y,scale,color);
+
+    ImGui::SetNextWindowSize(ImVec2(0,0));
+    ImGui::Begin("Text",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+    ImGui::InputTextMultiline("String",buffer,sizeof(buffer));
+    ImGui::SliderInt("X",&x,0,SCREEN_WIDTH);
+    ImGui::SliderInt("Y",&y,0,SCREEN_HEIGHT);
+    ImGui::SliderFloat("Scale",&scale,0.0f,10.0f);
+    ImGui::ColorEdit3("Text Color",color);
     ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
     ImGui::End();
 }

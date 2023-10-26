@@ -1,6 +1,7 @@
 #pragma once
 
 #include <renderer.hpp>
+#include <textrenderer.hpp>
 #include <texture.hpp>
 
 class Examples{
@@ -11,4 +12,5 @@ public:
     static void DepthTest(Renderer &renderer,Texture &t1,Texture &t2);
     static void LinesPoints(Renderer &renderer);
     static void PostProcessing(Renderer &renderer,Texture &t);
+    static void Text(TextRenderer &textrenderer);
 };

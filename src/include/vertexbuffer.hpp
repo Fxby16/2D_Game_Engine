@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 #include <global.hpp>
+#include <glad/glad.h>
 
 struct Vec2{
     float x,y;
@@ -35,7 +36,7 @@ public:
      * Allocates memory for a vertex buffer
      * \param num_vertices the number of quads to render
     */
-    VertexBuffer(unsigned int num_vertices);
+    VertexBuffer(unsigned int num_vertices,unsigned int vertex_size,GLenum usage);
     ~VertexBuffer();
 
     /**

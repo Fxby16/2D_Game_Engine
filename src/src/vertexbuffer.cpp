@@ -2,10 +2,10 @@
 
 #include <glad/glad.h>
 
-VertexBuffer::VertexBuffer(unsigned int num_vertices){
+VertexBuffer::VertexBuffer(unsigned int num_vertices,unsigned int vertex_size,GLenum usage){
     glGenBuffers(1,&ID);
     glBindBuffer(GL_ARRAY_BUFFER,ID);
-    glBufferData(GL_ARRAY_BUFFER,num_vertices*sizeof(Vertex),nullptr,GL_DYNAMIC_DRAW); //allocate 4 vertices for every quad
+    glBufferData(GL_ARRAY_BUFFER,num_vertices*vertex_size,nullptr,usage); //allocate 4 vertices for every quad
 }
 
 VertexBuffer::~VertexBuffer(){

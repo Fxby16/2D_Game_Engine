@@ -6,8 +6,8 @@ else
 endif
 
 CC := g++
-CINCLUDES := -I include/ -I include/vendor/imgui/ -I include/vendor
-CLIBRARIES := -L lib/glfw -lglfw3 -lX11 -lpthread -ldl
+CINCLUDES := -I include/ -I include/vendor/imgui/ -I include/vendor -I include/vendor/freetype2
+CLIBRARIES := -L lib/glfw -L lib/ -lglfw3 -lX11 -lpthread -ldl -lfreetype -lz
 TARGET := main
 
 SRCS := $(wildcard *.cpp src/vendor/imgui/*.cpp src/vendor/*.c src/*.cpp)

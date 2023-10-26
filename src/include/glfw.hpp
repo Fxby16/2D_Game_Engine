@@ -11,6 +11,6 @@ extern bool isFullScreen;
 
 void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam);
 void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *window,int width,int height);
-void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mode);
+void HandleInputs();
 int InitGlfwWindow();
 void ToggleFullScreen();

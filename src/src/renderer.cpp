@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <glfw.hpp>
 
-Renderer::Renderer(): VB_T(MAX_VERTICES),VB_P(MAX_VERTICES),VB_L(MAX_VERTICES),buffer_T(MAX_VERTICES),
+Renderer::Renderer(): VB_T(MAX_VERTICES,sizeof(Vertex),GL_DYNAMIC_DRAW),VB_P(MAX_VERTICES,sizeof(Vertex),GL_DYNAMIC_DRAW),VB_L(MAX_VERTICES,sizeof(Vertex),GL_DYNAMIC_DRAW),buffer_T(MAX_VERTICES),
     buffer_P(MAX_VERTICES),buffer_L(MAX_VERTICES),
     shader_T("resources/shaders/textures/vertex.glsl","resources/shaders/textures/fragment.glsl"),
     shader_P("resources/shaders/points/vertex.glsl","resources/shaders/points/fragment.glsl"),

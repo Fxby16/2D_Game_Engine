@@ -16,11 +16,11 @@ void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *window,int width,int height)
     SCREEN_HEIGHT=height;
 }  
 
-void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mode){
-    if(key==GLFW_KEY_Q && action==GLFW_PRESS)
+void HandleInputs(){
+    if(glfwGetKey(window,GLFW_KEY_Q)==GLFW_PRESS)   
         glfwSetWindowShouldClose(window,true);
 
-    if(key==GLFW_KEY_F && action==GLFW_PRESS)
+    if(glfwGetKey(window,GLFW_KEY_F)==GLFW_PRESS && glfwGetKey(window,GLFW_KEY_LEFT_SHIFT)==GLFW_PRESS)
         ToggleFullScreen();
 }
 
@@ -50,7 +50,7 @@ int InitGlfwWindow(){
     } 
 
     glfwSetFramebufferSizeCallback(window,FramebufferSizeCallback);
-    glfwSetKeyCallback(window,KeyCallback);
+    //glfwSetKeyCallback(window,KeyCallback);
     //enable debug output
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(MessageCallback,0);
