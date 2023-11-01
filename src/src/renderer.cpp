@@ -14,6 +14,7 @@ Renderer::Renderer(): VB_T(MAX_VERTICES,sizeof(Vertex),GL_DYNAMIC_DRAW),VB_P(MAX
     postprocessing_index(std::numeric_limits<unsigned int>::max()),Num_Vertices_T(0),Num_Vertices_P(0),Num_Vertices_L(0){
 
     framebuffer=new Framebuffer();
+    IB.Set(MAX_VERTICES);
 
     proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
     for(int i=0;i<32;i++)
@@ -173,8 +174,7 @@ int lastIndex=0;
                     buffer_T[i].texID=(float)slot;
                 }else{ //no slots available
                     VB_T.SetData(0,(float *)&buffer_T[lastIndex],i-lastIndex,sizeof(Vertex)); //send the data to the vertex buffer
-                    IB.Set((i-lastIndex)); //send the indices to the index buffer
-                    glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr); //draw
+                    glDrawElements(GL_TRIANGLES,(i-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr); //draw
                     lastIndex=i; //update starting point for the next batch
                     lastChecked=buffer_T[i].texID;
                     slot=0;
@@ -187,8 +187,7 @@ int lastIndex=0;
         }
         if(Num_Vertices_T-lastIndex>0){ //if there are some vertices remaining, render them
             VB_T.SetData(0,(float *)&buffer_T[lastIndex],Num_Vertices_T-lastIndex,sizeof(Vertex));
-            IB.Set((Num_Vertices_T-lastIndex));
-            glDrawElements(GL_TRIANGLES,IB.GetNumElem(),GL_UNSIGNED_INT,nullptr);
+            glDrawElements(GL_TRIANGLES,(Num_Vertices_T-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr);
             DRAW_CALLS++;
         }
     }

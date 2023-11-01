@@ -157,3 +157,21 @@ static char buffer[200];
     ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
     ImGui::End();
 }
+
+void Examples::Sounds(AudioPlayer &audioplayer){
+    ImGui::SetNextWindowSize(ImVec2(0,0));
+    ImGui::Begin("Sound",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+    
+    ImGui::Text("Crostata-Costata");
+    ImGui::SameLine();
+    if(ImGui::Button("Play")){
+        audioplayer.PlayAudio(0);
+    }
+    ImGui::SameLine();
+    if(ImGui::Button("Stop")){
+        audioplayer.StopAudio(0);
+    }
+
+    ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
+    ImGui::End();
+}

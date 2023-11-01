@@ -2,6 +2,7 @@
 
 #include <renderer.hpp>
 #include <textrenderer.hpp>
+#include <audio.hpp>
 #include <texture.hpp>
 
 class Examples{
@@ -13,4 +14,5 @@ public:
     static void LinesPoints(Renderer &renderer);
     static void PostProcessing(Renderer &renderer,Texture &t);
     static void Text(TextRenderer &textrenderer);
+    static void Sounds(AudioPlayer &audioplayer);
 };

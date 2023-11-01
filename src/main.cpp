@@ -1,5 +1,6 @@
 #include <renderer.hpp>
 #include <textrenderer.hpp>
+#include <audio.hpp>
 #include <examples.hpp>
 #include <glfw.hpp>
 #include <framebuffer.hpp>
@@ -12,15 +13,18 @@ int main(){
 {
 Renderer renderer;
 TextRenderer textrenderer("resources/fonts/Tektur-Regular.ttf");
+AudioPlayer audioplayer;
 Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
 Texture texture2("resources/textures/smurf_cat.jpg",GL_LINEAR,GL_LINEAR);
 SpriteSheet spritesheet("resources/textures/spritesheet.png",32,32,GL_NEAREST,GL_NEAREST);
 
 std::vector<Texture*>t(457);
-    for(int i=0;i<t.size();i++) //using new because when it copies the object, it calls the destructor and delete the texture. will be manually deleted at the end
+    for(int i=0;i<t.size();i++)
         t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i)+".png",GL_NEAREST,GL_NEAREST);
 
-bool menus[7];
+    audioplayer.LoadAudio("resources/audio/crostata e costata cicciogamer89.mp3");
+
+bool menus[8];
     memset(menus,0,sizeof(menus));
 
     while(!glfwWindowShouldClose(window)){
@@ -47,6 +51,8 @@ bool menus[7];
             Examples::PostProcessing(renderer,texture2);
         else if(menus[6])
             Examples::Text(textrenderer);
+        else if(menus[7])
+            Examples::Sounds(audioplayer);
     
         ImGui::SetNextWindowSize(ImVec2(0,0));
         ImGui::Begin("Menu",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -78,6 +84,10 @@ bool menus[7];
             else if(ImGui::MenuItem("Text")){
                 memset(menus,0,sizeof(menus));
                 menus[6]=true;
+            }
+            else if(ImGui::MenuItem("Sounds")){
+                memset(menus,0,sizeof(menus));
+                menus[7]=true;
             }
             else if(ImGui::MenuItem("None"))
                 memset(menus,0,sizeof(menus));
