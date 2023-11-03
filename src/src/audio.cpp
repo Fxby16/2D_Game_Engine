@@ -2,11 +2,11 @@
 
 SoLoud::Soloud soloud;
 
-AudioPlayer::AudioPlayer(): WavIndex(0),WavStreamIndex(0){
+void InitAudio(){
     soloud.init();
 }
 
-AudioPlayer::~AudioPlayer(){
+void DeinitAudio(){
     soloud.deinit();
 }
 
@@ -40,4 +40,14 @@ void AudioPlayer::StopAudio(int index){
 
 void AudioPlayer::StopAudioLong(int index){
     WavStreams[index].stop();
+}
+
+void AudioPlayer::ClearAudio(){
+    Wavs.clear();
+    WavIndex=0;
+}
+
+void AudioPlayer::ClearAudioLong(){
+    WavStreams.clear();
+    WavStreamIndex=0;
 }

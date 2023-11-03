@@ -8,6 +8,9 @@
 
 extern SoLoud::Soloud soloud;
 
+void InitAudio();
+void DeinitAudio();
+
 class AudioPlayer{
 private:
 
@@ -18,8 +21,7 @@ private:
     int WavStreamIndex;
 
 public:
-    AudioPlayer();
-    ~AudioPlayer();   
+    AudioPlayer(): WavIndex(0),WavStreamIndex(0){}
 
     /**
      * \return index of the audio
@@ -48,4 +50,7 @@ public:
      * Stop all instances of the audio source
     */
     void StopAudioLong(int index);
+
+    void ClearAudio();
+    void ClearAudioLong();
 };

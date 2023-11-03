@@ -9,6 +9,8 @@ int main(){
     if(InitGlfwWindow()<0)
         return -1;
 
+    InitAudio();
+
     ImGui::CreateContext();
 {
 Renderer renderer;
@@ -105,6 +107,7 @@ bool menus[8];
     for(int i=0;i<40;i++)
         delete t[i];
 }
+    DeinitAudio();
     glfwTerminate();
     return 0;
 }
