@@ -1,6 +1,6 @@
 DEBUG ?= 1
 ifeq ($(DEBUG),1)
-	CFLAGS = -Wall -g
+	CFLAGS = -Wall -g -ggdb -Og
 else
 	CFLAGS = -Ofast
 endif

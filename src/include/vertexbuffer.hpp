@@ -19,31 +19,22 @@ struct Vec4{
 struct Vertex{
     Vec2 Position;
     Vec2 TexCoords;
-    float depth;
-    float texID;
+    float Depth;
+    float TexID;
 };
 
 struct LinePointVertex{
-    Vec2 pos;
-    Vec4 color;
+    Vec2 Pos;
+    Vec4 Color;
 };
 
 class VertexBuffer{
 private:
-    unsigned int ID;
+    unsigned int m_ID;
 public:
-    /**
-     * Allocates memory for a vertex buffer
-     * \param num_vertices the number of quads to render
-    */
     VertexBuffer(unsigned int num_vertices,unsigned int vertex_size,GLenum usage);
     ~VertexBuffer();
 
-    /**
-     * Modifies data in the vertex buffer
-     * \param vertex_index the index of the first quad to set
-     * \param data the data of the quad to set
-    */
     void SetData(unsigned int vertex_index,float *data,unsigned int num_vertices,unsigned int VertexSize);
     static std::array<Vertex,4> CreateQuad(float x,float y,float w,float h,float scale,float depth,float texID);
     void Bind() const;

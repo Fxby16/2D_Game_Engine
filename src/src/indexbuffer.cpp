@@ -3,37 +3,37 @@
 #include <glad/glad.h>
 #include <vector>
 
-IndexBuffer::IndexBuffer(): indices(MAX_INDICES){
-    glGenBuffers(1,&ID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ID);
+IndexBuffer::IndexBuffer(): m_Indices(MAX_INDICES){
+    glGenBuffers(1,&m_ID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,m_ID);
     
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,MAX_INDICES*sizeof(GLuint),nullptr,GL_DYNAMIC_DRAW);
 }
 
 IndexBuffer::~IndexBuffer(){
-    glDeleteBuffers(1,&ID);
+    glDeleteBuffers(1,&m_ID);
 }
 
 void IndexBuffer::Set(unsigned int num_elem){
     Bind();
-    NumElem=num_elem/4*6;
+    m_NumElem=num_elem/4*6;
     unsigned int offset=0;
-    for(int i=0;i<NumElem;i+=6){
-        indices[i+0]=offset;
-        indices[i+1]=1+offset;
-        indices[i+2]=2+offset;
+    for(unsigned int i=0;i<m_NumElem;i+=6){
+        m_Indices[i+0]=offset;
+        m_Indices[i+1]=1+offset;
+        m_Indices[i+2]=2+offset;
 
-        indices[i+3]=2+offset;
-        indices[i+4]=3+offset;
-        indices[i+5]=offset;
+        m_Indices[i+3]=2+offset;
+        m_Indices[i+4]=3+offset;
+        m_Indices[i+5]=offset;
 
         offset+=4;
     }
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0,NumElem*sizeof(GLuint),(const void *)indices.data());
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0,m_NumElem*sizeof(GLuint),(const void *)m_Indices.data());
 }
 
 void IndexBuffer::Bind() const{
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,m_ID);
 }
 
 void IndexBuffer::Unbind() const{

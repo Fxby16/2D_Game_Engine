@@ -6,25 +6,19 @@
 
 class Shader{
 private:
-    std::unordered_map<std::string,int>Uniforms_Cache;
-    unsigned int ID;
+    std::unordered_map<std::string,int>m_UniformsCache;
+    unsigned int m_ID;
 public:
-    /**
-     * \param VertexShaderPath path to the file that contains the vertex shader
-     * \param FragmentShaderPath path to the file that contains the fragment shader
-    */
-    Shader(const char *VertexShaderPath,const char *FragmentShaderPath);
+   
+    Shader(const char *vertex_shader_path,const char *fragment_shader_path);
     ~Shader();
     void Bind() const;
     void Unbind() const;
-    inline unsigned int getID(){ return ID; }
-    /**
-     * \param vertexSourceCode a string containing the vertex shader
-     * \param fragmentSourceCode a string containing the fragment shader
-    */
-    void Compile(const char *vertexSourceCode,const char *fragmentSourceCode);
+    inline unsigned int getID(){ return m_ID; }
 
-    bool CheckShaderErrors(GLuint ShaderID);
+    void Compile(const char *vertex_src_code,const char *fragment_src_code);
+
+    bool CheckShaderErrors(GLuint shader_ID);
 
     void SetUniform4f(const std::string &name,float v0,float v1,float v2,float v3);
     void SetUniform3f(const std::string &name,float v0,float v1,float v2);

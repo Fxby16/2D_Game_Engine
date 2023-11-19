@@ -3,41 +3,41 @@
 #include <cstdio>
 
 TextRenderer::TextRenderer(const char *font_path):
-    VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
-    shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
-    transforms(CH_LIMIT),to_render(CH_LIMIT)
+    m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
+    m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
+    m_Transforms(CH_LIMIT),m_ToRender(CH_LIMIT)
 {
     UpdateProjMat();
-    shader.Bind();
-    shader.SetUniformMat4f("u_PM",proj);
+    m_Shader.Bind();
+    m_Shader.SetUniformMat4f("u_PM",m_Proj);
 
-    if(FT_Init_FreeType(&ft))
+    if(FT_Init_FreeType(&m_FT))
         fprintf(stderr,"FREETYPE ERROR: Couldn't init FreeType Library\n");
 
-    if(FT_New_Face(ft,font_path,0,&face))
+    if(FT_New_Face(m_FT,font_path,0,&m_Face))
         fprintf(stderr,"FREETYPE ERROR: Failed to load font\n");
     else{
-        FT_Select_Charmap(face,ft_encoding_unicode);
-        FT_Set_Pixel_Sizes(face,256,256);
+        FT_Select_Charmap(m_Face,ft_encoding_unicode);
+        FT_Set_Pixel_Sizes(m_Face,256,256);
         glPixelStorei(GL_UNPACK_ALIGNMENT,1); //disable byte-alignment restriction
 
-        glGenTextures(1,&textureArrayID);
+        glGenTextures(1,&m_TextureArrayID);
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D_ARRAY,textureArrayID);
+        glBindTexture(GL_TEXTURE_2D_ARRAY,m_TextureArrayID);
         glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_R8,256,256,CH_NUM,0,GL_RED,GL_UNSIGNED_BYTE,0);
 
         for(uint8_t ch=0;ch<CH_NUM;ch++){
-            if(FT_Load_Char(face,ch,FT_LOAD_RENDER)){
+            if(FT_Load_Char(m_Face,ch,FT_LOAD_RENDER)){
                 fprintf(stderr,"FREETYPE ERROR: Failed to load Glyph\n");
                 continue;
             }
             glTexSubImage3D(
                 GL_TEXTURE_2D_ARRAY,
                 0,0,0,ch,
-                face->glyph->bitmap.width,
-                face->glyph->bitmap.rows,1,
+                m_Face->glyph->bitmap.width,
+                m_Face->glyph->bitmap.rows,1,
                 GL_RED,GL_UNSIGNED_BYTE,
-                face->glyph->bitmap.buffer
+                m_Face->glyph->bitmap.buffer
             );
 
             glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
@@ -47,15 +47,15 @@ TextRenderer::TextRenderer(const char *font_path):
             
             Character character={
                 ch,
-                glm::ivec2(face->glyph->bitmap.width,face->glyph->bitmap.rows),
-                glm::ivec2(face->glyph->bitmap_left,face->glyph->bitmap_top),
-                (unsigned int)face->glyph->advance.x
+                glm::ivec2(m_Face->glyph->bitmap.width,m_Face->glyph->bitmap.rows),
+                glm::ivec2(m_Face->glyph->bitmap_left,m_Face->glyph->bitmap_top),
+                (unsigned int)m_Face->glyph->advance.x
             };
-            characters[ch]=character;
+            m_Characters[ch]=character;
         }
     }
-    FT_Done_Face(face);
-    FT_Done_FreeType(ft);
+    FT_Done_Face(m_Face);
+    FT_Done_FreeType(m_FT);
 
     float vertices[]={
         0.0f,1.0f,
@@ -64,54 +64,54 @@ TextRenderer::TextRenderer(const char *font_path):
         1.0f,0.0f,
     };
 
-    VBO.SetData(0,vertices,4,sizeof(float)*2);
-    VBL.Push(GL_FLOAT,2,false);
-    VAO.AddBuffer(VBO,VBL);
+    m_VBO.SetData(0,vertices,4,sizeof(float)*2);
+    m_VBL.Push(GL_FLOAT,2,false);
+    m_VAO.AddBuffer(m_VBO,m_VBL);
 }
 
 TextRenderer::~TextRenderer(){
-    glDeleteTextures(1,&textureArrayID);
+    glDeleteTextures(1,&m_TextureArrayID);
 }
 
-void TextRenderer::RenderText(std::string text,float x,float y,float scale,float *color){
+void TextRenderer::DrawText(std::string text,float x,float y,float scale,float *color){
     scale=scale*48.0f/256.0f;
     float copyX=x;
-    shader.Bind();
-    shader.SetUniform3f("textColor",color[0],color[1],color[2]);
+    m_Shader.Bind();
+    m_Shader.SetUniform3f("textColor",color[0],color[1],color[2]);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D_ARRAY,textureArrayID);
-    VAO.Bind();
-    VBO.Bind();
+    glBindTexture(GL_TEXTURE_2D_ARRAY,m_TextureArrayID);
+    m_VAO.Bind();
+    m_VBO.Bind();
 
     int workingIndex=0;
     for(auto c:text){
-        Character ch=characters[c];
+        Character ch=m_Characters[c];
         if(c=='\n'){
-            y-=((ch.size_.y))*1.3*scale;
+            y-=((ch.Size.y))*1.3*scale;
             x=copyX;
         }else if(c==' ')
-            x+=(ch.advance>>6)*scale;
+            x+=(ch.Advance>>6)*scale;
         else{
-            float xpos=x+ch.bearing.x*scale;
-            float ypos=y-(256-ch.bearing.y)*scale;
+            float xpos=x+ch.Bearing.x*scale;
+            float ypos=y-(256-ch.Bearing.y)*scale;
 
-            transforms[workingIndex]=glm::translate(glm::mat4(1.0f),glm::vec3(xpos,ypos,0))*glm::scale(glm::mat4(1.0f),glm::vec3(256*scale,256*scale,0));
-            to_render[workingIndex]=ch.texID;
-            x+=(ch.advance>>6)*scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+            m_Transforms[workingIndex]=glm::translate(glm::mat4(1.0f),glm::vec3(xpos,ypos,0))*glm::scale(glm::mat4(1.0f),glm::vec3(256*scale,256*scale,0));
+            m_ToRender[workingIndex]=ch.TexID;
+            x+=(ch.Advance>>6)*scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
             workingIndex++;
             if(workingIndex==CH_LIMIT-1){
-                Draw(workingIndex);
+                Render(workingIndex);
                 workingIndex=0;
             }
         }
     }
-    Draw(workingIndex);
+    Render(workingIndex);
 }
 
-void TextRenderer::Draw(int num_characters){
+void TextRenderer::Render(int num_characters){
     if(num_characters!=0){
-        glUniformMatrix4fv(shader.GetUniformLocation("transforms"),num_characters,GL_FALSE,&transforms[0][0][0]);
-        shader.SetUniform1iv("letterMap",&to_render[0],num_characters);
+        glUniformMatrix4fv(m_Shader.GetUniformLocation("m_Transforms"),num_characters,GL_FALSE,&m_Transforms[0][0][0]);
+        m_Shader.SetUniform1iv("letterMap",&m_ToRender[0],num_characters);
         glDrawArraysInstanced(GL_TRIANGLE_STRIP,0,4,num_characters);
     }
 }

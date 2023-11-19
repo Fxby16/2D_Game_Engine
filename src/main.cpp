@@ -4,6 +4,7 @@
 #include <examples.hpp>
 #include <glfw.hpp>
 #include <framebuffer.hpp>
+#include <entity.hpp>
 
 int main(){
     if(InitGlfwWindow()<0)
@@ -13,23 +14,39 @@ int main(){
 
     ImGui::CreateContext();
 {
+    
 Renderer renderer;
-TextRenderer textrenderer("resources/fonts/Tektur-Regular.ttf");
 AudioPlayer audioplayer;
+TextRenderer textrenderer("resources/fonts/Tektur-Regular.ttf");
 Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
 Texture texture2("resources/textures/smurf_cat.jpg",GL_LINEAR,GL_LINEAR);
 SpriteSheet spritesheet("resources/textures/spritesheet.png",32,32,GL_NEAREST,GL_NEAREST);
 
 std::vector<Texture*>t(457);
-    for(int i=0;i<t.size();i++)
+    for(size_t i=0;i<t.size();i++)
         t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i)+".png",GL_NEAREST,GL_NEAREST);
 
     audioplayer.LoadAudio("resources/audio/crostata e costata cicciogamer89.mp3");
 
-bool menus[8];
+Entity entity("resources/textures/smurf_cat.jpg",0,0,100,100);
+Entity e1("resources/textures/cicciogamer89.jpg",150,150,100,100);
+Entity e2("resources/textures/cicciogamer89.jpg",300,300,100,100);
+Entity e3("resources/textures/cicciogamer89.jpg",450,450,100,100);
+Entity e4("resources/textures/cicciogamer89.jpg",600,600,100,100);
+
+    entity.AddCollider();
+    e1.AddCollider(true);
+    e2.AddCollider(true);
+    e3.AddCollider(true);
+    e4.AddCollider(true);
+
+bool menus[9];
     memset(menus,0,sizeof(menus));
 
-    while(!glfwWindowShouldClose(window)){
+    while(!glfwWindowShouldClose(WINDOW)){
+        CURRENT_FRAME=glfwGetTime();
+        DELTA_TIME=CURRENT_FRAME-LAST_FRAME;
+        LAST_FRAME=CURRENT_FRAME;
         HandleInputs();
         renderer.StartScene();
         
@@ -55,6 +72,8 @@ bool menus[8];
             Examples::Text(textrenderer);
         else if(menus[7])
             Examples::Sounds(audioplayer);
+        else if(menus[8])
+            Examples::Entities(renderer,entity,e1,e2,e3,e4);
     
         ImGui::SetNextWindowSize(ImVec2(0,0));
         ImGui::Begin("Menu",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -91,6 +110,10 @@ bool menus[8];
                 memset(menus,0,sizeof(menus));
                 menus[7]=true;
             }
+            else if(ImGui::MenuItem("Entities")){
+                memset(menus,0,sizeof(menus));
+                menus[8]=true;
+            }
             else if(ImGui::MenuItem("None"))
                 memset(menus,0,sizeof(menus));
             ImGui::EndMenu();
@@ -100,11 +123,11 @@ bool menus[8];
 
         renderer.DrawScene();
         Renderer::ImGui_End_Frame();
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(WINDOW);
     }
 
     Renderer::ImGui_Close();
-    for(int i=0;i<40;i++)
+    for(size_t i=0;i<t.size();i++)
         delete t[i];
 }
     DeinitAudio();

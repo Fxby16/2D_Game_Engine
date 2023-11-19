@@ -19,33 +19,33 @@ class TextRenderer{
 private:
 
     struct Character{
-        unsigned int texID;     // ID of the glyph texture       
-        glm::ivec2 size_;       // Size of glyph
-        glm::ivec2 bearing;     // Offset from baseline to left/top of glyph
-        unsigned int advance;   // Horizontal offset to advance to next glyph
+        unsigned int TexID;     // ID of the glyph texture       
+        glm::ivec2 Size;       // Size of glyph
+        glm::ivec2 Bearing;     // Offset from baseline to left/top of glyph
+        unsigned int Advance;   // Horizontal offset to advance to next glyph
     };
 
-    FT_Library ft;
-    FT_Face face;
+    FT_Library m_FT;
+    FT_Face m_Face;
 
-    VertexBuffer VBO;
-    VertexArray VAO;
-    VertexBufferLayout VBL;
-    Shader shader;
-    glm::mat4 proj;
+    VertexBuffer m_VBO;
+    VertexArray m_VAO;
+    VertexBufferLayout m_VBL;
+    Shader m_Shader;
+    glm::mat4 m_Proj;
 
-    unsigned int textureArrayID;
-    Character characters[CH_NUM];
-    std::vector<glm::mat4> transforms;
-    std::vector<int> to_render;
+    unsigned int m_TextureArrayID;
+    Character m_Characters[CH_NUM];
+    std::vector<glm::mat4> m_Transforms;
+    std::vector<int> m_ToRender;
 public:
     TextRenderer(const char *font_path);
     ~TextRenderer();
 
     inline void UpdateProjMat(){
-        proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
+        m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
     }
 
-    void RenderText(std::string text,float x,float y,float scale,float *color);
-    void Draw(int num_characters);
+    void DrawText(std::string text,float x,float y,float scale,float *color);
+    void Render(int num_characters);
 };

@@ -5,9 +5,9 @@
 
 class IndexBuffer{
 private:
-    unsigned int ID;
-    unsigned int NumElem;
-    std::vector<unsigned int>indices;
+    unsigned int m_ID;
+    unsigned int m_NumElem;
+    std::vector<unsigned int>m_Indices;
 public:
     IndexBuffer();
     ~IndexBuffer();
@@ -17,5 +17,5 @@ public:
     void Bind() const;
     void Unbind() const;
 
-    inline unsigned int GetNumElem() const{ return NumElem; }
+    inline unsigned int GetNumElem() const{ return m_NumElem; }
 };

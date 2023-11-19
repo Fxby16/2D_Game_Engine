@@ -3,12 +3,12 @@
 #include <glad/glad.h>
 
 VertexArray::VertexArray(){
-    glGenVertexArrays(1,&ID);
-    glBindVertexArray(ID);
+    glGenVertexArrays(1,&m_ID);
+    glBindVertexArray(m_ID);
 }
     
 VertexArray::~VertexArray(){
-    glDeleteVertexArrays(1,&ID);
+    glDeleteVertexArrays(1,&m_ID);
 }
 
 void VertexArray::AddBuffer(const VertexBuffer &vb,const VertexBufferLayout &layout){
@@ -31,7 +31,7 @@ void VertexArray::DisableAttribs(const VertexBufferLayout &layout){
 }
 
 void VertexArray::Bind() const{
-    glBindVertexArray(ID);
+    glBindVertexArray(m_ID);
 }
 
 void VertexArray::Unbind() const{

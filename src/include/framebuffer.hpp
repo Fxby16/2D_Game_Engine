@@ -2,8 +2,8 @@
 
 class Framebuffer{
 private:
-    unsigned int framebufferID;
-    unsigned int colorbufferID;
+    unsigned int m_FramebufferID;
+    unsigned int m_ColorbufferID;
 public:
     Framebuffer();
     ~Framebuffer();
@@ -11,6 +11,6 @@ public:
     void Bind() const;
     void Unbind() const;
 
-    inline unsigned int getFramebufferID(){ return framebufferID; }
-    inline unsigned int getColorbufferID(){ return colorbufferID; }
+    inline unsigned int GetFramebufferID(){ return m_FramebufferID; }
+    inline unsigned int GetColorbufferID(){ return m_ColorbufferID; }
 };

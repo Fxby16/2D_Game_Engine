@@ -25,16 +25,16 @@ struct VertexBufferElement{
 
 class VertexBufferLayout{
 private:
-    std::vector<VertexBufferElement> Elements;
-    unsigned int stride;
+    std::vector<VertexBufferElement> m_Elements;
+    unsigned int m_Stride;
 public:
-    VertexBufferLayout() : stride(0){}
+    VertexBufferLayout() : m_Stride(0){}
 
     void Push(unsigned int type,unsigned int count,bool normalized);
-    inline const std::vector<VertexBufferElement> &GetElements() const{ return Elements; };
-    inline unsigned int GetStride() const{ return stride; };
+    inline const std::vector<VertexBufferElement> &GetElements() const{ return m_Elements; };
+    inline unsigned int GetStride() const{ return m_Stride; };
     inline void Clear(){
-        Elements.clear();
-        stride=0;
+        m_Elements.clear();
+        m_Stride=0;
     }
 };

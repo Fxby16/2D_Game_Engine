@@ -3,12 +3,14 @@
 #endif
 
 #include <GLFW/glfw3.h>
+#include <renderer.hpp>
+#include <audio.hpp>
 
 double FPS;
-double currentFrame;
-double deltaTime=0.0;
-double lastFrame=0.0;
-bool v_sync=true;
+double CURRENT_FRAME;
+double DELTA_TIME=0.0;
+double LAST_FRAME=0.0;
+bool V_SYNC=true;
 
 unsigned int SCREEN_WIDTH=1600;
 unsigned int SCREEN_HEIGHT=900;
@@ -19,10 +21,10 @@ unsigned int MAX_INDICES=6*MAX_QUADS;
 
 int DRAW_CALLS=0;
 
-GLFWwindow *window;
-bool framebuffer_update=false;
-bool proj_update=false;
+GLFWwindow *WINDOW;
+bool FRAMEBUFFER_UPDATE=false;
+bool PROJ_UPDATE=false;
 
 namespace WindowInfo{
-    bool isFullScreen=false;
+    bool ISFULLSCREEN=false;
 }

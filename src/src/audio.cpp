@@ -1,53 +1,53 @@
 #include <audio.hpp>
 
-SoLoud::Soloud soloud;
+SoLoud::Soloud SOLOUD;
 
 void InitAudio(){
-    soloud.init();
+    SOLOUD.init();
 }
 
 void DeinitAudio(){
-    soloud.deinit();
+    SOLOUD.deinit();
 }
 
 int AudioPlayer::LoadAudio(const char *path){
-    Wavs.resize(WavIndex+1);
-    Wavs[WavIndex].load(path);
-    ++WavIndex;
+    m_Wavs.resize(m_WavIndex+1);
+    m_Wavs[m_WavIndex].load(path);
+    ++m_WavIndex;
 
-    return WavIndex-1;
+    return m_WavIndex-1;
 }
 
 int AudioPlayer::LoadAudioLong(const char *path){
-    WavStreams.resize(WavStreamIndex+1);
-    WavStreams[WavStreamIndex].load(path);
-    ++WavStreamIndex;
+    m_WavStreams.resize(m_WavStreamIndex+1);
+    m_WavStreams[m_WavStreamIndex].load(path);
+    ++m_WavStreamIndex;
 
-    return WavStreamIndex-1;
+    return m_WavStreamIndex-1;
 }
 
 void AudioPlayer::PlayAudio(int index){
-    soloud.play(Wavs[index]);
+    SOLOUD.play(m_Wavs[index]);
 }
 
 void AudioPlayer::PlayAudioLong(int index){
-    soloud.play(WavStreams[index]);
+    SOLOUD.play(m_WavStreams[index]);
 }
 
 void AudioPlayer::StopAudio(int index){
-    Wavs[index].stop();
+    m_Wavs[index].stop();
 }
 
 void AudioPlayer::StopAudioLong(int index){
-    WavStreams[index].stop();
+    m_WavStreams[index].stop();
 }
 
 void AudioPlayer::ClearAudio(){
-    Wavs.clear();
-    WavIndex=0;
+    m_Wavs.clear();
+    m_WavIndex=0;
 }
 
 void AudioPlayer::ClearAudioLong(){
-    WavStreams.clear();
-    WavStreamIndex=0;
+    m_WavStreams.clear();
+    m_WavStreamIndex=0;
 }

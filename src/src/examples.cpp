@@ -6,8 +6,8 @@ static unsigned int IMAGE_WIDTH=10,IMAGE_HEIGHT=10;
 static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HEIGHT);
 
     float x=0.0f,y=0.0f; //creating data for the vertex buffer
-    for(int i=0;i<NUM_QUADS;i++){
-        renderer.RenderTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)texture.GetTexID());
+    for(unsigned int i=0;i<NUM_QUADS;i++){
+        renderer.DrawTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)texture.GetTexID());
         x+=IMAGE_WIDTH;
         if(x>=SCREEN_WIDTH){
             x=0;
@@ -18,7 +18,7 @@ static unsigned int NUM_QUADS=(SCREEN_WIDTH/IMAGE_WIDTH)*(SCREEN_HEIGHT/IMAGE_HE
             x=0;
         }
     }
-    renderer.Draw();
+    renderer.Render();
 
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("Batch Rendering",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -37,8 +37,8 @@ void Examples::Spritesheet(Renderer &renderer,SpriteSheet &spritesheet){
 static unsigned int row=0,col=0;
 static float scale=1.0f;
 auto [a,b,c,d]=spritesheet.CreateQuadSpriteSheet(SCREEN_WIDTH/2-(32*scale)/2,SCREEN_HEIGHT/2-(32*scale)/2,row,col,scale,1.0f,(float)spritesheet.GetTexID());
-    renderer.RenderQuad(a,b,c,d);
-    renderer.Draw();
+    renderer.DrawQuad(a,b,c,d);
+    renderer.Render();
 
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("Spritesheet",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -55,8 +55,8 @@ static unsigned int NUM_QUADS;
     NUM_QUADS=(float)ceil(((float)SCREEN_WIDTH/(float)IMAGE_WIDTH)*((float)SCREEN_HEIGHT/(float)IMAGE_HEIGHT));
     
     float x=0.0f,y=0.0f; //creating data for the vertex buffer
-    for(int i=0;i<NUM_QUADS;i++){
-        renderer.RenderTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)t[i%t.size()]->GetTexID());
+    for(unsigned int i=0;i<NUM_QUADS;i++){
+        renderer.DrawTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)t[i%t.size()]->GetTexID());
         x+=IMAGE_WIDTH;
         if(x>=SCREEN_WIDTH){
             x=0;
@@ -67,7 +67,7 @@ static unsigned int NUM_QUADS;
             x=0;
         }
     }
-    renderer.Draw();
+    renderer.Render();
 
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("Batching Multiple Textures",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -80,9 +80,9 @@ static unsigned int NUM_QUADS;
 
 void Examples::DepthTest(Renderer &renderer,Texture &t1,Texture &t2){
 static unsigned int depth1=1,depth2=0;
-    renderer.RenderTexture(SCREEN_WIDTH/2-160,SCREEN_HEIGHT/2-160,32,32,10,depth1,t1.GetTexID());
-    renderer.RenderTexture(SCREEN_WIDTH/2-80,SCREEN_HEIGHT/2-80,32,32,10,depth2,t2.GetTexID());
-    renderer.Draw();
+    renderer.DrawTexture(SCREEN_WIDTH/2-160,SCREEN_HEIGHT/2-160,32,32,10,depth1,t1.GetTexID());
+    renderer.DrawTexture(SCREEN_WIDTH/2-80,SCREEN_HEIGHT/2-80,32,32,10,depth2,t2.GetTexID());
+    renderer.Render();
 
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("Batching Multiple Textures",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -99,9 +99,9 @@ static float point_colors[4]={1.0f,1.0f,1.0f,1.0f};
 static unsigned int line_x1=100,line_y1=100,line_x2=500,line_y2=300;
 static float line_colors[4]={1.0f,1.0f,1.0f,1.0f};
 
-    renderer.RenderLine(line_x1,line_y1,line_x2,line_y2,&line_colors[0]);
-    renderer.RenderPoint(point_x,point_y,point_colors[0],point_colors[1],point_colors[2],point_colors[3]);
-    renderer.Draw();
+    renderer.DrawLine(line_x1,line_y1,line_x2,line_y2,&line_colors[0]);
+    renderer.DrawPoint(point_x,point_y,point_colors[0],point_colors[1],point_colors[2],point_colors[3]);
+    renderer.Render();
 
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("Point/Lines Rendering",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -119,8 +119,8 @@ static float line_colors[4]={1.0f,1.0f,1.0f,1.0f};
 }
 
 void Examples::PostProcessing(Renderer &renderer,Texture &t){
-    renderer.RenderTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,t.GetTexID());
-    renderer.Draw();
+    renderer.DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,t.GetTexID());
+    renderer.Render();
 
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("Post Processing",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -145,7 +145,7 @@ static float color[3]={1.0f,1.0f,1.0f};
 static int x=300,y=500;
 static float scale=1.0f;
 static char buffer[200];
-    textrenderer.RenderText(buffer,x,y,scale,color);
+    textrenderer.DrawText(buffer,x,y,scale,color);
 
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("Text",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
@@ -174,4 +174,25 @@ void Examples::Sounds(AudioPlayer &audioplayer){
 
     ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
     ImGui::End();
+}
+
+void Examples::Entities(Renderer &renderer,Entity &e0,Entity &e1,Entity &e2,Entity &e3,Entity &e4){
+    int x_offset=0,y_offset=0;
+    if(glfwGetKey(WINDOW,GLFW_KEY_W)==GLFW_PRESS)
+        y_offset+=20;
+    if(glfwGetKey(WINDOW,GLFW_KEY_A)==GLFW_PRESS)
+        x_offset-=20;
+    if(glfwGetKey(WINDOW,GLFW_KEY_S)==GLFW_PRESS)
+        y_offset-=20;
+    if(glfwGetKey(WINDOW,GLFW_KEY_D)==GLFW_PRESS)
+        x_offset+=20;
+
+    e0.Move(x_offset,y_offset,DELTA_TIME*5);
+
+    e0.Draw(renderer);
+    e1.Draw(renderer);
+    e2.Draw(renderer);
+    e3.Draw(renderer);
+    e4.Draw(renderer);
+    renderer.Render();
 }

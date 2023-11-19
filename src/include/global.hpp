@@ -6,10 +6,10 @@
 #include <GLFW/glfw3.h>
 
 extern double FPS;
-extern double currentFrame;
-extern double deltaTime;
-extern double lastFrame;
-extern bool v_sync;
+extern double CURRENT_FRAME;
+extern double DELTA_TIME;
+extern double LAST_FRAME;
+extern bool V_SYNC;
 
 inline constexpr unsigned int BASE_SCREEN_WIDTH=1600;
 inline constexpr unsigned int BASE_SCREEN_HEIGHT=900;
@@ -21,10 +21,10 @@ extern unsigned int MAX_INDICES;
 
 extern int DRAW_CALLS;
 
-extern GLFWwindow *window;
-extern bool framebuffer_update;
-extern bool proj_update;
+extern GLFWwindow *WINDOW;
+extern bool FRAMEBUFFER_UPDATE;
+extern bool PROJ_UPDATE;
 
 namespace WindowInfo{
-    extern bool isFullScreen;
+    extern bool ISFULLSCREEN;
 }

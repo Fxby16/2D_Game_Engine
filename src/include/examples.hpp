@@ -4,15 +4,16 @@
 #include <textrenderer.hpp>
 #include <audio.hpp>
 #include <texture.hpp>
+#include <entity.hpp>
 
-class Examples{
-public:
-    static void BatchRendering(Renderer &renderer,Texture &texture);
-    static void Spritesheet(Renderer &renderer,SpriteSheet &spritesheet);
-    static void BatchingMultipleTextures(Renderer &renderer,std::vector<Texture*>&t);
-    static void DepthTest(Renderer &renderer,Texture &t1,Texture &t2);
-    static void LinesPoints(Renderer &renderer);
-    static void PostProcessing(Renderer &renderer,Texture &t);
-    static void Text(TextRenderer &textrenderer);
-    static void Sounds(AudioPlayer &audioplayer);
+namespace Examples{
+    void BatchRendering(Renderer &renderer,Texture &texture);
+    void Spritesheet(Renderer &renderer,SpriteSheet &spritesheet);
+    void BatchingMultipleTextures(Renderer &renderer,std::vector<Texture*>&t);
+    void DepthTest(Renderer &renderer,Texture &t1,Texture &t2);
+    void LinesPoints(Renderer &renderer);
+    void PostProcessing(Renderer &renderer,Texture &t);
+    void Text(TextRenderer &textrenderer);
+    void Sounds(AudioPlayer &audioplayer);
+    void Entities(Renderer &renderer,Entity &e0,Entity &e1,Entity &e2,Entity &e3,Entity &e4);
 };

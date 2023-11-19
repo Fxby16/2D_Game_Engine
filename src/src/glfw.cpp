@@ -1,26 +1,26 @@
 #include <glfw.hpp>
-#include <cstdio>
+#include <stdio.h>
 
-bool isFullScreen=false;
+bool ISFULLSCREEN=false;
 
 void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam){
     if(type==GL_DEBUG_TYPE_ERROR)
         fprintf(stderr,"[[GL ERROR]]  Type: 0x%x  Severity: 0x%x  Message: %s\n",type,severity,message);
 }
 
-void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *window,int width,int height){
+void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *WINDOW,int width,int height){
     glViewport(0,0,width,height);
-    framebuffer_update=true;
-    proj_update=true;
+    FRAMEBUFFER_UPDATE=true;
+    PROJ_UPDATE=true;
     SCREEN_WIDTH=width;
     SCREEN_HEIGHT=height;
 }  
 
 void HandleInputs(){
-    if(glfwGetKey(window,GLFW_KEY_Q)==GLFW_PRESS)   
-        glfwSetWindowShouldClose(window,true);
+    if(glfwGetKey(WINDOW,GLFW_KEY_Q)==GLFW_PRESS)   
+        glfwSetWindowShouldClose(WINDOW,true);
 
-    if(glfwGetKey(window,GLFW_KEY_F)==GLFW_PRESS && glfwGetKey(window,GLFW_KEY_LEFT_SHIFT)==GLFW_PRESS)
+    if(glfwGetKey(WINDOW,GLFW_KEY_F)==GLFW_PRESS && glfwGetKey(WINDOW,GLFW_KEY_LEFT_SHIFT)==GLFW_PRESS)
         ToggleFullScreen();
 }
 
@@ -34,24 +34,23 @@ int InitGlfwWindow(){
     #endif
     glfwWindowHint(GLFW_RESIZABLE,false);
 
-    window=glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT,"Test",nullptr,nullptr);
-    if(window==NULL){
-        fprintf(stderr,"Failed to create GLFW window\n");
+    WINDOW=glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT,"Test",nullptr,nullptr);
+    if(WINDOW==NULL){
+        perror("Failed to create GLFW WINDOW\n");
         glfwTerminate();
         return -1;
     }
 
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(WINDOW);
     glfwSwapInterval(1); //v-sync
 
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        fprintf(stderr,"Failed to initialize GLAD\n");
+        perror("Failed to initialize GLAD\n");
         return -1;
     } 
 
-    glfwSetFramebufferSizeCallback(window,FramebufferSizeCallback);
-    //glfwSetKeyCallback(window,KeyCallback);
-    //enable debug output
+    glfwSetFramebufferSizeCallback(WINDOW,FramebufferSizeCallback);
+
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(MessageCallback,0);
 
@@ -66,10 +65,10 @@ int InitGlfwWindow(){
 
 void ToggleFullScreen(){
     const GLFWvidmode *mode=glfwGetVideoMode(glfwGetPrimaryMonitor());
-    if(isFullScreen)
-        glfwSetWindowMonitor(window,nullptr,mode->width/2-BASE_SCREEN_WIDTH/2,mode->height/2-BASE_SCREEN_HEIGHT/2,BASE_SCREEN_WIDTH,BASE_SCREEN_HEIGHT,GLFW_DONT_CARE);
+    if(ISFULLSCREEN)
+        glfwSetWindowMonitor(WINDOW,nullptr,mode->width/2-BASE_SCREEN_WIDTH/2,mode->height/2-BASE_SCREEN_HEIGHT/2,BASE_SCREEN_WIDTH,BASE_SCREEN_HEIGHT,GLFW_DONT_CARE);
     else
-        glfwSetWindowMonitor(window,glfwGetPrimaryMonitor(),0,0,mode->width,mode->height,GLFW_DONT_CARE);
-    isFullScreen=!isFullScreen;
-    WindowInfo::isFullScreen=isFullScreen;
+        glfwSetWindowMonitor(WINDOW,glfwGetPrimaryMonitor(),0,0,mode->width,mode->height,GLFW_DONT_CARE);
+    ISFULLSCREEN=!ISFULLSCREEN;
+    WindowInfo::ISFULLSCREEN=ISFULLSCREEN;
 }
