@@ -13,7 +13,6 @@ Run `./main`
 
 ## Short term plans
 - start to write a documentation
-- add collision detection
 - make the code more readable and more organized
 
 ## Long term plans
