@@ -11,3 +11,11 @@ Run `./main`
 - compiling the program in debug mode gives terrible results
 - to use it on windows, you'll probably have to do some changes
 
+## Short term plans
+- start to write a documentation
+- add collision detection
+- make the code more readable and more organized
+
+## Long term plans
+- add an editor
+- windows porting
