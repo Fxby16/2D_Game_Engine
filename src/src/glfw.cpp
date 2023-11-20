@@ -24,7 +24,7 @@ void HandleInputs(){
         ToggleFullScreen();
 }
 
-int InitGlfwWindow(){
+int InitGlfwWindow(const char *window_name){
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,6);
@@ -34,7 +34,7 @@ int InitGlfwWindow(){
     #endif
     glfwWindowHint(GLFW_RESIZABLE,false);
 
-    WINDOW=glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT,"Test",nullptr,nullptr);
+    WINDOW=glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT,window_name,nullptr,nullptr);
     if(WINDOW==NULL){
         perror("Failed to create GLFW WINDOW\n");
         glfwTerminate();

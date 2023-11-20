@@ -55,7 +55,6 @@ Renderer::Renderer():
 
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_PROGRAM_POINT_SIZE);
-    glDepthMask(false);
     glPointSize(5);
     glLineWidth(5);
 
@@ -138,12 +137,12 @@ void Renderer::StartScene(){
         m_Framebuffer=new Framebuffer();
     }
     m_Framebuffer->Bind();
-    Clear();
+    Clear({0.0f,0.0f,0.0f});
 }
 
 void Renderer::DrawScene(){
     m_Framebuffer->Unbind();
-    Clear();
+    Clear({0.0f,0.0f,0.0f});
     DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,m_Framebuffer->GetColorbufferID());
     Render(true);
 }
@@ -224,10 +223,10 @@ void Renderer::Render(bool finalScene){ //if this function gets called because t
     m_T.NumVertices=m_P.NumVertices=m_L.NumVertices=0;
 }
 
-void Renderer::Clear() const{
+void Renderer::Clear(Vec3 color) const{
     DRAW_CALLS=0;
 
-    glClearColor(0.0f,0.0f,0.0f,1.0f);
+    glClearColor(color.r,color.g,color.b,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 

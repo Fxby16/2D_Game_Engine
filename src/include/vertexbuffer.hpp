@@ -12,6 +12,10 @@ struct Vec2{
     float& h(){ return y; }
 };
 
+struct Vec3{
+    float r,g,b;
+};
+
 struct Vec4{
     float r,g,b,a;
 };

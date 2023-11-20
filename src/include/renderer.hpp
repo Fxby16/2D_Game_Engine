@@ -63,7 +63,7 @@ public:
     void StartScene();
     void DrawScene();
 
-    void Clear() const;
+    void Clear(Vec3 color) const;
     void Render(bool final_scene=false);
     void SetPostProcessing(const char *uniform_name);
     void PostProcessing();
