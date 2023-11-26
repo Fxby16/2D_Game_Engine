@@ -1,38 +1,149 @@
 #include <game.hpp>
 
-class Example1 : public Game{
-private:
-    std::vector<Texture*>t;
-    unsigned int IMAGE_WIDTH,IMAGE_HEIGHT,NUM_QUADS;
-public:
-    Example1(const char *window_name): Game(window_name),t(457),IMAGE_WIDTH(20),IMAGE_HEIGHT(20){
-        for(size_t i=0;i<t.size();i++){
-            t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i)+".png",GL_NEAREST,GL_NEAREST);
-        }
-    }
+#include <vector>
+#include <cmath>
+#include <algorithm>
 
-    ~Example1(){
-        for(size_t i=0;i<t.size();i++)
-            delete t[i];
+class Example : public Game{
+private:
+    std::vector<std::pair<Vec2D,Vec2D>>segments;
+    bool show_points,show_lines,show_light;
+    Texture ciccio;
+public:
+    Example(const char *window_name): Game(window_name),show_points(false),show_lines(false),show_light(true),ciccio("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR){
+        m_Renderer->ChangePointSize(3);
+        m_Renderer->ChangeLineWidth(2);
+        
+        segments.push_back(std::make_pair(Vec2D(0,0),Vec2D(0,SCREEN_HEIGHT)));
+        segments.push_back(std::make_pair(Vec2D(0,SCREEN_HEIGHT),Vec2D(SCREEN_WIDTH,SCREEN_HEIGHT)));
+        segments.push_back(std::make_pair(Vec2D(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2D(SCREEN_WIDTH,0)));
+        segments.push_back(std::make_pair(Vec2D(SCREEN_WIDTH,0),Vec2D(0,0)));
+        
+        segments.push_back(std::make_pair(Vec2D(300,200),Vec2D(700,200)));
+        segments.push_back(std::make_pair(Vec2D(700,200),Vec2D(700,500)));
+        segments.push_back(std::make_pair(Vec2D(700,500),Vec2D(300,500)));
+        segments.push_back(std::make_pair(Vec2D(300,500),Vec2D(300,200)));
+
+        segments.push_back(std::make_pair(Vec2D(100,200),Vec2D(200,200)));
+        segments.push_back(std::make_pair(Vec2D(200,200),Vec2D(200,300)));
+        segments.push_back(std::make_pair(Vec2D(200,300),Vec2D(100,300)));
+        segments.push_back(std::make_pair(Vec2D(100,300),Vec2D(100,200)));
+
+        segments.push_back(std::make_pair(Vec2D(1100,600),Vec2D(1100,100)));
+        segments.push_back(std::make_pair(Vec2D(1100,100),Vec2D(1000,100)));
+        segments.push_back(std::make_pair(Vec2D(1000,100),Vec2D(1000,600)));
+        segments.push_back(std::make_pair(Vec2D(1000,600),Vec2D(1100,600)));
     }
 
     void OnUpdate(double frame_time) override{
-        NUM_QUADS=(unsigned int)ceil(((float)SCREEN_WIDTH/(float)IMAGE_WIDTH)*((float)SCREEN_HEIGHT/(float)IMAGE_HEIGHT));
+        m_Renderer->Clear({0,0,0});
 
-        m_Renderer->Clear({0.0f,0.0f,0.0f});
+        m_Renderer->DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,ciccio.GetTexID());
 
-        float x=0.0f,y=0.0f;
-        for(unsigned int i=0;i<NUM_QUADS;i++){
-            m_Renderer->DrawTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)t[i%t.size()]->GetTexID());
-            x+=IMAGE_WIDTH;
-            if(x>=SCREEN_WIDTH){
-                x=0;
-                y+=IMAGE_HEIGHT;
+        segments[0]=std::make_pair(Vec2D(0,0),Vec2D(0,SCREEN_HEIGHT));
+        segments[1]=std::make_pair(Vec2D(0,SCREEN_HEIGHT),Vec2D(SCREEN_WIDTH,SCREEN_HEIGHT));
+        segments[2]=std::make_pair(Vec2D(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2D(SCREEN_WIDTH,0));
+        segments[3]=std::make_pair(Vec2D(SCREEN_WIDTH,0),Vec2D(0,0));
+
+        for(auto [a,b]:segments)
+            m_Renderer->DrawLine(a.x,a.y,b.x,b.y,1,0,0,1);
+
+        std::vector<Vec2D>points;
+        auto find=[&points](Vec2D point)->bool{
+            for(size_t i=0;i<points.size();i++){
+                if(points[i].x==point.x && points[i].y==point.y)
+                    return false;
             }
-            if(y>=SCREEN_HEIGHT){
-                y=0;
-                x=0;
+            return true;
+        };
+        for(auto [a,b]:segments){
+            if(find(a))
+                points.push_back(a);
+            if(find(b))
+                points.push_back(b);
+        }
+        std::vector<float>angles;
+
+        double xpos, ypos;
+        glfwGetCursorPos(WINDOW, &xpos, &ypos);
+        ypos=SCREEN_HEIGHT-ypos;
+
+        for(auto p:points){
+            float angle=std::atan2(p.y-ypos,p.x-xpos);
+            angles.push_back(angle-0.0001f);
+            angles.push_back(angle);
+            angles.push_back(angle+0.0001f);
+        }
+
+        auto GetIntersection=[](std::pair<Vec2D,Vec2D>ray,std::pair<Vec2D,Vec2D>seg)->std::pair<Vec2D,float>{
+            float r_px=ray.first.x;
+            float r_py=ray.first.y;
+            float r_dx=ray.second.x-ray.first.x;
+            float r_dy=ray.second.y-ray.first.y;
+        
+            float s_px=seg.first.x;
+            float s_py=seg.first.y;
+            float s_dx=seg.second.x-seg.first.x;
+            float s_dy=seg.second.y-seg.first.y;
+        
+            float r_mag=std::sqrt(r_dx*r_dx+r_dy*r_dy);
+            float s_mag=std::sqrt(s_dx*s_dx+s_dy*s_dy);
+            if(r_dx/r_mag==s_dx/s_mag && r_dy/r_mag==s_dy/s_mag){
+                return std::make_pair(Vec2D(-1.0f,-1.0f),-1.0f); // Unit vectors are the same.
             }
+
+            float T2=(r_dx*(s_py-r_py)+r_dy*(r_px-s_px))/(s_dx*r_dy-s_dy*r_dx);
+	        float T1=(s_px+s_dx*T2-r_px)/r_dx;
+        
+            if(T1<0) return std::make_pair(Vec2D(-1.0f,-1.0f),-1.0f);
+	        if(T2<0 || T2>1) return std::make_pair(Vec2D(-1.0f,-1.0f),-1.0f);
+        
+            return std::make_pair(Vec2D(r_px+r_dx*T1,r_py+r_dy*T1),T1);
+        };
+
+        std::vector<std::pair<Vec2D,float>>intersects;
+        for(auto angle:angles){
+            float dx=std::cos(angle);
+            float dy=std::sin(angle);
+
+            std::pair<Vec2D,Vec2D>ray=std::make_pair(Vec2D(xpos,ypos),Vec2D(xpos+dx,ypos+dy));
+            std::pair<Vec2D,double> closest_intersect=std::make_pair(Vec2D(-1.0f,-1.0f),-1.0f);
+            for(auto seg:segments){
+                std::pair<Vec2D,double> intersect=GetIntersection(ray,seg);
+                if(intersect.first.x==-1.0f && intersect.first.y==-1.0f)
+                    continue;
+                if((closest_intersect.first.x==-1.0f && closest_intersect.first.y==-1.0f) || (intersect.second<closest_intersect.second && intersect.second!=-1.0f))
+                    closest_intersect=intersect;
+            }
+            if(closest_intersect.first.x!=-1.0f && closest_intersect.first.y!=-1.0f)
+                intersects.push_back(std::make_pair(closest_intersect.first,angle));
+        }
+
+        for(auto p:intersects){
+            if(show_lines)
+                m_Renderer->DrawLine(p.first.x,p.first.y,xpos,ypos,0,1,0,1);
+            if(show_points)
+                m_Renderer->DrawPoint(p.first.x,p.first.y,0,0,1,1);
+        }
+
+        m_Renderer->Render();
+        
+        if(show_light){
+            std::sort(begin(intersects),end(intersects),[](const auto& a,const auto& b){
+                return a.second<b.second;
+            });
+
+            m_Renderer->BindLightingFB();
+            m_Renderer->Clear({0.3f,0.3f,0.3f});
+
+            for(size_t i=0;i<intersects.size()-1;i++){
+                auto a=intersects[i].first;
+                auto b=intersects[i+1].first;
+                m_Renderer->DrawTriangle(xpos,ypos,a.x,a.y,b.x,b.y,1,1,1,1);
+            }
+            m_Renderer->DrawTriangle(xpos,ypos,intersects[0].first.x,intersects[0].first.y,intersects[intersects.size()-1].first.x,intersects[intersects.size()-1].first.y,1,1,1,1);
+            m_Renderer->RenderTriangles();
+            m_Renderer->ApplyLight("CircleAroundPos",xpos,ypos);
         }
     }
 
@@ -40,132 +151,19 @@ public:
         Renderer::ImGui_Content();
 
         ImGui::SetNextWindowSize(ImVec2(0,0));
-        ImGui::Begin("Batching Multiple Textures",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-        ImGui::Text("NUM QUADS: %d",NUM_QUADS);
+        ImGui::Begin("Options",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+        ImGui::Checkbox("Show Points",&show_points);
+        ImGui::Checkbox("Show Lines",&show_lines);
+        ImGui::Checkbox("Show Light",&show_light);
         ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
         ImGui::End();
     }
 };
 
 int main(){
-/*{
-TextRenderer textrenderer("resources/fonts/Tektur-Regular.ttf");
-Texture texture("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR);
-Texture texture2("resources/textures/smurf_cat.jpg",GL_LINEAR,GL_LINEAR);
-SpriteSheet spritesheet("resources/textures/spritesheet.png",32,32,GL_NEAREST,GL_NEAREST);
-
-std::vector<Texture*>t(457);
-    for(size_t i=0;i<t.size();i++)
-        t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i)+".png",GL_NEAREST,GL_NEAREST);
-
-    audioplayer.LoadAudio("resources/audio/crostata e costata cicciogamer89.mp3");
-
-Entity entity("resources/textures/smurf_cat.jpg",0,0,100,100);
-Entity e1("resources/textures/cicciogamer89.jpg",150,150,100,100);
-Entity e2("resources/textures/cicciogamer89.jpg",300,300,100,100);
-Entity e3("resources/textures/cicciogamer89.jpg",450,450,100,100);
-Entity e4("resources/textures/cicciogamer89.jpg",600,600,100,100);
-
-    entity.AddCollider();
-    e1.AddCollider(true);
-    e2.AddCollider(true);
-    e3.AddCollider(true);
-    e4.AddCollider(true);
-
-bool menus[9];
-    memset(menus,0,sizeof(menus));
-
-    while(!glfwWindowShouldClose(WINDOW)){
-        CURRENT_FRAME=glfwGetTime();
-        DELTA_TIME=CURRENT_FRAME-LAST_FRAME;
-        LAST_FRAME=CURRENT_FRAME;
-        HandleInputs();
-        renderer.StartScene();
-        
-        Renderer::ImGui_Start_Frame();
-        Renderer::ImGui_Theme();
-        Renderer::ImGui_Content();
-
-        glfwPollEvents();
-
-        if(menus[0])
-            Examples::BatchRendering(renderer,texture);
-        else if(menus[1])
-            Examples::Spritesheet(renderer,spritesheet);
-        else if(menus[2])
-            Examples::BatchingMultipleTextures(renderer,t);
-        else if(menus[3])
-            Examples::DepthTest(renderer,*t[0],*t[10]);
-        else if(menus[4])
-            Examples::LinesPoints(renderer);
-        else if(menus[5])
-            Examples::PostProcessing(renderer,texture2);
-        else if(menus[6])
-            Examples::Text(textrenderer);
-        else if(menus[7])
-            Examples::Sounds(audioplayer);
-        else if(menus[8])
-            Examples::Entities(renderer,entity,e1,e2,e3,e4);
-    
-        ImGui::SetNextWindowSize(ImVec2(0,0));
-        ImGui::Begin("Menu",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-        if(ImGui::BeginMenu("Examples")){
-            if(ImGui::MenuItem("Batch Rendering")){
-                memset(menus,0,sizeof(menus));
-                menus[0]=true;
-            }
-            else if(ImGui::MenuItem("SpriteSheet")){
-                memset(menus,0,sizeof(menus));
-                menus[1]=true;
-            }
-            else if(ImGui::MenuItem("Batching Multiple Textures")){
-                memset(menus,0,sizeof(menus));
-                menus[2]=true;
-            }
-            else if(ImGui::MenuItem("Depth")){
-                memset(menus,0,sizeof(menus));
-                menus[3]=true;
-            }
-            else if(ImGui::MenuItem("Lines/Points")){
-                memset(menus,0,sizeof(menus));
-                menus[4]=true;
-            }
-            else if(ImGui::MenuItem("Post Processing")){
-                memset(menus,0,sizeof(menus));
-                menus[5]=true;
-            }
-            else if(ImGui::MenuItem("Text")){
-                memset(menus,0,sizeof(menus));
-                menus[6]=true;
-            }
-            else if(ImGui::MenuItem("Sounds")){
-                memset(menus,0,sizeof(menus));
-                menus[7]=true;
-            }
-            else if(ImGui::MenuItem("Entities")){
-                memset(menus,0,sizeof(menus));
-                menus[8]=true;
-            }
-            else if(ImGui::MenuItem("None"))
-                memset(menus,0,sizeof(menus));
-            ImGui::EndMenu();
-        }
-        ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH-ImGui::GetWindowWidth(),0));
-        ImGui::End();
-
-        renderer.DrawScene();
-        Renderer::ImGui_End_Frame();
-        glfwSwapBuffers(WINDOW);
-    }
-
-    Renderer::ImGui_Close();
-    for(size_t i=0;i<t.size();i++)
-        delete t[i];
-}*/
-
-    Example1 *example1=new Example1("Test");
-    example1->Run();
-    delete example1;
+    Example *example=new Example("Test");
+    example->Run();
+    delete example;
 
     return 0;
 }

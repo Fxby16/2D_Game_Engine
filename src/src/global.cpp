@@ -15,10 +15,6 @@ bool V_SYNC=true;
 unsigned int SCREEN_WIDTH=1600;
 unsigned int SCREEN_HEIGHT=900;
 
-unsigned int MAX_QUADS=10000;
-unsigned int MAX_VERTICES=4*MAX_QUADS;
-unsigned int MAX_INDICES=6*MAX_QUADS;
-
 int DRAW_CALLS=0;
 
 GLFWwindow *WINDOW;

@@ -8,6 +8,7 @@ project "2DGameEngine"
     targetdir "bin/%{cfg.buildcfg}"
 
     files { "**.hpp", "**.cpp", "**.h", "**.c" }
+    removefiles { "examples/**" }
 
     includedirs { "include", 
                   "include/vendor", 
@@ -27,8 +28,9 @@ project "2DGameEngine"
             "asound" }
 
     filter "configurations:Debug"
-        buildoptions{"-g","-ggdb","-Og","-Wall"}
+        optimize "Debug"
         symbols "On"
 
     filter "configurations:Release"
-        buildoptions{"-Ofast"}
+        optimize "Full"
+        

@@ -15,9 +15,10 @@ inline constexpr unsigned int BASE_SCREEN_WIDTH=1600;
 inline constexpr unsigned int BASE_SCREEN_HEIGHT=900;
 extern unsigned int SCREEN_WIDTH;
 extern unsigned int SCREEN_HEIGHT;
-extern unsigned int MAX_QUADS;
-extern unsigned int MAX_VERTICES;
-extern unsigned int MAX_INDICES;
+
+inline constexpr unsigned int MAX_QUADS=5000;
+inline constexpr unsigned int MAX_VERTICES=4*MAX_QUADS;
+inline constexpr unsigned int MAX_INDICES=6*MAX_QUADS;
 
 extern int DRAW_CALLS;
 

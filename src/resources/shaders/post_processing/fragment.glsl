@@ -29,6 +29,12 @@ void GrayScale(){
     color=vec4(temp,temp,temp,1.0);
 }
 
+subroutine(PostProcessing)
+void DarkerImg(){
+    vec4 tmp=texture(texID[int(Tex_Index)],v_TexCoord);
+    color=vec4(0.3*tmp.r,0.3*tmp.g,0.3*tmp.b,1.0);
+}
+
 void main(){
     post_processing();
 }

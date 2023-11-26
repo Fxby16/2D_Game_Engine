@@ -117,3 +117,16 @@ int Shader::GetUniformLocation(const std::string &name){
         std::cout<<"Warning: Uniform "<<name<<" doesn't exist"<<std::endl;
     return location;
 }
+
+unsigned int Shader::GetSubroutineIndex(const char *uniform_name,unsigned int shader_id){
+    unsigned int temp;
+    if(uniform_name==nullptr){
+        return std::numeric_limits<unsigned int>::max();
+    }
+    temp=glGetSubroutineIndex(shader_id,GL_FRAGMENT_SHADER,uniform_name);
+    return temp;
+}
+
+void Shader::SetSubroutineUniform(unsigned int uniform_index){
+    glUniformSubroutinesuiv(GL_FRAGMENT_SHADER,1,&uniform_index);
+}

@@ -28,4 +28,6 @@ public:
     void SetUniform1iv(const std::string &name,int *v,unsigned int num_elem);
     void SetUniform1i(const std::string &name,int v0);
     int GetUniformLocation(const std::string &name);
+    static unsigned int GetSubroutineIndex(const char *uniform_name,unsigned int shader_id);
+    static void SetSubroutineUniform(unsigned int uniform_index);
 };

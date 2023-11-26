@@ -9,14 +9,18 @@ RendererData::RendererData(const char *vertex_path,const char *fragment_path,uns
                           VBO(MAX_VERTICES,vertex_size,GL_DYNAMIC_DRAW),S(vertex_path,fragment_path),NumVertices(0){}
 
 Renderer::Renderer(): 
-    m_T("resources/shaders/textures/vertex.glsl","resources/shaders/textures/fragment.glsl",sizeof(Vertex)),
-    m_P("resources/shaders/points/vertex.glsl","resources/shaders/points/fragment.glsl",sizeof(LinePointVertex)),
-    m_L("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl",sizeof(LinePointVertex)),
-    m_BufferT(MAX_VERTICES),m_BufferP(MAX_VERTICES),m_BufferL(MAX_VERTICES),
+    m_Textures("resources/shaders/textures/vertex.glsl","resources/shaders/textures/fragment.glsl",sizeof(Vertex)),
+    m_Points("resources/shaders/points/vertex.glsl","resources/shaders/points/fragment.glsl",sizeof(LinePointVertex)),
+    m_Lines("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl",sizeof(LinePointVertex)),
+    m_Triangles("resources/shaders/triangles/vertex.glsl","resources/shaders/triangles/fragment.glsl",sizeof(TriangleVertex)),
+    m_Lights("resources/shaders/lights/vertex.glsl","resources/shaders/lights/fragment.glsl",4*sizeof(float)),
+    m_BufferT(MAX_VERTICES),m_BufferP(MAX_VERTICES),m_BufferL(MAX_VERTICES),m_BufferTR(MAX_VERTICES),
     m_SPostProcessing("resources/shaders/textures/vertex.glsl","resources/shaders/post_processing/fragment.glsl"),
     m_PostProcessingIndex(std::numeric_limits<unsigned int>::max()){
 
-    m_Framebuffer=new Framebuffer();
+    m_Framebuffer=new Framebuffer;
+    m_LightingFramebuffer=new Framebuffer;
+    //m_TempFramebuffer=new Framebuffer;
     IB.Set(MAX_VERTICES);
 
     m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
@@ -25,29 +29,47 @@ Renderer::Renderer():
 
     Renderer::ImGui_Init();
 
-    AddLayout(m_T.VBL,GL_FLOAT,2,false);
-    AddLayout(m_T.VBL,GL_FLOAT,2,false);
-    AddLayout(m_T.VBL,GL_FLOAT,1,false);
-    AddLayout(m_T.VBL,GL_FLOAT,1,false);
-    m_T.VAO.AddBuffer(m_T.VBO,m_T.VBL);
+    AddLayout(m_Textures.VBL,GL_FLOAT,2,false);
+    AddLayout(m_Textures.VBL,GL_FLOAT,2,false);
+    AddLayout(m_Textures.VBL,GL_FLOAT,1,false);
+    AddLayout(m_Textures.VBL,GL_FLOAT,1,false);
+    m_Textures.VAO.AddBuffer(m_Textures.VBO,m_Textures.VBL);
 
-    AddLayout(m_P.VBL,GL_FLOAT,2,false);
-    AddLayout(m_P.VBL,GL_FLOAT,4,false);
-    m_P.VAO.AddBuffer(m_P.VBO,m_P.VBL);
+    AddLayout(m_Points.VBL,GL_FLOAT,2,false);
+    AddLayout(m_Points.VBL,GL_FLOAT,4,false);
+    m_Points.VAO.AddBuffer(m_Points.VBO,m_Points.VBL);
     
-    AddLayout(m_L.VBL,GL_FLOAT,2,false);
-    AddLayout(m_L.VBL,GL_FLOAT,4,false);
-    m_L.VAO.AddBuffer(m_L.VBO,m_L.VBL);
+    AddLayout(m_Lines.VBL,GL_FLOAT,2,false);
+    AddLayout(m_Lines.VBL,GL_FLOAT,4,false);
+    m_Lines.VAO.AddBuffer(m_Lines.VBO,m_Lines.VBL);
 
-    m_P.S.Bind();
-    m_P.S.SetUniformMat4f("u_PM",m_Proj);
+    AddLayout(m_Triangles.VBL,GL_FLOAT,2,false);
+    AddLayout(m_Triangles.VBL,GL_FLOAT,4,false);
+    m_Triangles.VAO.AddBuffer(m_Triangles.VBO,m_Triangles.VBL);
 
-    m_L.S.Bind();
-    m_L.S.SetUniformMat4f("u_PM",m_Proj);
+    AddLayout(m_Lights.VBL,GL_FLOAT,2,false);
+    AddLayout(m_Lights.VBL,GL_FLOAT,2,false);
+    m_Lights.VAO.AddBuffer(m_Lights.VBO,m_Lights.VBL);
 
-    m_T.S.Bind();
-    m_T.S.SetUniformMat4f("u_PM",m_Proj);
-    m_T.S.SetUniform1iv("texID",m_Slots,32);
+    m_Points.S.Bind();
+    m_Points.S.SetUniformMat4f("u_PM",m_Proj);
+
+    m_Lines.S.Bind();
+    m_Lines.S.SetUniformMat4f("u_PM",m_Proj);
+
+    m_Textures.S.Bind();
+    m_Textures.S.SetUniformMat4f("u_PM",m_Proj);
+    m_Textures.S.SetUniform1iv("texID",m_Slots,32);
+
+    m_Triangles.S.Bind();
+    m_Triangles.S.SetUniformMat4f("u_PM",m_Proj);
+
+    m_Lights.S.Bind();
+    m_Lights.S.SetUniformMat4f("u_PM",m_Proj);
+    m_Lights.S.SetUniform1i("framebuffer",0);
+    m_Lights.S.SetUniform1i("light",1);
+    m_Lights.S.SetUniform1f("edgeWidth",0.05f);
+    m_Lights.S.SetUniform1f("radius",0.125f);
 
     m_SPostProcessing.Bind();
     m_SPostProcessing.SetUniformMat4f("u_PM",m_Proj);
@@ -65,53 +87,104 @@ Renderer::~Renderer(){
     delete m_Framebuffer;
 }
 
+void Renderer::BindLightingFB(){
+    m_LightingFramebuffer->Bind();
+}
+
+void Renderer::ApplyLight(const char *type,float center_x,float center_y){
+    float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
+                       0.0f,static_cast<float>(SCREEN_HEIGHT),0.0f,1.0f,
+                       static_cast<float>(SCREEN_WIDTH),static_cast<float>(SCREEN_HEIGHT),1.0f,1.0f,
+                       static_cast<float>(SCREEN_WIDTH),0.0f,1.0f,0.0f};
+
+    m_Lights.VBO.Bind();
+    m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
+
+    //glBindFramebuffer(GL_READ_FRAMEBUFFER,m_Framebuffer->GetFramebufferID());
+    //glBindFramebuffer(GL_DRAW_FRAMEBUFFER,m_TempFramebuffer->GetFramebufferID());
+    //glBlitFramebuffer(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,GL_COLOR_BUFFER_BIT,GL_NEAREST);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
+    
+    m_Framebuffer->Bind();
+    IB.Bind();
+    m_Lights.VAO.Bind();
+    m_Lights.S.Bind();
+    
+    m_Lights.S.SetUniform1f("xpos",center_x/static_cast<float>(SCREEN_WIDTH));
+    m_Lights.S.SetUniform1f("ypos",center_y/static_cast<float>(SCREEN_HEIGHT));
+
+    int sub_id=Shader::GetSubroutineIndex(type,m_Lights.S.getID());
+    Shader::SetSubroutineUniform(sub_id);
+    glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+}
+
 void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized){
     VBL.Push(type,count,normalized);
 }
 
 void Renderer::DrawTexture(float x,float y,float w,float h,float scale,float depth,float texID){
     auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,scale,depth,texID);
-    m_BufferT[m_T.NumVertices]=a;
-    m_BufferT[m_T.NumVertices+1]=b;
-    m_BufferT[m_T.NumVertices+2]=c;
-    m_BufferT[m_T.NumVertices+3]=d;
-    m_T.NumVertices+=4;
+    m_BufferT[m_Textures.NumVertices]=a;
+    m_BufferT[m_Textures.NumVertices+1]=b;
+    m_BufferT[m_Textures.NumVertices+2]=c;
+    m_BufferT[m_Textures.NumVertices+3]=d;
+    m_Textures.NumVertices+=4;
 
-    if(m_T.NumVertices==MAX_VERTICES){ 
+    if(m_Textures.NumVertices==MAX_VERTICES)
         Render();
-        m_T.NumVertices=0;
-    }
+}
+
+void Renderer::DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,float r,float g,float b,float a){
+    m_BufferTR[m_Triangles.NumVertices]=TriangleVertex(Vec2(x1,y1),Vec4(r,g,b,a));
+    m_BufferTR[m_Triangles.NumVertices+1]=TriangleVertex(Vec2(x2,y2),Vec4(r,g,b,a));
+    m_BufferTR[m_Triangles.NumVertices+2]=TriangleVertex(Vec2(x3,y3),Vec4(r,g,b,a));
+    m_Triangles.NumVertices+=3;
+
+    if(m_Triangles.NumVertices==MAX_VERTICES)
+        Render();
 }
 
 void Renderer::DrawQuad(Vertex a,Vertex b,Vertex c,Vertex d){
-    m_BufferT[m_T.NumVertices]=a;
-    m_BufferT[m_T.NumVertices+1]=b;
-    m_BufferT[m_T.NumVertices+2]=c;
-    m_BufferT[m_T.NumVertices+3]=d;
-    m_T.NumVertices+=4;
+    m_BufferT[m_Textures.NumVertices]=a;
+    m_BufferT[m_Textures.NumVertices+1]=b;
+    m_BufferT[m_Textures.NumVertices+2]=c;
+    m_BufferT[m_Textures.NumVertices+3]=d;
+    m_Textures.NumVertices+=4;
 
-    if(m_T.NumVertices==MAX_VERTICES)
+    if(m_Textures.NumVertices==MAX_VERTICES)
         Render();
 }
 
 void Renderer::DrawPoint(float x,float y,float r,float g,float b,float a){
-    m_BufferP[m_P.NumVertices].Pos={x,y};
-    m_BufferP[m_P.NumVertices].Color={r,g,b,a};
-    ++m_P.NumVertices;
+    m_BufferP[m_Points.NumVertices].Pos={x,y};
+    m_BufferP[m_Points.NumVertices].Color={r,g,b,a};
+    ++m_Points.NumVertices;
 
-    if(m_P.NumVertices==MAX_VERTICES)
+    if(m_Points.NumVertices==MAX_VERTICES)
         Render();
 }
 
-void Renderer::DrawLine(float x1,float y1,float x2,float y2,float *color){
-    m_BufferL[m_L.NumVertices].Pos={x1,y1};
-    m_BufferL[m_L.NumVertices].Color={color[0],color[1],color[2],color[3]};
-    m_BufferL[m_L.NumVertices+1].Pos={x2,y2};
-    m_BufferL[m_L.NumVertices+1].Color=m_BufferL[m_L.NumVertices].Color;
-    m_L.NumVertices+=2;
+void Renderer::DrawLine(float x1,float y1,float x2,float y2,float r,float g,float b,float a){
+    m_BufferL[m_Lines.NumVertices].Pos={x1,y1};
+    m_BufferL[m_Lines.NumVertices].Color={r,g,b,a};
+    m_BufferL[m_Lines.NumVertices+1].Pos={x2,y2};
+    m_BufferL[m_Lines.NumVertices+1].Color=m_BufferL[m_Lines.NumVertices].Color;
+    m_Lines.NumVertices+=2;
 
-    if(m_L.NumVertices==MAX_VERTICES)
+    if(m_Lines.NumVertices==MAX_VERTICES)
         Render();
+}
+
+void Renderer::ChangeLineWidth(float new_size){
+    glLineWidth(new_size);
+}
+
+void Renderer::ChangePointSize(float new_size){
+    glPointSize(new_size);
 }
 
 void Renderer::StartScene(){
@@ -119,14 +192,17 @@ void Renderer::StartScene(){
         PROJ_UPDATE=false;
         m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
 
-        m_P.S.Bind();
-        m_P.S.SetUniformMat4f("u_PM",m_Proj);
+        m_Points.S.Bind();
+        m_Points.S.SetUniformMat4f("u_PM",m_Proj);
 
-        m_L.S.Bind();
-        m_L.S.SetUniformMat4f("u_PM",m_Proj);
+        m_Lines.S.Bind();
+        m_Lines.S.SetUniformMat4f("u_PM",m_Proj);
 
-        m_T.S.Bind();
-        m_T.S.SetUniformMat4f("u_PM",m_Proj);
+        m_Textures.S.Bind();
+        m_Textures.S.SetUniformMat4f("u_PM",m_Proj);
+
+        m_Triangles.S.Bind();
+        m_Triangles.S.SetUniformMat4f("u_PM",m_Proj);
 
         m_SPostProcessing.Bind();
         m_SPostProcessing.SetUniformMat4f("u_PM",m_Proj);
@@ -134,7 +210,11 @@ void Renderer::StartScene(){
     if(FRAMEBUFFER_UPDATE){
         FRAMEBUFFER_UPDATE=false;
         delete m_Framebuffer;
-        m_Framebuffer=new Framebuffer();
+        m_Framebuffer=new Framebuffer;
+        delete m_LightingFramebuffer;
+        m_LightingFramebuffer=new Framebuffer;
+        //delete m_TempFramebuffer;
+        //m_TempFramebuffer=new Framebuffer;
     }
     m_Framebuffer->Bind();
     Clear({0.0f,0.0f,0.0f});
@@ -147,80 +227,101 @@ void Renderer::DrawScene(){
     Render(true);
 }
 
-void Renderer::Render(bool finalScene){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect depth input for subsequent vertices
-    if(m_T.NumVertices==0 && m_P.NumVertices==0 && m_L.NumVertices==0)
+void Renderer::Render(bool post_processing){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect depth input for subsequent vertices
+    RenderTextures(post_processing);
+    RenderPoints();
+    RenderLines();
+    RenderTriangles();
+}
+
+void Renderer::RenderTextures(bool post_processing){
+    if(m_Textures.NumVertices<=0)
         return;
 
     int lastChecked=-1;
     int slot=-1;
     int lastIndex=0;
 
-    if(m_T.NumVertices>0){ //draw textures
-        std::stable_sort(begin(m_BufferT),begin(m_BufferT)+m_T.NumVertices,cmp); //sorting textures by id to reduce the times you have to bind new textures
-        m_T.VAO.Bind();
-        m_T.VBO.Bind();
-        IB.Bind();
+    std::stable_sort(begin(m_BufferT),begin(m_BufferT)+m_Textures.NumVertices,cmp); //sorting textures by id to reduce the times you have to bind new textures
+    m_Textures.VAO.Bind();
+    m_Textures.VBO.Bind();
+    IB.Bind();
 
-        if(m_PostProcessingIndex!=std::numeric_limits<unsigned int>::max() && finalScene)
-            PostProcessing();
-        else
-            m_T.S.Bind();
+    if(m_PostProcessingIndex!=std::numeric_limits<unsigned int>::max() && post_processing)
+        PostProcessing();
+    else
+        m_Textures.S.Bind();
 
-        for(unsigned int i=0;i<m_T.NumVertices;i++){
-            if(m_BufferT[i].TexID!=lastChecked){ //new texture
-                if(slot<m_MaxTextureSlots-1){ //slot available, change last id checked, increment slot and update the vertex
-                    lastChecked=m_BufferT[i].TexID;
-                    ++slot;
-                    glActiveTexture(GL_TEXTURE0+slot);
-                    glBindTexture(GL_TEXTURE_2D,lastChecked);
-                    m_BufferT[i].TexID=(float)slot;
-                }else{ //no slots available
-                    m_T.VBO.SetData(0,(float *)&m_BufferT[lastIndex],i-lastIndex,sizeof(Vertex)); //send the data to the vertex buffer
-                    glDrawElements(GL_TRIANGLES,(i-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr); //draw
-                    lastIndex=i; //update starting point for the next batch
-                    lastChecked=m_BufferT[i].TexID;
-                    slot=0;
-                    m_BufferT[i].TexID=(float)slot;
-                    DRAW_CALLS++;
-                }
-            }else{ //same texture, just update the vertex
+    for(unsigned int i=0;i<m_Textures.NumVertices;i++){
+        if(m_BufferT[i].TexID!=lastChecked){ //new texture
+            if(slot<m_MaxTextureSlots-1){ //slot available, change last id checked, increment slot and update the vertex
+                lastChecked=m_BufferT[i].TexID;
+                ++slot;
+                glActiveTexture(GL_TEXTURE0+slot);
+                glBindTexture(GL_TEXTURE_2D,lastChecked);
                 m_BufferT[i].TexID=(float)slot;
+            }else{ //no slots available
+                m_Textures.VBO.SetData(0,(float *)&m_BufferT[lastIndex],i-lastIndex,sizeof(Vertex)); //send the data to the vertex buffer
+                glDrawElements(GL_TRIANGLES,(i-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr); //draw
+                lastIndex=i; //update starting point for the next batch
+                lastChecked=m_BufferT[i].TexID;
+                slot=0;
+                m_BufferT[i].TexID=(float)slot;
+                DRAW_CALLS++;
             }
-        }
-        if(m_T.NumVertices-lastIndex>0){ //if there are some vertices remaining, render them
-            m_T.VBO.SetData(0,(float *)&m_BufferT[lastIndex],m_T.NumVertices-lastIndex,sizeof(Vertex));
-            glDrawElements(GL_TRIANGLES,(m_T.NumVertices-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr);
-            DRAW_CALLS++;
+        }else{ //same texture, just update the vertex
+            m_BufferT[i].TexID=(float)slot;
         }
     }
-
-    if(m_P.NumVertices>0){
-        m_P.VAO.Bind();
-        m_P.VBO.Bind();
-
-        if(m_PostProcessingIndex!=std::numeric_limits<unsigned int>::max() && finalScene)
-            PostProcessing();
-        else
-            m_P.S.Bind();
-
-        m_P.VBO.SetData(0,(float *)&m_BufferP[0],m_P.NumVertices,sizeof(LinePointVertex));
-        glDrawArrays(GL_POINTS,0,m_P.NumVertices);
+    if(m_Textures.NumVertices-lastIndex>0){ //if there are some vertices remaining, render them
+        m_Textures.VBO.SetData(0,(float *)&m_BufferT[lastIndex],m_Textures.NumVertices-lastIndex,sizeof(Vertex));
+        glDrawElements(GL_TRIANGLES,(m_Textures.NumVertices-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr);
+        DRAW_CALLS++;
     }
 
-    if(m_L.NumVertices>0){
-        m_L.VAO.Bind();    
-        m_L.VBO.Bind();
+    m_Textures.NumVertices=0;
+}
 
-        if(m_PostProcessingIndex!=std::numeric_limits<unsigned int>::max() && finalScene)
-            PostProcessing();
-        else
-            m_L.S.Bind();
+void Renderer::RenderTriangles(){
+    if(m_Triangles.NumVertices<=0)
+        return;
 
-        m_L.VBO.SetData(0,(float *)&m_BufferL[0],m_L.NumVertices,sizeof(LinePointVertex));
-        glDrawArrays(GL_LINES,0,m_L.NumVertices);
-    }
+    m_Triangles.VAO.Bind();
+    m_Triangles.VBO.Bind();
+    m_Triangles.S.Bind();
 
-    m_T.NumVertices=m_P.NumVertices=m_L.NumVertices=0;
+    m_Triangles.VBO.SetData(0,(float *)&m_BufferTR[0],m_Triangles.NumVertices,sizeof(TriangleVertex));
+    glDrawArrays(GL_TRIANGLES,0,m_Triangles.NumVertices);
+
+    m_Triangles.NumVertices=0;
+}
+
+void Renderer::RenderPoints(){
+    if(m_Points.NumVertices<=0)
+        return;
+
+    m_Points.VAO.Bind();
+    m_Points.VBO.Bind();
+    m_Points.S.Bind();
+
+    m_Points.VBO.SetData(0,(float *)&m_BufferP[0],m_Points.NumVertices,sizeof(LinePointVertex));
+    glDrawArrays(GL_POINTS,0,m_Points.NumVertices);
+
+    m_Points.NumVertices=0;
+}
+
+void Renderer::RenderLines(){
+    if(m_Lines.NumVertices<=0)
+        return;
+
+    m_Lines.VAO.Bind();    
+    m_Lines.VBO.Bind();
+    m_Lines.S.Bind();
+
+    m_Lines.VBO.SetData(0,(float *)&m_BufferL[0],m_Lines.NumVertices,sizeof(LinePointVertex));
+    glDrawArrays(GL_LINES,0,m_Lines.NumVertices);
+
+    m_Lines.NumVertices=0;
 }
 
 void Renderer::Clear(Vec3 color) const{
@@ -230,17 +331,13 @@ void Renderer::Clear(Vec3 color) const{
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer::SetPostProcessing(const char *uniformName){
-    if(uniformName==nullptr){
-        m_PostProcessingIndex=std::numeric_limits<unsigned int>::max();
-        return;
-    }
-    m_PostProcessingIndex=glGetSubroutineIndex(m_SPostProcessing.getID(),GL_FRAGMENT_SHADER,uniformName);;
+void Renderer::SetPostProcessing(const char *uniform_name){
+    m_PostProcessingIndex=Shader::GetSubroutineIndex(uniform_name,m_SPostProcessing.getID());
 }
 
 void Renderer::PostProcessing(){
     m_SPostProcessing.Bind();
-    glUniformSubroutinesuiv(GL_FRAGMENT_SHADER,1,&m_PostProcessingIndex);
+    Shader::SetSubroutineUniform(m_PostProcessingIndex);
 }
 
 void Renderer::ImGui_Init(){
