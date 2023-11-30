@@ -40,7 +40,7 @@ public:
         Renderer::ImGui_Content();
 
         ImGui::SetNextWindowSize(ImVec2(0,0));
-        ImGui::Begin("Batching Multiple Textures",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+        ImGui::Begin("Batching Multiple Textures",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
         ImGui::Text("NUM QUADS: %d",NUM_QUADS);
         ImGui::SetWindowPos(ImVec2(SCREEN_WIDTH/2-ImGui::GetWindowWidth()/2,0));
         ImGui::End();

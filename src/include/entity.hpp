@@ -4,34 +4,7 @@
 #include <renderer.hpp>
 #include <cmath>
 #include <vector>
-
-struct Vec2D{
-    union{
-        float x;
-        float w;
-    };
-    union{
-        float y;
-        float h;
-    };
-    Vec2D(): x(0),y(0){}
-    Vec2D(float x,float y): x(x),y(y){}
-};
-
-Vec2D operator+(Vec2D a,Vec2D b);
-Vec2D operator-(Vec2D a,Vec2D b);
-Vec2D operator*(Vec2D a,Vec2D b);
-Vec2D operator*(float a,Vec2D b);
-Vec2D operator*(Vec2D a,float b);
-Vec2D operator/(Vec2D a,Vec2D b);
-Vec2D operator/(float a,Vec2D b);
-Vec2D operator/(Vec2D a,int b);
-
-struct Rect{
-    Vec2D pos;
-    Vec2D size;
-    Vec2D vel;
-};
+#include <structs.hpp>
 
 class Entity{
 private:
@@ -54,10 +27,10 @@ public:
 };
 
 namespace CollisionDetection{
-    bool RayVsRect(const Vec2D &ray_origin, const Vec2D &ray_dir,const Rect *target,Vec2D &contact_point,Vec2D &contact_normal,float& t_hit_near);
+    bool RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float& t_hit_near);
 
     bool DynamicRectVsRect(const Rect* r_dynamic,const float fTimeStep,const Rect& r_static,
-        Vec2D &contact_point, Vec2D &contact_normal, float& contact_time);
+        Vec2 &contact_point, Vec2 &contact_normal, float& contact_time);
 
     bool ResolveDynamicRectVsRect(Rect* r_dynamic,const float fTimeStep,Rect* r_static);
 

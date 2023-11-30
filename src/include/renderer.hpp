@@ -50,6 +50,8 @@ private:
     glm::mat4 m_Proj;
     int m_Slots[32];
     int m_MaxTextureSlots;
+
+    std::vector<std::pair<Vec2,Vec2>>segments; //used for lighting
 public:
     Renderer();
     ~Renderer();
@@ -84,6 +86,12 @@ public:
     void RenderPoints();
     void SetPostProcessing(const char *uniform_name);
     void PostProcessing();
+
+    void AddSegment(Vec2 start_point,Vec2 end_point);
+    void UpdateScreenSegments();
+    void ClearSegments();
+
+    void DrawLight(float light_x,float light_y,const char *light_type);
 
     static void ImGui_Init();
     static void ImGui_Theme();

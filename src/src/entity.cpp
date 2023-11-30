@@ -1,38 +1,6 @@
 #include <entity.hpp>
 #include <algorithm>
 
-Vec2D operator+(Vec2D a,Vec2D b){
-    return {a.x+b.x,a.y+b.y};
-}
-
-Vec2D operator-(Vec2D a,Vec2D b){
-    return {a.x-b.x,a.y-b.y};
-}
-
-Vec2D operator*(Vec2D a,Vec2D b){
-    return {a.x*b.x,a.y*b.y};
-}
-
-Vec2D operator*(float a,Vec2D b){
-    return {a*b.x,a*b.y};
-}
-
-Vec2D operator*(Vec2D a,float b){
-    return {a.x*b,a.y*b};
-}
-
-Vec2D operator/(Vec2D a,Vec2D b){
-    return {a.x/b.x,a.y/b.y};
-}
-
-Vec2D operator/(float a,Vec2D b){
-    return {a/b.x,a/b.y};
-}
-
-Vec2D operator/(Vec2D a,int b){
-    return {a.x/b,a.y/b};
-}
-
 Entity::Entity(const char *path,float x,float y,float w,float h,bool pixelart): m_R(),m_Depth(0),m_T(path,(pixelart)?GL_NEAREST:GL_LINEAR,(pixelart)?GL_NEAREST:GL_LINEAR),m_Collider(false){
     m_R.pos={x,y};
     m_R.size={w,h};
@@ -55,7 +23,7 @@ void Entity::Move(int x_offset,int y_offset,float frame_time){
     m_R.vel.x+=x_offset;
     m_R.vel.y+=y_offset;
     if(m_Collider){
-        Vec2D cp,cn;
+        Vec2 cp,cn;
         float m_T=0;
         std::vector<std::pair<int,float>>z;
 
@@ -83,16 +51,16 @@ void Entity::AddCollider(bool insert){
 
 //ORIGINAL CODE: https://github.com/OneLoneCoder/Javidx9/blob/master/PixelGameEngine/SmallerProjects/OneLoneCoder_PGE_Rectangles.cpp
 namespace CollisionDetection{
-    bool RayVsRect(const Vec2D &ray_origin, const Vec2D &ray_dir,const Rect *target,Vec2D &contact_point,Vec2D &contact_normal,float& t_hit_near){
+    bool RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float& t_hit_near){
         contact_normal={0,0};
         contact_point={0,0};
 
         // Cache division
-        Vec2D invdir=1.0f/ray_dir;
+        Vec2 invdir=1.0f/ray_dir;
 
         // Calculate intersections with rectangle bounding axes
-        Vec2D t_near=(target->pos-ray_origin)*invdir;
-        Vec2D t_far=(target->pos+target->size-ray_origin)*invdir;
+        Vec2 t_near=(target->pos-ray_origin)*invdir;
+        Vec2 t_far=(target->pos+target->size-ray_origin)*invdir;
 
         // Check division by 0
         if(std::isnan(t_far.y) || std::isnan(t_far.x)) return false;
@@ -136,7 +104,7 @@ namespace CollisionDetection{
     }
 
     bool DynamicRectVsRect(const Rect* r_dynamic,const float fTimeStep,const Rect& r_static,
-        Vec2D &contact_point, Vec2D &contact_normal, float& contact_time){
+        Vec2 &contact_point, Vec2 &contact_normal, float& contact_time){
         // Check if dynamic rectangle is actually moving - we assume rectangles are NOT in collision to start
         if(r_dynamic->vel.x==0 && r_dynamic->vel.y==0)
             return false;
@@ -153,10 +121,10 @@ namespace CollisionDetection{
     }
 
     bool ResolveDynamicRectVsRect(Rect* r_dynamic,const float fTimeStep,Rect* r_static){
-        Vec2D contact_point,contact_normal;
+        Vec2 contact_point,contact_normal;
         float contact_time=0.0f;
         if(DynamicRectVsRect(r_dynamic,fTimeStep,*r_static,contact_point,contact_normal,contact_time)){
-            r_dynamic->vel=r_dynamic->vel+contact_normal*Vec2D(std::abs(r_dynamic->vel.x),std::abs(r_dynamic->vel.y))*(1-contact_time);
+            r_dynamic->vel=r_dynamic->vel+contact_normal*Vec2(std::abs(r_dynamic->vel.x),std::abs(r_dynamic->vel.y))*(1-contact_time);
             return true;
         }
 

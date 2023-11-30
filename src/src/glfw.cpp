@@ -24,6 +24,11 @@ void HandleInputs(){
         ToggleFullScreen();
 }
 
+void GetMousePos(double *x,double *y){
+    glfwGetCursorPos(WINDOW,x,y);
+    *y=SCREEN_HEIGHT-(*y);
+}
+
 int InitGlfwWindow(const char *window_name){
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,4);

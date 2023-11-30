@@ -81,6 +81,11 @@ Renderer::Renderer():
     glLineWidth(5);
 
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&m_MaxTextureSlots);
+
+    segments.push_back(std::make_pair(Vec2(0,0),Vec2(0,SCREEN_HEIGHT)));
+    segments.push_back(std::make_pair(Vec2(0,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,SCREEN_HEIGHT)));
+    segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,0)));
+    segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,0),Vec2(0,0)));
 }
 
 Renderer::~Renderer(){
@@ -203,6 +208,9 @@ void Renderer::StartScene(){
 
         m_Triangles.S.Bind();
         m_Triangles.S.SetUniformMat4f("u_PM",m_Proj);
+
+        m_Lights.S.Bind();
+        m_Lights.S.SetUniformMat4f("u_PM",m_Proj);
 
         m_SPostProcessing.Bind();
         m_SPostProcessing.SetUniformMat4f("u_PM",m_Proj);
@@ -338,6 +346,114 @@ void Renderer::SetPostProcessing(const char *uniform_name){
 void Renderer::PostProcessing(){
     m_SPostProcessing.Bind();
     Shader::SetSubroutineUniform(m_PostProcessingIndex);
+}
+
+void Renderer::AddSegment(Vec2 start_point,Vec2 end_point){
+    segments.push_back(std::make_pair(start_point,end_point));
+}
+
+void Renderer::UpdateScreenSegments(){
+    segments[0]=std::make_pair(Vec2(0,0),Vec2(0,SCREEN_HEIGHT));
+    segments[1]=std::make_pair(Vec2(0,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,SCREEN_HEIGHT));
+    segments[2]=std::make_pair(Vec2(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,0));
+    segments[3]=std::make_pair(Vec2(SCREEN_WIDTH,0),Vec2(0,0)); 
+}
+
+void Renderer::ClearSegments(){
+    segments.resize(4);
+    UpdateScreenSegments();
+}
+
+void Renderer::DrawLight(float light_x,float light_y,const char *light_type){
+    std::vector<Vec2>points;
+    auto find=[&points](Vec2 point)->bool{
+        for(size_t i=0;i<points.size();i++){
+            if(points[i].x==point.x && points[i].y==point.y)
+                return false;
+        }
+        return true;
+    };
+    for(auto [a,b]:segments){
+        if(find(a))
+            points.push_back(a);
+        if(find(b))
+            points.push_back(b);
+    }
+    std::vector<float>angles;
+
+    for(auto p:points){
+        float angle=std::atan2(p.y-light_y,p.x-light_x);
+        angles.push_back(angle-0.0001f);
+        angles.push_back(angle);
+        angles.push_back(angle+0.0001f);
+    }
+
+    auto GetIntersection=[](std::pair<Vec2,Vec2>ray,std::pair<Vec2,Vec2>seg)->std::pair<Vec2,float>{
+        float r_px=ray.first.x;
+        float r_py=ray.first.y;
+        float r_dx=ray.second.x-ray.first.x;
+        float r_dy=ray.second.y-ray.first.y;
+    
+        float s_px=seg.first.x;
+        float s_py=seg.first.y;
+        float s_dx=seg.second.x-seg.first.x;
+        float s_dy=seg.second.y-seg.first.y;
+    
+        float r_mag=std::sqrt(r_dx*r_dx+r_dy*r_dy);
+        float s_mag=std::sqrt(s_dx*s_dx+s_dy*s_dy);
+        if(r_dx/r_mag==s_dx/s_mag && r_dy/r_mag==s_dy/s_mag){
+            return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f); // Unit vectors are the same.
+        }
+
+        float T2=(r_dx*(s_py-r_py)+r_dy*(r_px-s_px))/(s_dx*r_dy-s_dy*r_dx);
+        float T1=(s_px+s_dx*T2-r_px)/r_dx;
+    
+        if(T1<0) return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
+        if(T2<0 || T2>1) return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
+    
+        return std::make_pair(Vec2(r_px+r_dx*T1,r_py+r_dy*T1),T1);
+    };
+
+    std::vector<std::pair<Vec2,float>>intersects;
+    for(auto angle:angles){
+        float dx=std::cos(angle);
+        float dy=std::sin(angle);
+
+        std::pair<Vec2,Vec2>ray=std::make_pair(Vec2(light_x,light_y),Vec2(light_x+dx,light_y+dy));
+        std::pair<Vec2,double> closest_intersect=std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
+        for(auto seg:segments){
+            std::pair<Vec2,double> intersect=GetIntersection(ray,seg);
+            if(intersect.first.x==-1.0f && intersect.first.y==-1.0f)
+                continue;
+            if((closest_intersect.first.x==-1.0f && closest_intersect.first.y==-1.0f) || (intersect.second<closest_intersect.second && intersect.second!=-1.0f))
+                closest_intersect=intersect;
+        }
+        if(closest_intersect.first.x!=-1.0f && closest_intersect.first.y!=-1.0f)
+            intersects.push_back(std::make_pair(closest_intersect.first,angle));
+    }
+    /*
+    for(auto p:intersects){
+        m_Renderer->DrawLine(p.first.x,p.first.y,light_x,light_y,0,1,0,1);
+        m_Renderer->DrawPoint(p.first.x,p.first.y,0,0,1,1);
+    }*/
+
+    Render();
+    
+    std::sort(begin(intersects),end(intersects),[](const auto& a,const auto& b){
+        return a.second<b.second;
+    });
+
+    BindLightingFB();
+    Clear({0.3f,0.3f,0.3f});
+
+    for(size_t i=0;i<intersects.size()-1;i++){
+        auto a=intersects[i].first;
+        auto b=intersects[i+1].first;
+        DrawTriangle(light_x,light_y,a.x,a.y,b.x,b.y,1,1,1,1);
+    }
+    DrawTriangle(light_x,light_y,intersects[0].first.x,intersects[0].first.y,intersects[intersects.size()-1].first.x,intersects[intersects.size()-1].first.y,1,1,1,1);
+    RenderTriangles();
+    ApplyLight(light_type,light_x,light_y);
 }
 
 void Renderer::ImGui_Init(){
