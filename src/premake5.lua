@@ -8,18 +8,24 @@ project "2DGameEngine"
     targetdir "bin/%{cfg.buildcfg}"
 
     files { "**.hpp", "**.cpp", "**.h", "**.c" }
-    removefiles { "examples/**" }
+    removefiles { "examples/**","vendor/**" }
 
     includedirs { "include", 
                   "include/vendor", 
-                  "include/vendor/imgui/", 
-                  "include/vendor/freetype2", 
-                  "include/vendor/soloud" }
+                  "vendor/FreeType/include",
+                  "vendor/glfw/include/GLFW",
+                  "vendor/ImGui",
+                  "vendor/ImGui/backends",
+                  "vendor/soloud/include"}
 
-    libdirs { "lib" }
+    libdirs { "vendor/FreeType/objs",
+              "vendor/glfw/build/src",
+              "vendor/ImGui",
+              "vendor/soloud/lib" }
 
     links { "freetype", 
             "glfw3", 
+            "imgui_static",
             "soloud_static",
             "X11",
             "pthread",

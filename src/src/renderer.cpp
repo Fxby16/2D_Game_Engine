@@ -69,8 +69,6 @@ Renderer::Renderer():
     m_Lights.S.SetUniformMat4f("u_PM",m_Proj);
     m_Lights.S.SetUniform1i("framebuffer",0);
     m_Lights.S.SetUniform1i("light",1);
-    m_Lights.S.SetUniform1f("edgeWidth",0.05f);
-    m_Lights.S.SetUniform1f("radius",0.125f);
 
     m_SPostProcessing.Bind();
     m_SPostProcessing.SetUniformMat4f("u_PM",m_Proj);
@@ -119,17 +117,11 @@ void Renderer::ApplyLight(){
     glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
     
     m_Framebuffer->Bind();
-    //glBlendFunc(GL_DST_COLOR,GL_SRC_COLOR);
-    //DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,m_LightingFramebuffer->GetColorbufferID());
-    //RenderTextures(false);
-    //glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     IB.Bind();
     m_Lights.VAO.Bind();
     m_Lights.S.Bind();
-    //m_Lights.S.SetUniform1f("xpos",center_x/static_cast<float>(SCREEN_WIDTH));
-    //m_Lights.S.SetUniform1f("ypos",center_y/static_cast<float>(SCREEN_HEIGHT));
 
-    int sub_id=Shader::GetSubroutineIndex("AllLight",m_Lights.S.getID());
+    int sub_id=Shader::GetSubroutineIndex("Merge",m_Lights.S.getID());
     Shader::SetSubroutineUniform(sub_id);
     glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
 }
@@ -419,7 +411,7 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,enum LightType l
             float r_mag=std::sqrt(r_dx*r_dx+r_dy*r_dy);
             float s_mag=std::sqrt(s_dx*s_dx+s_dy*s_dy);
             if(r_dx/r_mag==s_dx/s_mag && r_dy/r_mag==s_dy/s_mag){
-                return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f); // Unit vectors are the same.
+                return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f); 
             }
 
             float T2=(r_dx*(s_py-r_py)+r_dy*(r_px-s_px))/(s_dx*r_dy-s_dy*r_dx);

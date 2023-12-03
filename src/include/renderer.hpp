@@ -2,9 +2,9 @@
 
 #include <glad/glad.h>
 
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw.h>
-#include <imgui/imgui_impl_opengl3.h>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 #include <vertexarray.hpp>
 #include <vertexbuffer.hpp>
@@ -26,7 +26,7 @@ struct RendererData{
 };
 
 enum LightType{
-    ALL_LIGHT,LIGHT_AROUND_POS,LIGHT_AROUND_POS_COLL
+    ALL_LIGHT,LIGHT_AROUND_POS
 };
 
 class Renderer{

@@ -1,0 +1,18 @@
+[submodule "src/vendor/ImGui"]
+	path = src/vendor/ImGui
+	url = https://github.com/ocornut/imgui.git
+[submodule "src/vendor/FreeType"]
+	path = src/vendor/FreeType
+	url = https://github.com/freetype/freetype.git
+[submodule "src/vendor/glfw"]
+	path = src/vendor/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "src/vendor/glm"]
+	path = src/vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "src/vendor/soloud"]
+	path = src/vendor/soloud
+	url = https://github.com/jarikomppa/soloud.git
+[submodule "src/vendor/genie"]
+	path = src/vendor/genie
+	url = https://github.com/bkaradzic/GENie.git
