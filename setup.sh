@@ -2,7 +2,6 @@ cd src/vendor/FreeType
 make setup ansi
 make
 
-sudo apt install xorg-dev  
 cd ..
 cd glfw
 cmake -S . -B build
@@ -15,5 +14,3 @@ cd ../soloud/build
 ../../genie/bin/linux/genie gmake
 cd gmake
 make
-
-sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev

@@ -1,9 +1,20 @@
 # 2D Game Engine
 A work-in-progress 2D game engine made in c++ and opengl.
 
+## Clone
+Run git clone --recursive https://github.com/Fxby16/2D_Game_Engine.git
+
+## Requirements
+`sudo apt install xorg-dev`  
+`sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev`
+
 ## Build
-Run `premake5 gmake2` to get the makefile. 
-The run `make` to get the executable. If not specified, the program will be compiled in debug mode. To compile in release mode use `make config=release`.
+`bash setup.sh`  
+`bash src/glfw.sh`  
+`cd src`  
+`premake5 gmake2`  
+`make`  
+To get the executable. If not specified, the program will be compiled in debug mode. To compile in release mode use `make config=release`.
 
 ## Execute
 Run `bin/Debug/2DGameEngine` or `bin/Release/2DGameEngine` depending on which config you used.
