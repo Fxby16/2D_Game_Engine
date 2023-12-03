@@ -9,7 +9,6 @@ uniform mat4 u_PM;
 
 void main() {
     gl_Position = u_PM*position;
-    gl_PointSize = 20;
 
     out_color=color;
 }

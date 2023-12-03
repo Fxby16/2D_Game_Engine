@@ -58,6 +58,7 @@ int InitGlfwWindow(const char *window_name){
 
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(MessageCallback,0);
+    glEnable(GL_PROGRAM_POINT_SIZE);
 
     printf("%s\n%s\n",(char *)glGetString(GL_VERSION),(char *)glGetString(GL_RENDERER));
 

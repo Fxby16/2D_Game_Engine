@@ -25,6 +25,10 @@ struct RendererData{
     RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size);
 };
 
+enum LightType{
+    ALL_LIGHT,LIGHT_AROUND_POS,LIGHT_AROUND_POS_COLL
+};
+
 class Renderer{
 private:
     RendererData m_Textures;
@@ -57,14 +61,16 @@ public:
     ~Renderer();
 
     void BindLightingFB();
-    void ApplyLight(const char *type,float center_x,float center_y);
+    void ApplyLight();
    
     void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
     void DrawTexture(float x,float y,float w,float h,float scale,float depth,float texID);
     void DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,float r,float g,float b,float a);
     void DrawQuad(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
+    void DrawSolidQuad(float x,float y,float w,float h,Vec4 color);
     void DrawPoint(float x,float y,float r,float g,float b,float a);
     void DrawLine(float x1,float y1,float x2,float y2,float r,float g,float b,float a);
+    void DrawLight(float light_x,float light_y,Vec4 color,enum LightType light_type,float radius=0.0f,float blurAmount=0.0f);
 
     void ChangeLineWidth(float new_size);
     void ChangePointSize(float new_size);
@@ -90,8 +96,6 @@ public:
     void AddSegment(Vec2 start_point,Vec2 end_point);
     void UpdateScreenSegments();
     void ClearSegments();
-
-    void DrawLight(float light_x,float light_y,const char *light_type);
 
     static void ImGui_Init();
     static void ImGui_Theme();
