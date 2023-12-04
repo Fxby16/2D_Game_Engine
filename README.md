@@ -22,7 +22,6 @@ Run `bin/Debug/2DGameEngine` or `bin/Release/2DGameEngine` depending on which co
 ## Short term plans
 - start to write a documentation
 - make the code more readable and more organized
-- add lighting
 - add other features
 
 ## Long term plans
