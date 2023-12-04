@@ -14,3 +14,6 @@ cd ../soloud/build
 ../../genie/bin/linux/genie gmake
 cd gmake
 make
+
+cd ../../../../..
+bash ./imgui.sh

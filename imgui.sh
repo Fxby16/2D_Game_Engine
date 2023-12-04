@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory dei file sorgente di ImGui
-imgui_src_dir="vendor/ImGui"
+imgui_src_dir="src/vendor/ImGui"
 
 # Nome della libreria statica
 lib_name="libimgui_static.a"
