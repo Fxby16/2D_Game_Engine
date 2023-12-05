@@ -7,6 +7,7 @@ Run `git clone --recursive https://github.com/Fxby16/2D_Game_Engine.git`
 ## Requirements
 `sudo apt install xorg-dev`  
 `sudo apt install libglu1-mesa-dev freeglut3-dev mesa-common-dev`  
+  
 Required only for the editor (there isn't one yet...):  
 `sudo apt install zenity`
 
