@@ -2,7 +2,7 @@
 A work-in-progress 2D game engine made in c++ and opengl.
 
 ## Clone
-Run git clone --recursive https://github.com/Fxby16/2D_Game_Engine.git
+Run `git clone --recursive https://github.com/Fxby16/2D_Game_Engine.git`
 
 ## Requirements
 `sudo apt install xorg-dev`  
