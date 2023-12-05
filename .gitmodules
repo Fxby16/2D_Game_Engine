@@ -16,3 +16,6 @@
 [submodule "src/vendor/genie"]
 	path = src/vendor/genie
 	url = https://github.com/bkaradzic/GENie.git
+[submodule "src/editor/vendor/NativeFileDialog"]
+	path = src/editor/vendor/NativeFileDialog
+	url = https://github.com/mlabbe/nativefiledialog.git

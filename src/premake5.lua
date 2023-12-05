@@ -8,7 +8,7 @@ project "2DGameEngine"
     targetdir "bin/%{cfg.buildcfg}"
 
     files { "**.hpp", "**.cpp", "**.h", "**.c" }
-    removefiles { "examples/**","vendor/**" }
+    removefiles { "examples/**","vendor/**","editor/**" }
 
     includedirs { "include", 
                   "include/vendor", 

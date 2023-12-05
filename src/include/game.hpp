@@ -19,12 +19,12 @@ protected:
 
 public:
     Game(const char *window_name);
-    virtual ~Game();
+    ~Game();
 
     void Run();
 
-    virtual void OnUpdate(double frame_time);
-    virtual void OnRender();
-    virtual void OnImGuiUpdate();
-    virtual void OnImGuiRender();
+    void OnUpdate(double frame_time);
+    void OnRender();
+    void OnImGuiUpdate();
+    void OnImGuiRender();
 };

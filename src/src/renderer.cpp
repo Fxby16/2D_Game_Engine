@@ -27,8 +27,6 @@ Renderer::Renderer():
     for(int i=0;i<32;i++)
         m_Slots[i]=i;
 
-    Renderer::ImGui_Init();
-
     AddLayout(m_Textures.VBL,GL_FLOAT,2,false);
     AddLayout(m_Textures.VBL,GL_FLOAT,2,false);
     AddLayout(m_Textures.VBL,GL_FLOAT,1,false);
@@ -88,6 +86,8 @@ Renderer::Renderer():
     segments.push_back(std::make_pair(Vec2(0,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,SCREEN_HEIGHT)));
     segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,0)));
     segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,0),Vec2(0,0)));
+
+    Renderer::ImGui_Init();
 }
 
 Renderer::~Renderer(){

@@ -31,7 +31,7 @@ public:
         m_Renderer->AddSegment(Vec2(1000,600),Vec2(1100,600));
     }
 
-    void OnUpdate(double frame_time) override{
+    void OnUpdate(double frame_time){
         m_Renderer->Clear({0.5f,0.5f,0.5f});
         m_Renderer->DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,img.GetTexID());
         m_Renderer->DrawSolidQuad(300,200,400,300,{0,0,0,1});
@@ -57,7 +57,7 @@ public:
         m_Renderer->Render();
     }
 
-    void OnImGuiUpdate() override{
+    void OnImGuiUpdate(){
         Renderer::ImGui_Content();
 
         ImGui::SetNextWindowSize(ImVec2(0,0));
