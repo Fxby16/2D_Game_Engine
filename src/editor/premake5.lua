@@ -12,11 +12,9 @@ project "2DGameEngineEditor"
 
     includedirs { "include",
                   "../include/vendor", 
-                  "../vendor/FreeType/include",
                   "../vendor/glfw/include/GLFW",
                   "../vendor/ImGui",
                   "../vendor/ImGui/backends",
-                  "../vendor/soloud/include",
                   "vendor/NativeFileDialog/src/include",
                   "vendor/NativeFileDialog/src/"}
 
