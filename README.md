@@ -15,7 +15,7 @@ Required only for the editor (there isn't one yet...):
 `cd src`  
 `premake5 gmake2`  
 `make`  
-To get the executable. If not specified, the program will be compiled in debug mode. To compile in release mode use `make config=release`.
+If not specified, the program will be compiled in debug mode. To compile in release mode use `make config=release`.
 
 ## Execute
 Run `bin/Debug/2DGameEngine` or `bin/Release/2DGameEngine` depending on which config you used.
