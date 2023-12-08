@@ -40,10 +40,10 @@ private:
 
     IndexBuffer IB;
 
-    std::vector<Vertex>m_BufferT;
-    std::vector<LinePointVertex>m_BufferP;
-    std::vector<LinePointVertex>m_BufferL;
-    std::vector<TriangleVertex>m_BufferTR;
+    Vertex *m_BufferT;
+    LinePointVertex *m_BufferP;
+    LinePointVertex *m_BufferL;
+    TriangleVertex *m_BufferTR;
 
     Shader m_SPostProcessing;
     unsigned int m_PostProcessingIndex;

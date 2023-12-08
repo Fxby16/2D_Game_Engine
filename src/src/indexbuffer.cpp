@@ -3,7 +3,11 @@
 #include <glad/glad.h>
 #include <vector>
 
-IndexBuffer::IndexBuffer(): m_Indices(MAX_INDICES){
+#include <memory.hpp>
+
+IndexBuffer::IndexBuffer(){
+    m_Indices=(unsigned int*)AllocateMemory(MAX_INDICES*sizeof(unsigned int));
+
     glGenBuffers(1,&m_ID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,m_ID);
     
@@ -12,6 +16,7 @@ IndexBuffer::IndexBuffer(): m_Indices(MAX_INDICES){
 
 IndexBuffer::~IndexBuffer(){
     glDeleteBuffers(1,&m_ID);
+    FreeMemory(m_Indices);
 }
 
 void IndexBuffer::Set(unsigned int num_elem){
@@ -29,7 +34,7 @@ void IndexBuffer::Set(unsigned int num_elem){
 
         offset+=4;
     }
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0,m_NumElem*sizeof(GLuint),(const void *)m_Indices.data());
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0,m_NumElem*sizeof(GLuint),(const void *)m_Indices);
 }
 
 void IndexBuffer::Bind() const{

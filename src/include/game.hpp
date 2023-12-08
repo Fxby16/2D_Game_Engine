@@ -6,7 +6,7 @@
 #include <textrenderer.hpp>
 #include <texture.hpp>
 #include <entity.hpp>
-#include <glfw.hpp>
+#include <window.hpp>
 
 #include <iostream>
 
@@ -17,14 +17,18 @@ protected:
     AudioPlayer *m_AudioPlayer;
     const char *m_WindowName;
 
+    #ifdef DEBUG
+        double last_time;
+    #endif
+
 public:
     Game(const char *window_name);
     ~Game();
 
     void Run();
 
-    void OnUpdate(double frame_time);
-    void OnRender();
-    void OnImGuiUpdate();
-    void OnImGuiRender();
+    virtual void OnUpdate(double frame_time);
+    virtual void OnRender();
+    virtual void OnImGuiUpdate();
+    virtual void OnImGuiRender();
 };

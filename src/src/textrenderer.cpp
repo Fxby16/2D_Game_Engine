@@ -1,21 +1,26 @@
 #include <textrenderer.hpp>
 #include <global.hpp>
 #include <cstdio>
+#include <memory.hpp>
 
 TextRenderer::TextRenderer(const char *font_path):
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
-    m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
-    m_Transforms(CH_LIMIT),m_ToRender(CH_LIMIT)
+    m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl")
 {
+
+    m_Characters=(Character*)AllocateMemory(CH_NUM*sizeof(Character));
+    m_Transforms=(glm::mat4*)AllocateMemory(CH_LIMIT*sizeof(glm::mat4));
+    m_ToRender=(int*)AllocateMemory(CH_LIMIT*sizeof(int));
+
     UpdateProjMat();
     m_Shader.Bind();
     m_Shader.SetUniformMat4f("u_PM",m_Proj);
 
     if(FT_Init_FreeType(&m_FT))
-        fprintf(stderr,"FREETYPE ERROR: Couldn't init FreeType Library\n");
+        perror("FREETYPE ERROR: Couldn't init FreeType Library\n");
 
     if(FT_New_Face(m_FT,font_path,0,&m_Face))
-        fprintf(stderr,"FREETYPE ERROR: Failed to load font\n");
+        perror("FREETYPE ERROR: Failed to load font\n");
     else{
         FT_Select_Charmap(m_Face,ft_encoding_unicode);
         FT_Set_Pixel_Sizes(m_Face,256,256);
@@ -26,9 +31,9 @@ TextRenderer::TextRenderer(const char *font_path):
         glBindTexture(GL_TEXTURE_2D_ARRAY,m_TextureArrayID);
         glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_R8,256,256,CH_NUM,0,GL_RED,GL_UNSIGNED_BYTE,0);
 
-        for(uint8_t ch=0;ch<CH_NUM;ch++){
+        for(int ch=0;ch<CH_NUM;ch++){
             if(FT_Load_Char(m_Face,ch,FT_LOAD_RENDER)){
-                fprintf(stderr,"FREETYPE ERROR: Failed to load Glyph\n");
+                perror("FREETYPE ERROR: Failed to load Glyph\n");
                 continue;
             }
             glTexSubImage3D(
@@ -70,14 +75,18 @@ TextRenderer::TextRenderer(const char *font_path):
 }
 
 TextRenderer::~TextRenderer(){
+    FreeMemory(m_Characters);
+    FreeMemory(m_Transforms);
+    FreeMemory(m_ToRender);
+
     glDeleteTextures(1,&m_TextureArrayID);
 }
 
-void TextRenderer::DrawText(std::string text,float x,float y,float scale,float *color){
+void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 color){
     scale=scale*48.0f/256.0f;
     float copyX=x;
     m_Shader.Bind();
-    m_Shader.SetUniform3f("textColor",color[0],color[1],color[2]);
+    m_Shader.SetUniform3f("textColor",color.r,color.g,color.b);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D_ARRAY,m_TextureArrayID);
     m_VAO.Bind();
@@ -87,7 +96,7 @@ void TextRenderer::DrawText(std::string text,float x,float y,float scale,float *
     for(auto c:text){
         Character ch=m_Characters[c];
         if(c=='\n'){
-            y-=((ch.Size.y))*1.3*scale;
+            y-=ch.Size.y*1.3*scale;
             x=copyX;
         }else if(c==' ')
             x+=(ch.Advance>>6)*scale;
@@ -108,9 +117,28 @@ void TextRenderer::DrawText(std::string text,float x,float y,float scale,float *
     Render(workingIndex);
 }
 
+std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
+    scale=scale*48.0f/256.0f;
+    float width_=0.0f,height_=0.0f;
+    float max_width=0.0f;
+    for(auto c:text){
+        Character ch=m_Characters[c];
+        if(c=='\n'){
+            height_+=ch.Size.y*1.3*scale;
+            max_width=std::max(max_width,width_);
+            width_=0.0f;
+        }else if(c==' ')
+            width_+=(ch.Advance>>6)*scale;
+        else{
+            width_+=(ch.Advance>>6)*scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+        }
+    }
+    return std::make_pair(std::max(max_width,width_),height_);
+}
+
 void TextRenderer::Render(int num_characters){
     if(num_characters!=0){
-        glUniformMatrix4fv(m_Shader.GetUniformLocation("m_Transforms"),num_characters,GL_FALSE,&m_Transforms[0][0][0]);
+        glUniformMatrix4fv(m_Shader.GetUniformLocation("transforms"),num_characters,GL_FALSE,&m_Transforms[0][0][0]);
         m_Shader.SetUniform1iv("letterMap",&m_ToRender[0],num_characters);
         glDrawArraysInstanced(GL_TRIANGLE_STRIP,0,4,num_characters);
     }

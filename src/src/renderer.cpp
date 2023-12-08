@@ -3,7 +3,9 @@
 #include <algorithm>
 
 #include <GLFW/glfw3.h>
-#include <glfw.hpp>
+#include <window.hpp>
+
+#include <memory.hpp>
 
 RendererData::RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size): 
                           VBO(MAX_VERTICES,vertex_size,GL_DYNAMIC_DRAW),S(vertex_path,fragment_path),NumVertices(0){}
@@ -14,9 +16,13 @@ Renderer::Renderer():
     m_Lines("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl",sizeof(LinePointVertex)),
     m_Triangles("resources/shaders/triangles/vertex.glsl","resources/shaders/triangles/fragment.glsl",sizeof(TriangleVertex)),
     m_Lights("resources/shaders/lights/vertex.glsl","resources/shaders/lights/fragment.glsl",4*sizeof(float)),
-    m_BufferT(MAX_VERTICES),m_BufferP(MAX_VERTICES),m_BufferL(MAX_VERTICES),m_BufferTR(MAX_VERTICES),
     m_SPostProcessing("resources/shaders/textures/vertex.glsl","resources/shaders/post_processing/fragment.glsl"),
     m_PostProcessingIndex(std::numeric_limits<unsigned int>::max()){
+
+    m_BufferT=(Vertex *)AllocateMemory(MAX_VERTICES*sizeof(Vertex));
+    m_BufferP=(LinePointVertex *)AllocateMemory(MAX_VERTICES*sizeof(LinePointVertex));
+    m_BufferL=(LinePointVertex *)AllocateMemory(MAX_VERTICES*sizeof(LinePointVertex));
+    m_BufferTR=(TriangleVertex *)AllocateMemory(MAX_VERTICES*sizeof(TriangleVertex));
 
     m_Framebuffer=new Framebuffer;
     m_LightingFramebuffer=new Framebuffer;
@@ -80,18 +86,27 @@ Renderer::Renderer():
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
+    glEnable(GL_PROGRAM_POINT_SIZE);
+
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&m_MaxTextureSlots);
+    #ifdef DEBUG
+        printf("Max texture slots: %d\n",m_MaxTextureSlots);
+    #endif
 
     segments.push_back(std::make_pair(Vec2(0,0),Vec2(0,SCREEN_HEIGHT)));
     segments.push_back(std::make_pair(Vec2(0,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,SCREEN_HEIGHT)));
     segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,0)));
     segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,0),Vec2(0,0)));
-
-    Renderer::ImGui_Init();
 }
 
 Renderer::~Renderer(){
+    FreeMemory(m_BufferT);
+    FreeMemory(m_BufferP);
+    FreeMemory(m_BufferL);
+    FreeMemory(m_BufferTR);
+
     delete m_Framebuffer;
+    delete m_LightingFramebuffer;
 }
 
 void Renderer::BindLightingFB(){
@@ -256,7 +271,7 @@ void Renderer::RenderTextures(bool post_processing){
     int slot=-1;
     int lastIndex=0;
 
-    std::stable_sort(begin(m_BufferT),begin(m_BufferT)+m_Textures.NumVertices,cmp); //sorting textures by id to reduce the times you have to bind new textures
+    std::stable_sort(m_BufferT,m_BufferT+m_Textures.NumVertices,cmp); //sorting textures by id to reduce the times you have to bind new textures
     m_Textures.VAO.Bind();
     m_Textures.VBO.Bind();
     IB.Bind();

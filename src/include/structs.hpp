@@ -15,6 +15,8 @@ struct Vec2{
 
 struct Vec3{
     float r,g,b;
+    Vec3();
+    Vec3(float r,float g,float b);
 };
 
 struct Vec4{

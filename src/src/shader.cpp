@@ -1,28 +1,37 @@
 #include <glad/glad.h>
 #include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
+#include <cstdio>
 
 #include <shader.hpp>
 
 Shader::Shader(const char *vertex_shader_path,const char *fragment_shader_path){
     m_ID=glCreateProgram();
 
-std::string vertexCode;
-std::string fragmentCode;
-std::ifstream vertexFile;
-std::ifstream fragmentFile;
-    //get shader source code from file
-    vertexFile.open(vertex_shader_path);
-    fragmentFile.open(fragment_shader_path);
-    std::stringstream vertexStream,fragmentStream;
-    vertexStream<<vertexFile.rdbuf();
-    fragmentStream<<fragmentFile.rdbuf();
-    vertexFile.close();
-    fragmentFile.close();
-    vertexCode=vertexStream.str();
-    fragmentCode=fragmentStream.str();
+    std::string vertexCode;
+    std::string fragmentCode;
+    FILE *vertexFile=fopen(vertex_shader_path,"r");
+    FILE *fragmentFile=fopen(fragment_shader_path,"r");
+
+    if(vertexFile==NULL){
+        perror("Couldn't open vertex shader file\n");
+        return;
+    }
+
+    if(fragmentFile==NULL){
+        perror("Couldn't open fragment shader file\n");
+        return;
+    }
+    
+    char ch;
+    while((ch=fgetc(vertexFile))!=EOF){
+        vertexCode+=ch;
+    }
+    while((ch=fgetc(fragmentFile))!=EOF){
+        fragmentCode+=ch;
+    }
+
+    fclose(vertexFile);
+    fclose(fragmentFile);
 
     const char *vertexSourceCode=vertexCode.c_str();
     const char *fragmentSourceCode=fragmentCode.c_str();
@@ -44,11 +53,13 @@ void Shader::Unbind() const{
 
 void Shader::Compile(const char *vertex_src_code,const char *fragment_src_code){
 unsigned int vertexShader,fragmentShader;
+
     //compile vertex Shader
     vertexShader=glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader,1,&vertex_src_code,NULL);
     glCompileShader(vertexShader);
     CheckShaderErrors(vertexShader);
+
     //compile fragment Shader
     fragmentShader=glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader,1,&fragment_src_code,NULL);
@@ -73,7 +84,7 @@ bool Shader::CheckShaderErrors(GLuint ShaderID){
 
         GLsizei BufferSize;
         glGetShaderInfoLog(ShaderID,InfoLogLength,&BufferSize,buffer);
-        std::cout<<buffer<<std::endl;
+        puts(buffer);
         delete []buffer;
         return false;
     }
@@ -114,7 +125,7 @@ int Shader::GetUniformLocation(const std::string &name){
     int location=glGetUniformLocation(m_ID,name.c_str());
     m_UniformsCache[name]=location;
     if(location==-1)
-        std::cout<<"Warning: Uniform "<<name<<" doesn't exist"<<std::endl;
+        printf("Warning: Uniform %s doesn't exist\n",name.c_str());
     return location;
 }
 

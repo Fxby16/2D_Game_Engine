@@ -7,7 +7,7 @@ class IndexBuffer{
 private:
     unsigned int m_ID;
     unsigned int m_NumElem;
-    std::vector<unsigned int>m_Indices;
+    unsigned int *m_Indices;
 public:
     IndexBuffer();
     ~IndexBuffer();

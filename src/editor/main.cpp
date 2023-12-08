@@ -22,7 +22,7 @@ int main(){
                 }
                 if(ImGui::MenuItem("Open")){
                     nfdchar_t *outPath=NULL;
-                    nfdresult_t result=NFD_OpenDialog(NULL, NULL,&outPath);
+                    nfdresult_t result=NFD_OpenDialog(NULL,NULL,&outPath);
                         
                     if(result==NFD_OKAY){
                         puts("Success!");
@@ -33,7 +33,7 @@ int main(){
                         puts("User pressed cancel.");
                     }
                     else{
-                        printf("Error: %s\n", NFD_GetError() );
+                        printf("Error: %s\n",NFD_GetError());
                     }
                 }
                 if(ImGui::MenuItem("Save")){

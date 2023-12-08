@@ -1,5 +1,9 @@
-#include <glfw.hpp>
-#include <stdio.h>
+#include <window.hpp>
+#include <cstdio>
+#include <sys/types.h>
+#include <sys/sysinfo.h>
+#include <cstring>
+#include <cstdlib>
 
 bool ISFULLSCREEN=false;
 
@@ -43,7 +47,7 @@ int InitGlfwWindow(const char *window_name){
     if(WINDOW==NULL){
         perror("Failed to create GLFW WINDOW\n");
         glfwTerminate();
-        return -1;
+        return 1;
     }
 
     glfwMakeContextCurrent(WINDOW);
@@ -51,20 +55,19 @@ int InitGlfwWindow(const char *window_name){
 
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         perror("Failed to initialize GLAD\n");
-        return -1;
+        return 1;
     } 
 
     glfwSetFramebufferSizeCallback(WINDOW,FramebufferSizeCallback);
 
-    glEnable(GL_DEBUG_OUTPUT);
-    glDebugMessageCallback(MessageCallback,0);
-    glEnable(GL_PROGRAM_POINT_SIZE);
+    #ifdef DEBUG
+        glEnable(GL_DEBUG_OUTPUT);
+        glDebugMessageCallback(MessageCallback,0);
+    #endif
 
     printf("%s\n%s\n",(char *)glGetString(GL_VERSION),(char *)glGetString(GL_RENDERER));
 
     glViewport(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
     return 0;
 }
@@ -77,4 +80,68 @@ void ToggleFullScreen(){
         glfwSetWindowMonitor(WINDOW,glfwGetPrimaryMonitor(),0,0,mode->width,mode->height,GLFW_DONT_CARE);
     ISFULLSCREEN=!ISFULLSCREEN;
     WindowInfo::ISFULLSCREEN=ISFULLSCREEN;
+}
+
+int parseLine(char *line){
+    int i=0;
+    while(*line<'0' || *line>'9') 
+        line++;
+    while(*line>='0'&&*line<='9'){
+        i=i*10+(*line-'0');
+        line++;
+    }
+    return i;
+}
+
+/**
+ * Get value from /proc/meminfo
+ * \param value a string containing the value name, for example `MemTotal`.
+ * \return the value in kb
+*/
+int getMemInfoValue(const char *value){
+    FILE *file=fopen("/proc/meminfo","r");
+    int result=-1;
+    char line[128];
+
+    while(fgets(line,128,file)!=NULL){
+        if(strncmp(line,value,strlen(value))==0){
+            result=parseLine(line);
+            break;
+        }
+    }
+    fclose(file);
+    return result;
+}
+
+/**
+ * Get value from /proc/self/status
+ * \param value a string containing the value name, for example `VmRSS`.
+ * \return the value in kb
+*/
+int getStatusValue(const char *value){
+    FILE *file=fopen("/proc/self/status","r");
+    int result=-1;
+    char line[128];
+
+    while(fgets(line,128,file)!=NULL){
+        if(strncmp(line,value,strlen(value))==0){
+            result=parseLine(line);
+            break;
+        }
+    }
+    fclose(file);
+    return result;
+}
+
+void PrintDebugInfo(){
+    float totalMem=static_cast<float>(getMemInfoValue("MemTotal"))/1024.0f;
+    float availableMem=static_cast<float>(getMemInfoValue("MemAvailable"))/1024.0f;
+    float SwapTotal=static_cast<float>(getMemInfoValue("SwapTotal"))/1024.0f;
+    float SwapFree=static_cast<float>(getMemInfoValue("SwapFree"))/1024.0f;
+    float residentMem=static_cast<float>(getStatusValue("VmRSS"))/1024.0f;
+    printf("RAM: %.2f/%.2f MB\n",totalMem-availableMem,totalMem);
+    printf("Swap: %.2f/%.2f MB\n",SwapTotal-SwapFree,SwapTotal);
+    printf("Resident Memory: %.2f MB\n",residentMem);
+
+    putchar('\n');
 }

@@ -4,7 +4,7 @@ workspace "2DGameEngine"
 project "2DGameEngine"
     kind "ConsoleApp"
     language "C++"
-    cppdialect "C++17"
+    cppdialect "C++20"
     targetdir "bin/%{cfg.buildcfg}"
 
     files { "**.hpp", "**.cpp", "**.h", "**.c" }
@@ -36,6 +36,7 @@ project "2DGameEngine"
     filter "configurations:Debug"
         optimize "Debug"
         symbols "On"
+        defines { "DEBUG" }
 
     filter "configurations:Release"
         optimize "Full"

@@ -35,9 +35,9 @@ private:
     glm::mat4 m_Proj;
 
     unsigned int m_TextureArrayID;
-    Character m_Characters[CH_NUM];
-    std::vector<glm::mat4> m_Transforms;
-    std::vector<int> m_ToRender;
+    Character *m_Characters;
+    glm::mat4 *m_Transforms;
+    int *m_ToRender;
 public:
     TextRenderer(const char *font_path);
     ~TextRenderer();
@@ -46,6 +46,7 @@ public:
         m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
     }
 
-    void DrawText(std::string text,float x,float y,float scale,float *color);
+    void DrawText(std::string text,float x,float y,float scale,Vec3 color);
+    std::pair<float,float> GetTextSize(std::string text,float scale);
     void Render(int num_characters);
 };

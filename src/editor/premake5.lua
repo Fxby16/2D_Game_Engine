@@ -4,7 +4,7 @@ workspace "2DGameEngineEditor"
 project "2DGameEngineEditor"
     kind "ConsoleApp"
     language "C++"
-    cppdialect "C++17"
+    cppdialect "C++20"
     targetdir "bin/%{cfg.buildcfg}"
 
     files { "**.hpp", "**.cpp", "**.h", "**.c" }

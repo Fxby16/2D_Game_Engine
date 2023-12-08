@@ -4,14 +4,21 @@ Game::Game(const char *window_name){
     m_WindowName=window_name;
 
     InitGlfwWindow(window_name);
+    Renderer::ImGui_Init();
     InitAudio();
-    ImGui::CreateContext();
 
     m_Renderer=new Renderer;
+    m_AudioPlayer=new AudioPlayer;
+
+    #ifdef DEBUG
+        last_time=glfwGetTime();
+        PrintDebugInfo();
+    #endif
 }
 
 Game::~Game(){
     delete m_Renderer;
+    delete m_AudioPlayer;
 
     DeinitAudio();
     Renderer::ImGui_Close();
@@ -38,6 +45,15 @@ void Game::Run(){
         OnImGuiRender();
 
         glfwSwapBuffers(WINDOW);
+
+        #ifdef DEBUG
+            double current_time=glfwGetTime();
+            if(current_time-last_time>=4.0){
+                last_time=current_time;
+                printf("FPS: %f\n",1.0/(DELTA_TIME));
+                PrintDebugInfo();
+            }
+        #endif
     }
 }
 
