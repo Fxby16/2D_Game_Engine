@@ -14,7 +14,7 @@ public:
     ~VertexBuffer();
 
     void SetData(unsigned int vertex_index,float *data,unsigned int num_vertices,unsigned int VertexSize);
-    static std::array<Vertex,4> CreateQuad(float x,float y,float w,float h,float scale,float depth,float texID);
+    static std::array<Vertex,4> CreateQuad(float x,float y,float w,float h,float depth,float texID);
     void Bind() const;
     void Unbind() const;
 };

@@ -20,7 +20,7 @@ void VertexBuffer::Unbind() const{
     glBindBuffer(GL_ARRAY_BUFFER,0);
 }
 
-std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,float scale,float Depth,float TexID){
+std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,float Depth,float TexID){
     Vertex v1;
     v1.Position={x,y};
     v1.TexCoords={0.0f,0.0f};
@@ -28,19 +28,19 @@ std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,fl
     v1.TexID=TexID;
 
     Vertex v2;
-    v2.Position={x,y+h*scale};
+    v2.Position={x,y+h};
     v2.TexCoords={0.0f,1.0f};
     v2.Depth=Depth;
     v2.TexID=TexID;
 
     Vertex v3;
-    v3.Position={x+w*scale,y+h*scale};
+    v3.Position={x+w,y+h};
     v3.TexCoords={1.0f,1.0f};
     v3.Depth=Depth;
     v3.TexID=TexID;
 
     Vertex v4;
-    v4.Position={x+w*scale,y};
+    v4.Position={x+w,y};
     v4.TexCoords={1.0f,0.0f};
     v4.Depth=Depth;
     v4.TexID=TexID;

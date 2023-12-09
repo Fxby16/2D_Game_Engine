@@ -16,7 +16,7 @@ void Entity::SetTexture(const char *path,bool pixelart){
 }
 
 void Entity::Draw(Renderer &renderer){
-    renderer.DrawTexture(m_R.pos.x,m_R.pos.y,m_R.size.w,m_R.size.h,1.0f,m_Depth,m_T.GetTexID());
+    renderer.DrawTexture(m_R.pos.x,m_R.pos.y,m_R.size.w,m_R.size.h,m_Depth,m_T.GetTexID());
 }
 
 void Entity::Move(int x_offset,int y_offset,float frame_time){

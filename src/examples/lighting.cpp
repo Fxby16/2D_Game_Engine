@@ -33,7 +33,7 @@ public:
 
     void OnUpdate(double frame_time) override{
         m_Renderer->Clear({0.5f,0.5f,0.5f});
-        m_Renderer->DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,img.GetTexID());
+        m_Renderer->DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,0,img.GetTexID());
         m_Renderer->DrawSolidQuad(300,200,400,300,{0,0,0,1});
         m_Renderer->DrawSolidQuad(100,200,100,100,{0,0,0,1});
         m_Renderer->DrawSolidQuad(1000,100,100,500,{0,0,0,1});

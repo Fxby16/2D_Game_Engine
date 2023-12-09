@@ -64,7 +64,7 @@ public:
     void ApplyLight();
    
     void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
-    void DrawTexture(float x,float y,float w,float h,float scale,float depth,float texID);
+    void DrawTexture(float x,float y,float w,float h,float depth,float texID);
     void DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,float r,float g,float b,float a);
     void DrawQuad(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
     void DrawSolidQuad(float x,float y,float w,float h,Vec4 color);

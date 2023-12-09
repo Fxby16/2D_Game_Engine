@@ -23,7 +23,7 @@ public:
 
         float x=0.0f,y=0.0f;
         for(unsigned int i=0;i<NUM_QUADS;i++){
-            m_Renderer->DrawTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,1.0f,(float)t[i%t.size()]->GetTexID());
+            m_Renderer->DrawTexture(x,y,(float)IMAGE_WIDTH,(float)IMAGE_HEIGHT,1.0f,(float)t[i%t.size()]->GetTexID());
             x+=IMAGE_WIDTH;
             if(x>=SCREEN_WIDTH){
                 x=0;

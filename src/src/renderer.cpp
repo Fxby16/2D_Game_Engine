@@ -145,8 +145,8 @@ void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int 
     VBL.Push(type,count,normalized);
 }
 
-void Renderer::DrawTexture(float x,float y,float w,float h,float scale,float depth,float texID){
-    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,scale,depth,texID);
+void Renderer::DrawTexture(float x,float y,float w,float h,float depth,float texID){
+    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,depth,texID);
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
     m_BufferT[m_Textures.NumVertices+2]=c;
