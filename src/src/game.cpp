@@ -58,7 +58,7 @@ void Game::Run(){
 }
 
 void Game::OnUpdate(double frame_time){
-    m_Renderer->Clear({0.0f,0.0f,0.0f});
+    m_Renderer->Clear();
 }
 
 void Game::OnRender(){

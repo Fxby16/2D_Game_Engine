@@ -20,7 +20,7 @@ public:
     }
 
     void OnUpdate(double frame_time) override{
-        m_Renderer->Clear({0.0f,0.0f,0.0f});
+        m_Renderer->Clear();
 
         int x_offset=0,y_offset=0;
         if(glfwGetKey(WINDOW,GLFW_KEY_W)==GLFW_PRESS)

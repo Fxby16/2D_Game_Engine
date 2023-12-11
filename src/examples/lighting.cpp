@@ -14,6 +14,8 @@ public:
     Example(const char *window_name): Game(window_name),img("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR),light_radius(300.0f),type(LIGHT_AROUND_POS){
         m_Renderer->ChangePointSize(20);
         m_Renderer->ChangeLineWidth(2);
+
+        m_Renderer->SetAmbientLight({0.3f,0.3f,0.3f});
         
         m_Renderer->AddSegment(Vec2(300,200),Vec2(700,200));
         m_Renderer->AddSegment(Vec2(700,200),Vec2(700,500));
@@ -32,7 +34,7 @@ public:
     }
 
     void OnUpdate(double frame_time) override{
-        m_Renderer->Clear({0.5f,0.5f,0.5f});
+        m_Renderer->Clear();
         m_Renderer->DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,0,img.GetTexID());
         m_Renderer->DrawSolidQuad(300,200,400,300,{0,0,0,1});
         m_Renderer->DrawSolidQuad(100,200,100,100,{0,0,0,1});

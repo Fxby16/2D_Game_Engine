@@ -19,7 +19,7 @@ public:
     void OnUpdate(double frame_time) override{
         NUM_QUADS=(unsigned int)ceil(((float)SCREEN_WIDTH/(float)IMAGE_WIDTH)*((float)SCREEN_HEIGHT/(float)IMAGE_HEIGHT));
 
-        m_Renderer->Clear({0.0f,0.0f,0.0f});
+        m_Renderer->Clear();
 
         float x=0.0f,y=0.0f;
         for(unsigned int i=0;i<NUM_QUADS;i++){

@@ -38,7 +38,7 @@ public:
     void StartScene();
     void DrawScene();
 
-    void Clear(Vec3 color) const;
+    void Clear(bool ambient_light=false) const;
     void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
 
     void DrawTexture(float x,float y,float w,float h,float depth,float texID);
@@ -61,6 +61,8 @@ public:
 
     void ChangeLineWidth(float new_size);
     void ChangePointSize(float new_size);
+    void SetAmbientLight(Vec3 color);
+    void SetClearColor(Vec3 color);
 
     void AddSegment(Vec2 start_point,Vec2 end_point);
     void UpdateScreenSegments();
@@ -93,7 +95,9 @@ private:
     unsigned int m_PostProcessingIndex;
     Framebuffer *m_Framebuffer;
     Framebuffer *m_LightingFramebuffer;
-    //Framebuffer *m_TempFramebuffer;
+
+    Vec3 m_AmbientLight;
+    Vec3 m_ClearColor;
     
     glm::mat4 m_Proj;
     int m_Slots[32];

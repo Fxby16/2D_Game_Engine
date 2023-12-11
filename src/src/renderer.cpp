@@ -16,7 +16,7 @@ Renderer::Renderer():
     m_Triangles("resources/shaders/triangles/vertex.glsl","resources/shaders/triangles/fragment.glsl",sizeof(TriangleVertex)),
     m_Lights("resources/shaders/lights/vertex.glsl","resources/shaders/lights/fragment.glsl",4*sizeof(float)),
     m_SPostProcessing("resources/shaders/textures/vertex.glsl","resources/shaders/post_processing/fragment.glsl"),
-    m_PostProcessingIndex(std::numeric_limits<unsigned int>::max()){
+    m_PostProcessingIndex(std::numeric_limits<unsigned int>::max()),m_AmbientLight(0.0f,0.0f,0.0f),m_ClearColor(0.0f,0.0f,0.0f){
 
     m_BufferT=(Vertex *)AllocateMemory(MAX_VERTICES*sizeof(Vertex));
     m_BufferP=(LinePointVertex *)AllocateMemory(MAX_VERTICES*sizeof(LinePointVertex));
@@ -25,7 +25,6 @@ Renderer::Renderer():
 
     m_Framebuffer=new Framebuffer;
     m_LightingFramebuffer=new Framebuffer;
-    //m_TempFramebuffer=new Framebuffer;
     IB.Set(MAX_VERTICES);
 
     m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
@@ -116,10 +115,6 @@ void Renderer::ApplyLight(){
 
     m_Lights.VBO.Bind();
     m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
-
-    //glBindFramebuffer(GL_READ_FRAMEBUFFER,m_Framebuffer->GetFramebufferID());
-    //glBindFramebuffer(GL_DRAW_FRAMEBUFFER,m_TempFramebuffer->GetFramebufferID());
-    //glBlitFramebuffer(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,GL_COLOR_BUFFER_BIT,GL_NEAREST);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
@@ -235,6 +230,14 @@ void Renderer::ChangePointSize(float new_size){
     glPointSize(new_size);
 }
 
+void Renderer::SetAmbientLight(Vec3 color){
+    m_AmbientLight=color;
+}
+
+void Renderer::SetClearColor(Vec3 color){
+    m_ClearColor=color;
+}
+
 void Renderer::StartScene(){
     if(PROJ_UPDATE){
         PROJ_UPDATE=false;
@@ -264,18 +267,16 @@ void Renderer::StartScene(){
         m_Framebuffer=new Framebuffer;
         delete m_LightingFramebuffer;
         m_LightingFramebuffer=new Framebuffer;
-        //delete m_TempFramebuffer;
-        //m_TempFramebuffer=new Framebuffer;
     }
     m_LightingFramebuffer->Bind();
-    Clear({0.3f,0.3f,0.3f});
+    Clear(true);
     m_Framebuffer->Bind();
-    Clear({0.0f,0.0f,0.0f});
+    Clear();
 }
 
 void Renderer::DrawScene(){
     m_Framebuffer->Unbind();
-    Clear({0.0f,0.0f,0.0f});
+    Clear();
     DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,0,m_Framebuffer->GetColorbufferID());
     Render(true);
 }
@@ -377,10 +378,13 @@ void Renderer::RenderLines(){
     m_Lines.NumVertices=0;
 }
 
-void Renderer::Clear(Vec3 color) const{
+void Renderer::Clear(bool ambient_light) const{
     DRAW_CALLS=0;
 
-    glClearColor(color.r,color.g,color.b,1.0f);
+    if(ambient_light)
+        glClearColor(m_AmbientLight.r,m_AmbientLight.g,m_AmbientLight.b,1.0f);
+    else    
+        glClearColor(m_ClearColor.r,m_ClearColor.g,m_ClearColor.b,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 

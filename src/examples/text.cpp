@@ -17,6 +17,8 @@ public:
     Example(const char *window_name): Game(window_name),text_renderer("resources/fonts/Tektur-Regular.ttf"),
         color(1,1,1),x(0),y(0),scale(1){
 
+        m_Renderer->SetClearColor({0.5f,0.5f,0.5f});
+
         text=(char*)AllocateMemory(100*sizeof(char));
         memset(text,'\0',100*sizeof(char));
     }
@@ -25,7 +27,7 @@ public:
     }
 
     void OnUpdate(double frame_time) override{
-        m_Renderer->Clear({0.5f,0.5f,0.5f});
+        m_Renderer->Clear();
         text_renderer.DrawText(text,x,y,scale,color);
     }
 
