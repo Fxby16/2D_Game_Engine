@@ -7,8 +7,6 @@
 #include <structs.hpp>
 
 class VertexBuffer{
-private:
-    unsigned int m_ID;
 public:
     VertexBuffer(unsigned int num_vertices,unsigned int vertex_size,GLenum usage);
     ~VertexBuffer();
@@ -17,4 +15,7 @@ public:
     static std::array<Vertex,4> CreateQuad(float x,float y,float w,float h,float depth,float texID);
     void Bind() const;
     void Unbind() const;
+
+private:
+    unsigned int m_ID;
 };

@@ -11,3 +11,4 @@ cd editor
 make clean
 rm ./Makefile -f
 rm ./2DGameEngineEditor.make -f
+rm ./imgui.ini -f

@@ -12,14 +12,6 @@ void InitAudio();
 void DeinitAudio();
 
 class AudioPlayer{
-private:
-
-    std::vector<SoLoud::Wav>m_Wavs;
-    std::vector<SoLoud::WavStream>m_WavStreams;
-
-    int m_WavIndex;
-    int m_WavStreamIndex;
-
 public:
     AudioPlayer(): m_WavIndex(0),m_WavStreamIndex(0){}
 
@@ -34,4 +26,14 @@ public:
 
     void ClearAudio();
     void ClearAudioLong();
+
+private:
+
+    std::vector<SoLoud::Wav>m_Wavs;
+    std::vector<SoLoud::WavStream>m_WavStreams;
+
+    int m_WavIndex;
+    int m_WavStreamIndex;
+
+
 };

@@ -2,6 +2,7 @@
 #include <global.hpp>
 #include <cstdio>
 #include <memory.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 TextRenderer::TextRenderer(const char *font_path):
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
@@ -14,7 +15,7 @@ TextRenderer::TextRenderer(const char *font_path):
 
     UpdateProjMat();
     m_Shader.Bind();
-    m_Shader.SetUniformMat4f("u_PM",m_Proj);
+    m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
     if(FT_Init_FreeType(&m_FT))
         perror("FREETYPE ERROR: Couldn't init FreeType Library\n");
@@ -138,7 +139,7 @@ std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
 
 void TextRenderer::Render(int num_characters){
     if(num_characters!=0){
-        glUniformMatrix4fv(m_Shader.GetUniformLocation("transforms"),num_characters,GL_FALSE,&m_Transforms[0][0][0]);
+        m_Shader.SetUniformMat4fv("transforms",glm::value_ptr(m_Transforms[0]),num_characters);
         m_Shader.SetUniform1iv("letterMap",&m_ToRender[0],num_characters);
         glDrawArraysInstanced(GL_TRIANGLE_STRIP,0,4,num_characters);
     }

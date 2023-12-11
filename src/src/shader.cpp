@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <string>
 #include <cstdio>
-
+#include <memory.hpp>
 #include <shader.hpp>
 
 Shader::Shader(const char *vertex_shader_path,const char *fragment_shader_path){
@@ -75,17 +75,17 @@ unsigned int vertexShader,fragmentShader;
 }
 
 bool Shader::CheckShaderErrors(GLuint ShaderID){
-    GLint CompileStatus;
+    int CompileStatus;
     glGetShaderiv(ShaderID,GL_COMPILE_STATUS,&CompileStatus);
     if(CompileStatus!=GL_TRUE){
-        GLint InfoLogLength;
+        int InfoLogLength;
         glGetShaderiv(ShaderID,GL_INFO_LOG_LENGTH,&InfoLogLength);
-        GLchar *buffer=new GLchar[InfoLogLength];
+        char *buffer=(char*)AllocateMemory(InfoLogLength*sizeof(char));
 
-        GLsizei BufferSize;
+        int BufferSize;
         glGetShaderInfoLog(ShaderID,InfoLogLength,&BufferSize,buffer);
         puts(buffer);
-        delete []buffer;
+        FreeMemory(buffer);
         return false;
     }
     return true;
@@ -111,8 +111,8 @@ void Shader::SetUniform1f(const std::string &name,float v0){
     glUniform1f(GetUniformLocation(name),v0);
 }
 
-void Shader::SetUniformMat4f(const std::string &name,glm::mat4 &proj){
-    glUniformMatrix4fv(GetUniformLocation(name),1,GL_FALSE,&proj[0][0]);
+void Shader::SetUniformMat4fv(const std::string &name,float *proj,unsigned int num_elem){
+    glUniformMatrix4fv(GetUniformLocation(name),num_elem,GL_FALSE,proj);
 }
 
 void Shader::SetUniform1i(const std::string &name,int v0){

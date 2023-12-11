@@ -16,6 +16,13 @@ inline constexpr unsigned int CH_LIMIT=400;
 inline constexpr unsigned int CH_NUM=128;
 
 class TextRenderer{
+public:
+    TextRenderer(const char *font_path);
+    ~TextRenderer();
+
+    void DrawText(std::string text,float x,float y,float scale,Vec3 color);
+    std::pair<float,float> GetTextSize(std::string text,float scale); 
+
 private:
 
     struct Character{
@@ -38,15 +45,10 @@ private:
     Character *m_Characters;
     glm::mat4 *m_Transforms;
     int *m_ToRender;
-public:
-    TextRenderer(const char *font_path);
-    ~TextRenderer();
 
     inline void UpdateProjMat(){
         m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
     }
 
-    void DrawText(std::string text,float x,float y,float scale,Vec3 color);
-    std::pair<float,float> GetTextSize(std::string text,float scale);
-    void Render(int num_characters);
+    void Render(int num_characters);  
 };

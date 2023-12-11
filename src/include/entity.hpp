@@ -7,11 +7,6 @@
 #include <structs.hpp>
 
 class Entity{
-private:
-    Rect m_R;
-    int m_Depth;
-    Texture m_T;
-    bool m_Collider;
 public:
     Entity(const char *path,float x,float y,float w,float h,bool pixelart=false);
     void SetSize(int w,int h);
@@ -24,6 +19,12 @@ public:
     inline int GetY(){ return m_R.pos.y; }
     inline int GetW(){ return m_R.size.w; }
     inline int GetH(){ return m_R.size.h; }
+
+private:
+    Rect m_R;
+    int m_Depth;
+    Texture m_T;
+    bool m_Collider;
 };
 
 namespace CollisionDetection{

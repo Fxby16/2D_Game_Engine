@@ -12,15 +12,6 @@
 
 
 class Game{
-protected:
-    Renderer *m_Renderer;
-    AudioPlayer *m_AudioPlayer;
-    const char *m_WindowName;
-
-    #ifdef DEBUG
-        double last_time;
-    #endif
-
 public:
     Game(const char *window_name);
     ~Game();
@@ -31,4 +22,13 @@ public:
     virtual void OnRender();
     virtual void OnImGuiUpdate();
     virtual void OnImGuiRender();
+
+protected:
+    Renderer *m_Renderer;
+    AudioPlayer *m_AudioPlayer;
+    const char *m_WindowName;
+
+    #ifdef DEBUG
+        double last_time;
+    #endif
 };

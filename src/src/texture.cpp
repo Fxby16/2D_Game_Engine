@@ -33,30 +33,36 @@ void Texture::Unbind() const{
     glBindTexture(GL_TEXTURE_2D,0);
 }
 
-std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float row,float col,float scale,float Depth,float texID){
+std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,float texID){
     Vertex v1;
     v1.Position={x,y};
     v1.TexCoords={(col*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};
-    v1.Depth=Depth;
+    v1.Depth=depth;
     v1.TexID=texID;
 
     Vertex v2;
-    v2.Position={x,y+m_TileHeight*scale};
+    v2.Position={x,y+height};
     v2.TexCoords={(col*m_TileWidth)/m_Width,((row+1)*m_TileHeight)/m_Height};
-    v2.Depth=Depth;
+    v2.Depth=depth;
     v2.TexID=texID;
 
     Vertex v3;
-    v3.Position={x+m_TileWidth*scale,y+m_TileHeight*scale};
+    v3.Position={x+width,y+height};
     v3.TexCoords={((col+1)*m_TileWidth)/m_Width,((row+1)*m_TileHeight)/m_Height};
-    v3.Depth=Depth;
+    v3.Depth=depth;
     v3.TexID=texID;
 
     Vertex v4;
-    v4.Position={x+m_TileWidth*scale,y};
+    v4.Position={x+width,y};
     v4.TexCoords={((col+1)*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};
-    v4.Depth=Depth;
+    v4.Depth=depth;
     v4.TexID=texID;
     
     return {v1,v2,v3,v4};
+}
+
+void SpriteSheet::PlayAnimation(bool loop,float delay){
+    m_PlayAnimation=true;
+    m_LoopAnimation=loop;
+    m_AnimationDelay=delay;
 }

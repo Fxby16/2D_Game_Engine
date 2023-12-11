@@ -4,10 +4,6 @@
 #include <global.hpp>
 
 class IndexBuffer{
-private:
-    unsigned int m_ID;
-    unsigned int m_NumElem;
-    unsigned int *m_Indices;
 public:
     IndexBuffer();
     ~IndexBuffer();
@@ -18,4 +14,9 @@ public:
     void Unbind() const;
 
     inline unsigned int GetNumElem() const{ return m_NumElem; }
+
+private:
+    unsigned int m_ID;
+    unsigned int m_NumElem;
+    unsigned int *m_Indices;
 };

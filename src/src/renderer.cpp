@@ -1,11 +1,10 @@
 #include <renderer.hpp>
 #include <vector>
 #include <algorithm>
-
 #include <GLFW/glfw3.h>
 #include <window.hpp>
-
 #include <memory.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 RendererData::RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size): 
                           VBO(MAX_VERTICES,vertex_size,GL_DYNAMIC_DRAW),S(vertex_path,fragment_path),NumVertices(0){}
@@ -56,26 +55,26 @@ Renderer::Renderer():
     m_Lights.VAO.AddBuffer(m_Lights.VBO,m_Lights.VBL);
 
     m_Points.S.Bind();
-    m_Points.S.SetUniformMat4f("u_PM",m_Proj);
+    m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     m_Points.S.SetUniform1f("blurAmount",0.0f);
 
     m_Lines.S.Bind();
-    m_Lines.S.SetUniformMat4f("u_PM",m_Proj);
+    m_Lines.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
     m_Textures.S.Bind();
-    m_Textures.S.SetUniformMat4f("u_PM",m_Proj);
+    m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     m_Textures.S.SetUniform1iv("texID",m_Slots,32);
 
     m_Triangles.S.Bind();
-    m_Triangles.S.SetUniformMat4f("u_PM",m_Proj);
+    m_Triangles.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
     m_Lights.S.Bind();
-    m_Lights.S.SetUniformMat4f("u_PM",m_Proj);
+    m_Lights.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     m_Lights.S.SetUniform1i("framebuffer",0);
     m_Lights.S.SetUniform1i("light",1);
 
     m_SPostProcessing.Bind();
-    m_SPostProcessing.SetUniformMat4f("u_PM",m_Proj);
+    m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     m_SPostProcessing.SetUniform1iv("texID",m_Slots,32);
 
     glEnable(GL_LINE_SMOOTH);
@@ -107,10 +106,6 @@ Renderer::~Renderer(){
 
     delete m_Framebuffer;
     delete m_LightingFramebuffer;
-}
-
-void Renderer::BindLightingFB(){
-    m_LightingFramebuffer->Bind();
 }
 
 void Renderer::ApplyLight(){
@@ -156,6 +151,35 @@ void Renderer::DrawTexture(float x,float y,float w,float h,float depth,float tex
     if(m_Textures.NumVertices==MAX_VERTICES)
         Render();
 }
+
+void Renderer::DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,SpriteSheet &s){
+    std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(x,y,width,height,row,col,depth,s.GetTexID());
+    m_BufferT[m_Textures.NumVertices]=quad[0];
+    m_BufferT[m_Textures.NumVertices+1]=quad[1];
+    m_BufferT[m_Textures.NumVertices+2]=quad[2];
+    m_BufferT[m_Textures.NumVertices+3]=quad[3];
+    m_Textures.NumVertices+=4;
+
+    if(m_Textures.NumVertices==MAX_VERTICES)
+        Render();
+}
+
+void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,float depth,SpriteSheet &s){
+    if(s.m_PlayAnimation){
+        if(glfwGetTime()-s.m_LastAnimationTime>=s.m_AnimationDelay){
+            s.m_LastAnimationTime=glfwGetTime();
+            s.m_AnimationIndex++;
+            if(s.m_AnimationIndex>=s.m_Width/s.m_TileWidth){
+                if(!s.m_LoopAnimation){
+                    s.m_PlayAnimation=false;
+                }
+                s.m_AnimationIndex=0;
+            }
+        }
+    }
+    DrawSpriteSheet(x,y,width,height,ceil(static_cast<float>(s.m_Height)/static_cast<float>(s.m_TileHeight))-1,s.m_AnimationIndex,depth,s);
+}
+
 
 void Renderer::DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,float r,float g,float b,float a){
     m_BufferTR[m_Triangles.NumVertices]=TriangleVertex(Vec2(x1,y1),Vec4(r,g,b,a));
@@ -217,22 +241,22 @@ void Renderer::StartScene(){
         m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
 
         m_Points.S.Bind();
-        m_Points.S.SetUniformMat4f("u_PM",m_Proj);
+        m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
         m_Lines.S.Bind();
-        m_Lines.S.SetUniformMat4f("u_PM",m_Proj);
+        m_Lines.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
         m_Textures.S.Bind();
-        m_Textures.S.SetUniformMat4f("u_PM",m_Proj);
+        m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
         m_Triangles.S.Bind();
-        m_Triangles.S.SetUniformMat4f("u_PM",m_Proj);
+        m_Triangles.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
         m_Lights.S.Bind();
-        m_Lights.S.SetUniformMat4f("u_PM",m_Proj);
+        m_Lights.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
         m_SPostProcessing.Bind();
-        m_SPostProcessing.SetUniformMat4f("u_PM",m_Proj);
+        m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     }
     if(FRAMEBUFFER_UPDATE){
         FRAMEBUFFER_UPDATE=false;
@@ -243,7 +267,7 @@ void Renderer::StartScene(){
         //delete m_TempFramebuffer;
         //m_TempFramebuffer=new Framebuffer;
     }
-    BindLightingFB();
+    m_LightingFramebuffer->Bind();
     Clear({0.3f,0.3f,0.3f});
     m_Framebuffer->Bind();
     Clear({0.0f,0.0f,0.0f});
@@ -252,7 +276,7 @@ void Renderer::StartScene(){
 void Renderer::DrawScene(){
     m_Framebuffer->Unbind();
     Clear({0.0f,0.0f,0.0f});
-    DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,1,0,m_Framebuffer->GetColorbufferID());
+    DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,0,m_Framebuffer->GetColorbufferID());
     Render(true);
 }
 
