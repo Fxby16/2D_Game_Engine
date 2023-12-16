@@ -5,6 +5,8 @@ A work-in-progress 2D game engine made in c++ and opengl.
 Run `git clone --recursive https://github.com/Fxby16/2D_Game_Engine.git`
 
 ## Requirements
+`sudo apt install cmake`  
+`sudo apt install libasound2-dev`  
 `sudo apt install xorg-dev`  
 `sudo apt install libglu1-mesa-dev freeglut3-dev mesa-common-dev`  
   
