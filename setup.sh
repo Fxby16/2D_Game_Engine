@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Setup GLFW
+cd src/vendor/glfw
+cmake -S . -B build
+cd build
+make
+
+cd ../../../../
+
 # Setup ImGui
 imgui_src_dir="src/vendor/ImGui" 
 lib_name="libimgui_static.a"
@@ -8,12 +16,13 @@ objects=()
 for file in "${imgui_src_dir}"/*.cpp; do
     base_name=$(basename "$file")
     object_name="${base_name%.cpp}.o"
-    g++ -c -o "${object_name}" "${file}" -I "${imgui_src_dir}"
+    g++ -c -o "${object_name}" "${file}" -I "${imgui_src_dir}" -I src/vendor/glfw
     objects+=("${object_name}")
 done
 
-g++ -c -o ./imgui_impl_glfw.o "${imgui_src_dir}/backends/imgui_impl_glfw.cpp" -I "${imgui_src_dir}" -I "${imgui_src_dir}/backends"
-g++ -c -o ./imgui_impl_opengl3.o "${imgui_src_dir}/backends/imgui_impl_opengl3.cpp" -I "${imgui_src_dir}" -I "${imgui_src_dir}/backends"
+pwd
+g++ -c -o ./imgui_impl_glfw.o "${imgui_src_dir}/backends/imgui_impl_glfw.cpp" -I "${imgui_src_dir}" -I "${imgui_src_dir}/backends" -I src/vendor/glfw/include
+g++ -c -o ./imgui_impl_opengl3.o "${imgui_src_dir}/backends/imgui_impl_opengl3.cpp" -I "${imgui_src_dir}" -I "${imgui_src_dir}/backends" -I src/vendor/glfw/include
 
 objects+=("imgui_impl_glfw.o")
 objects+=("imgui_impl_opengl3.o")
@@ -27,16 +36,10 @@ rm "${lib_name}"
 cd src/vendor/FreeType
 make setup ansi
 make
-
-# Setup GLFW
-cd ..
-cd glfw
-cmake -S . -B build
-cd build
-make
+pwd
 
 # Setup Genie
-cd ../../genie
+cd ../genie
 make
 
 # Setup Soloud
@@ -49,4 +52,4 @@ cd ../../../../..
 
 # Setup NativeFileDialog
 cd src/editor/vendor/NativeFileDialog/build/gmake_linux_zenity
-make
+make 
