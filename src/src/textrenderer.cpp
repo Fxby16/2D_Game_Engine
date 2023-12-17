@@ -120,7 +120,7 @@ void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 co
 
 std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
     scale=scale*48.0f/256.0f;
-    float width_=0.0f,height_=0.0f;
+    float width_=0.0f,height_=m_Characters['\n'].Size.y*1.3*scale;
     float max_width=0.0f;
     for(auto c:text){
         Character ch=m_Characters[c];

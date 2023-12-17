@@ -8,7 +8,7 @@ private:
     Entity e3;
     Entity e4;
 public:
-    Example(const char *window_name): Game(window_name),e0("resources/textures/smurf_cat.jpg",0,0,100,100),
+    Example(const char *window_name,unsigned int width,unsigned int height,bool imgui=true): Game(window_name,width,height,imgui),e0("resources/textures/smurf_cat.jpg",0,0,100,100),
     e1("resources/textures/cicciogamer89.jpg",150,150,100,100),e2("resources/textures/cicciogamer89.jpg",300,300,100,100),
     e3("resources/textures/cicciogamer89.jpg",450,450,100,100),e4("resources/textures/cicciogamer89.jpg",600,600,100,100)
     {
@@ -43,7 +43,7 @@ public:
 };
 
 int main(){
-    Example *example=new Example("Test");
+    Example *example=new Example("Test",1600,900);
     example->Run();
     delete example;
 

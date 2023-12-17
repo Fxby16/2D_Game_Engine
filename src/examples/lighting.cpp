@@ -11,7 +11,7 @@ private:
     float light_radius;
     enum LightType type;
 public:
-    Example(const char *window_name): Game(window_name),img("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR),light_radius(300.0f),type(LIGHT_AROUND_POS){
+    Example(const char *window_name,unsigned int width,unsigned int height,bool imgui=true): Game(window_name,width,height,imgui),img("resources/textures/cicciogamer89.jpg",GL_LINEAR,GL_LINEAR),light_radius(300.0f),type(LIGHT_AROUND_POS){
         m_Renderer->ChangePointSize(20);
         m_Renderer->ChangeLineWidth(2);
 
@@ -83,7 +83,7 @@ public:
 };
 
 int main(){
-    Example *example=new Example("Test");
+    Example *example=new Example("Test",1600,900);
     example->Run();
     delete example;
 

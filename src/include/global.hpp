@@ -11,8 +11,8 @@ extern double DELTA_TIME;
 extern double LAST_FRAME;
 extern bool V_SYNC;
 
-inline constexpr unsigned int BASE_SCREEN_WIDTH=1600;
-inline constexpr unsigned int BASE_SCREEN_HEIGHT=900;
+extern unsigned int BASE_SCREEN_WIDTH;
+extern unsigned int BASE_SCREEN_HEIGHT;
 extern unsigned int SCREEN_WIDTH;
 extern unsigned int SCREEN_HEIGHT;
 

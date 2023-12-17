@@ -14,7 +14,7 @@ private:
     Vec3 color;
     float x,y,scale;
 public:
-    Example(const char *window_name): Game(window_name),text_renderer("resources/fonts/Tektur-Regular.ttf"),
+    Example(const char *window_name,unsigned int width,unsigned int height,bool imgui=true): Game(window_name,width,height,imgui),text_renderer("resources/fonts/Tektur-Regular.ttf"),
         color(1,1,1),x(0),y(0),scale(1){
 
         m_Renderer->SetClearColor({0.5f,0.5f,0.5f});
@@ -47,7 +47,7 @@ public:
 };
 
 int main(){
-    Example *example=new Example("Test");
+    Example *example=new Example("Test",1600,900);
     example->Run();
     delete example;
 

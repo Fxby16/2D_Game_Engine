@@ -13,7 +13,7 @@
 
 class Game{
 public:
-    Game(const char *window_name);
+    Game(const char *window_name,unsigned int width,unsigned int height,bool imgui=true);
     ~Game();
 
     void Run();
@@ -27,6 +27,8 @@ protected:
     Renderer *m_Renderer;
     AudioPlayer *m_AudioPlayer;
     const char *m_WindowName;
+
+    bool imgui;
 
     #ifdef DEBUG
         double last_time;

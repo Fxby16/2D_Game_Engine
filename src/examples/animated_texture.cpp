@@ -5,7 +5,7 @@ class Example : public Game{
 private:
     SpriteSheet s;
 public:
-    Example(const char *window_name): Game(window_name),s("resources/textures/Run.png",128,128,GL_NEAREST,GL_NEAREST){
+    Example(const char *window_name,unsigned int width,unsigned int height,bool imgui=true): Game(window_name,width,height,imgui),s("resources/textures/Run.png",128,128,GL_NEAREST,GL_NEAREST){
         s.PlayAnimation(true,0.1f);
     }
     ~Example(){}
@@ -21,7 +21,7 @@ public:
 };
 
 int main(){
-    Example *example=new Example("Test");
+    Example *example=new Example("Test",1600,900);
     example->Run();
     delete example;
 

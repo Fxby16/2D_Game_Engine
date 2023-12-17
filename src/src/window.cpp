@@ -82,6 +82,11 @@ void ToggleFullScreen(){
     WindowInfo::ISFULLSCREEN=ISFULLSCREEN;
 }
 
+void ToggleVSync(){
+    V_SYNC=!V_SYNC;
+    glfwSwapInterval(V_SYNC);
+}
+
 int parseLine(char *line){
     int i=0;
     while(*line<'0' || *line>'9') 

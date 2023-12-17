@@ -5,7 +5,7 @@ private:
     std::vector<Texture*>t;
     unsigned int IMAGE_WIDTH,IMAGE_HEIGHT,NUM_QUADS;
 public:
-    Example(const char *window_name): Game(window_name),t(457),IMAGE_WIDTH(20),IMAGE_HEIGHT(20){
+    Example(const char *window_name,unsigned int width,unsigned int height,bool imgui=true): Game(window_name,width,height,imgui),t(457),IMAGE_WIDTH(20),IMAGE_HEIGHT(20){
         for(size_t i=0;i<t.size();i++){
             t[i]=new Texture("resources/textures/batching_multiple_textures/"+std::to_string(i)+".png",GL_NEAREST,GL_NEAREST);
         }
@@ -48,7 +48,7 @@ public:
 };
 
 int main(){
-    Example *example=new Example("Test");
+    Example *example=new Example("Test",1600,900);
     example->Run();
     delete example;
 

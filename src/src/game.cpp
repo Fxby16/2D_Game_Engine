@@ -1,10 +1,15 @@
 #include <game.hpp>
 
-Game::Game(const char *window_name){
+Game::Game(const char *window_name,unsigned int width,unsigned int height,bool imgui){
     m_WindowName=window_name;
+    BASE_SCREEN_WIDTH=SCREEN_WIDTH=width;
+    BASE_SCREEN_HEIGHT=SCREEN_HEIGHT=height;
+
+    this->imgui=imgui;
 
     InitGlfwWindow(window_name);
-    Renderer::ImGui_Init();
+    if(imgui)
+        Renderer::ImGui_Init();
     InitAudio();
 
     m_Renderer=new Renderer;
@@ -21,7 +26,8 @@ Game::~Game(){
     delete m_AudioPlayer;
 
     DeinitAudio();
-    Renderer::ImGui_Close();
+    if(imgui)
+        Renderer::ImGui_Close();
     glfwTerminate();
 }
 
@@ -35,14 +41,18 @@ void Game::Run(){
         glfwPollEvents();
 
         m_Renderer->StartScene();
-        Renderer::ImGui_Start_Frame();
-        Renderer::ImGui_Theme();
+        if(imgui){
+            Renderer::ImGui_Start_Frame();
+            Renderer::ImGui_Theme();
+        }
 
         OnUpdate(DELTA_TIME);
-        OnImGuiUpdate();
-
         OnRender();
-        OnImGuiRender();
+
+        if(imgui){
+            OnImGuiUpdate();
+            OnImGuiRender();
+        }
 
         glfwSwapBuffers(WINDOW);
 

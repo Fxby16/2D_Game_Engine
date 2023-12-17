@@ -17,4 +17,5 @@ void HandleInputs();
 void GetMousePos(double *x,double *y);
 int InitGlfwWindow(const char *window_name);
 void ToggleFullScreen();
+void ToggleVSync();
 void PrintDebugInfo();
