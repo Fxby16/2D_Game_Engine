@@ -25,7 +25,6 @@ public:
 
 protected:
     Renderer *m_Renderer;
-    AudioPlayer *m_AudioPlayer;
     const char *m_WindowName;
 
     bool imgui;

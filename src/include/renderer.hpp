@@ -27,7 +27,7 @@ struct RendererData{
 };
 
 enum LightType{
-    ALL_LIGHT,LIGHT_AROUND_POS
+    ALL_LIGHT,LIGHT_AROUND_POS,LIGHT_AROUND_POS_COLL
 };
 
 class Renderer{
@@ -68,6 +68,8 @@ public:
     void UpdateScreenSegments();
     void ClearSegments();
     void ApplyLight();
+    void KeepCircle(float x,float y,float radius,float blurAmount);
+    std::pair<Vec2,float> GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg);
 
     static void ImGui_Init();
     static void ImGui_Theme();
@@ -81,7 +83,6 @@ private:
     RendererData m_Points;
     RendererData m_Lines;
     RendererData m_Triangles;
-
     RendererData m_Lights;
 
     IndexBuffer IB;
@@ -90,11 +91,13 @@ private:
     LinePointVertex *m_BufferP;
     LinePointVertex *m_BufferL;
     TriangleVertex *m_BufferTR;
+    
+    Framebuffer *m_Framebuffer;
+    Framebuffer *m_LightingFramebuffer;
+    Framebuffer *m_TempFramebuffer;
 
     Shader m_SPostProcessing;
     unsigned int m_PostProcessingIndex;
-    Framebuffer *m_Framebuffer;
-    Framebuffer *m_LightingFramebuffer;
 
     Vec3 m_AmbientLight;
     Vec3 m_ClearColor;

@@ -18,6 +18,11 @@ Renderer::Renderer():
     m_SPostProcessing("resources/shaders/textures/vertex.glsl","resources/shaders/post_processing/fragment.glsl"),
     m_PostProcessingIndex(std::numeric_limits<unsigned int>::max()),m_AmbientLight(0.0f,0.0f,0.0f),m_ClearColor(0.0f,0.0f,0.0f){
 
+    float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
+                    0.0f,SCREEN_HEIGHT,0.0f,1.0f,
+                    SCREEN_WIDTH,SCREEN_HEIGHT,1.0f,1.0f,
+                    SCREEN_WIDTH,0.0f,1.0f,0.0f};
+
     m_BufferT=(Vertex *)AllocateMemory(MAX_VERTICES*sizeof(Vertex));
     m_BufferP=(LinePointVertex *)AllocateMemory(MAX_VERTICES*sizeof(LinePointVertex));
     m_BufferL=(LinePointVertex *)AllocateMemory(MAX_VERTICES*sizeof(LinePointVertex));
@@ -25,6 +30,7 @@ Renderer::Renderer():
 
     m_Framebuffer=new Framebuffer;
     m_LightingFramebuffer=new Framebuffer;
+    m_TempFramebuffer=new Framebuffer;
     IB.Set(MAX_VERTICES);
 
     m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
@@ -52,6 +58,7 @@ Renderer::Renderer():
     AddLayout(m_Lights.VBL,GL_FLOAT,2,false);
     AddLayout(m_Lights.VBL,GL_FLOAT,2,false);
     m_Lights.VAO.AddBuffer(m_Lights.VBO,m_Lights.VBL);
+    m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
 
     m_Points.S.Bind();
     m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
@@ -105,30 +112,6 @@ Renderer::~Renderer(){
 
     delete m_Framebuffer;
     delete m_LightingFramebuffer;
-}
-
-void Renderer::ApplyLight(){
-    float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
-                       0.0f,static_cast<float>(SCREEN_HEIGHT),0.0f,1.0f,
-                       static_cast<float>(SCREEN_WIDTH),static_cast<float>(SCREEN_HEIGHT),1.0f,1.0f,
-                       static_cast<float>(SCREEN_WIDTH),0.0f,1.0f,0.0f};
-
-    m_Lights.VBO.Bind();
-    m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
-    
-    m_Framebuffer->Bind();
-    IB.Bind();
-    m_Lights.VAO.Bind();
-    m_Lights.S.Bind();
-
-    int sub_id=Shader::GetSubroutineIndex("Merge",m_Lights.S.getID());
-    Shader::SetSubroutineUniform(sub_id);
-    glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
 }
 
 void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized){
@@ -267,7 +250,20 @@ void Renderer::StartScene(){
         m_Framebuffer=new Framebuffer;
         delete m_LightingFramebuffer;
         m_LightingFramebuffer=new Framebuffer;
+        delete m_TempFramebuffer;
+        m_TempFramebuffer=new Framebuffer;
+
+        float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
+                       0.0f,SCREEN_HEIGHT,0.0f,1.0f,
+                       SCREEN_WIDTH,SCREEN_HEIGHT,1.0f,1.0f,
+                       SCREEN_WIDTH,0.0f,1.0f,0.0f};
+
+        m_Lights.VBO.Bind();
+        m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
     }
+    m_TempFramebuffer->Bind();
+    glClearColor(0.0f,0.0f,0.0f,1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
     m_LightingFramebuffer->Bind();
     Clear(true);
     m_Framebuffer->Bind();
@@ -413,8 +409,34 @@ void Renderer::ClearSegments(){
     UpdateScreenSegments();
 }
 
+std::pair<Vec2,float> Renderer::GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg){
+    float r_px=ray.first.x;
+    float r_py=ray.first.y;
+    float r_dx=ray.second.x-ray.first.x;
+    float r_dy=ray.second.y-ray.first.y;
+
+    float s_px=seg.first.x;
+    float s_py=seg.first.y;
+    float s_dx=seg.second.x-seg.first.x;
+    float s_dy=seg.second.y-seg.first.y;
+
+    float r_mag=glm::sqrt(r_dx*r_dx+r_dy*r_dy);
+    float s_mag=glm::sqrt(s_dx*s_dx+s_dy*s_dy);
+    if(r_dx/r_mag==s_dx/s_mag && r_dy/r_mag==s_dy/s_mag){
+        return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f); 
+    }
+
+    float T2=(r_dx*(s_py-r_py)+r_dy*(r_px-s_px))/(s_dx*r_dy-s_dy*r_dx);
+    float T1=(s_px+s_dx*T2-r_px)/r_dx;
+
+    if(T1<0) return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
+    if(T2<0 || T2>1) return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
+
+    return std::make_pair(Vec2(r_px+r_dx*T1,r_py+r_dy*T1),T1);
+}
+
 void Renderer::DrawLight(float light_x,float light_y,Vec4 color,enum LightType light_type,float radius,float blurAmount){
-    if(light_type==ALL_LIGHT){
+    if(light_type==ALL_LIGHT || light_type==LIGHT_AROUND_POS_COLL){
         std::vector<Vec2>points;
         auto find=[&points](Vec2 point)->bool{
             for(size_t i=0;i<points.size();i++){
@@ -429,47 +451,21 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,enum LightType l
             if(find(b))
                 points.push_back(b);
 
-            DrawLine(a.x,a.y,b.x,b.y,0.5f,1.0f,1.0f,1.0f);
+            //DrawLine(a.x,a.y,b.x,b.y,0.5f,1.0f,1.0f,1.0f);
         }
         std::vector<float>angles;
 
         for(auto p:points){
-            float angle=std::atan2(p.y-light_y,p.x-light_x);
+            float angle=glm::atan(p.y-light_y,p.x-light_x);
             angles.push_back(angle-0.0001f);
             angles.push_back(angle);
             angles.push_back(angle+0.0001f);
         }
 
-        auto GetIntersection=[](std::pair<Vec2,Vec2>ray,std::pair<Vec2,Vec2>seg)->std::pair<Vec2,float>{
-            float r_px=ray.first.x;
-            float r_py=ray.first.y;
-            float r_dx=ray.second.x-ray.first.x;
-            float r_dy=ray.second.y-ray.first.y;
-        
-            float s_px=seg.first.x;
-            float s_py=seg.first.y;
-            float s_dx=seg.second.x-seg.first.x;
-            float s_dy=seg.second.y-seg.first.y;
-        
-            float r_mag=std::sqrt(r_dx*r_dx+r_dy*r_dy);
-            float s_mag=std::sqrt(s_dx*s_dx+s_dy*s_dy);
-            if(r_dx/r_mag==s_dx/s_mag && r_dy/r_mag==s_dy/s_mag){
-                return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f); 
-            }
-
-            float T2=(r_dx*(s_py-r_py)+r_dy*(r_px-s_px))/(s_dx*r_dy-s_dy*r_dx);
-            float T1=(s_px+s_dx*T2-r_px)/r_dx;
-        
-            if(T1<0) return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
-            if(T2<0 || T2>1) return std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
-        
-            return std::make_pair(Vec2(r_px+r_dx*T1,r_py+r_dy*T1),T1);
-        };
-
         std::vector<std::pair<Vec2,float>>intersects;
         for(auto angle:angles){
-            float dx=std::cos(angle);
-            float dy=std::sin(angle);
+            float dx=glm::cos(angle);
+            float dy=glm::sin(angle);
 
             std::pair<Vec2,Vec2>ray=std::make_pair(Vec2(light_x,light_y),Vec2(light_x+dx,light_y+dy));
             std::pair<Vec2,double> closest_intersect=std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
@@ -495,8 +491,14 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,enum LightType l
 
         Render();
 
-        m_LightingFramebuffer->Bind();
-        glBlendFunc(GL_ONE,GL_ONE);
+        if(light_type==ALL_LIGHT){
+            m_LightingFramebuffer->Bind();
+            glBlendFunc(GL_ONE,GL_ONE);
+        }else{
+            m_TempFramebuffer->Bind();
+            glClearColor(0.0f,0.0f,0.0f,1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+        }
 
         for(size_t i=0;i<intersects.size()-1;i++){
             auto a=intersects[i].first;
@@ -505,21 +507,65 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,enum LightType l
         }
         DrawTriangle(light_x,light_y,intersects[0].first.x,intersects[0].first.y,intersects[intersects.size()-1].first.x,intersects[intersects.size()-1].first.y,color.r,color.g,color.b,color.a);
         RenderTriangles();
+
+        if(light_type==LIGHT_AROUND_POS_COLL){
+            KeepCircle(light_x,light_y,radius,blurAmount);
+        }
     }else{
         Render();
         float previousSize;
         glGetFloatv(GL_POINT_SIZE,&previousSize);
         ChangePointSize(radius*2);
+
         m_Points.S.Bind();
         m_Points.S.SetUniform1f("blurAmount",blurAmount);
         m_LightingFramebuffer->Bind();
         glBlendFunc(GL_ONE,GL_ONE);
+
         DrawPoint(light_x,light_y,color.r,color.g,color.b,color.a);
         RenderPoints();
         m_Points.S.SetUniform1f("blurAmount",0.0f);
         ChangePointSize(previousSize);
     }
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void Renderer::KeepCircle(float x,float y,float radius,float blurAmount){
+    m_Lights.VBO.Bind();
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D,m_TempFramebuffer->GetColorbufferID());
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
+
+    m_LightingFramebuffer->Bind();
+    m_Lights.VAO.Bind();
+    m_Lights.S.Bind();
+
+    m_Lights.S.SetUniform2f("lightPos",x,y);
+    m_Lights.S.SetUniform1f("radius",radius);
+    m_Lights.S.SetUniform1f("blurAmount",blurAmount);
+
+    int sub_id=Shader::GetSubroutineIndex("KeepCircle",m_Lights.S.getID());
+    Shader::SetSubroutineUniform(sub_id);
+    glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+}
+
+void Renderer::ApplyLight(){
+    m_Lights.VBO.Bind();
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
+    
+    m_Framebuffer->Bind();
+    m_Lights.VAO.Bind();
+    m_Lights.S.Bind();
+
+    int sub_id=Shader::GetSubroutineIndex("Merge",m_Lights.S.getID());
+    Shader::SetSubroutineUniform(sub_id);
+    glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
 }
 
 void Renderer::ImGui_Init(){

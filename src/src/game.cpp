@@ -10,10 +10,8 @@ Game::Game(const char *window_name,unsigned int width,unsigned int height,bool i
     InitGlfwWindow(window_name);
     if(imgui)
         Renderer::ImGui_Init();
-    InitAudio();
 
     m_Renderer=new Renderer;
-    m_AudioPlayer=new AudioPlayer;
 
     #ifdef DEBUG
         last_time=glfwGetTime();
@@ -23,9 +21,7 @@ Game::Game(const char *window_name,unsigned int width,unsigned int height,bool i
 
 Game::~Game(){
     delete m_Renderer;
-    delete m_AudioPlayer;
 
-    DeinitAudio();
     if(imgui)
         Renderer::ImGui_Close();
     glfwTerminate();

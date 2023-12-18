@@ -12,10 +12,10 @@ double DELTA_TIME=0.0;
 double LAST_FRAME=0.0;
 bool V_SYNC=true;
 
-unsigned int BASE_SCREEN_WIDTH=1600;
-unsigned int BASE_SCREEN_HEIGHT=900;
-unsigned int SCREEN_WIDTH=1600;
-unsigned int SCREEN_HEIGHT=900;
+float BASE_SCREEN_WIDTH=1600.0f;
+float BASE_SCREEN_HEIGHT=900.0f;
+float SCREEN_WIDTH=1600.0f;
+float SCREEN_HEIGHT=900.0f;
 
 int DRAW_CALLS=0;
 

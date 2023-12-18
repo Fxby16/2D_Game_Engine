@@ -11,10 +11,10 @@ extern double DELTA_TIME;
 extern double LAST_FRAME;
 extern bool V_SYNC;
 
-extern unsigned int BASE_SCREEN_WIDTH;
-extern unsigned int BASE_SCREEN_HEIGHT;
-extern unsigned int SCREEN_WIDTH;
-extern unsigned int SCREEN_HEIGHT;
+extern float BASE_SCREEN_WIDTH;
+extern float BASE_SCREEN_HEIGHT;
+extern float SCREEN_WIDTH;
+extern float SCREEN_HEIGHT;
 
 inline constexpr unsigned int MAX_QUADS=5000;
 inline constexpr unsigned int MAX_VERTICES=4*MAX_QUADS;
