@@ -12,7 +12,7 @@ public:
     void SetSize(int w,int h);
     void SetTexture(const char *path,bool pixelart=false);
     void Draw(Renderer &renderer);
-    void Move(int x_offset,int y_offset,float frame_time);
+    void Move(int x_offset,int y_offset,const float frame_time);
     void AddCollider(bool insert=false);
 
     inline int GetX(){ return m_R.pos.x; }
@@ -28,12 +28,12 @@ private:
 };
 
 namespace CollisionDetection{
-    bool RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float& t_hit_near);
+    bool RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float &t_hit_near);
 
-    bool DynamicRectVsRect(const Rect* r_dynamic,const float fTimeStep,const Rect& r_static,
-        Vec2 &contact_point, Vec2 &contact_normal, float& contact_time);
+    bool DynamicRectVsRect(const Rect* r_dynamic,const float frame_time,const Rect &r_static,
+        Vec2 &contact_point,Vec2 &contact_normal,float &contact_time);
 
-    bool ResolveDynamicRectVsRect(Rect* r_dynamic,const float fTimeStep,Rect* r_static);
+    bool ResolveDynamicRectVsRect(Rect* r_dynamic,const float frame_time,Rect *r_static);
 
     extern std::vector<Rect>COLLIDERS;
 }

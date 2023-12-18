@@ -10,7 +10,7 @@ public:
     }
     ~Example(){}
 
-    void OnUpdate(double frame_time) override{
+    void OnUpdate(const double frame_time) override{
         m_Renderer->Clear();
         m_Renderer->DrawAnimatedTexture(300,300,300,300,0,s);
     }

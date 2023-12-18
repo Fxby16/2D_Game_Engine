@@ -16,7 +16,7 @@ public:
             delete t[i];
     }
 
-    void OnUpdate(double frame_time) override{
+    void OnUpdate(const double frame_time) override{
         NUM_QUADS=(unsigned int)ceil(((float)SCREEN_WIDTH/(float)IMAGE_WIDTH)*((float)SCREEN_HEIGHT/(float)IMAGE_HEIGHT));
 
         m_Renderer->Clear();

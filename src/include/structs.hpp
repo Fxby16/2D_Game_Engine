@@ -26,20 +26,20 @@ struct Vec4{
 };
 
 struct Vertex{
-    Vec2 Position;
-    Vec2 TexCoords;
-    float Depth;
-    float TexID;
+    Vec2 position;
+    Vec2 texcoords;
+    float depth;
+    float texID;
 };
 
 struct LinePointVertex{
-    Vec2 Pos;
-    Vec4 Color;
+    Vec2 pos;
+    Vec4 color;
 };
 
 struct TriangleVertex{
-    Vec2 Position;
-    Vec4 Color;
+    Vec2 position;
+    Vec4 color;
     TriangleVertex();
     TriangleVertex(Vec2 pos,Vec4 color);
 };

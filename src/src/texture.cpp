@@ -35,28 +35,28 @@ void Texture::Unbind() const{
 
 std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,float texID){
     Vertex v1;
-    v1.Position={x,y};
-    v1.TexCoords={(col*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};
-    v1.Depth=depth;
-    v1.TexID=texID;
+    v1.position={x,y};
+    v1.texcoords={(col*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};
+    v1.depth=depth;
+    v1.texID=texID;
 
     Vertex v2;
-    v2.Position={x,y+height};
-    v2.TexCoords={(col*m_TileWidth)/m_Width,((row+1)*m_TileHeight)/m_Height};
-    v2.Depth=depth;
-    v2.TexID=texID;
+    v2.position={x,y+height};
+    v2.texcoords={(col*m_TileWidth)/m_Width,((row+1)*m_TileHeight)/m_Height};
+    v2.depth=depth;
+    v2.texID=texID;
 
     Vertex v3;
-    v3.Position={x+width,y+height};
-    v3.TexCoords={((col+1)*m_TileWidth)/m_Width,((row+1)*m_TileHeight)/m_Height};
-    v3.Depth=depth;
-    v3.TexID=texID;
+    v3.position={x+width,y+height};
+    v3.texcoords={((col+1)*m_TileWidth)/m_Width,((row+1)*m_TileHeight)/m_Height};
+    v3.depth=depth;
+    v3.texID=texID;
 
     Vertex v4;
-    v4.Position={x+width,y};
-    v4.TexCoords={((col+1)*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};
-    v4.Depth=depth;
-    v4.TexID=texID;
+    v4.position={x+width,y};
+    v4.texcoords={((col+1)*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};
+    v4.depth=depth;
+    v4.texID=texID;
     
     return {v1,v2,v3,v4};
 }

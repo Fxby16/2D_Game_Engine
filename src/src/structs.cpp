@@ -9,8 +9,8 @@ Vec3::Vec3(float r,float g,float b): r(r),g(g),b(b){}
 Vec4::Vec4(): r(0),g(0),b(0),a(0){}
 Vec4::Vec4(float r,float g,float b,float a): r(r),g(g),b(b),a(a){}
 
-TriangleVertex::TriangleVertex(): Position(Vec2()),Color(Vec4()){}
-TriangleVertex::TriangleVertex(Vec2 pos,Vec4 color): Position(pos),Color(color){}
+TriangleVertex::TriangleVertex(): position(Vec2()),color(Vec4()){}
+TriangleVertex::TriangleVertex(Vec2 pos,Vec4 color): position(pos),color(color){}
 
 Vec2 operator+(Vec2 a,Vec2 b){
     return {a.x+b.x,a.y+b.y};

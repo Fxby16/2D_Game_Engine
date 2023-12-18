@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <global.hpp>
+#include <buttons.hpp>
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -19,3 +20,5 @@ int InitGlfwWindow(const char *window_name);
 void ToggleFullScreen();
 void ToggleVSync();
 void PrintDebugInfo();
+bool getKeyState(int key,int state);
+bool getMouseButtonState(int button,int state);

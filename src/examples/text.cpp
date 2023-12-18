@@ -26,7 +26,7 @@ public:
         FreeMemory(text);
     }
 
-    void OnUpdate(double frame_time) override{
+    void OnUpdate(const double frame_time) override{
         m_Renderer->Clear();
         text_renderer.DrawText(text,x,y,scale,color);
     }

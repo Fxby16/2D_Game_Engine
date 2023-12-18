@@ -18,7 +18,7 @@ public:
 
     void Run();
 
-    virtual void OnUpdate(double frame_time);
+    virtual void OnUpdate(const double frame_time);
     virtual void OnRender();
     virtual void OnImGuiUpdate();
     virtual void OnImGuiRender();

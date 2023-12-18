@@ -150,3 +150,11 @@ void PrintDebugInfo(){
 
     putchar('\n');
 }
+
+bool getKeyState(int key,int state){
+    return glfwGetKey(WINDOW,key)==state;
+}
+
+bool getMouseButtonState(int button,int state){
+    return glfwGetMouseButton(WINDOW,button)==state;
+}

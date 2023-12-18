@@ -42,6 +42,8 @@ public:
     void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
 
     void DrawTexture(float x,float y,float w,float h,float depth,float texID);
+    void DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float depth,float texID);
+    void DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float depth,Texture &texture);
     void DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,SpriteSheet &s);
     void DrawAnimatedTexture(float x,float y,float width,float height,float depth,SpriteSheet &s);
     void DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,float r,float g,float b,float a);
@@ -109,8 +111,8 @@ private:
     std::vector<std::pair<Vec2,Vec2>>segments; //used for lighting
 
     static bool cmp(const Vertex &v1,const Vertex &v2){
-        if(v1.Depth!=v2.Depth)
-            return v1.Depth>v2.Depth;
-        return v1.TexID<v2.TexID; 
+        if(v1.depth==v2.depth)
+            return v1.depth>v2.depth;
+        return v1.texID<v2.texID; 
     }
 };

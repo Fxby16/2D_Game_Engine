@@ -130,6 +130,29 @@ void Renderer::DrawTexture(float x,float y,float w,float h,float depth,float tex
         Render();
 }
 
+void Renderer::DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float depth,float texID){
+    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,tx,ty,tw,th,ttw,tth,depth,texID);
+    m_BufferT[m_Textures.NumVertices]=a;
+    m_BufferT[m_Textures.NumVertices+1]=b;
+    m_BufferT[m_Textures.NumVertices+2]=c;
+    m_BufferT[m_Textures.NumVertices+3]=d;
+    m_Textures.NumVertices+=4;
+
+    if(m_Textures.NumVertices==MAX_VERTICES)
+        Render();
+}
+
+void Renderer::DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float depth,Texture &texture){
+    if(reverse_x && reverse_y)
+        DrawTexture(x,y,w,h,texture.GetWidth(),texture.GetHeight(),-texture.GetWidth(),-texture.GetHeight(),texture.GetWidth(),texture.GetHeight(),0,texture.GetTexID());
+    else if(reverse_x)
+        DrawTexture(x,y,w,h,texture.GetWidth(),0,-texture.GetWidth(),texture.GetHeight(),texture.GetWidth(),texture.GetHeight(),0,texture.GetTexID());
+    else if(reverse_y)
+        DrawTexture(x,y,w,h,0,texture.GetHeight(),texture.GetWidth(),-texture.GetHeight(),texture.GetWidth(),texture.GetHeight(),0,texture.GetTexID());
+    else
+        DrawTexture(x,y,w,h,depth,texture.GetTexID());
+}
+
 void Renderer::DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,SpriteSheet &s){
     std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(x,y,width,height,row,col,depth,s.GetTexID());
     m_BufferT[m_Textures.NumVertices]=quad[0];
@@ -186,8 +209,8 @@ void Renderer::DrawSolidQuad(float x,float y,float w,float h,Vec4 color){
 }
 
 void Renderer::DrawPoint(float x,float y,float r,float g,float b,float a){
-    m_BufferP[m_Points.NumVertices].Pos={x,y};
-    m_BufferP[m_Points.NumVertices].Color={r,g,b,a};
+    m_BufferP[m_Points.NumVertices].pos={x,y};
+    m_BufferP[m_Points.NumVertices].color={r,g,b,a};
     ++m_Points.NumVertices;
 
     if(m_Points.NumVertices==MAX_VERTICES)
@@ -195,10 +218,10 @@ void Renderer::DrawPoint(float x,float y,float r,float g,float b,float a){
 }
 
 void Renderer::DrawLine(float x1,float y1,float x2,float y2,float r,float g,float b,float a){
-    m_BufferL[m_Lines.NumVertices].Pos={x1,y1};
-    m_BufferL[m_Lines.NumVertices].Color={r,g,b,a};
-    m_BufferL[m_Lines.NumVertices+1].Pos={x2,y2};
-    m_BufferL[m_Lines.NumVertices+1].Color=m_BufferL[m_Lines.NumVertices].Color;
+    m_BufferL[m_Lines.NumVertices].pos={x1,y1};
+    m_BufferL[m_Lines.NumVertices].color={r,g,b,a};
+    m_BufferL[m_Lines.NumVertices+1].pos={x2,y2};
+    m_BufferL[m_Lines.NumVertices+1].color=m_BufferL[m_Lines.NumVertices].color;
     m_Lines.NumVertices+=2;
 
     if(m_Lines.NumVertices==MAX_VERTICES)
@@ -303,24 +326,24 @@ void Renderer::RenderTextures(bool post_processing){
         m_Textures.S.Bind();
 
     for(unsigned int i=0;i<m_Textures.NumVertices;i++){
-        if(m_BufferT[i].TexID!=lastChecked){ //new texture
+        if(m_BufferT[i].texID!=lastChecked){ //new texture
             if(slot<m_MaxTextureSlots-1){ //slot available, change last id checked, increment slot and update the vertex
-                lastChecked=m_BufferT[i].TexID;
+                lastChecked=m_BufferT[i].texID;
                 ++slot;
                 glActiveTexture(GL_TEXTURE0+slot);
                 glBindTexture(GL_TEXTURE_2D,lastChecked);
-                m_BufferT[i].TexID=(float)slot;
+                m_BufferT[i].texID=(float)slot;
             }else{ //no slots available
                 m_Textures.VBO.SetData(0,(float *)&m_BufferT[lastIndex],i-lastIndex,sizeof(Vertex)); //send the data to the vertex buffer
                 glDrawElements(GL_TRIANGLES,(i-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr); //draw
                 lastIndex=i; //update starting point for the next batch
-                lastChecked=m_BufferT[i].TexID;
+                lastChecked=m_BufferT[i].texID;
                 slot=0;
-                m_BufferT[i].TexID=(float)slot;
+                m_BufferT[i].texID=(float)slot;
                 DRAW_CALLS++;
             }
         }else{ //same texture, just update the vertex
-            m_BufferT[i].TexID=(float)slot;
+            m_BufferT[i].texID=(float)slot;
         }
     }
     if(m_Textures.NumVertices-lastIndex>0){ //if there are some vertices remaining, render them

@@ -19,7 +19,7 @@ public:
         e4.AddCollider(true);
     }
 
-    void OnUpdate(double frame_time) override{
+    void OnUpdate(const double frame_time) override{
         m_Renderer->Clear();
 
         int x_offset=0,y_offset=0;
