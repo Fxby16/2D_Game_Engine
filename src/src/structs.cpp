@@ -43,3 +43,6 @@ Vec2 operator/(float a,Vec2 b){
 Vec2 operator/(Vec2 a,int b){
     return {a.x/b,a.y/b};
 }
+
+Rect::Rect(): pos(Vec2()),size(Vec2()),vel(Vec2()){}
+Rect::Rect(Vec2 pos,Vec2 size,Vec2 vel): pos(pos),size(size),vel(vel){}

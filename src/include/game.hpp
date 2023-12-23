@@ -10,6 +10,7 @@
 
 #include <iostream>
 
+extern Renderer *m_Renderer;
 
 class Game{
 public:
@@ -24,7 +25,6 @@ public:
     virtual void OnImGuiRender();
 
 protected:
-    Renderer *m_Renderer;
     const char *m_WindowName;
 
     bool imgui;

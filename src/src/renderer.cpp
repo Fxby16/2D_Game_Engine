@@ -165,20 +165,20 @@ void Renderer::DrawSpriteSheet(float x,float y,float width,float height,float ro
         Render();
 }
 
-void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,float depth,SpriteSheet &s){
-    if(s.m_PlayAnimation){
-        if(glfwGetTime()-s.m_LastAnimationTime>=s.m_AnimationDelay){
-            s.m_LastAnimationTime=glfwGetTime();
-            s.m_AnimationIndex++;
-            if(s.m_AnimationIndex>=s.m_Width/s.m_TileWidth){
-                if(!s.m_LoopAnimation){
-                    s.m_PlayAnimation=false;
+void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,float depth,AnimatedTexture &at){
+    if(at.m_PlayAnimation){
+        if(glfwGetTime()-at.m_LastAnimationTime>=at.m_AnimationDelay){
+            at.m_LastAnimationTime=glfwGetTime();
+            at.m_AnimationIndex++;
+            if(at.m_AnimationIndex>=at.m_Width/at.m_TileWidth){
+                if(!at.m_LoopAnimation){
+                    at.m_PlayAnimation=false;
                 }
-                s.m_AnimationIndex=0;
+                at.m_AnimationIndex=0;
             }
         }
     }
-    DrawSpriteSheet(x,y,width,height,ceil(static_cast<float>(s.m_Height)/static_cast<float>(s.m_TileHeight))-1,s.m_AnimationIndex,depth,s);
+    DrawSpriteSheet(x,y,width,height,ceil(static_cast<float>(at.m_Height)/static_cast<float>(at.m_TileHeight))-1,at.m_AnimationIndex,depth,at);
 }
 
 

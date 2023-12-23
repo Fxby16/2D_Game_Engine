@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <glad/glad.h>
+#include <cstdio>
 
 struct VertexBufferElement{
     unsigned int type;
@@ -17,7 +18,7 @@ struct VertexBufferElement{
             case GL_UNSIGNED_BYTE:
                 return sizeof(GLbyte);
             default:
-                std::__throw_runtime_error("Wrong Type\n");
+                printf("Wrong type\n");
                 return 0;
         }
     }

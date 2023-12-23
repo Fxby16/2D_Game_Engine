@@ -137,5 +137,10 @@
 #define MOUSE_BUTTON_RIGHT     MOUSE_BUTTON_2
 #define MOUSE_BUTTON_MIDDLE    MOUSE_BUTTON_3
 
-#define BUTTON_RELEASE         0
-#define BUTTON_PRESS           1
+#define BUTTON_UP              0
+#define BUTTON_DOWN            1
+#define BUTTON_PRESSED         2
+
+#include <unordered_map>
+
+extern std::unordered_map<int,bool> BUTTONS_STATE;

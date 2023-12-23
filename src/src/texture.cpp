@@ -15,14 +15,31 @@ Texture::Texture(const std::string &path,GLint mag_filter,GLint min_filter): m_I
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
 
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA8,m_Width,m_Height,0,GL_RGBA,GL_UNSIGNED_BYTE,m_LocalBuffer);
-    
-    if(m_LocalBuffer)
+
+    if(m_LocalBuffer){
         stbi_image_free(m_LocalBuffer);
+        m_LocalBuffer=nullptr;
+    }
+}
+
+Texture::Texture(Texture &other){
+    m_ID=other.m_ID;
+    m_FilePath=other.m_FilePath;
+    m_LocalBuffer=other.m_LocalBuffer;
+    m_Width=other.m_Width;
+    m_Height=other.m_Height;
+    m_BPP=other.m_BPP;
 }
 
 Texture::~Texture(){
-    glDeleteTextures(1,&m_ID);
+    if(m_ID!=std::numeric_limits<unsigned int>::max()){
+        glDeleteTextures(1,&m_ID);
+        if(m_LocalBuffer!=nullptr)
+            free(m_LocalBuffer);
+    }
 }
+
+
 
 void Texture::Bind(unsigned int slot) const{
     glActiveTexture(GL_TEXTURE0+slot);
@@ -31,6 +48,17 @@ void Texture::Bind(unsigned int slot) const{
 
 void Texture::Unbind() const{
     glBindTexture(GL_TEXTURE_2D,0);
+}
+
+SpriteSheet::SpriteSheet(SpriteSheet &other){
+    m_ID=other.m_ID;
+    m_FilePath=other.m_FilePath;
+    m_LocalBuffer=other.m_LocalBuffer;
+    m_Width=other.m_Width;
+    m_Height=other.m_Height;
+    m_BPP=other.m_BPP;
+    m_TileWidth=other.m_TileWidth;
+    m_TileHeight=other.m_TileHeight;
 }
 
 std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,float texID){
@@ -61,7 +89,23 @@ std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float wi
     return {v1,v2,v3,v4};
 }
 
-void SpriteSheet::PlayAnimation(bool loop,float delay){
+AnimatedTexture::AnimatedTexture(AnimatedTexture &other){
+    m_ID=other.m_ID;
+    m_FilePath=other.m_FilePath;
+    m_LocalBuffer=other.m_LocalBuffer;
+    m_Width=other.m_Width;
+    m_Height=other.m_Height;
+    m_BPP=other.m_BPP;
+    m_TileWidth=other.m_TileWidth;
+    m_TileHeight=other.m_TileHeight;
+    m_PlayAnimation=other.m_PlayAnimation;
+    m_LoopAnimation=other.m_LoopAnimation;
+    m_AnimationDelay=other.m_AnimationDelay;
+    m_LastAnimationTime=other.m_LastAnimationTime;
+    m_AnimationIndex=other.m_AnimationIndex;
+}
+
+void AnimatedTexture::PlayAnimation(bool loop,float delay){
     m_PlayAnimation=true;
     m_LoopAnimation=loop;
     m_AnimationDelay=delay;

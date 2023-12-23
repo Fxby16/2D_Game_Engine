@@ -1,5 +1,7 @@
 #include <game.hpp>
 
+Renderer *m_Renderer;
+
 Game::Game(const char *window_name,unsigned int width,unsigned int height,bool imgui){
     m_WindowName=window_name;
     BASE_SCREEN_WIDTH=SCREEN_WIDTH=width;
@@ -33,7 +35,6 @@ void Game::Run(){
         DELTA_TIME=CURRENT_FRAME-LAST_FRAME;
         LAST_FRAME=CURRENT_FRAME;
 
-        HandleInputs();
         glfwPollEvents();
 
         m_Renderer->StartScene();

@@ -4,6 +4,7 @@
 #include <sys/sysinfo.h>
 #include <cstring>
 #include <cstdlib>
+#include <buttons.hpp>
 
 bool ISFULLSCREEN=false;
 
@@ -20,12 +21,13 @@ void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *WINDOW,int width,int height)
     SCREEN_HEIGHT=height;
 }  
 
-void HandleInputs(){
-    if(glfwGetKey(WINDOW,GLFW_KEY_Q)==GLFW_PRESS)   
-        glfwSetWindowShouldClose(WINDOW,true);
-
-    if(glfwGetKey(WINDOW,GLFW_KEY_F)==GLFW_PRESS && glfwGetKey(WINDOW,GLFW_KEY_LEFT_SHIFT)==GLFW_PRESS)
+void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mods){
+    if(key==KEY_F11 && action==BUTTON_DOWN)
         ToggleFullScreen();
+    if(key==KEY_F10 && action==BUTTON_DOWN)
+        ToggleVSync();
+    if(key==KEY_Q && action==BUTTON_DOWN)
+        glfwSetWindowShouldClose(window,true);
 }
 
 void GetMousePos(double *x,double *y){
@@ -59,6 +61,7 @@ int InitGlfwWindow(const char *window_name){
     } 
 
     glfwSetFramebufferSizeCallback(WINDOW,FramebufferSizeCallback);
+    glfwSetKeyCallback(WINDOW,KeyCallback);
 
     #ifdef DEBUG
         glEnable(GL_DEBUG_OUTPUT);
@@ -152,9 +155,11 @@ void PrintDebugInfo(){
 }
 
 bool getKeyState(int key,int state){
-    return glfwGetKey(WINDOW,key)==state;
+    BUTTONS_STATE[key]=glfwGetKey(WINDOW,key);
+    return BUTTONS_STATE[key]==state;
 }
 
 bool getMouseButtonState(int button,int state){
-    return glfwGetMouseButton(WINDOW,button)==state;
+    BUTTONS_STATE[button]=glfwGetMouseButton(WINDOW,button);
+    return BUTTONS_STATE[button]==state;
 }

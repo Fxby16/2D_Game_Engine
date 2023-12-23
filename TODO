@@ -1,0 +1,10 @@
+- add the possibility to start the animation for the animated texture component
+- add light component
+- add audio component
+- add scripting?
+- fix examples
+- write documentation
+
+Others:
+- write the editor
+- windows porting

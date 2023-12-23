@@ -45,7 +45,7 @@ public:
     void DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float depth,float texID);
     void DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float depth,Texture &texture);
     void DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,SpriteSheet &s);
-    void DrawAnimatedTexture(float x,float y,float width,float height,float depth,SpriteSheet &s);
+    void DrawAnimatedTexture(float x,float y,float width,float height,float depth,AnimatedTexture &at);
     void DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,float r,float g,float b,float a);
     void DrawQuad(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
     void DrawSolidQuad(float x,float y,float w,float h,Vec4 color);

@@ -15,12 +15,3 @@ If not specified, the program will be compiled in debug mode. To compile in rele
 
 ## Execute
 Run `bin/Debug/2DGameEngine` or `bin/Release/2DGameEngine` depending on which config you used.
-
-## Short term plans
-- start to write a documentation
-- make the code more readable and more organized
-- add other features
-
-## Long term plans
-- add an editor
-- windows porting

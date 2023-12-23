@@ -57,4 +57,7 @@ struct Rect{
     Vec2 pos;
     Vec2 size;
     Vec2 vel;
+
+    Rect();
+    Rect(Vec2 pos,Vec2 size,Vec2 vel);
 };

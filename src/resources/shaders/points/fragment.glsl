@@ -8,7 +8,7 @@ uniform float blurAmount;
 
 void main() {
     vec2 circCoord = 2.0 * gl_PointCoord - 1.0;
-    float dist = dot(circCoord, circCoord);
+    float dist = length(circCoord);
     if (dist > 1.0) {
         discard;
     }
