@@ -4,6 +4,7 @@
 - add scripting?
 - fix examples
 - write documentation
+- remove unordered map for buttons states
 
 Others:
 - write the editor
