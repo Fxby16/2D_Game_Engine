@@ -4,7 +4,8 @@
 - add scripting?
 - fix examples
 - write documentation
-- remove unordered map for buttons states
+- add rendering layers
+- add different collider shapes
 
 Others:
 - write the editor
