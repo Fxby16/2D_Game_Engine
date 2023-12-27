@@ -26,10 +26,6 @@ struct RendererData{
     RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size);
 };
 
-enum LightType{
-    ALL_LIGHT,LIGHT_AROUND_POS,LIGHT_AROUND_POS_COLL
-};
-
 class Renderer{
 public:
     Renderer();
@@ -41,23 +37,23 @@ public:
     void Clear(bool ambient_light=false) const;
     void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
 
-    void DrawTexture(float x,float y,float w,float h,float depth,float texID);
-    void DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float depth,float texID);
-    void DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float depth,Texture &texture);
-    void DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,SpriteSheet &s);
-    void DrawAnimatedTexture(float x,float y,float width,float height,float depth,AnimatedTexture &at);
-    void DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,float r,float g,float b,float a);
+    void DrawTexture(float x,float y,float w,float h,float layer,float texID);
+    void DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float layer,float texID);
+    void DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float layer,Texture &texture);
+    void DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,SpriteSheet &s);
+    void DrawAnimatedTexture(float x,float y,float width,float height,float layer,AnimatedTexture &at);
+    void DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,Vec4 color,float layer);
     void DrawQuad(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
-    void DrawSolidQuad(float x,float y,float w,float h,Vec4 color);
-    void DrawPoint(float x,float y,float r,float g,float b,float a);
-    void DrawLine(float x1,float y1,float x2,float y2,float r,float g,float b,float a);
-    void DrawLight(float light_x,float light_y,Vec4 color,enum LightType light_type,float radius=0.0f,float blurAmount=0.0f);
+    void DrawSolidQuad(float x,float y,float w,float h,Vec4 color,float layer);
+    void DrawPoint(float x,float y,Vec4 color,float layer);
+    void DrawLine(float x1,float y1,float x2,float y2,Vec4 color,float layer);
+    void DrawLight(float light_x,float light_y,Vec4 color,LightType light_type,float radius=0.0f,float blurAmount=0.0f);
 
     void Render(bool post_processing=false);
-    void RenderTextures(bool post_processing);
-    void RenderTriangles();
-    void RenderLines();
-    void RenderPoints();
+    void RenderTextures(bool post_processing,float max_layer);
+    void RenderTriangles(float max_layer);
+    void RenderLines(float max_layer);
+    void RenderPoints(float max_layer);
     void SetPostProcessing(const char *uniform_name);
     void PostProcessing();
 
@@ -87,6 +83,8 @@ private:
     RendererData m_Triangles;
     RendererData m_Lights;
 
+    unsigned int m_TextureIndex,m_PointIndex,m_LineIndex,m_TriangleIndex;
+
     IndexBuffer IB;
 
     Vertex *m_BufferT;
@@ -110,9 +108,22 @@ private:
 
     std::vector<std::pair<Vec2,Vec2>>segments; //used for lighting
 
-    static bool cmp(const Vertex &v1,const Vertex &v2){
-        if(v1.depth==v2.depth)
-            return v1.depth>v2.depth;
-        return v1.texID<v2.texID; 
+    static bool cmp1(const Vertex &v1,const Vertex &v2){
+        if(v1.layer==v2.layer)
+            return v1.texID<v2.texID;
+        return v1.layer<v2.layer; 
     }
+
+    static bool cmp2(const LinePointVertex &v1,const LinePointVertex &v2){
+        return v1.layer<v2.layer; 
+    }
+
+    static bool cmp3(const TriangleVertex &v1,const TriangleVertex &v2){
+        return v1.layer<v2.layer; 
+    }
+
+    inline float GetTexturesMinLayer(){ return m_Textures.NumVertices>0?m_BufferT[m_TextureIndex].layer:std::numeric_limits<float>::max(); }
+    inline float GetPointsMinLayer(){ return m_Points.NumVertices>0?m_BufferP[m_PointIndex].layer:std::numeric_limits<float>::max(); }
+    inline float GetLinesMinLayer(){ return m_Lines.NumVertices>0?m_BufferL[m_LineIndex].layer:std::numeric_limits<float>::max(); }
+    inline float GetTrianglesMinLayer(){ return m_Triangles.NumVertices>0?m_BufferTR[m_TriangleIndex].layer:std::numeric_limits<float>::max(); }
 };

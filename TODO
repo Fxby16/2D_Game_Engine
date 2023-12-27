@@ -1,11 +1,9 @@
-- add the possibility to start the animation for the animated texture component
-- add light component
 - add audio component
 - add scripting?
 - fix examples
 - write documentation
-- add rendering layers
 - add different collider shapes
+- ensure consistent data types for the same variables across all definitions
 
 Others:
 - write the editor

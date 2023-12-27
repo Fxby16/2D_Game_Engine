@@ -9,9 +9,24 @@ uint64_t NEXT_UID=0;
 ComponentManager<TextureComponent> CMTC;
 ComponentManager<AnimatedTextureComponent> CMATC;
 ComponentManager<ColliderComponent> CMCC;
+ComponentManager<LightComponent> CMLC;
 
 Entity::Entity(): m_X(0.0f),m_Y(0.0f),m_UID(NEXT_UID++),m_HasCollider(false){}
 Entity::Entity(float x,float y): m_X(x),m_Y(y),m_UID(NEXT_UID++),m_HasCollider(false){}
+
+Entity::Entity(Entity &other){
+    m_X=other.m_X;
+    m_Y=other.m_Y;
+    m_UID=other.m_UID;
+    m_HasCollider=other.m_HasCollider;
+}
+
+Entity::Entity(Entity &&other){
+    m_X=other.m_X;
+    m_Y=other.m_Y;
+    m_UID=other.m_UID;
+    m_HasCollider=other.m_HasCollider;
+}
 
 Entity::~Entity(){
     CMTC.RemoveComponent(m_UID);
@@ -35,14 +50,14 @@ void Entity::SetPos(float x,float y){
 }
 
 template<>
-void Entity::AddComponent<TextureComponent,const char*,int,int,float,float,int>(const char *path,int mag_filter,int min_filter,float width,float height,int depth){
-    TextureComponent temp(path,mag_filter,min_filter,width,height,depth,this);
+void Entity::AddComponent<TextureComponent,const char*,int,int,float,float,int>(const char *path,int mag_filter,int min_filter,float width,float height,int layer){
+    TextureComponent temp(path,mag_filter,min_filter,width,height,layer,this);
     CMTC.AddComponent(temp,m_UID);
 }
 
 template<>
-void Entity::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsigned int,int,int,float,float,int>(const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int depth){
-    AnimatedTextureComponent temp(path,tile_width,tile_height,mag_filter,min_filter,width,height,depth,this);
+void Entity::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsigned int,int,int,float,float,int>(const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer){
+    AnimatedTextureComponent temp(path,tile_width,tile_height,mag_filter,min_filter,width,height,layer,this);
     CMATC.AddComponent(temp,m_UID);
 }
 
@@ -52,6 +67,12 @@ void Entity::AddComponent<ColliderComponent,float,float,float,float,float,float>
     ColliderComponent temp(width,height,hspeed,vspeed,xoffset,yoffset,this);
     CMCC.AddComponent(temp,m_UID);
 }
+
+template<>
+void Entity::AddComponent<LightComponent,float,float,float,float,Vec3,LightType>(float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type){
+    LightComponent temp(x_offset,y_offset,radius,blur,color,type,this);
+    CMLC.AddComponent(temp,m_UID);
+}   
 
 template<>
 void Entity::RemoveComponent<TextureComponent>(){
@@ -69,6 +90,11 @@ void Entity::RemoveComponent<ColliderComponent>(){
 }
 
 template<>
+void Entity::RemoveComponent<LightComponent>(){
+    CMLC.RemoveComponent(m_UID);
+}
+
+template<>
 TextureComponent* Entity::GetComponent<TextureComponent>(){
     return CMTC.GetComponent(m_UID);
 }
@@ -83,16 +109,21 @@ ColliderComponent* Entity::GetComponent<ColliderComponent>(){
     return CMCC.GetComponent(m_UID);
 }
 
-TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int depth,Entity *entity):
-    m_Texture(path,mag_filter,min_filter),m_Width(width),m_Height(height),m_Depth(depth),m_Entity(entity){}
+template<>
+LightComponent* Entity::GetComponent<LightComponent>(){
+    return CMLC.GetComponent(m_UID);
+}
 
-AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int depth,Entity *entity):
-    m_AnimatedTexture(path,tile_width,tile_height,mag_filter,min_filter),m_Width(width),m_Height(height),m_Depth(depth),m_Entity(entity){}
+TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,Entity *entity):
+    m_Texture(path,mag_filter,min_filter),m_Width(width),m_Height(height),m_Layer(layer),m_Entity(entity){}
+
+AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer,Entity *entity):
+    m_AnimatedTexture(path,tile_width,tile_height,mag_filter,min_filter),m_Width(width),m_Height(height),m_Layer(layer),m_Entity(entity){}
 
 ColliderComponent::ColliderComponent(float width,float height,float hspeed,float vspeed,float xoffset,float yoffset,Entity *entity):
     m_Width(width),m_Height(height),m_HSpeed(hspeed),m_VSpeed(vspeed),m_XOffset(xoffset),m_YOffset(yoffset),m_Entity(entity){}
 
-bool ColliderComponent::RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float& t_hit_near){
+bool ColliderComponent::RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float& time_hit_near){
     contact_normal={0,0};
     contact_point={0,0};
 
@@ -109,13 +140,13 @@ bool ColliderComponent::RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,co
 
     if(t_near.x>t_far.y || t_near.y>t_far.x) return false;
 
-    t_hit_near=std::max(t_near.x,t_near.y);
+    time_hit_near=std::max(t_near.x,t_near.y);
     float t_hit_far=std::min(t_far.x,t_far.y);
 
     if(t_hit_far<0)
         return false;
 
-    contact_point=ray_origin+t_hit_near*ray_dir;
+    contact_point=ray_origin+time_hit_near*ray_dir;
 
     if(t_near.x>t_near.y){
         if(invdir.x<0)
@@ -132,27 +163,27 @@ bool ColliderComponent::RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,co
     return true;
 }
 
-bool ColliderComponent::DynamicRectVsRect(const Rect* r_dynamic,const float fTimeStep,const Rect* r_static,
+bool ColliderComponent::DynamicRectVsRect(const Rect *dynamic_rect,const float fTimeStep,const Rect *static_rect,
     Vec2 &contact_point, Vec2 &contact_normal, float& contact_time){
     
-    if(r_dynamic->vel.x==0 && r_dynamic->vel.y==0)
+    if(dynamic_rect->vel.x==0 && dynamic_rect->vel.y==0)
         return false;
 
     Rect expanded_target;
-    expanded_target.pos=r_static->pos-r_dynamic->size/2;
-    expanded_target.size=r_static->size+r_dynamic->size;
+    expanded_target.pos=static_rect->pos-dynamic_rect->size/2;
+    expanded_target.size=static_rect->size+dynamic_rect->size;
 
-    if(RayVsRect(r_dynamic->pos+r_dynamic->size/2,r_dynamic->vel*fTimeStep,&expanded_target,contact_point,contact_normal,contact_time))
+    if(RayVsRect(dynamic_rect->pos+dynamic_rect->size/2,dynamic_rect->vel*fTimeStep,&expanded_target,contact_point,contact_normal,contact_time))
         return (contact_time>=0.0f && contact_time<1.0f);
     else
         return false;
 }
 
-bool ColliderComponent::ResolveDynamicRectVsRect(Rect* r_dynamic,const float fTimeStep,Rect* r_static){
+bool ColliderComponent::ResolveDynamicRectVsRect(Rect *dynamic_rect,const float fTimeStep,Rect *static_rect){
     Vec2 contact_point,contact_normal;
     float contact_time=0.0f;
-    if(DynamicRectVsRect(r_dynamic,fTimeStep,r_static,contact_point,contact_normal,contact_time)){
-        r_dynamic->vel=r_dynamic->vel+contact_normal*Vec2(std::abs(r_dynamic->vel.x),std::abs(r_dynamic->vel.y))*(1-contact_time);
+    if(DynamicRectVsRect(dynamic_rect,fTimeStep,static_rect,contact_point,contact_normal,contact_time)){
+        dynamic_rect->vel=dynamic_rect->vel+contact_normal*Vec2(std::abs(dynamic_rect->vel.x),std::abs(dynamic_rect->vel.y))*(1-contact_time);
         return true;
     }
 
@@ -191,6 +222,24 @@ AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &&ot
     m_Height=other.m_Height;
     m_Entity=other.m_Entity;
 } 
+
+void AnimatedTextureComponent::PlayAnimation(bool loop,float delay){
+    m_AnimatedTexture.PlayAnimation(loop,delay);
+}
+
+LightComponent::LightComponent(): m_XOffset(0.0f),m_YOffset(0.0f),m_Radius(0.0f),m_Blur(0.0f),m_Color(0.0f,0.0f,0.0f),m_Type(LIGHT_AROUND_POS),m_Entity(nullptr){}
+LightComponent::LightComponent(float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type,Entity *entity): 
+    m_XOffset(x_offset),m_YOffset(y_offset),m_Radius(radius),m_Blur(blur),m_Color(color),m_Type(type),m_Entity(entity){}
+
+void LightComponent::SetOffset(float x_offset,float y_offset){
+    m_XOffset=x_offset;
+    m_YOffset=y_offset;
+}
+
+void LightComponent::SetCentered(float width,float height){
+    m_XOffset=width/2;
+    m_YOffset=height/2;
+}
 
 template<>
 void ComponentManager<TextureComponent>::Update(float frame_time){
@@ -237,29 +286,41 @@ void ComponentManager<ColliderComponent>::Update(float frame_time){
 }
 
 template<>
+void ComponentManager<LightComponent>::Update(float frame_time){
+    printf("Light components don't need to be updated!\n");
+}
+
+template<>
 void ComponentManager<TextureComponent>::Render(){
     for(int i=0;i<m_Components.size();i++){
-        m_Renderer->DrawTexture(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,m_Components[i].m_Width,m_Components[i].m_Height,false,false,m_Components[i].m_Depth,m_Components[i].m_Texture);
+        RENDERER->DrawTexture(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,m_Components[i].m_Width,m_Components[i].m_Height,false,false,m_Components[i].m_Layer,m_Components[i].m_Texture);
     }
 }
 
 template<>
 void ComponentManager<AnimatedTextureComponent>::Render(){
     for(int i=0;i<m_Components.size();i++){
-        m_Renderer->DrawAnimatedTexture(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,m_Components[i].m_Width,m_Components[i].m_Height,m_Components[i].m_Depth,m_Components[i].m_AnimatedTexture);  
-        m_Renderer->DrawLine(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y,0.0f,1.0f,0.0f,1.0f);
-        m_Renderer->DrawLine(m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y,m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,0.0f,1.0f,0.0f,1.0f);
-        m_Renderer->DrawLine(m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,0.0f,1.0f,0.0f,1.0f);
-        m_Renderer->DrawLine(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,0.0f,1.0f,0.0f,1.0f);
+        RENDERER->DrawAnimatedTexture(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,m_Components[i].m_Width,m_Components[i].m_Height,m_Components[i].m_Layer,m_Components[i].m_AnimatedTexture);  
+        RENDERER->DrawLine(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y,Vec4(0.0f,1.0f,0.0f,1.0f),-2);
+        RENDERER->DrawLine(m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y,m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,Vec4(0.0f,1.0f,0.0f,1.0f),-2);
+        RENDERER->DrawLine(m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,Vec4(0.0f,1.0f,0.0f,1.0f),-2);
+        RENDERER->DrawLine(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,Vec4(0.0f,1.0f,0.0f,1.0f),-2);
     }
 }
 
 template<>
 void ComponentManager<ColliderComponent>::Render(){
     for(int i=0;i<m_Components.size();i++){
-        m_Renderer->DrawLine(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y,1.0f,0.0f,0.0f,1.0f);
-        m_Renderer->DrawLine(m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y,m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,1.0f,0.0f,0.0f,1.0f);
-        m_Renderer->DrawLine(m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,1.0f,0.0f,0.0f,1.0f);
-        m_Renderer->DrawLine(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,1.0f,0.0f,0.0f,1.0f);
+        RENDERER->DrawLine(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y,Vec4(1.0f,0.0f,0.0f,1.0f),-2);
+        RENDERER->DrawLine(m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y,m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,Vec4(1.0f,0.0f,0.0f,1.0f),-2);
+        RENDERER->DrawLine(m_Components[i].m_Entity->m_X+m_Components[i].m_Width,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,Vec4(1.0f,0.0f,0.0f,1.0f),-2);
+        RENDERER->DrawLine(m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y+m_Components[i].m_Height,m_Components[i].m_Entity->m_X,m_Components[i].m_Entity->m_Y,Vec4(1.0f,0.0f,0.0f,1.0f),-2);
+    }
+}
+
+template<>
+void ComponentManager<LightComponent>::Render(){
+    for(int i=0;i<m_Components.size();i++){
+        RENDERER->DrawLight(m_Components[i].m_Entity->m_X+m_Components[i].m_XOffset,m_Components[i].m_Entity->m_Y+m_Components[i].m_YOffset,Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
     }
 }

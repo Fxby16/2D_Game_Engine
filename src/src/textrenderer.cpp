@@ -2,7 +2,6 @@
 #include <global.hpp>
 #include <cstdio>
 #include <memory.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 TextRenderer::TextRenderer(const char *font_path):
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
@@ -14,8 +13,6 @@ TextRenderer::TextRenderer(const char *font_path):
     m_ToRender=(int*)AllocateMemory(CH_LIMIT*sizeof(int));
 
     UpdateProjMat();
-    m_Shader.Bind();
-    m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
     if(FT_Init_FreeType(&m_FT))
         perror("FREETYPE ERROR: Couldn't init FreeType Library\n");
@@ -37,6 +34,14 @@ TextRenderer::TextRenderer(const char *font_path):
                 perror("FREETYPE ERROR: Failed to load Glyph\n");
                 continue;
             }
+
+            if(m_Face->glyph->bitmap.rows>256){
+                #ifdef DEBUG
+                    printf("FREETYPE WARNING: Glyph %c is too tall\n",ch);
+                #endif
+                continue;
+            }
+
             glTexSubImage3D(
                 GL_TEXTURE_2D_ARRAY,
                 0,0,0,ch,
@@ -120,7 +125,8 @@ void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 co
 
 std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
     scale=scale*48.0f/256.0f;
-    float width_=0.0f,height_=m_Characters['\n'].Size.y*1.3*scale;
+    float width_=0.0f;
+    float height_=m_Characters['\n'].Size.y*1.3*scale;
     float max_width=0.0f;
     for(auto c:text){
         Character ch=m_Characters[c];

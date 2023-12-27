@@ -45,14 +45,17 @@ Renderer::Renderer():
 
     AddLayout(m_Points.VBL,GL_FLOAT,2,false);
     AddLayout(m_Points.VBL,GL_FLOAT,4,false);
+    AddLayout(m_Points.VBL,GL_FLOAT,1,false);
     m_Points.VAO.AddBuffer(m_Points.VBO,m_Points.VBL);
     
     AddLayout(m_Lines.VBL,GL_FLOAT,2,false);
     AddLayout(m_Lines.VBL,GL_FLOAT,4,false);
+    AddLayout(m_Lines.VBL,GL_FLOAT,1,false);
     m_Lines.VAO.AddBuffer(m_Lines.VBO,m_Lines.VBL);
 
     AddLayout(m_Triangles.VBL,GL_FLOAT,2,false);
     AddLayout(m_Triangles.VBL,GL_FLOAT,4,false);
+    AddLayout(m_Triangles.VBL,GL_FLOAT,1,false);
     m_Triangles.VAO.AddBuffer(m_Triangles.VBO,m_Triangles.VBL);
 
     AddLayout(m_Lights.VBL,GL_FLOAT,2,false);
@@ -102,6 +105,8 @@ Renderer::Renderer():
     segments.push_back(std::make_pair(Vec2(0,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,SCREEN_HEIGHT)));
     segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,0)));
     segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,0),Vec2(0,0)));
+
+    m_AmbientLight=Vec3(0.0f,0.0f,0.0f);
 }
 
 Renderer::~Renderer(){
@@ -182,10 +187,10 @@ void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,floa
 }
 
 
-void Renderer::DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,float r,float g,float b,float a){
-    m_BufferTR[m_Triangles.NumVertices]=TriangleVertex(Vec2(x1,y1),Vec4(r,g,b,a));
-    m_BufferTR[m_Triangles.NumVertices+1]=TriangleVertex(Vec2(x2,y2),Vec4(r,g,b,a));
-    m_BufferTR[m_Triangles.NumVertices+2]=TriangleVertex(Vec2(x3,y3),Vec4(r,g,b,a));
+void Renderer::DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,Vec4 color,float layer){
+    m_BufferTR[m_Triangles.NumVertices]=TriangleVertex(Vec2(x1,y1),color,layer);
+    m_BufferTR[m_Triangles.NumVertices+1]=TriangleVertex(Vec2(x2,y2),color,layer);
+    m_BufferTR[m_Triangles.NumVertices+2]=TriangleVertex(Vec2(x3,y3),color,layer);
     m_Triangles.NumVertices+=3;
 
     if(m_Triangles.NumVertices==MAX_VERTICES)
@@ -203,25 +208,22 @@ void Renderer::DrawQuad(Vertex a,Vertex b,Vertex c,Vertex d){
         Render();
 }
 
-void Renderer::DrawSolidQuad(float x,float y,float w,float h,Vec4 color){
-    DrawTriangle(x,y,x+w,y,x,y+h,color.r,color.g,color.b,color.a);
-    DrawTriangle(x,y+h,x+w,y+h,x+w,y,color.r,color.g,color.b,color.a);
+void Renderer::DrawSolidQuad(float x,float y,float w,float h,Vec4 color,float layer){
+    DrawTriangle(x,y,x+w,y,x,y+h,color,layer);
+    DrawTriangle(x,y+h,x+w,y+h,x+w,y,color,layer);
 }
 
-void Renderer::DrawPoint(float x,float y,float r,float g,float b,float a){
-    m_BufferP[m_Points.NumVertices].pos={x,y};
-    m_BufferP[m_Points.NumVertices].color={r,g,b,a};
+void Renderer::DrawPoint(float x,float y,Vec4 color,float layer){
+    m_BufferP[m_Points.NumVertices]=LinePointVertex(Vec2(x,y),color,layer);
     ++m_Points.NumVertices;
 
     if(m_Points.NumVertices==MAX_VERTICES)
         Render();
 }
 
-void Renderer::DrawLine(float x1,float y1,float x2,float y2,float r,float g,float b,float a){
-    m_BufferL[m_Lines.NumVertices].pos={x1,y1};
-    m_BufferL[m_Lines.NumVertices].color={r,g,b,a};
-    m_BufferL[m_Lines.NumVertices+1].pos={x2,y2};
-    m_BufferL[m_Lines.NumVertices+1].color=m_BufferL[m_Lines.NumVertices].color;
+void Renderer::DrawLine(float x1,float y1,float x2,float y2,Vec4 color,float layer){
+    m_BufferL[m_Lines.NumVertices]=LinePointVertex(Vec2(x1,y1),color,layer);
+    m_BufferL[m_Lines.NumVertices+1]=LinePointVertex(Vec2(x2,y2),color,layer);
     m_Lines.NumVertices+=2;
 
     if(m_Lines.NumVertices==MAX_VERTICES)
@@ -245,6 +247,7 @@ void Renderer::SetClearColor(Vec3 color){
 }
 
 void Renderer::StartScene(){
+    m_TextureIndex=m_PointIndex=m_LineIndex=m_TriangleIndex=0;
     if(PROJ_UPDATE){
         PROJ_UPDATE=false;
         m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
@@ -301,21 +304,42 @@ void Renderer::DrawScene(){
 }
 
 void Renderer::Render(bool post_processing){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect depth input for subsequent vertices
-    RenderTextures(post_processing);
-    RenderPoints();
-    RenderLines();
-    RenderTriangles();
+    if(m_Textures.NumVertices>0)
+        std::stable_sort(m_BufferT,m_BufferT+m_Textures.NumVertices,cmp1);
+    if(m_Points.NumVertices>0)
+        std::stable_sort(m_BufferP,m_BufferP+m_Points.NumVertices,cmp2);
+    if(m_Lines.NumVertices>0)
+        std::stable_sort(m_BufferL,m_BufferL+m_Lines.NumVertices,cmp2);
+    if(m_Triangles.NumVertices>0)
+        std::stable_sort(m_BufferTR,m_BufferTR+m_Triangles.NumVertices,cmp3);
+
+    float min_texture_layer,min_point_layer,min_line_layer,min_triangle_layer;
+    
+    while(true){
+        if(m_Textures.NumVertices==0 && m_Points.NumVertices==0 && m_Lines.NumVertices==0 && m_Triangles.NumVertices==0)
+            break;
+
+        min_texture_layer=GetTexturesMinLayer();
+        min_point_layer=GetPointsMinLayer();
+        min_line_layer=GetLinesMinLayer();
+        min_triangle_layer=GetTrianglesMinLayer();
+        
+        if(min_texture_layer!=std::numeric_limits<float>::max())    
+            RenderTextures(post_processing,std::min({min_point_layer,min_line_layer,min_triangle_layer}));
+        if(min_point_layer!=std::numeric_limits<float>::max())
+            RenderPoints(std::min({min_texture_layer,min_line_layer,min_triangle_layer}));
+        if(min_line_layer!=std::numeric_limits<float>::max())
+            RenderLines(std::min({min_texture_layer,min_point_layer,min_triangle_layer}));
+        if(min_triangle_layer!=std::numeric_limits<float>::max())
+            RenderTriangles(std::min({min_texture_layer,min_point_layer,min_line_layer}));
+    }
 }
 
-void Renderer::RenderTextures(bool post_processing){
-    if(m_Textures.NumVertices<=0)
-        return;
-
+void Renderer::RenderTextures(bool post_processing,float max_layer){
     int lastChecked=-1;
     int slot=-1;
     int lastIndex=0;
 
-    std::stable_sort(m_BufferT,m_BufferT+m_Textures.NumVertices,cmp); //sorting textures by id to reduce the times you have to bind new textures
     m_Textures.VAO.Bind();
     m_Textures.VBO.Bind();
     IB.Bind();
@@ -325,7 +349,8 @@ void Renderer::RenderTextures(bool post_processing){
     else
         m_Textures.S.Bind();
 
-    for(unsigned int i=0;i<m_Textures.NumVertices;i++){
+    unsigned int i;
+    for(i=m_TextureIndex;i<m_Textures.NumVertices && m_BufferT[i].layer<=max_layer;i++){
         if(m_BufferT[i].texID!=lastChecked){ //new texture
             if(slot<m_MaxTextureSlots-1){ //slot available, change last id checked, increment slot and update the vertex
                 lastChecked=m_BufferT[i].texID;
@@ -336,65 +361,90 @@ void Renderer::RenderTextures(bool post_processing){
             }else{ //no slots available
                 m_Textures.VBO.SetData(0,(float *)&m_BufferT[lastIndex],i-lastIndex,sizeof(Vertex)); //send the data to the vertex buffer
                 glDrawElements(GL_TRIANGLES,(i-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr); //draw
-                lastIndex=i; //update starting point for the next batch
+                DRAW_CALLS++;
+                m_TextureIndex=i; //update starting point for the next batch
                 lastChecked=m_BufferT[i].texID;
                 slot=0;
                 m_BufferT[i].texID=(float)slot;
-                DRAW_CALLS++;
             }
         }else{ //same texture, just update the vertex
             m_BufferT[i].texID=(float)slot;
         }
     }
-    if(m_Textures.NumVertices-lastIndex>0){ //if there are some vertices remaining, render them
-        m_Textures.VBO.SetData(0,(float *)&m_BufferT[lastIndex],m_Textures.NumVertices-lastIndex,sizeof(Vertex));
-        glDrawElements(GL_TRIANGLES,(m_Textures.NumVertices-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr);
+    if(i-m_TextureIndex>0){ //if there are some vertices remaining, render them
+        m_Textures.VBO.SetData(0,(float *)&m_BufferT[m_TextureIndex],i-m_TextureIndex,sizeof(Vertex));
+        glDrawElements(GL_TRIANGLES,(i-m_TextureIndex)/4*6,GL_UNSIGNED_INT,nullptr);
         DRAW_CALLS++;
     }
 
-    m_Textures.NumVertices=0;
+    if(m_Textures.NumVertices-i==0){
+        m_TextureIndex=0;
+        m_Textures.NumVertices=0;
+    }else
+        m_TextureIndex=i;
 }
 
-void Renderer::RenderTriangles(){
-    if(m_Triangles.NumVertices<=0)
-        return;
-
+void Renderer::RenderTriangles(float max_layer){
     m_Triangles.VAO.Bind();
     m_Triangles.VBO.Bind();
     m_Triangles.S.Bind();
 
-    m_Triangles.VBO.SetData(0,(float *)&m_BufferTR[0],m_Triangles.NumVertices,sizeof(TriangleVertex));
-    glDrawArrays(GL_TRIANGLES,0,m_Triangles.NumVertices);
+    unsigned int i;
+    for(i=m_TriangleIndex;i<m_Triangles.NumVertices && m_BufferTR[i].layer<=max_layer;i++);
 
-    m_Triangles.NumVertices=0;
+    if(i-m_TriangleIndex>0){
+        m_Triangles.VBO.SetData(0,(float *)&m_BufferTR[m_TriangleIndex],i-m_TriangleIndex,sizeof(TriangleVertex));
+        glDrawArrays(GL_TRIANGLES,0,i-m_TriangleIndex);
+        DRAW_CALLS++;
+    }
+
+    if(m_Triangles.NumVertices-i==0){
+        m_TriangleIndex=0;
+        m_Triangles.NumVertices=0;
+    }else
+        m_TriangleIndex=i;
 }
 
-void Renderer::RenderPoints(){
-    if(m_Points.NumVertices<=0)
-        return;
-
+void Renderer::RenderPoints(float max_layer){
     m_Points.VAO.Bind();
     m_Points.VBO.Bind();
     m_Points.S.Bind();
 
-    m_Points.VBO.SetData(0,(float *)&m_BufferP[0],m_Points.NumVertices,sizeof(LinePointVertex));
-    glDrawArrays(GL_POINTS,0,m_Points.NumVertices);
+    unsigned int i;
+    for(i=m_PointIndex;i<m_Points.NumVertices && m_BufferP[i].layer<=max_layer;i++);
 
-    m_Points.NumVertices=0;
+    if(i-m_PointIndex>0){
+        m_Points.VBO.SetData(0,(float *)&m_BufferP[m_PointIndex],i-m_PointIndex,sizeof(LinePointVertex));
+        glDrawArrays(GL_POINTS,0,i-m_PointIndex);
+        DRAW_CALLS++;
+    }
+
+    if(m_Points.NumVertices-i==0){
+        m_PointIndex=0;
+        m_Points.NumVertices=0;
+    }else
+        m_PointIndex=i;
 }
 
-void Renderer::RenderLines(){
-    if(m_Lines.NumVertices<=0)
-        return;
-
+void Renderer::RenderLines(float max_layer){
     m_Lines.VAO.Bind();    
     m_Lines.VBO.Bind();
     m_Lines.S.Bind();
 
-    m_Lines.VBO.SetData(0,(float *)&m_BufferL[0],m_Lines.NumVertices,sizeof(LinePointVertex));
-    glDrawArrays(GL_LINES,0,m_Lines.NumVertices);
+    unsigned int i;
+    for(i=m_LineIndex;i<m_Lines.NumVertices && m_BufferL[i].layer<=max_layer;i++);
 
-    m_Lines.NumVertices=0;
+    if(i-m_LineIndex>0){
+        m_Lines.VBO.SetData(0,(float *)&m_BufferL[m_LineIndex],i-m_LineIndex,sizeof(LinePointVertex));
+        glDrawArrays(GL_LINES,0,i-m_LineIndex);
+        DRAW_CALLS++;
+    }
+
+    if(m_Lines.NumVertices-i==0){
+        m_LineIndex=0;
+        m_Lines.NumVertices=0;
+    }else
+        m_LineIndex=i;
 }
 
 void Renderer::Clear(bool ambient_light) const{
@@ -458,7 +508,7 @@ std::pair<Vec2,float> Renderer::GetIntersection(const std::pair<Vec2,Vec2>&ray,c
     return std::make_pair(Vec2(r_px+r_dx*T1,r_py+r_dy*T1),T1);
 }
 
-void Renderer::DrawLight(float light_x,float light_y,Vec4 color,enum LightType light_type,float radius,float blurAmount){
+void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_type,float radius,float blurAmount){
     if(light_type==ALL_LIGHT || light_type==LIGHT_AROUND_POS_COLL){
         std::vector<Vec2>points;
         auto find=[&points](Vec2 point)->bool{
@@ -526,10 +576,10 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,enum LightType l
         for(size_t i=0;i<intersects.size()-1;i++){
             auto a=intersects[i].first;
             auto b=intersects[i+1].first;
-            DrawTriangle(light_x,light_y,a.x,a.y,b.x,b.y,color.r,color.g,color.b,color.a);
+            DrawTriangle(light_x,light_y,a.x,a.y,b.x,b.y,color,0);
         }
-        DrawTriangle(light_x,light_y,intersects[0].first.x,intersects[0].first.y,intersects[intersects.size()-1].first.x,intersects[intersects.size()-1].first.y,color.r,color.g,color.b,color.a);
-        RenderTriangles();
+        DrawTriangle(light_x,light_y,intersects[0].first.x,intersects[0].first.y,intersects[intersects.size()-1].first.x,intersects[intersects.size()-1].first.y,color,0);
+        RenderTriangles(std::numeric_limits<float>::max());
 
         if(light_type==LIGHT_AROUND_POS_COLL){
             KeepCircle(light_x,light_y,radius,blurAmount);
@@ -545,8 +595,8 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,enum LightType l
         m_LightingFramebuffer->Bind();
         glBlendFunc(GL_ONE,GL_ONE);
 
-        DrawPoint(light_x,light_y,color.r,color.g,color.b,color.a);
-        RenderPoints();
+        DrawPoint(light_x,light_y,color,0);
+        RenderPoints(std::numeric_limits<float>::max());
         m_Points.S.SetUniform1f("blurAmount",0.0f);
         ChangePointSize(previousSize);
     }

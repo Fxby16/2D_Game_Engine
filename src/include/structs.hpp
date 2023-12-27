@@ -28,20 +28,28 @@ struct Vec4{
 struct Vertex{
     Vec2 position;
     Vec2 texcoords;
-    float depth;
+    float layer;
     float texID;
+
+    Vertex();
+    Vertex(Vec2 pos,Vec2 texcoords,float layer,float texID);
 };
 
 struct LinePointVertex{
     Vec2 pos;
     Vec4 color;
+    float layer;
+
+    LinePointVertex();
+    LinePointVertex(Vec2 pos,Vec4 color,float layer);
 };
 
 struct TriangleVertex{
     Vec2 position;
     Vec4 color;
+    float layer;
     TriangleVertex();
-    TriangleVertex(Vec2 pos,Vec4 color);
+    TriangleVertex(Vec2 pos,Vec4 color,float layer);
 };
 
 Vec2 operator+(Vec2 a,Vec2 b);

@@ -140,7 +140,3 @@
 #define BUTTON_UP              0
 #define BUTTON_DOWN            1
 #define BUTTON_PRESSED         2
-
-#include <unordered_map>
-
-extern std::unordered_map<int,bool> BUTTONS_STATE;

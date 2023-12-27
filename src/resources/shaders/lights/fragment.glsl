@@ -14,32 +14,25 @@ subroutine void Light();
 subroutine uniform Light light_sub;
 
 subroutine(Light)
-void Merge(){
+void Merge(){ //merge main framebuffer and lighting framebuffer (colors get multiplied)
     vec4 color1=texture(framebuffer,v_TexCoord);
     vec4 color2=texture(light,v_TexCoord);
     FragColor=color1*color2;
 }
 
 subroutine(Light)
-void KeepCircle(){
+void KeepCircle(){ //merge lighting framebuffer and temp framebuffer. used to render point light with walls collisions
     vec4 color1=texture(framebuffer,v_TexCoord);
     vec4 color2=texture(light,v_TexCoord);
 
-    // Calcola le coordinate del pixel rispetto al centro
-    vec2 centerCoord = gl_FragCoord.xy - lightPos;
+    vec2 centerCoord=gl_FragCoord.xy-lightPos;
+    float dist=length(centerCoord);
 
-    // Calcola la distanza dal centro
-    float dist = length(centerCoord);
-
-    // Controlla se il pixel è al di fuori del cerchio
-    if (dist > radius) {
-        FragColor = color2;
-    } else {
-        // Calcola l'effetto di sfocatura basato sulla distanza
-        float fade = 1.0 - smoothstep(1.0 - blurAmount, 1.0, dist / radius);
-
-        // Applica l'effetto di sfocatura al colore di output
-        FragColor = vec4(color1.rgb*fade,1.0)+color2;
+    if(dist>radius){
+        FragColor=color2;
+    }else{
+        float fade=1.0-smoothstep(1.0-blurAmount,1.0,dist/radius);
+        FragColor=vec4(color1.rgb*fade,1.0)+color2;
     }
 }
 

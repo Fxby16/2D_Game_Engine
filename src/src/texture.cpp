@@ -61,29 +61,29 @@ SpriteSheet::SpriteSheet(SpriteSheet &other){
     m_TileHeight=other.m_TileHeight;
 }
 
-std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,float texID){
+std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,float texID){
     Vertex v1;
     v1.position={x,y};
     v1.texcoords={(col*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};
-    v1.depth=depth;
+    v1.layer=layer;
     v1.texID=texID;
 
     Vertex v2;
     v2.position={x,y+height};
     v2.texcoords={(col*m_TileWidth)/m_Width,((row+1)*m_TileHeight)/m_Height};
-    v2.depth=depth;
+    v2.layer=layer;
     v2.texID=texID;
 
     Vertex v3;
     v3.position={x+width,y+height};
     v3.texcoords={((col+1)*m_TileWidth)/m_Width,((row+1)*m_TileHeight)/m_Height};
-    v3.depth=depth;
+    v3.layer=layer;
     v3.texID=texID;
 
     Vertex v4;
     v4.position={x+width,y};
     v4.texcoords={((col+1)*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};
-    v4.depth=depth;
+    v4.layer=layer;
     v4.texID=texID;
     
     return {v1,v2,v3,v4};

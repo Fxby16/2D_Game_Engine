@@ -1,5 +1,5 @@
 #version 460 core
-layout(location = 0) in vec2 vertex;
+layout(location=0) in vec2 vertex;
 
 out VS_OUT{
     vec2 TexCoords;

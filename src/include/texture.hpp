@@ -92,7 +92,7 @@ public:
     inline int GetTileWidth() const{ return m_TileWidth; }
     inline int GetTileHeight() const{ return m_TileHeight; }
 
-    std::array<Vertex,4> CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,float texID);
+    std::array<Vertex,4> CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,float texID);
     
 protected:
     int m_TileWidth;

@@ -10,6 +10,7 @@ extern double CURRENT_FRAME;
 extern double DELTA_TIME;
 extern double LAST_FRAME;
 extern bool V_SYNC;
+extern bool FPS_COUNTER;
 
 extern float BASE_SCREEN_WIDTH;
 extern float BASE_SCREEN_HEIGHT;
@@ -25,7 +26,12 @@ extern int DRAW_CALLS;
 extern GLFWwindow *WINDOW;
 extern bool FRAMEBUFFER_UPDATE;
 extern bool PROJ_UPDATE;
+extern bool TEXT_PROJ_UPDATE;
 
 namespace WindowInfo{
     extern bool ISFULLSCREEN;
 }
+
+enum LightType{
+    ALL_LIGHT,LIGHT_AROUND_POS,LIGHT_AROUND_POS_COLL
+};

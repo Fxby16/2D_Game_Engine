@@ -10,8 +10,6 @@
 
 #include <iostream>
 
-extern Renderer *m_Renderer;
-
 class Game{
 public:
     Game(const char *window_name,unsigned int width,unsigned int height,bool imgui=true);
@@ -26,7 +24,7 @@ public:
 
 protected:
     const char *m_WindowName;
-
+    std::vector<Entity> m_Entities;
     bool imgui;
 
     #ifdef DEBUG

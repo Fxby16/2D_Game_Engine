@@ -11,7 +11,7 @@ subroutine uniform PostProcessing post_processing;
 
 subroutine(PostProcessing) 
 void InvertColor(){
-    color=vec4(1.0,1.0,1.0,1.0)-texture(texID[int(Tex_Index)],v_TexCoord); //color inversion
+    color=vec4(1.0,1.0,1.0,1.0)-texture(texID[int(Tex_Index)],v_TexCoord);
     color.a=1.0;
 }
 

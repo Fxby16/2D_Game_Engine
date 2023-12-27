@@ -1,7 +1,5 @@
 #include <game.hpp>
 
-Renderer *m_Renderer;
-
 Game::Game(const char *window_name,unsigned int width,unsigned int height,bool imgui){
     m_WindowName=window_name;
     BASE_SCREEN_WIDTH=SCREEN_WIDTH=width;
@@ -13,8 +11,6 @@ Game::Game(const char *window_name,unsigned int width,unsigned int height,bool i
     if(imgui)
         Renderer::ImGui_Init();
 
-    m_Renderer=new Renderer;
-
     #ifdef DEBUG
         last_time=glfwGetTime();
         PrintDebugInfo();
@@ -22,11 +18,10 @@ Game::Game(const char *window_name,unsigned int width,unsigned int height,bool i
 }
 
 Game::~Game(){
-    delete m_Renderer;
-
     if(imgui)
         Renderer::ImGui_Close();
-    glfwTerminate();
+    m_Entities.clear();
+    DeinitGlfwWindow();
 }
 
 void Game::Run(){
@@ -35,9 +30,10 @@ void Game::Run(){
         DELTA_TIME=CURRENT_FRAME-LAST_FRAME;
         LAST_FRAME=CURRENT_FRAME;
 
+
         glfwPollEvents();
 
-        m_Renderer->StartScene();
+        RENDERER->StartScene();
         if(imgui){
             Renderer::ImGui_Start_Frame();
             Renderer::ImGui_Theme();
@@ -45,6 +41,8 @@ void Game::Run(){
 
         OnUpdate(DELTA_TIME);
         OnRender();
+        if(FPS_COUNTER)
+            ShowFpsCounter();
 
         if(imgui){
             OnImGuiUpdate();
@@ -65,12 +63,13 @@ void Game::Run(){
 }
 
 void Game::OnUpdate(const double frame_time){
-    m_Renderer->Clear();
+    RENDERER->Clear();
 }
 
 void Game::OnRender(){
-    m_Renderer->Render();
-    m_Renderer->DrawScene();
+    RENDERER->Render();
+    RENDERER->ApplyLight();
+    RENDERER->DrawScene();
 }
 
 void Game::OnImGuiUpdate(){

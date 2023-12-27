@@ -5,6 +5,7 @@
 #include <vertexarray.hpp>
 #include <shader.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <vector>
 #include <map>
@@ -22,6 +23,12 @@ public:
 
     void DrawText(std::string text,float x,float y,float scale,Vec3 color);
     std::pair<float,float> GetTextSize(std::string text,float scale); 
+
+    inline void UpdateProjMat(){
+        m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
+        m_Shader.Bind();
+        m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
+    }
 
 private:
 
@@ -45,10 +52,6 @@ private:
     Character *m_Characters;
     glm::mat4 *m_Transforms;
     int *m_ToRender;
-
-    inline void UpdateProjMat(){
-        m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
-    }
 
     void Render(int num_characters);  
 };

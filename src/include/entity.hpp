@@ -8,12 +8,14 @@ class Entity;
 class TextureComponent;
 class AnimatedTextureComponent;
 class ColliderComponent;
+class LightComponent;
 
 template<typename T>
 using ComponentType=typename std::enable_if<
     std::is_same<T,TextureComponent>::value ||
     std::is_same<T,AnimatedTextureComponent>::value ||
-    std::is_same<T,ColliderComponent>::value,
+    std::is_same<T,ColliderComponent>::value ||
+    std::is_same<T,LightComponent>::value,
     int>::type;
 
 template<typename T,ComponentType<T> = 0>
@@ -52,8 +54,8 @@ void RightShift(std::vector<T> &v,size_t idx){
 
 class TextureComponent{
 public:
-    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int depth,Entity *entity);
-    TextureComponent(): m_Texture(),m_Width(0),m_Height(0),m_Depth(0),m_Entity(nullptr){}
+    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,Entity *entity);
+    TextureComponent(): m_Texture(),m_Width(0),m_Height(0),m_Layer(0),m_Entity(nullptr){}
     TextureComponent(TextureComponent &other);
     TextureComponent(TextureComponent &&other);
     
@@ -61,7 +63,7 @@ public:
         m_Texture=b.m_Texture;
         m_Width=b.m_Width;
         m_Height=b.m_Height;
-        m_Depth=b.m_Depth;
+        m_Layer=b.m_Layer;
         m_Entity=b.m_Entity;
         return *this;
     }
@@ -70,7 +72,7 @@ public:
             m_Texture=std::move(b.m_Texture);
             m_Width=b.m_Width;
             m_Height=b.m_Height;
-            m_Depth=b.m_Depth;
+            m_Layer=b.m_Layer;
             m_Entity=b.m_Entity;
         }
         return *this;
@@ -78,14 +80,14 @@ public:
 
     Texture m_Texture;
     float m_Width,m_Height;
-    int m_Depth;
+    int m_Layer;
     Entity *m_Entity;
 };
 
 class AnimatedTextureComponent{
 public:
-    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int depth,Entity *entity);
-    AnimatedTextureComponent(): m_AnimatedTexture(),m_Width(0),m_Height(0),m_Depth(0),m_Entity(nullptr){}
+    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer,Entity *entity);
+    AnimatedTextureComponent(): m_AnimatedTexture(),m_Width(0),m_Height(0),m_Layer(0),m_Entity(nullptr){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
     AnimatedTextureComponent(AnimatedTextureComponent &&other);
 
@@ -93,7 +95,7 @@ public:
         m_AnimatedTexture=b.m_AnimatedTexture;
         m_Width=b.m_Width;
         m_Height=b.m_Height;
-        m_Depth=b.m_Depth;
+        m_Layer=b.m_Layer;
         m_Entity=b.m_Entity;
         return *this;
     }
@@ -102,15 +104,17 @@ public:
             m_AnimatedTexture=std::move(b.m_AnimatedTexture);
             m_Width=b.m_Width;
             m_Height=b.m_Height;
-            m_Depth=b.m_Depth;
+            m_Layer=b.m_Layer;
             m_Entity=b.m_Entity;
         }
         return *this;
     }
 
+    void PlayAnimation(bool loop=false,float delay=0.0f);
+
     AnimatedTexture m_AnimatedTexture;
     float m_Width,m_Height;
-    int m_Depth;
+    int m_Layer;
     Entity *m_Entity;
 };
 
@@ -119,10 +123,10 @@ public:
     ColliderComponent(float width,float height,float hspeed,float vspeed,float xoffset,float yoffset,Entity *entity);
     ColliderComponent(): m_Width(0),m_Height(0),m_HSpeed(0),m_VSpeed(0),m_XOffset(0),m_YOffset(0),m_Entity(nullptr){}
 
-    static bool RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float &t_hit_near);
-    static bool DynamicRectVsRect(const Rect* r_dynamic,const float frame_time,const Rect* r_static,
+    static bool RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float &time_hit_near);
+    static bool DynamicRectVsRect(const Rect *dynamic_rect,const float frame_time,const Rect *static_rect,
         Vec2 &contact_point,Vec2 &contact_normal,float &contact_time);
-    static bool ResolveDynamicRectVsRect(Rect* r_dynamic,const float frame_time,Rect *r_static);
+    static bool ResolveDynamicRectVsRect(Rect *dynamic_rect,const float frame_time,Rect *static_rect);
 
     void Move(float x_offset,float y_offset);
 
@@ -133,10 +137,28 @@ public:
     Entity *m_Entity;
 };
 
+class LightComponent{
+public:
+    LightComponent();
+    LightComponent(float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type,Entity *entity);
+
+    void SetOffset(float x_offset,float y_offset);
+    void SetCentered(float width,float height);
+
+    float m_XOffset,m_YOffset;
+    float m_Radius,m_Blur;
+    Vec3 m_Color;
+    LightType m_Type;
+
+    Entity *m_Entity;
+};
+
 class Entity{
 public:
     Entity();
     Entity(float x,float y);
+    Entity(Entity &other);
+    Entity(Entity &&other);
     ~Entity();
 
     void Move(float x_offset,float y_offset);
@@ -208,3 +230,4 @@ public:
 extern ComponentManager<TextureComponent> CMTC;
 extern ComponentManager<AnimatedTextureComponent> CMATC;
 extern ComponentManager<ColliderComponent> CMCC;
+extern ComponentManager<LightComponent> CMLC;

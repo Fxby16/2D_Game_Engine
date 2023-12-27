@@ -7,6 +7,8 @@ make config=release clean
 rm ./Makefile -f
 rm ./2DGameEngine.make -f
 rm ./imgui.ini -f
+rm bin/Debug/imgui.ini -f
+rm bin/Release/imgui.ini -f
 
 cd editor
 make clean
