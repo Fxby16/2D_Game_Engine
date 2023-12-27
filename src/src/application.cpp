@@ -1,6 +1,6 @@
-#include <game.hpp>
+#include <application.hpp>
 
-Game::Game(const char *window_name,unsigned int width,unsigned int height,bool imgui){
+Application::Application(const char *window_name,unsigned int width,unsigned int height,bool imgui){
     m_WindowName=window_name;
     BASE_SCREEN_WIDTH=SCREEN_WIDTH=width;
     BASE_SCREEN_HEIGHT=SCREEN_HEIGHT=height;
@@ -17,14 +17,14 @@ Game::Game(const char *window_name,unsigned int width,unsigned int height,bool i
     #endif
 }
 
-Game::~Game(){
+Application::~Application(){
     if(imgui)
         Renderer::ImGui_Close();
     m_Entities.clear();
     DeinitGlfwWindow();
 }
 
-void Game::Run(){
+void Application::Run(){
     while(!glfwWindowShouldClose(WINDOW)){
         CURRENT_FRAME=glfwGetTime();
         DELTA_TIME=CURRENT_FRAME-LAST_FRAME;
@@ -62,20 +62,20 @@ void Game::Run(){
     }
 }
 
-void Game::OnUpdate(const double frame_time){
+void Application::OnUpdate(const double frame_time){
     RENDERER->Clear();
 }
 
-void Game::OnRender(){
+void Application::OnRender(){
     RENDERER->Render();
     RENDERER->ApplyLight();
     RENDERER->DrawScene();
 }
 
-void Game::OnImGuiUpdate(){
+void Application::OnImGuiUpdate(){
     Renderer::ImGui_Content();
 }
 
-void Game::OnImGuiRender(){
+void Application::OnImGuiRender(){
     Renderer::ImGui_End_Frame();
 }

@@ -123,8 +123,8 @@ void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int 
     VBL.Push(type,count,normalized);
 }
 
-void Renderer::DrawTexture(float x,float y,float w,float h,float depth,float texID){
-    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,depth,texID);
+void Renderer::DrawTexture(float x,float y,float w,float h,float layer,float texID){
+    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,layer,texID);
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
     m_BufferT[m_Textures.NumVertices+2]=c;
@@ -135,8 +135,8 @@ void Renderer::DrawTexture(float x,float y,float w,float h,float depth,float tex
         Render();
 }
 
-void Renderer::DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float depth,float texID){
-    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,tx,ty,tw,th,ttw,tth,depth,texID);
+void Renderer::DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float layer,float texID){
+    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,tx,ty,tw,th,ttw,tth,layer,texID);
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
     m_BufferT[m_Textures.NumVertices+2]=c;
@@ -147,7 +147,7 @@ void Renderer::DrawTexture(float x,float y,float w,float h,float tx,float ty,flo
         Render();
 }
 
-void Renderer::DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float depth,Texture &texture){
+void Renderer::DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float layer,Texture &texture){
     if(reverse_x && reverse_y)
         DrawTexture(x,y,w,h,texture.GetWidth(),texture.GetHeight(),-texture.GetWidth(),-texture.GetHeight(),texture.GetWidth(),texture.GetHeight(),0,texture.GetTexID());
     else if(reverse_x)
@@ -155,11 +155,11 @@ void Renderer::DrawTexture(float x,float y,float w,float h,bool reverse_x,bool r
     else if(reverse_y)
         DrawTexture(x,y,w,h,0,texture.GetHeight(),texture.GetWidth(),-texture.GetHeight(),texture.GetWidth(),texture.GetHeight(),0,texture.GetTexID());
     else
-        DrawTexture(x,y,w,h,depth,texture.GetTexID());
+        DrawTexture(x,y,w,h,layer,texture.GetTexID());
 }
 
-void Renderer::DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float depth,SpriteSheet &s){
-    std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(x,y,width,height,row,col,depth,s.GetTexID());
+void Renderer::DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,SpriteSheet &s){
+    std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(x,y,width,height,row,col,layer,s.GetTexID());
     m_BufferT[m_Textures.NumVertices]=quad[0];
     m_BufferT[m_Textures.NumVertices+1]=quad[1];
     m_BufferT[m_Textures.NumVertices+2]=quad[2];
@@ -170,7 +170,7 @@ void Renderer::DrawSpriteSheet(float x,float y,float width,float height,float ro
         Render();
 }
 
-void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,float depth,AnimatedTexture &at){
+void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,float layer,AnimatedTexture &at){
     if(at.m_PlayAnimation){
         if(glfwGetTime()-at.m_LastAnimationTime>=at.m_AnimationDelay){
             at.m_LastAnimationTime=glfwGetTime();
@@ -183,7 +183,7 @@ void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,floa
             }
         }
     }
-    DrawSpriteSheet(x,y,width,height,ceil(static_cast<float>(at.m_Height)/static_cast<float>(at.m_TileHeight))-1,at.m_AnimationIndex,depth,at);
+    DrawSpriteSheet(x,y,width,height,ceil(static_cast<float>(at.m_Height)/static_cast<float>(at.m_TileHeight))-1,at.m_AnimationIndex,layer,at);
 }
 
 
@@ -303,7 +303,7 @@ void Renderer::DrawScene(){
     Render(true);
 }
 
-void Renderer::Render(bool post_processing){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect depth input for subsequent vertices
+void Renderer::Render(bool post_processing){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect layer input for subsequent vertices
     if(m_Textures.NumVertices>0)
         std::stable_sort(m_BufferT,m_BufferT+m_Textures.NumVertices,cmp1);
     if(m_Points.NumVertices>0)

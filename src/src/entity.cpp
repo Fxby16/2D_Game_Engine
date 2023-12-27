@@ -1,7 +1,7 @@
 #include <entity.hpp>
 #include <cmath>
 #include <renderer.hpp>
-#include <game.hpp>
+#include <application.hpp>
 #include <global.hpp>
 
 uint64_t NEXT_UID=0;
@@ -50,13 +50,13 @@ void Entity::SetPos(float x,float y){
 }
 
 template<>
-void Entity::AddComponent<TextureComponent,const char*,int,int,float,float,int>(const char *path,int mag_filter,int min_filter,float width,float height,int layer){
+void Entity::AddComponent<TextureComponent,const char*,int,int,float,float,float>(const char *path,int mag_filter,int min_filter,float width,float height,float layer){
     TextureComponent temp(path,mag_filter,min_filter,width,height,layer,this);
     CMTC.AddComponent(temp,m_UID);
 }
 
 template<>
-void Entity::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsigned int,int,int,float,float,int>(const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer){
+void Entity::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsigned int,int,int,float,float,float>(const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer){
     AnimatedTextureComponent temp(path,tile_width,tile_height,mag_filter,min_filter,width,height,layer,this);
     CMATC.AddComponent(temp,m_UID);
 }
@@ -114,10 +114,10 @@ LightComponent* Entity::GetComponent<LightComponent>(){
     return CMLC.GetComponent(m_UID);
 }
 
-TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,Entity *entity):
+TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,Entity *entity):
     m_Texture(path,mag_filter,min_filter),m_Width(width),m_Height(height),m_Layer(layer),m_Entity(entity){}
 
-AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer,Entity *entity):
+AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,Entity *entity):
     m_AnimatedTexture(path,tile_width,tile_height,mag_filter,min_filter),m_Width(width),m_Height(height),m_Layer(layer),m_Entity(entity){}
 
 ColliderComponent::ColliderComponent(float width,float height,float hspeed,float vspeed,float xoffset,float yoffset,Entity *entity):

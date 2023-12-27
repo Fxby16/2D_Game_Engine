@@ -1,21 +1,21 @@
-#include <game.hpp>
+#include <application.hpp>
 
-class Test : public Game{
+class Test : public Application{
 public:
-    Test(const char *title,int width,int height,bool imgui=false): Game(title,width,height,imgui){
+    Test(const char *title,int width,int height,bool imgui=false): Application(title,width,height,imgui){
         m_Entities.resize(2);
-        m_Entities[0].AddComponent<TextureComponent>("/home/fabio/Scaricati/Red.png",GL_LINEAR,GL_LINEAR,100.0f,100.0f,0);
+        m_Entities[0].AddComponent<TextureComponent>("/home/fabio/Scaricati/Red.png",GL_LINEAR,GL_LINEAR,100.0f,100.0f,0.0f);
         m_Entities[0].AddComponent<ColliderComponent>(100.0f,100.0f,0.0f,0.0f,0.0f,0.0f);
         m_Entities[0].AddComponent<LightComponent>(0.0f,0.0f,200.0f,0.3f,Vec3(1,1,1),LIGHT_AROUND_POS);
         CMLC.GetComponent(m_Entities[0].m_UID)->SetCentered(100.0f,100.0f);
-        m_Entities[1].AddComponent<AnimatedTextureComponent>("resources/textures/Run.png",(unsigned int)128,(unsigned int)128,GL_NEAREST,GL_NEAREST,300.0f,300.0f,0);
+        m_Entities[1].AddComponent<AnimatedTextureComponent>("resources/textures/Run.png",(unsigned int)128,(unsigned int)128,GL_NEAREST,GL_NEAREST,300.0f,300.0f,0.0f);
         m_Entities[1].AddComponent<ColliderComponent>(300.0f,200.0f,0.0f,0.0f,0.0f,0.0f);
         m_Entities[1].SetPos(500,500);
         RENDERER->SetAmbientLight({0.3,0.3,0.3});
         RENDERER->SetClearColor({0.3,0.3,0.3});
         RENDERER->ChangePointSize(100);
     }
-    void OnUpdate(double frame_time)override{
+    void OnUpdate(double frame_time) override{
         RENDERER->Clear();
         HandleButtons();
         CMCC.Update(frame_time);

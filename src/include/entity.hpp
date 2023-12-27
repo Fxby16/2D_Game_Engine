@@ -54,7 +54,7 @@ void RightShift(std::vector<T> &v,size_t idx){
 
 class TextureComponent{
 public:
-    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,Entity *entity);
+    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,Entity *entity);
     TextureComponent(): m_Texture(),m_Width(0),m_Height(0),m_Layer(0),m_Entity(nullptr){}
     TextureComponent(TextureComponent &other);
     TextureComponent(TextureComponent &&other);
@@ -80,13 +80,13 @@ public:
 
     Texture m_Texture;
     float m_Width,m_Height;
-    int m_Layer;
+    float m_Layer;
     Entity *m_Entity;
 };
 
 class AnimatedTextureComponent{
 public:
-    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer,Entity *entity);
+    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,Entity *entity);
     AnimatedTextureComponent(): m_AnimatedTexture(),m_Width(0),m_Height(0),m_Layer(0),m_Entity(nullptr){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
     AnimatedTextureComponent(AnimatedTextureComponent &&other);
@@ -114,7 +114,7 @@ public:
 
     AnimatedTexture m_AnimatedTexture;
     float m_Width,m_Height;
-    int m_Layer;
+    float m_Layer;
     Entity *m_Entity;
 };
 

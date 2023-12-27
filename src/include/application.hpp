@@ -10,10 +10,10 @@
 
 #include <iostream>
 
-class Game{
+class Application{
 public:
-    Game(const char *window_name,unsigned int width,unsigned int height,bool imgui=true);
-    ~Game();
+    Application(const char *window_name,unsigned int width,unsigned int height,bool imgui=true);
+    ~Application();
 
     void Run();
 
