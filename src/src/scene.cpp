@@ -132,9 +132,9 @@ void SceneManager::AddScene(const std::string &name){
 void SceneManager::RemoveScene(const std::string &name){
     if(name==m_CurrentSceneName)
         m_CurrentSceneName="";
-    for(auto &scene:m_Scenes){
-        if(scene.m_Name==name){
-            scene.m_Name="";
+    for(int i=0;i<m_Scenes.size();i++){
+        if(m_Scenes[i].m_Name==name){
+            m_Scenes.erase(m_Scenes.begin()+i);
             break;
         }
     }
@@ -145,6 +145,10 @@ void SceneManager::SetCurrentScene(const std::string &name){
 }
 
 Scene* SceneManager::GetCurrentScene(){
+    if(m_CurrentSceneName.empty()){
+        printf("You must set a current scene before calling GetCurrentScene()\n");
+        return nullptr;
+    }
     for(auto &scene:m_Scenes){
         if(scene.m_Name==m_CurrentSceneName)
             return &scene;

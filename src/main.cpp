@@ -49,8 +49,8 @@ public:
     void HandleButtons(){
         Scene *scene=m_SceneManager.GetCurrentScene();
         if(getKeyState(KEY_K,BUTTON_DOWN)){
-            if(m_SceneManager.GetCurrentSceneName()=="Test")
-                m_SceneManager.SetCurrentScene("Test2");
+            m_SceneManager.RemoveScene("Test");
+            m_SceneManager.SetCurrentScene("Test2");
         }
 
         if(getKeyState(KEY_W,BUTTON_DOWN)){
