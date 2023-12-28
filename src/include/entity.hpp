@@ -19,13 +19,13 @@ using ComponentType=typename std::enable_if<
     int>::type;
 
 template<typename T,ComponentType<T> = 0>
-int BinarySearch(std::vector<T> &v,uint64_t uid){
+inline int BinarySearch(std::vector<T> &v,uint64_t uid){
     int l=0,r=v.size()-1;
     while(l<=r){
         int m=(l+r)/2;
-        if(v[m].m_Entity->m_UID==uid)
+        if(v[m].m_UID==uid)
             return m;
-        else if(v[m].m_Entity->m_UID<uid)
+        else if(v[m].m_UID<uid)
             l=m+1;
         else
             r=m-1;
@@ -34,11 +34,11 @@ int BinarySearch(std::vector<T> &v,uint64_t uid){
 }
 
 template<typename T,ComponentType<T> = 0>
-int FirstGreaterThan(std::vector<T> &v,uint64_t uid){
+inline int FirstGreaterThan(std::vector<T> &v,uint64_t uid){
     int l=0,r=v.size()-1;
     while(l<=r){
         int m=(l+r)/2;
-        if(v[m].m_Entity->m_UID>uid)
+        if(v[m].m_UID>uid)
             r=m-1;
         else
             l=m+1;
@@ -47,15 +47,15 @@ int FirstGreaterThan(std::vector<T> &v,uint64_t uid){
 }
 
 template<typename T,ComponentType<T> = 0>
-void RightShift(std::vector<T> &v,size_t idx){
+inline void RightShift(std::vector<T> &v,size_t idx){
     for(size_t i=v.size()-1;i>idx;i--)
         v[i]=v[i-1];
 }
 
 class TextureComponent{
 public:
-    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,Entity *entity);
-    TextureComponent(): m_Texture(),m_Width(0),m_Height(0),m_Layer(0),m_Entity(nullptr){}
+    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint64_t uid);
+    TextureComponent(): m_Texture(),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint64_t>::max()){}
     TextureComponent(TextureComponent &other);
     TextureComponent(TextureComponent &&other);
     
@@ -64,7 +64,7 @@ public:
         m_Width=b.m_Width;
         m_Height=b.m_Height;
         m_Layer=b.m_Layer;
-        m_Entity=b.m_Entity;
+        m_UID=b.m_UID;
         return *this;
     }
     TextureComponent &operator=(TextureComponent &&b){
@@ -73,7 +73,7 @@ public:
             m_Width=b.m_Width;
             m_Height=b.m_Height;
             m_Layer=b.m_Layer;
-            m_Entity=b.m_Entity;
+            m_UID=b.m_UID;
         }
         return *this;
     }
@@ -81,13 +81,13 @@ public:
     Texture m_Texture;
     float m_Width,m_Height;
     float m_Layer;
-    Entity *m_Entity;
+    uint64_t m_UID;
 };
 
 class AnimatedTextureComponent{
 public:
-    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,Entity *entity);
-    AnimatedTextureComponent(): m_AnimatedTexture(),m_Width(0),m_Height(0),m_Layer(0),m_Entity(nullptr){}
+    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,uint64_t uid);
+    AnimatedTextureComponent(): m_AnimatedTexture(),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint64_t>::max()){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
     AnimatedTextureComponent(AnimatedTextureComponent &&other);
 
@@ -96,7 +96,7 @@ public:
         m_Width=b.m_Width;
         m_Height=b.m_Height;
         m_Layer=b.m_Layer;
-        m_Entity=b.m_Entity;
+        m_UID=b.m_UID;
         return *this;
     }
     AnimatedTextureComponent &operator=(AnimatedTextureComponent &&b){
@@ -105,7 +105,7 @@ public:
             m_Width=b.m_Width;
             m_Height=b.m_Height;
             m_Layer=b.m_Layer;
-            m_Entity=b.m_Entity;
+            m_UID=b.m_UID;
         }
         return *this;
     }
@@ -115,13 +115,13 @@ public:
     AnimatedTexture m_AnimatedTexture;
     float m_Width,m_Height;
     float m_Layer;
-    Entity *m_Entity;
+    uint64_t m_UID;
 };
 
 class ColliderComponent{
 public:
-    ColliderComponent(float width,float height,float hspeed,float vspeed,float xoffset,float yoffset,Entity *entity);
-    ColliderComponent(): m_Width(0),m_Height(0),m_HSpeed(0),m_VSpeed(0),m_XOffset(0),m_YOffset(0),m_Entity(nullptr){}
+    ColliderComponent(float width,float height,float hspeed,float vspeed,float xoffset,float yoffset,uint64_t uid);
+    ColliderComponent(): m_Width(0),m_Height(0),m_HSpeed(0),m_VSpeed(0),m_XOffset(0),m_YOffset(0),m_UID(std::numeric_limits<uint64_t>::max()){}
 
     static bool RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float &time_hit_near);
     static bool DynamicRectVsRect(const Rect *dynamic_rect,const float frame_time,const Rect *static_rect,
@@ -134,13 +134,13 @@ public:
     float m_HSpeed,m_VSpeed;
     float m_XOffset,m_YOffset;
 
-    Entity *m_Entity;
+    uint64_t m_UID;
 };
 
 class LightComponent{
 public:
     LightComponent();
-    LightComponent(float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type,Entity *entity);
+    LightComponent(float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type,uint64_t uid);
 
     void SetOffset(float x_offset,float y_offset);
     void SetCentered(float width,float height);
@@ -150,7 +150,7 @@ public:
     Vec3 m_Color;
     LightType m_Type;
 
-    Entity *m_Entity;
+    uint64_t m_UID;
 };
 
 class Entity{
@@ -159,25 +159,27 @@ public:
     Entity(float x,float y);
     Entity(Entity &other);
     Entity(Entity &&other);
-    ~Entity();
-
-    void Move(float x_offset,float y_offset);
-
-    template<typename T,typename...Args>
-    void AddComponent(Args...args);
-
-    template<typename T>
-    void RemoveComponent();
-
-    template<typename T>
-    T* GetComponent();
-    
-    void SetPos(float x,float y);
+    Entity &operator=(Entity &other);
+    Entity &operator=(Entity &&other);
 
     uint64_t m_UID;
     float m_X,m_Y;
     bool m_HasCollider;
 };
+
+inline Entity* BinarySearch(std::vector<Entity> &v,uint64_t uid){
+    int l=0,r=v.size()-1;
+    while(l<=r){
+        int m=(l+r)/2;
+        if(v[m].m_UID==uid)
+            return &v[m];
+        else if(v[m].m_UID<uid)
+            l=m+1;
+        else
+            r=m-1;
+    }
+    return nullptr;
+}
 
 template<typename T,ComponentType<T> = 0>
 class ComponentManager{
@@ -194,9 +196,6 @@ public:
     void RemoveComponent(uint64_t uid){
         int idx;
         if((idx=BinarySearch(m_Components,uid))!=-1){
-            if constexpr(std::is_same<T,ColliderComponent>::value){
-                m_Components[idx].m_Entity->m_HasCollider=false;
-            }
             m_Components.erase(m_Components.begin()+idx);
         }
     }
@@ -214,8 +213,8 @@ public:
 
     Rect* GetComponentAsRect(int index){
         Rect *r=new Rect;
-        r->pos.x=m_Components[index].m_Entity->m_X+m_Components[index].m_XOffset;
-        r->pos.y=m_Components[index].m_Entity->m_Y+m_Components[index].m_YOffset;
+        r->pos.x=m_Components[index].m_XOffset; //entity position is added later
+        r->pos.y=m_Components[index].m_YOffset;
         r->size.x=m_Components[index].m_Width;
         r->size.y=m_Components[index].m_Height;
         r->vel.x=m_Components[index].m_HSpeed;
@@ -223,11 +222,6 @@ public:
         return r;
     }
 
-    void Update(float frame_time);
-    void Render();
+    void Update(float frame_time,std::vector<Entity>& entities);
+    void Render(std::vector<Entity>& entities);
 };
-
-extern ComponentManager<TextureComponent> CMTC;
-extern ComponentManager<AnimatedTextureComponent> CMATC;
-extern ComponentManager<ColliderComponent> CMCC;
-extern ComponentManager<LightComponent> CMLC;

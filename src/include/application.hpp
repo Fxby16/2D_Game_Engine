@@ -2,10 +2,9 @@
 
 #include <renderer.hpp>
 #include <audio.hpp>
-#include <entity.hpp>
 #include <textrenderer.hpp>
 #include <texture.hpp>
-#include <entity.hpp>
+#include <scene.hpp>
 #include <window.hpp>
 
 #include <iostream>
@@ -24,8 +23,8 @@ public:
 
 protected:
     const char *m_WindowName;
-    std::vector<Entity> m_Entities;
     bool imgui;
+    SceneManager m_SceneManager;
 
     #ifdef DEBUG
         double last_time;

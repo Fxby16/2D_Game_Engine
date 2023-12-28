@@ -20,8 +20,6 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
 Application::~Application(){
     if(imgui)
         Renderer::ImGui_Close();
-    m_Entities.clear();
-    DeinitGlfwWindow();
 }
 
 void Application::Run(){

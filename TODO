@@ -1,10 +1,9 @@
 - add audio component
-- add scripting?
+- add scripting
 - fix examples
 - write documentation
 - add different collider shapes
 - ensure consistent data types for the same variables across all definitions
-- add scenes and a scene manager
 
 Others:
 - write the editor
