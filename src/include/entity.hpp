@@ -3,18 +3,23 @@
 #include <structs.hpp>
 #include <texture.hpp>
 #include <vector>
+#include <box2d/b2_body.h>
 
 class Entity;
 class TextureComponent;
 class AnimatedTextureComponent;
-class ColliderComponent;
+class RigidbodyComponent;
+class BoxColliderComponent;
+class CircleColliderComponent;
 class LightComponent;
 
 template<typename T>
 using ComponentType=typename std::enable_if<
     std::is_same<T,TextureComponent>::value ||
     std::is_same<T,AnimatedTextureComponent>::value ||
-    std::is_same<T,ColliderComponent>::value ||
+    std::is_same<T,RigidbodyComponent>::value ||
+    std::is_same<T,BoxColliderComponent>::value ||
+    std::is_same<T,CircleColliderComponent>::value ||
     std::is_same<T,LightComponent>::value,
     int>::type;
 
@@ -50,6 +55,10 @@ template<typename T,ComponentType<T> = 0>
 inline void RightShift(std::vector<T> &v,size_t idx){
     for(size_t i=v.size()-1;i>idx;i--)
         v[i]=v[i-1];
+}
+
+inline float Interpolate(float current,float previous){
+    return current*ALPHA+previous*(1.0f-ALPHA);
 }
 
 class TextureComponent{
@@ -118,21 +127,55 @@ public:
     uint64_t m_UID;
 };
 
-class ColliderComponent{
+class RigidbodyComponent{
 public:
-    ColliderComponent(float width,float height,float hspeed,float vspeed,float xoffset,float yoffset,uint64_t uid);
-    ColliderComponent(): m_Width(0),m_Height(0),m_HSpeed(0),m_VSpeed(0),m_XOffset(0),m_YOffset(0),m_UID(std::numeric_limits<uint64_t>::max()){}
+    RigidbodyComponent()=default;
+    RigidbodyComponent(const RigidbodyComponent &other)=default;
 
-    static bool RayVsRect(const Vec2 &ray_origin, const Vec2 &ray_dir,const Rect *target,Vec2 &contact_point,Vec2 &contact_normal,float &time_hit_near);
-    static bool DynamicRectVsRect(const Rect *dynamic_rect,const float frame_time,const Rect *static_rect,
-        Vec2 &contact_point,Vec2 &contact_normal,float &contact_time);
-    static bool ResolveDynamicRectVsRect(Rect *dynamic_rect,const float frame_time,Rect *static_rect);
+    enum class BodyType{
+        Static,
+        Dynamic,
+        Kinematic
+    };
+    BodyType m_BodyType=BodyType::Static;
+    bool m_FixedRotation=true;
+    b2Body *m_RuntimeBody=nullptr;
 
-    void Move(float x_offset,float y_offset);
+    uint64_t m_UID;
+};
 
-    float m_Width,m_Height;
-    float m_HSpeed,m_VSpeed;
-    float m_XOffset,m_YOffset;
+class BoxColliderComponent{
+public:
+    BoxColliderComponent()=default;
+    BoxColliderComponent(const BoxColliderComponent &other)=default;
+
+    float m_XOffset=0.0f,m_YOffset=0.0f;
+    float m_Width=0.0f,m_Height=0.0f;
+
+    float m_Density=1.0f;
+    float m_Friction=0.0f;
+    float m_Restitution=0.0f;
+    float m_RestitutionThreshold=0.5f;
+
+    b2Fixture *m_RuntimeFixture=nullptr;
+
+    uint64_t m_UID;
+};
+
+class CircleColliderComponent{
+public:
+    CircleColliderComponent()=default;
+    CircleColliderComponent(const CircleColliderComponent &other)=default;
+
+    float m_XOffset=0.0f,m_YOffset=0.0f;
+    float m_Radius=0.0f;
+
+    float m_Density=1.0f;
+    float m_Friction=0.0f;
+    float m_Restitution=0.0f;
+    float m_RestitutionThreshold=0.5f;
+
+    b2Fixture *m_RuntimeFixture=nullptr;
 
     uint64_t m_UID;
 };
@@ -164,7 +207,7 @@ public:
 
     uint64_t m_UID;
     float m_X,m_Y;
-    bool m_HasCollider;
+    float m_PreviousX,m_PreviousY;
 };
 
 inline Entity* BinarySearch(std::vector<Entity> &v,uint64_t uid){
@@ -196,6 +239,9 @@ public:
     void RemoveComponent(uint64_t uid){
         int idx;
         if((idx=BinarySearch(m_Components,uid))!=-1){
+            if constexpr(std::is_same<T,RigidbodyComponent>::value)
+                m_Components[idx].m_RuntimeBody->GetWorld()->DestroyBody(m_Components[idx].m_RuntimeBody);
+            
             m_Components.erase(m_Components.begin()+idx);
         }
     }
@@ -225,3 +271,28 @@ public:
     void Update(float frame_time,std::vector<Entity>& entities);
     void Render(std::vector<Entity>& entities);
 };
+
+inline b2BodyType RigidbodyTypeToBox2DBody(RigidbodyComponent::BodyType bodyType){
+    switch (bodyType){
+        case RigidbodyComponent::BodyType::Static:    
+            return b2_staticBody;
+        case RigidbodyComponent::BodyType::Dynamic:   
+            return b2_dynamicBody;
+        case RigidbodyComponent::BodyType::Kinematic: 
+            return b2_kinematicBody;
+    }
+    return b2_staticBody;
+}
+
+inline RigidbodyComponent::BodyType RigidbodyTypeFromBox2DBody(b2BodyType bodyType){
+    switch (bodyType){
+        case b2_staticBody:    
+            return RigidbodyComponent::BodyType::Static;   
+        case b2_dynamicBody:   
+            return RigidbodyComponent::BodyType::Dynamic;  
+        case b2_kinematicBody: 
+            return RigidbodyComponent::BodyType::Kinematic;
+    }
+    printf("Unknown body type\n");
+    return RigidbodyComponent::BodyType::Static;
+}

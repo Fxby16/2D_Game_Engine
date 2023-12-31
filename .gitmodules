@@ -19,3 +19,6 @@
 [submodule "src/editor/vendor/NativeFileDialog"]
 	path = src/editor/vendor/NativeFileDialog
 	url = https://github.com/mlabbe/nativefiledialog.git
+[submodule "src/vendor/box2d"]
+	path = src/vendor/box2d
+	url = https://github.com/erincatto/box2d.git

@@ -16,6 +16,10 @@ public:
 
     void Run();
 
+    /**
+     * This function is called every m_FixedTimeStep seconds. It's independent from the framerate.
+     * Edit m_FixedTimeStep to change the time between two calls.
+    */
     virtual void OnUpdate(const double frame_time);
     virtual void OnRender();
     virtual void OnImGuiUpdate();
@@ -23,7 +27,9 @@ public:
 
 protected:
     const char *m_WindowName;
-    bool imgui;
+    float m_FixedTimeStep=1.0f/60.0f;
+    float m_Accumulator=0.0f;
+    bool m_ImGui;
     SceneManager m_SceneManager;
 
     #ifdef DEBUG

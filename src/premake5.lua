@@ -16,12 +16,14 @@ project "2DGameEngine"
                   "vendor/glfw/include/GLFW",
                   "vendor/ImGui",
                   "vendor/ImGui/backends",
-                  "vendor/soloud/include"}
+                  "vendor/soloud/include",
+                  "vendor/box2d/include/" }
 
     libdirs { "vendor/FreeType/objs",
               "vendor/glfw/build/src",
               "vendor/ImGui",
-              "vendor/soloud/lib" }
+              "vendor/soloud/lib",
+              "vendor/box2d/build/bin" }
 
     links { "freetype", 
             "glfw3", 
@@ -31,7 +33,8 @@ project "2DGameEngine"
             "pthread",
             "dl",
             "z",
-            "asound" }
+            "asound",
+            "box2d" }   
 
     filter "configurations:Debug"
         optimize "Debug"

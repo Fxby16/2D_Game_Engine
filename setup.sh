@@ -56,10 +56,15 @@ cd ../soloud/build
 cd gmake
 make
 
-cd ../../../../..
+cd ../../../..
 
 # Setup NativeFileDialog
 if ! [ -z "$1" ] && [ $1==1 ]; then
-    cd src/editor/vendor/NativeFileDialog/build/gmake_linux_zenity
+    cd editor/vendor/NativeFileDialog/build/gmake_linux_zenity
     make 
+    cd ../../../../../
 fi
+
+#setup box2d
+cd vendor/box2d
+bash ./build.sh

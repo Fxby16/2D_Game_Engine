@@ -5,10 +5,11 @@
 #endif
 #include <GLFW/glfw3.h>
 
-extern double FPS;
-extern double CURRENT_FRAME;
-extern double DELTA_TIME;
-extern double LAST_FRAME;
+extern float FPS;
+extern float CURRENT_FRAME;
+extern float LAST_FRAME;
+extern float DELTA_TIME;
+extern float ALPHA;
 extern bool V_SYNC;
 extern bool FPS_COUNTER;
 

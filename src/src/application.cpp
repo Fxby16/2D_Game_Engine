@@ -5,7 +5,7 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
     BASE_SCREEN_WIDTH=SCREEN_WIDTH=width;
     BASE_SCREEN_HEIGHT=SCREEN_HEIGHT=height;
 
-    this->imgui=imgui;
+    m_ImGui=imgui;
 
     InitGlfwWindow(window_name);
     if(imgui)
@@ -18,31 +18,42 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
 }
 
 Application::~Application(){
-    if(imgui)
+    if(m_ImGui)
         Renderer::ImGui_Close();
 }
 
 void Application::Run(){
     while(!glfwWindowShouldClose(WINDOW)){
+        glfwPollEvents();
+
         CURRENT_FRAME=glfwGetTime();
         DELTA_TIME=CURRENT_FRAME-LAST_FRAME;
         LAST_FRAME=CURRENT_FRAME;
 
+        if(DELTA_TIME>0.25f)
+            DELTA_TIME=0.25f;
+            
+        m_Accumulator+=DELTA_TIME;
+        while(m_Accumulator>=m_FixedTimeStep){
+            OnUpdate(m_FixedTimeStep);
+            m_Accumulator-=m_FixedTimeStep;
+        }
 
-        glfwPollEvents();
-
+        ALPHA=m_Accumulator/m_FixedTimeStep;
+    
         RENDERER->StartScene();
-        if(imgui){
+        
+        if(m_ImGui){
             Renderer::ImGui_Start_Frame();
             Renderer::ImGui_Theme();
         }
 
-        OnUpdate(DELTA_TIME);
         OnRender();
+        
         if(FPS_COUNTER)
             ShowFpsCounter();
 
-        if(imgui){
+        if(m_ImGui){
             OnImGuiUpdate();
             OnImGuiRender();
         }

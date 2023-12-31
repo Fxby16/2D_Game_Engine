@@ -2,8 +2,8 @@
 - add scripting
 - fix examples
 - write documentation
-- add different collider shapes
 - ensure consistent data types for the same variables across all definitions
+- move glad and stb_image to vendor folder
 
 Others:
 - write the editor

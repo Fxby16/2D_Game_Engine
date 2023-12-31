@@ -6,10 +6,11 @@
 #include <renderer.hpp>
 #include <audio.hpp>
 
-double FPS;
-double CURRENT_FRAME;
-double DELTA_TIME=0.0;
-double LAST_FRAME=0.0;
+float FPS;
+float CURRENT_FRAME;
+float LAST_FRAME=0.0;
+float DELTA_TIME=0.0;
+float ALPHA=0.0;
 bool V_SYNC=true;
 bool FPS_COUNTER=false;
 
