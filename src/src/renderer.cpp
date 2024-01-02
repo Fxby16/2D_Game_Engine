@@ -19,9 +19,9 @@ Renderer::Renderer():
     m_PostProcessingIndex(std::numeric_limits<unsigned int>::max()),m_AmbientLight(0.0f,0.0f,0.0f),m_ClearColor(0.0f,0.0f,0.0f){
 
     float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
-                    0.0f,SCREEN_HEIGHT,0.0f,1.0f,
-                    SCREEN_WIDTH,SCREEN_HEIGHT,1.0f,1.0f,
-                    SCREEN_WIDTH,0.0f,1.0f,0.0f};
+                    0.0f,Window::MAX_HEIGHT,0.0f,1.0f,
+                    Window::MAX_WIDTH,Window::MAX_HEIGHT,1.0f,1.0f,
+                    Window::MAX_WIDTH,0.0f,1.0f,0.0f};
 
     m_BufferT=(Vertex *)AllocateMemory(MAX_VERTICES*sizeof(Vertex));
     m_BufferP=(LinePointVertex *)AllocateMemory(MAX_VERTICES*sizeof(LinePointVertex));
@@ -33,7 +33,7 @@ Renderer::Renderer():
     m_TempFramebuffer=new Framebuffer;
     IB.Set(MAX_VERTICES);
 
-    m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
+    m_Proj=glm::ortho(0.0f,Window::MAX_WIDTH,0.0f,Window::MAX_HEIGHT,-1.0f,1.0f);
     for(int i=0;i<32;i++)
         m_Slots[i]=i;
 
@@ -88,8 +88,8 @@ Renderer::Renderer():
 
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_PROGRAM_POINT_SIZE);
-    ChangePointSize(5);
-    ChangeLineWidth(5);
+    SetPointSize(1.0f);
+    SetLineWidth(0.1f);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
@@ -101,10 +101,10 @@ Renderer::Renderer():
         printf("Max texture slots: %d\n",m_MaxTextureSlots);
     #endif
 
-    segments.push_back(std::make_pair(Vec2(0,0),Vec2(0,SCREEN_HEIGHT)));
-    segments.push_back(std::make_pair(Vec2(0,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,SCREEN_HEIGHT)));
-    segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,0)));
-    segments.push_back(std::make_pair(Vec2(SCREEN_WIDTH,0),Vec2(0,0)));
+    segments.push_back(std::make_pair(Vec2(0,0),Vec2(0,Window::MAX_HEIGHT)));
+    segments.push_back(std::make_pair(Vec2(0,Window::MAX_HEIGHT),Vec2(Window::MAX_WIDTH,Window::MAX_HEIGHT)));
+    segments.push_back(std::make_pair(Vec2(Window::MAX_WIDTH,Window::MAX_HEIGHT),Vec2(Window::MAX_WIDTH,0)));
+    segments.push_back(std::make_pair(Vec2(Window::MAX_WIDTH,0),Vec2(0,0)));
 
     m_AmbientLight=Vec3(0.0f,0.0f,0.0f);
 }
@@ -183,7 +183,7 @@ void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,floa
             }
         }
     }
-    DrawSpriteSheet(x,y,width,height,ceil(static_cast<float>(at.m_Height)/static_cast<float>(at.m_TileHeight))-1,at.m_AnimationIndex,layer,at);
+    DrawSpriteSheet(x,y,width,height,ceil((float)at.m_Height/(float)at.m_TileHeight)-1,at.m_AnimationIndex,layer,at);
 }
 
 
@@ -230,12 +230,24 @@ void Renderer::DrawLine(float x1,float y1,float x2,float y2,Vec4 color,float lay
         Render();
 }
 
-void Renderer::ChangeLineWidth(float new_size){
-    glLineWidth(new_size);
+void Renderer::SetLineWidth(float new_size){
+    glLineWidth(new_size/Window::MAX_WIDTH*Window::Width);
 }
 
-void Renderer::ChangePointSize(float new_size){
-    glPointSize(new_size);
+void Renderer::SetPointSize(float new_size){
+    glPointSize(new_size/Window::MAX_WIDTH*Window::Width);
+}
+
+float Renderer::GetPointSize(){
+    float size;
+    glGetFloatv(GL_POINT_SIZE,&size);
+    return size/Window::Width*Window::MAX_WIDTH;
+}
+
+float Renderer::GetLineWidth(){
+    float size;
+    glGetFloatv(GL_LINE_WIDTH,&size);
+    return size/Window::Width*Window::MAX_WIDTH;
 }
 
 void Renderer::SetAmbientLight(Vec3 color){
@@ -248,9 +260,9 @@ void Renderer::SetClearColor(Vec3 color){
 
 void Renderer::StartScene(){
     m_TextureIndex=m_PointIndex=m_LineIndex=m_TriangleIndex=0;
-    if(PROJ_UPDATE){
-        PROJ_UPDATE=false;
-        m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
+    if(Window::ProjUpdate){
+        Window::ProjUpdate=false;
+        m_Proj=glm::ortho(0.0f,Window::MAX_WIDTH,0.0f,Window::MAX_HEIGHT,-1.0f,1.0f);
 
         m_Points.S.Bind();
         m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
@@ -270,8 +282,8 @@ void Renderer::StartScene(){
         m_SPostProcessing.Bind();
         m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     }
-    if(FRAMEBUFFER_UPDATE){
-        FRAMEBUFFER_UPDATE=false;
+    if(Window::FramebufferUpdate){
+        Window::FramebufferUpdate=false;
         delete m_Framebuffer;
         m_Framebuffer=new Framebuffer;
         delete m_LightingFramebuffer;
@@ -280,9 +292,9 @@ void Renderer::StartScene(){
         m_TempFramebuffer=new Framebuffer;
 
         float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
-                       0.0f,SCREEN_HEIGHT,0.0f,1.0f,
-                       SCREEN_WIDTH,SCREEN_HEIGHT,1.0f,1.0f,
-                       SCREEN_WIDTH,0.0f,1.0f,0.0f};
+                       0.0f,Window::MAX_HEIGHT,0.0f,1.0f,
+                       Window::MAX_WIDTH,Window::MAX_HEIGHT,1.0f,1.0f,
+                       Window::MAX_WIDTH,0.0f,1.0f,0.0f};
 
         m_Lights.VBO.Bind();
         m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
@@ -299,7 +311,7 @@ void Renderer::StartScene(){
 void Renderer::DrawScene(){
     m_Framebuffer->Unbind();
     Clear();
-    DrawTexture(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,0,m_Framebuffer->GetColorbufferID());
+    DrawTexture(0,0,Window::MAX_WIDTH,Window::MAX_HEIGHT,0,m_Framebuffer->GetColorbufferID());
     Render(true);
 }
 
@@ -471,15 +483,19 @@ void Renderer::AddSegment(Vec2 start_point,Vec2 end_point){
 }
 
 void Renderer::UpdateScreenSegments(){
-    segments[0]=std::make_pair(Vec2(0,0),Vec2(0,SCREEN_HEIGHT));
-    segments[1]=std::make_pair(Vec2(0,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,SCREEN_HEIGHT));
-    segments[2]=std::make_pair(Vec2(SCREEN_WIDTH,SCREEN_HEIGHT),Vec2(SCREEN_WIDTH,0));
-    segments[3]=std::make_pair(Vec2(SCREEN_WIDTH,0),Vec2(0,0)); 
+    segments[0]=std::make_pair(Vec2(0,0),Vec2(0,Window::MAX_HEIGHT));
+    segments[1]=std::make_pair(Vec2(0,Window::MAX_HEIGHT),Vec2(Window::MAX_WIDTH,Window::MAX_HEIGHT));
+    segments[2]=std::make_pair(Vec2(Window::MAX_WIDTH,Window::MAX_HEIGHT),Vec2(Window::MAX_WIDTH,0));
+    segments[3]=std::make_pair(Vec2(Window::MAX_WIDTH,0),Vec2(0,0)); 
 }
 
 void Renderer::ClearSegments(){
     segments.resize(4);
     UpdateScreenSegments();
+}
+
+std::vector<std::pair<Vec2,Vec2>> &Renderer::GetSegments(){
+    return segments;
 }
 
 std::pair<Vec2,float> Renderer::GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg){
@@ -586,9 +602,8 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_
         }
     }else{
         Render();
-        float previousSize;
-        glGetFloatv(GL_POINT_SIZE,&previousSize);
-        ChangePointSize(radius*2);
+        float previousSize=GetPointSize();
+        SetPointSize(radius*2);
 
         m_Points.S.Bind();
         m_Points.S.SetUniform1f("blurAmount",blurAmount);
@@ -598,7 +613,7 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_
         DrawPoint(light_x,light_y,color,0);
         RenderPoints(std::numeric_limits<float>::max());
         m_Points.S.SetUniform1f("blurAmount",0.0f);
-        ChangePointSize(previousSize);
+        SetPointSize(previousSize);
     }
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -615,8 +630,8 @@ void Renderer::KeepCircle(float x,float y,float radius,float blurAmount){
     m_Lights.VAO.Bind();
     m_Lights.S.Bind();
 
-    m_Lights.S.SetUniform2f("lightPos",x,y);
-    m_Lights.S.SetUniform1f("radius",radius);
+    m_Lights.S.SetUniform2f("lightPos",x/Window::MAX_WIDTH*Window::Width,y/Window::MAX_WIDTH*Window::Width);
+    m_Lights.S.SetUniform1f("radius",radius/Window::MAX_WIDTH*Window::Width);
     m_Lights.S.SetUniform1f("blurAmount",blurAmount);
 
     int sub_id=Shader::GetSubroutineIndex("KeepCircle",m_Lights.S.getID());
@@ -644,7 +659,7 @@ void Renderer::ApplyLight(){
 void Renderer::ImGui_Init(){
     ImGui::CreateContext();
     ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(WINDOW,true);
+    ImGui_ImplGlfw_InitForOpenGL(Window::Window,true);
     ImGui_ImplOpenGL3_Init("#version 460 core");
 
     ImGui::GetIO().FontGlobalScale=1.5f; // Increase the font size (adjust the scale as needed)
@@ -734,15 +749,15 @@ void Renderer::ImGui_Content(){
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("FPS",(bool *)__null,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
 
-    FPS=1.0/DELTA_TIME;
-    ImGui::Text("FPS: %.1f",FPS);
-    ImGui::Text("Frame Time: %.4f",DELTA_TIME*1000);
+    Window::FPS=1.0/Window::DeltaTime;
+    ImGui::Text("FPS: %.1f",Window::FPS);
+    ImGui::Text("Frame Time: %.4f",Window::DeltaTime*1000);
 
-    if(ImGui::Checkbox("V-Sync",&V_SYNC))
-        glfwSwapInterval(V_SYNC);
+    if(ImGui::Checkbox("V-Sync",&Window::IsVSync))
+        glfwSwapInterval(Window::IsVSync);
     
-    if(ImGui::Checkbox("Fullscreen",&WindowInfo::ISFULLSCREEN))
-        ToggleFullScreen();
+    if(ImGui::Checkbox("Fullscreen",&ISFULLSCREEN))
+        Window::ToggleFullScreen();
     ImGui::End();
 }
 

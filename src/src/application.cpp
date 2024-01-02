@@ -2,18 +2,19 @@
 
 Application::Application(const char *window_name,unsigned int width,unsigned int height,bool imgui){
     m_WindowName=window_name;
-    BASE_SCREEN_WIDTH=SCREEN_WIDTH=width;
-    BASE_SCREEN_HEIGHT=SCREEN_HEIGHT=height;
+    Window::BaseWidth=Window::Width=width;
+    Window::BaseHeight=Window::Height=height;
+    Window::MAX_HEIGHT=Window::MAX_WIDTH/(Window::Width/Window::Height);
 
     m_ImGui=imgui;
 
-    InitGlfwWindow(window_name);
+    Window::InitGlfwWindow(window_name);
     if(imgui)
         Renderer::ImGui_Init();
 
     #ifdef DEBUG
         last_time=glfwGetTime();
-        PrintDebugInfo();
+        Window::PrintDebugInfo();
     #endif
 }
 
@@ -23,23 +24,23 @@ Application::~Application(){
 }
 
 void Application::Run(){
-    while(!glfwWindowShouldClose(WINDOW)){
+    while(!glfwWindowShouldClose(Window::Window)){
         glfwPollEvents();
 
-        CURRENT_FRAME=glfwGetTime();
-        DELTA_TIME=CURRENT_FRAME-LAST_FRAME;
-        LAST_FRAME=CURRENT_FRAME;
+        Window::CurrentFrameTime=glfwGetTime();
+        Window::DeltaTime=Window::CurrentFrameTime-Window::LastFrameTime;
+        Window::LastFrameTime=Window::CurrentFrameTime;
 
-        if(DELTA_TIME>0.25f)
-            DELTA_TIME=0.25f;
+        if(Window::DeltaTime>0.25f)
+            Window::DeltaTime=0.25f;
             
-        m_Accumulator+=DELTA_TIME;
+        m_Accumulator+=Window::DeltaTime;
         while(m_Accumulator>=m_FixedTimeStep){
             OnUpdate(m_FixedTimeStep);
             m_Accumulator-=m_FixedTimeStep;
         }
 
-        ALPHA=m_Accumulator/m_FixedTimeStep;
+        Window::Alpha=m_Accumulator/m_FixedTimeStep;
     
         RENDERER->StartScene();
         
@@ -50,22 +51,22 @@ void Application::Run(){
 
         OnRender();
         
-        if(FPS_COUNTER)
-            ShowFpsCounter();
+        if(Window::ShowFpsCounter_)
+            Window::ShowFpsCounter();
 
         if(m_ImGui){
             OnImGuiUpdate();
             OnImGuiRender();
         }
 
-        glfwSwapBuffers(WINDOW);
+        glfwSwapBuffers(Window::Window);
 
         #ifdef DEBUG
             double current_time=glfwGetTime();
             if(current_time-last_time>=4.0){
                 last_time=current_time;
-                printf("FPS: %f\n",1.0/(DELTA_TIME));
-                PrintDebugInfo();
+                printf("FPS: %f\n",1.0/Window::DeltaTime);
+                Window::PrintDebugInfo();
             }
         #endif
     }

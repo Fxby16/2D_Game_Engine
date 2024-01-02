@@ -124,10 +124,6 @@ void ComponentManager<AnimatedTextureComponent>::Render(std::vector<Entity>& ent
     for(int i=0;i<m_Components.size();i++){
         entity=BinarySearch(entities,m_Components[i].m_UID);
         RENDERER->DrawAnimatedTexture(Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY),m_Components[i].m_Width,m_Components[i].m_Height,m_Components[i].m_Layer,m_Components[i].m_AnimatedTexture);  
-        RENDERER->DrawLine(entity->m_X,entity->m_Y,entity->m_X+m_Components[i].m_Width,entity->m_Y,Vec4(0.0f,1.0f,0.0f,1.0f),-2);
-        RENDERER->DrawLine(entity->m_X+m_Components[i].m_Width,entity->m_Y,entity->m_X+m_Components[i].m_Width,entity->m_Y+m_Components[i].m_Height,Vec4(0.0f,1.0f,0.0f,1.0f),-2);
-        RENDERER->DrawLine(entity->m_X+m_Components[i].m_Width,entity->m_Y+m_Components[i].m_Height,entity->m_X,entity->m_Y+m_Components[i].m_Height,Vec4(0.0f,1.0f,0.0f,1.0f),-2);
-        RENDERER->DrawLine(entity->m_X,entity->m_Y+m_Components[i].m_Height,entity->m_X,entity->m_Y,Vec4(0.0f,1.0f,0.0f,1.0f),-2);
     }
 }
 

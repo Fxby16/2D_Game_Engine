@@ -13,6 +13,10 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+namespace Window{
+    extern float Width,Height;
+}
+
 inline constexpr unsigned int CH_LIMIT=400;
 inline constexpr unsigned int CH_NUM=128;
 
@@ -25,7 +29,7 @@ public:
     std::pair<float,float> GetTextSize(std::string text,float scale); 
 
     inline void UpdateProjMat(){
-        m_Proj=glm::ortho(0.0f,(float)SCREEN_WIDTH,0.0f,(float)SCREEN_HEIGHT,-1.0f,1.0f);
+        m_Proj=glm::ortho(0.0f,Window::Width,0.0f,Window::Height,-1.0f,1.0f);
         m_Shader.Bind();
         m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     }

@@ -13,8 +13,7 @@ public:
     std::string &GetName();
     /**
      * Set the scaling factor for the scene.
-     * Example:
-     * If you want 100px to be 1 meter in the physics world,then set the scaling factor to 0.01f.
+     * Default value is 0.5 (1 meter = 0.5 units)
     */
     void SetScalingFactor(float scaling_factor);
     /**
@@ -46,11 +45,13 @@ public:
 
     void Update(double frame_time);
     void Render();
+
+    void DebugDraw();
 private:
     friend class SceneManager;
 
     b2World *m_PhysicsWorld=nullptr;
-    float m_ScalingFactor=0.01f;
+    float m_ScalingFactor=0.5f;
 
     std::vector<Entity> m_Entities;
     ComponentManager<TextureComponent> m_TextureComponents;

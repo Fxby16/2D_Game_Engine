@@ -3,7 +3,10 @@
 - fix examples
 - write documentation
 - ensure consistent data types for the same variables across all definitions
-- move glad and stb_image to vendor folder
+- collision callbacks
+- camera (movement, scaling)
+- rotated quads (and triangles)
+- change rendering parameters from float to vec2
 
 Others:
 - write the editor

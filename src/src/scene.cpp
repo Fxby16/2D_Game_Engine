@@ -1,5 +1,6 @@
 #include <scene.hpp>
 #include <box2d/box2d.h>
+#include <renderer.hpp>
 
 int BinarySearchi(std::vector<Entity> &v,uint64_t uid){
     int l=0,r=v.size()-1;
@@ -255,7 +256,7 @@ void Scene::OnPhysicsStart(){
 
         if((box_collider=GetComponent<BoxColliderComponent>(entity->m_UID))!=nullptr){
             b2PolygonShape box_shape;
-            box_shape.SetAsBox((box_collider->m_Width/2.0f)*m_ScalingFactor,(box_collider->m_Height/2.0f)*m_ScalingFactor,b2Vec2(box_collider->m_XOffset*m_ScalingFactor,box_collider->m_YOffset*m_ScalingFactor),0.0f);
+            box_shape.SetAsBox(box_collider->m_Width/2.0f*m_ScalingFactor,box_collider->m_Height/2.0f*m_ScalingFactor,b2Vec2(box_collider->m_XOffset*m_ScalingFactor,box_collider->m_YOffset*m_ScalingFactor),0.0f);
         
             b2FixtureDef fixture_def;
             fixture_def.shape=&box_shape;
@@ -295,12 +296,38 @@ void Scene::OnPhysicsUpdate(double frame_time){
         const auto &position=body->GetPosition();
         entity->m_PreviousX=entity->m_X;
         entity->m_PreviousY=entity->m_Y;
-        entity->m_X=position.x*(1.0f/m_ScalingFactor);
-        entity->m_Y=position.y*(1.0f/m_ScalingFactor);
+        entity->m_X=position.x/m_ScalingFactor;
+        entity->m_Y=position.y/m_ScalingFactor;
     }
 }
 
 void Scene::OnPhysicsStop(){
     delete m_PhysicsWorld;
     m_PhysicsWorld=nullptr;
+}
+
+void Scene::DebugDraw(){
+    float current_line_width=RENDERER->GetLineWidth();
+    RENDERER->SetLineWidth(0.03f);
+
+    for(auto &entity:m_Entities){
+        BoxColliderComponent *box_collider=GetComponent<BoxColliderComponent>(entity.m_UID);
+        if(box_collider!=nullptr){
+            RENDERER->DrawLine(Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY),Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY),{0,1,0.75f,1},5);
+            RENDERER->DrawLine(Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY),Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height,{0,1,0.75f,1},5);
+            RENDERER->DrawLine(Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height,Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height,{0,1,0.75f,1},5);
+            RENDERER->DrawLine(Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height,Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY),{0,1,0.75f,1},5);
+        }
+        CircleColliderComponent *circle_collider=GetComponent<CircleColliderComponent>(entity.m_UID);
+        if(circle_collider!=nullptr){
+            RENDERER->DrawPoint(Interpolate(entity.m_X,entity.m_PreviousX)+circle_collider->m_XOffset,Interpolate(entity.m_Y,entity.m_PreviousY)+circle_collider->m_YOffset,{0,1,0.75f,0.5f},5);
+        }
+    }
+
+    auto segments=RENDERER->GetSegments();
+    for(auto &segment:segments){
+        RENDERER->DrawLine(segment.first.x,segment.first.y,segment.second.x,segment.second.y,{0,1,0.75f,1.0f},5);
+    }
+    RENDERER->Render();
+    RENDERER->SetLineWidth(current_line_width);
 }

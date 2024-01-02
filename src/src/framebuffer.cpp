@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <global.hpp>
 #include <iostream>
+#include <window.hpp>
 
 Framebuffer::Framebuffer(){
     glGenFramebuffers(1,&m_FramebufferID);
@@ -9,7 +10,7 @@ Framebuffer::Framebuffer(){
     
     glGenTextures(1,&m_ColorbufferID);
     glBindTexture(GL_TEXTURE_2D,m_ColorbufferID);
-    glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,SCREEN_WIDTH,SCREEN_HEIGHT,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,Window::Width,Window::Height,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 

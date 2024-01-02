@@ -9,9 +9,12 @@ project "2DGameEngine"
 
     files { "**.hpp", "**.cpp", "**.h", "**.c" }
     removefiles { "examples/**","vendor/**","editor/**" }
+    files { "vendor/glad/src/glad.c" }
 
     includedirs { "include", 
                   "include/vendor", 
+                  "vendor/glad/include",
+                  "vendor/stb_image",
                   "vendor/FreeType/include",
                   "vendor/glfw/include/GLFW",
                   "vendor/ImGui",

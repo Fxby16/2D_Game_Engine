@@ -57,14 +57,17 @@ public:
     void SetPostProcessing(const char *uniform_name);
     void PostProcessing();
 
-    void ChangeLineWidth(float new_size);
-    void ChangePointSize(float new_size);
+    void SetLineWidth(float new_size);
+    void SetPointSize(float new_size);
+    float GetPointSize();
+    float GetLineWidth();
     void SetAmbientLight(Vec3 color);
     void SetClearColor(Vec3 color);
 
     void AddSegment(Vec2 start_point,Vec2 end_point);
     void UpdateScreenSegments();
     void ClearSegments();
+    std::vector<std::pair<Vec2,Vec2>> &GetSegments();
     void ApplyLight();
     void KeepCircle(float x,float y,float radius,float blurAmount);
     std::pair<Vec2,float> GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg);

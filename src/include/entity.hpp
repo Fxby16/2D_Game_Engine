@@ -3,6 +3,7 @@
 #include <structs.hpp>
 #include <texture.hpp>
 #include <vector>
+#include <window.hpp>
 #include <box2d/b2_body.h>
 
 class Entity;
@@ -58,7 +59,7 @@ inline void RightShift(std::vector<T> &v,size_t idx){
 }
 
 inline float Interpolate(float current,float previous){
-    return current*ALPHA+previous*(1.0f-ALPHA);
+    return current*Window::Alpha+previous*(1.0f-Window::Alpha);
 }
 
 class TextureComponent{
