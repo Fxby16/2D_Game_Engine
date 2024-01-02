@@ -7,6 +7,7 @@
 - camera (movement, scaling)
 - rotated quads (and triangles)
 - change rendering parameters from float to vec2
+- change text-renderer position unit
 
 Others:
 - write the editor
