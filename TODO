@@ -4,9 +4,8 @@
 - write documentation
 - ensure consistent data types for the same variables across all definitions
 - collision callbacks
-- camera (movement, scaling)
 - rotated quads (and triangles)
-- change rendering parameters from float to vec2
+- change text coords unit
 
 Others:
 - write the editor

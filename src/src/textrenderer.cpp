@@ -12,8 +12,6 @@ TextRenderer::TextRenderer(const char *font_path):
     m_Transforms=(glm::mat4*)AllocateMemory(CH_LIMIT*sizeof(glm::mat4));
     m_ToRender=(int*)AllocateMemory(CH_LIMIT*sizeof(int));
 
-    UpdateProjMat();
-
     if(FT_Init_FreeType(&m_FT))
         perror("FREETYPE ERROR: Couldn't init FreeType Library\n");
 

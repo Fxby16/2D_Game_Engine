@@ -114,7 +114,7 @@ template<>
 void ComponentManager<TextureComponent>::Render(std::vector<Entity>& entities){
     for(int i=0;i<m_Components.size();i++){
         Entity *entity=BinarySearch(entities,m_Components[i].m_UID);
-        RENDERER->DrawTexture(Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY),m_Components[i].m_Width,m_Components[i].m_Height,false,false,m_Components[i].m_Layer,m_Components[i].m_Texture);
+        RENDERER->DrawTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,m_Components[i].m_Texture);
     }
 }
 
@@ -123,7 +123,7 @@ void ComponentManager<AnimatedTextureComponent>::Render(std::vector<Entity>& ent
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
         entity=BinarySearch(entities,m_Components[i].m_UID);
-        RENDERER->DrawAnimatedTexture(Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY),m_Components[i].m_Width,m_Components[i].m_Height,m_Components[i].m_Layer,m_Components[i].m_AnimatedTexture);  
+        RENDERER->DrawAnimatedTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,m_Components[i].m_AnimatedTexture);  
     }
 }
 
@@ -132,6 +132,6 @@ void ComponentManager<LightComponent>::Render(std::vector<Entity>& entities){
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
         entity=BinarySearch(entities,m_Components[i].m_UID);
-        RENDERER->DrawLight(Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_XOffset,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_YOffset,Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
+        RENDERER->DrawLight({Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_XOffset,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_YOffset},Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
     }
 }

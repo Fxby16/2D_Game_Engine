@@ -7,8 +7,11 @@ layout(location=2) in float layer;
 out vec4 out_color;
 
 uniform mat4 u_PM;
+uniform float zoom;
+uniform float pointSize;
 
 void main(){
+    gl_PointSize = pointSize*zoom;
     gl_Position = u_PM*position;
 
     out_color=color;

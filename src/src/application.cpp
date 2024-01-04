@@ -9,6 +9,7 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
     m_ImGui=imgui;
 
     Window::InitGlfwWindow(window_name);
+    m_Camera.InitializeProj();
     if(imgui)
         Renderer::ImGui_Init();
 
@@ -26,6 +27,11 @@ Application::~Application(){
 void Application::Run(){
     while(!glfwWindowShouldClose(Window::Window)){
         glfwPollEvents();
+
+        if(Window::ProjUpdate){
+            m_Camera.InitializeProj();
+            Window::ProjUpdate=false;
+        }
 
         Window::CurrentFrameTime=glfwGetTime();
         Window::DeltaTime=Window::CurrentFrameTime-Window::LastFrameTime;

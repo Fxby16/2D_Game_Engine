@@ -19,11 +19,12 @@ public:
     /**
      * Set the gravity for the scene (m/s^2)
      * Should be called after OnPhysicsStart()
-     * Default value is (0,-9.8)
+     * Default value is (0,-0.3)
+     * Adjust the gravity according to the scaling factor
     */
     void SetGravity(float x,float y);
 
-    uint64_t AddEntity();
+    [[nodiscard]] uint64_t AddEntity();
     Entity* GetEntity(uint64_t uid);
     void RemoveEntity(uint64_t uid);
 

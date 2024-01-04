@@ -14,7 +14,9 @@
 #include <global.hpp>
 #include <texture.hpp>
 
-#include <glm/gtc/matrix_transform.hpp>
+#include <glm/mat4x4.hpp>
+
+class Camera;
 
 struct RendererData{
     VertexBuffer VBO;
@@ -37,17 +39,25 @@ public:
     void Clear(bool ambient_light=false) const;
     void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
 
-    void DrawTexture(float x,float y,float w,float h,float layer,float texID);
-    void DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float layer,float texID);
-    void DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float layer,Texture &texture);
-    void DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,SpriteSheet &s);
-    void DrawAnimatedTexture(float x,float y,float width,float height,float layer,AnimatedTexture &at);
-    void DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,Vec4 color,float layer);
+    void DrawTexture(Vec2 pos,Vec2 size,float layer,float texID);
+    /**
+     * Render a portion of a texture
+     * \param pos Position of the texture
+     * \param size Size of the texture
+     * \param texture_pos Position of the portion of the texture
+     * \param texture_size Size of the portion of the texture
+     * \param texture_total_size Size of the whole texture
+    */
+    void DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,float layer,float texID);
+    void DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,float layer,Texture &texture);
+    void DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s);
+    void DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,AnimatedTexture &at);
+    void DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer);
     void DrawQuad(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
-    void DrawSolidQuad(float x,float y,float w,float h,Vec4 color,float layer);
-    void DrawPoint(float x,float y,Vec4 color,float layer);
-    void DrawLine(float x1,float y1,float x2,float y2,Vec4 color,float layer);
-    void DrawLight(float light_x,float light_y,Vec4 color,LightType light_type,float radius=0.0f,float blurAmount=0.0f);
+    void DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer);
+    void DrawPoint(Vec2 pos,Vec4 color,float layer);
+    void DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer);
+    void DrawLight(Vec2 pos,Vec4 color,LightType light_type,float radius=0.0f,float blurAmount=0.0f);
 
     void Render(bool post_processing=false);
     void RenderTextures(bool post_processing,float max_layer);
@@ -69,7 +79,7 @@ public:
     void ClearSegments();
     std::vector<std::pair<Vec2,Vec2>> &GetSegments();
     void ApplyLight();
-    void KeepCircle(float x,float y,float radius,float blurAmount);
+    void KeepCircle(Vec2 pos,float radius,float blurAmount);
     std::pair<Vec2,float> GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg);
 
     static void ImGui_Init();
@@ -80,6 +90,8 @@ public:
     static void ImGui_Close();
 
 private:
+    friend class Camera;
+
     RendererData m_Textures;
     RendererData m_Points;
     RendererData m_Lines;
@@ -105,9 +117,10 @@ private:
     Vec3 m_AmbientLight;
     Vec3 m_ClearColor;
     
-    glm::mat4 m_Proj;
     int m_Slots[32];
     int m_MaxTextureSlots;
+
+    float m_PointSize;
 
     std::vector<std::pair<Vec2,Vec2>>segments; //used for lighting
 

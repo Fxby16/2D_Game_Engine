@@ -66,5 +66,7 @@ if ! [ -z "$1" ] && [ $1==1 ]; then
 fi
 
 #setup box2d
-cd vendor/box2d
-bash ./build.sh
+if ! [ -e vendor/box2d/build/bin/libbox2d.a ]; then
+    cd vendor/box2d
+    bash ./build.sh
+fi

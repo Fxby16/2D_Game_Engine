@@ -28,10 +28,9 @@ public:
     void DrawText(std::string text,float x,float y,float scale,Vec3 color);
     std::pair<float,float> GetTextSize(std::string text,float scale); 
 
-    inline void UpdateProjMat(){
-        m_Proj=glm::ortho(0.0f,Window::Width,0.0f,Window::Height,-1.0f,1.0f);
+    inline void UpdateProjMat(glm::mat4 proj){
         m_Shader.Bind();
-        m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
+        m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(proj),1);
     }
 
 private:
@@ -50,7 +49,6 @@ private:
     VertexArray m_VAO;
     VertexBufferLayout m_VBL;
     Shader m_Shader;
-    glm::mat4 m_Proj;
 
     unsigned int m_TextureArrayID;
     Character *m_Characters;

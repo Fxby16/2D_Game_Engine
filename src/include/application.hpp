@@ -6,6 +6,7 @@
 #include <texture.hpp>
 #include <scene.hpp>
 #include <window.hpp>
+#include <camera.hpp>
 
 #include <iostream>
 
@@ -31,6 +32,7 @@ protected:
     float m_Accumulator=0.0f;
     bool m_ImGui;
     SceneManager m_SceneManager;
+    Camera m_Camera;
 
     #ifdef DEBUG
         double last_time;

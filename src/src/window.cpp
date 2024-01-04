@@ -25,8 +25,6 @@ namespace Window{
         RENDERER->SetPointSize(current_point_size);
         RENDERER->SetLineWidth(current_line_width);
         MAX_HEIGHT=MAX_WIDTH/(Width/Height);
-        for(int i=0;i<TEXT_RENDERERS.size();i++)    
-            TEXT_RENDERERS[i]->UpdateProjMat();
     }  
 
     void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mods){

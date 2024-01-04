@@ -236,7 +236,7 @@ void Scene::MoveEntity(uint64_t uid,float x_offset,float y_offset){
 }
 
 void Scene::OnPhysicsStart(){
-    m_PhysicsWorld=new b2World(b2Vec2(0.0f,-20.0f));
+    m_PhysicsWorld=new b2World(b2Vec2(0.0f,-0.3f));
 
     std::vector<RigidbodyComponent> &rigidbodies=m_RigidbodyComponents.m_Components;
     Entity *entity;
@@ -268,7 +268,7 @@ void Scene::OnPhysicsStart(){
         }
         if((circle_collider=GetComponent<CircleColliderComponent>(entity->m_UID))!=nullptr){
             b2CircleShape circle_shape;
-            circle_shape.m_p.Set((entity->m_X+circle_collider->m_XOffset)*m_ScalingFactor,(entity->m_Y+circle_collider->m_YOffset)*m_ScalingFactor);
+            circle_shape.m_p.Set((circle_collider->m_XOffset)*m_ScalingFactor,(circle_collider->m_YOffset)*m_ScalingFactor);
             circle_shape.m_radius=(circle_collider->m_Radius)*m_ScalingFactor;
 
             b2FixtureDef fixture_def;
@@ -313,20 +313,24 @@ void Scene::DebugDraw(){
     for(auto &entity:m_Entities){
         BoxColliderComponent *box_collider=GetComponent<BoxColliderComponent>(entity.m_UID);
         if(box_collider!=nullptr){
-            RENDERER->DrawLine(Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY),Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY),{0,1,0.75f,1},5);
-            RENDERER->DrawLine(Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY),Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height,{0,1,0.75f,1},5);
-            RENDERER->DrawLine(Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height,Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height,{0,1,0.75f,1},5);
-            RENDERER->DrawLine(Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height,Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY),{0,1,0.75f,1},5);
+            RENDERER->DrawLine({Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)},{Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)},{0,1,0.75f,1},5);
+            RENDERER->DrawLine({Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)},{Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height},{0,1,0.75f,1},5);
+            RENDERER->DrawLine({Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height},{Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height},{0,1,0.75f,1},5);
+            RENDERER->DrawLine({Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height},{Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)},{0,1,0.75f,1},5);
         }
         CircleColliderComponent *circle_collider=GetComponent<CircleColliderComponent>(entity.m_UID);
         if(circle_collider!=nullptr){
-            RENDERER->DrawPoint(Interpolate(entity.m_X,entity.m_PreviousX)+circle_collider->m_XOffset,Interpolate(entity.m_Y,entity.m_PreviousY)+circle_collider->m_YOffset,{0,1,0.75f,0.5f},5);
+            float current_point_size=RENDERER->GetPointSize();
+            RENDERER->SetPointSize(circle_collider->m_Radius*2);
+            RENDERER->DrawPoint({Interpolate(entity.m_X,entity.m_PreviousX)+circle_collider->m_XOffset,Interpolate(entity.m_Y,entity.m_PreviousY)+circle_collider->m_YOffset},{0,1,0.75f,0.5f},5);
+            RENDERER->Render();
+            RENDERER->SetPointSize(current_point_size);
         }
     }
 
     auto segments=RENDERER->GetSegments();
     for(auto &segment:segments){
-        RENDERER->DrawLine(segment.first.x,segment.first.y,segment.second.x,segment.second.y,{0,1,0.75f,1.0f},5);
+        RENDERER->DrawLine({segment.first.x,segment.first.y},{segment.second.x,segment.second.y},{0,1,0.75f,1.0f},5);
     }
     RENDERER->Render();
     RENDERER->SetLineWidth(current_line_width);

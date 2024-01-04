@@ -4,7 +4,6 @@
 #include <GLFW/glfw3.h>
 #include <window.hpp>
 #include <memory.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 RendererData::RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size): 
                           VBO(MAX_VERTICES,vertex_size,GL_DYNAMIC_DRAW),S(vertex_path,fragment_path),NumVertices(0){}
@@ -33,7 +32,6 @@ Renderer::Renderer():
     m_TempFramebuffer=new Framebuffer;
     IB.Set(MAX_VERTICES);
 
-    m_Proj=glm::ortho(0.0f,Window::MAX_WIDTH,0.0f,Window::MAX_HEIGHT,-1.0f,1.0f);
     for(int i=0;i<32;i++)
         m_Slots[i]=i;
 
@@ -64,26 +62,16 @@ Renderer::Renderer():
     m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
 
     m_Points.S.Bind();
-    m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     m_Points.S.SetUniform1f("blurAmount",0.0f);
 
-    m_Lines.S.Bind();
-    m_Lines.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-
     m_Textures.S.Bind();
-    m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     m_Textures.S.SetUniform1iv("texID",m_Slots,32);
 
-    m_Triangles.S.Bind();
-    m_Triangles.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-
     m_Lights.S.Bind();
-    m_Lights.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     m_Lights.S.SetUniform1i("framebuffer",0);
     m_Lights.S.SetUniform1i("light",1);
 
     m_SPostProcessing.Bind();
-    m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     m_SPostProcessing.SetUniform1iv("texID",m_Slots,32);
 
     glEnable(GL_LINE_SMOOTH);
@@ -123,8 +111,8 @@ void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int 
     VBL.Push(type,count,normalized);
 }
 
-void Renderer::DrawTexture(float x,float y,float w,float h,float layer,float texID){
-    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,layer,texID);
+void Renderer::DrawTexture(Vec2 pos,Vec2 size,float layer,float texID){
+    auto [a,b,c,d]=VertexBuffer::CreateQuad(pos.x,pos.y,size.w,size.h,layer,texID);
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
     m_BufferT[m_Textures.NumVertices+2]=c;
@@ -135,8 +123,8 @@ void Renderer::DrawTexture(float x,float y,float w,float h,float layer,float tex
         Render();
 }
 
-void Renderer::DrawTexture(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float layer,float texID){
-    auto [a,b,c,d]=VertexBuffer::CreateQuad(x,y,w,h,tx,ty,tw,th,ttw,tth,layer,texID);
+void Renderer::DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,float layer,float texID){
+    auto [a,b,c,d]=VertexBuffer::CreateQuad(pos.x,pos.y,size.w,size.h,texture_pos.x,texture_pos.y,texture_size.w,texture_size.h,texture_total_size.w,texture_total_size.h,layer,texID);
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
     m_BufferT[m_Textures.NumVertices+2]=c;
@@ -147,19 +135,19 @@ void Renderer::DrawTexture(float x,float y,float w,float h,float tx,float ty,flo
         Render();
 }
 
-void Renderer::DrawTexture(float x,float y,float w,float h,bool reverse_x,bool reverse_y,float layer,Texture &texture){
+void Renderer::DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,float layer,Texture &texture){
     if(reverse_x && reverse_y)
-        DrawTexture(x,y,w,h,texture.GetWidth(),texture.GetHeight(),-texture.GetWidth(),-texture.GetHeight(),texture.GetWidth(),texture.GetHeight(),0,texture.GetTexID());
+        DrawTexture(pos,size,{texture.GetWidth(),texture.GetHeight()},{-texture.GetWidth(),-texture.GetHeight()},{texture.GetWidth(),texture.GetHeight()},layer,texture.GetTexID());
     else if(reverse_x)
-        DrawTexture(x,y,w,h,texture.GetWidth(),0,-texture.GetWidth(),texture.GetHeight(),texture.GetWidth(),texture.GetHeight(),0,texture.GetTexID());
+        DrawTexture(pos,size,{texture.GetWidth(),0},{-texture.GetWidth(),texture.GetHeight()},{texture.GetWidth(),texture.GetHeight()},layer,texture.GetTexID());
     else if(reverse_y)
-        DrawTexture(x,y,w,h,0,texture.GetHeight(),texture.GetWidth(),-texture.GetHeight(),texture.GetWidth(),texture.GetHeight(),0,texture.GetTexID());
+        DrawTexture(pos,size,{0,texture.GetHeight()},{texture.GetWidth(),-texture.GetHeight()},{texture.GetWidth(),texture.GetHeight()},layer,texture.GetTexID());
     else
-        DrawTexture(x,y,w,h,layer,texture.GetTexID());
+        DrawTexture(pos,size,layer,texture.GetTexID());
 }
 
-void Renderer::DrawSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,SpriteSheet &s){
-    std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(x,y,width,height,row,col,layer,s.GetTexID());
+void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s){
+    std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(pos.x,pos.y,size.w,size.h,row,col,layer,s.GetTexID());
     m_BufferT[m_Textures.NumVertices]=quad[0];
     m_BufferT[m_Textures.NumVertices+1]=quad[1];
     m_BufferT[m_Textures.NumVertices+2]=quad[2];
@@ -170,7 +158,7 @@ void Renderer::DrawSpriteSheet(float x,float y,float width,float height,float ro
         Render();
 }
 
-void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,float layer,AnimatedTexture &at){
+void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,AnimatedTexture &at){
     if(at.m_PlayAnimation){
         if(glfwGetTime()-at.m_LastAnimationTime>=at.m_AnimationDelay){
             at.m_LastAnimationTime=glfwGetTime();
@@ -183,14 +171,14 @@ void Renderer::DrawAnimatedTexture(float x,float y,float width,float height,floa
             }
         }
     }
-    DrawSpriteSheet(x,y,width,height,ceil((float)at.m_Height/(float)at.m_TileHeight)-1,at.m_AnimationIndex,layer,at);
+    DrawSpriteSheet(pos,size,ceil((float)at.m_Height/(float)at.m_TileHeight)-1,at.m_AnimationIndex,layer,at);
 }
 
 
-void Renderer::DrawTriangle(float x1,float y1,float x2,float y2,float x3,float y3,Vec4 color,float layer){
-    m_BufferTR[m_Triangles.NumVertices]=TriangleVertex(Vec2(x1,y1),color,layer);
-    m_BufferTR[m_Triangles.NumVertices+1]=TriangleVertex(Vec2(x2,y2),color,layer);
-    m_BufferTR[m_Triangles.NumVertices+2]=TriangleVertex(Vec2(x3,y3),color,layer);
+void Renderer::DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer){
+    m_BufferTR[m_Triangles.NumVertices]=TriangleVertex(pos1,color,layer);
+    m_BufferTR[m_Triangles.NumVertices+1]=TriangleVertex(pos2,color,layer);
+    m_BufferTR[m_Triangles.NumVertices+2]=TriangleVertex(pos3,color,layer);
     m_Triangles.NumVertices+=3;
 
     if(m_Triangles.NumVertices==MAX_VERTICES)
@@ -208,22 +196,22 @@ void Renderer::DrawQuad(Vertex a,Vertex b,Vertex c,Vertex d){
         Render();
 }
 
-void Renderer::DrawSolidQuad(float x,float y,float w,float h,Vec4 color,float layer){
-    DrawTriangle(x,y,x+w,y,x,y+h,color,layer);
-    DrawTriangle(x,y+h,x+w,y+h,x+w,y,color,layer);
+void Renderer::DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer){
+    DrawTriangle(pos,{pos.x+size.w,pos.y},{pos.x,pos.y+size.h},color,layer);
+    DrawTriangle({pos.x,pos.y+size.h},{pos.x+size.w,pos.y+size.h},{pos.x+size.w,pos.y},color,layer);
 }
 
-void Renderer::DrawPoint(float x,float y,Vec4 color,float layer){
-    m_BufferP[m_Points.NumVertices]=LinePointVertex(Vec2(x,y),color,layer);
+void Renderer::DrawPoint(Vec2 pos,Vec4 color,float layer){
+    m_BufferP[m_Points.NumVertices]=LinePointVertex(pos,color,layer);
     ++m_Points.NumVertices;
 
     if(m_Points.NumVertices==MAX_VERTICES)
         Render();
 }
 
-void Renderer::DrawLine(float x1,float y1,float x2,float y2,Vec4 color,float layer){
-    m_BufferL[m_Lines.NumVertices]=LinePointVertex(Vec2(x1,y1),color,layer);
-    m_BufferL[m_Lines.NumVertices+1]=LinePointVertex(Vec2(x2,y2),color,layer);
+void Renderer::DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer){
+    m_BufferL[m_Lines.NumVertices]=LinePointVertex(pos1,color,layer);
+    m_BufferL[m_Lines.NumVertices+1]=LinePointVertex(pos2,color,layer);
     m_Lines.NumVertices+=2;
 
     if(m_Lines.NumVertices==MAX_VERTICES)
@@ -234,14 +222,18 @@ void Renderer::SetLineWidth(float new_size){
     glLineWidth(new_size/Window::MAX_WIDTH*Window::Width);
 }
 
+/**
+ * \param new_size the new diameter
+*/
 void Renderer::SetPointSize(float new_size){
-    glPointSize(new_size/Window::MAX_WIDTH*Window::Width);
+    //glPointSize(new_size/Window::MAX_WIDTH*Window::Width);
+    m_PointSize=new_size;
+    m_Points.S.Bind();
+    m_Points.S.SetUniform1f("pointSize",new_size/Window::MAX_WIDTH*Window::Width);
 }
 
 float Renderer::GetPointSize(){
-    float size;
-    glGetFloatv(GL_POINT_SIZE,&size);
-    return size/Window::Width*Window::MAX_WIDTH;
+    return m_PointSize; 
 }
 
 float Renderer::GetLineWidth(){
@@ -260,28 +252,6 @@ void Renderer::SetClearColor(Vec3 color){
 
 void Renderer::StartScene(){
     m_TextureIndex=m_PointIndex=m_LineIndex=m_TriangleIndex=0;
-    if(Window::ProjUpdate){
-        Window::ProjUpdate=false;
-        m_Proj=glm::ortho(0.0f,Window::MAX_WIDTH,0.0f,Window::MAX_HEIGHT,-1.0f,1.0f);
-
-        m_Points.S.Bind();
-        m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-
-        m_Lines.S.Bind();
-        m_Lines.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-
-        m_Textures.S.Bind();
-        m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-
-        m_Triangles.S.Bind();
-        m_Triangles.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-
-        m_Lights.S.Bind();
-        m_Lights.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-
-        m_SPostProcessing.Bind();
-        m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-    }
     if(Window::FramebufferUpdate){
         Window::FramebufferUpdate=false;
         delete m_Framebuffer;
@@ -311,7 +281,7 @@ void Renderer::StartScene(){
 void Renderer::DrawScene(){
     m_Framebuffer->Unbind();
     Clear();
-    DrawTexture(0,0,Window::MAX_WIDTH,Window::MAX_HEIGHT,0,m_Framebuffer->GetColorbufferID());
+    DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_Framebuffer->GetColorbufferID());
     Render(true);
 }
 
@@ -524,7 +494,7 @@ std::pair<Vec2,float> Renderer::GetIntersection(const std::pair<Vec2,Vec2>&ray,c
     return std::make_pair(Vec2(r_px+r_dx*T1,r_py+r_dy*T1),T1);
 }
 
-void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_type,float radius,float blurAmount){
+void Renderer::DrawLight(Vec2 pos,Vec4 color,LightType light_type,float radius,float blurAmount){
     if(light_type==ALL_LIGHT || light_type==LIGHT_AROUND_POS_COLL){
         std::vector<Vec2>points;
         auto find=[&points](Vec2 point)->bool{
@@ -545,7 +515,7 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_
         std::vector<float>angles;
 
         for(auto p:points){
-            float angle=glm::atan(p.y-light_y,p.x-light_x);
+            float angle=glm::atan(p.y-pos.y,p.x-pos.x);
             angles.push_back(angle-0.0001f);
             angles.push_back(angle);
             angles.push_back(angle+0.0001f);
@@ -556,7 +526,7 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_
             float dx=glm::cos(angle);
             float dy=glm::sin(angle);
 
-            std::pair<Vec2,Vec2>ray=std::make_pair(Vec2(light_x,light_y),Vec2(light_x+dx,light_y+dy));
+            std::pair<Vec2,Vec2>ray=std::make_pair(pos,Vec2(pos.x+dx,pos.y+dy));
             std::pair<Vec2,double> closest_intersect=std::make_pair(Vec2(-1.0f,-1.0f),-1.0f);
             for(auto seg:segments){
                 std::pair<Vec2,double> intersect=GetIntersection(ray,seg);
@@ -568,11 +538,6 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_
             if(closest_intersect.first.x!=-1.0f && closest_intersect.first.y!=-1.0f)
                 intersects.push_back(std::make_pair(closest_intersect.first,angle));
         }
-        
-        //for(auto p:intersects){
-        //    DrawLine(p.first.x,p.first.y,light_x,light_y,0,1,0,1);
-        //    DrawPoint(p.first.x,p.first.y,0,0,1,1);
-        //}
 
         std::sort(begin(intersects),end(intersects),[](const auto& a,const auto& b){
             return a.second<b.second;
@@ -592,13 +557,13 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_
         for(size_t i=0;i<intersects.size()-1;i++){
             auto a=intersects[i].first;
             auto b=intersects[i+1].first;
-            DrawTriangle(light_x,light_y,a.x,a.y,b.x,b.y,color,0);
+            DrawTriangle(pos,{a.x,a.y},{b.x,b.y},color,0);
         }
-        DrawTriangle(light_x,light_y,intersects[0].first.x,intersects[0].first.y,intersects[intersects.size()-1].first.x,intersects[intersects.size()-1].first.y,color,0);
+        DrawTriangle(pos,intersects[0].first,intersects[intersects.size()-1].first,color,0);
         RenderTriangles(std::numeric_limits<float>::max());
 
         if(light_type==LIGHT_AROUND_POS_COLL){
-            KeepCircle(light_x,light_y,radius,blurAmount);
+            KeepCircle(pos,radius,blurAmount);
         }
     }else{
         Render();
@@ -610,7 +575,7 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_
         m_LightingFramebuffer->Bind();
         glBlendFunc(GL_ONE,GL_ONE);
 
-        DrawPoint(light_x,light_y,color,0);
+        DrawPoint(pos,color,0);
         RenderPoints(std::numeric_limits<float>::max());
         m_Points.S.SetUniform1f("blurAmount",0.0f);
         SetPointSize(previousSize);
@@ -618,7 +583,7 @@ void Renderer::DrawLight(float light_x,float light_y,Vec4 color,LightType light_
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Renderer::KeepCircle(float x,float y,float radius,float blurAmount){
+void Renderer::KeepCircle(Vec2 pos,float radius,float blurAmount){
     m_Lights.VBO.Bind();
 
     glActiveTexture(GL_TEXTURE0);
@@ -630,7 +595,7 @@ void Renderer::KeepCircle(float x,float y,float radius,float blurAmount){
     m_Lights.VAO.Bind();
     m_Lights.S.Bind();
 
-    m_Lights.S.SetUniform2f("lightPos",x/Window::MAX_WIDTH*Window::Width,y/Window::MAX_WIDTH*Window::Width);
+    m_Lights.S.SetUniform2f("lightPos",pos.x/Window::MAX_WIDTH*Window::Width,pos.y/Window::MAX_WIDTH*Window::Width);
     m_Lights.S.SetUniform1f("radius",radius/Window::MAX_WIDTH*Window::Width);
     m_Lights.S.SetUniform1f("blurAmount",blurAmount);
 
