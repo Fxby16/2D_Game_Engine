@@ -6,6 +6,7 @@
 - collision callbacks
 - rotated quads (and triangles)
 - change text coords unit
+- change line width corresponding to the zoom of the camera 
 
 Others:
 - write the editor
