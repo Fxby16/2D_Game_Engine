@@ -3,6 +3,7 @@
 #include <renderer.hpp>
 #include <application.hpp>
 #include <global.hpp>
+#include <scene.hpp>
 
 uint64_t NEXT_UID=0;
 
@@ -96,42 +97,52 @@ void LightComponent::SetCentered(float width,float height){
 }
 
 template<>
-void ComponentManager<TextureComponent>::Update(float frame_time,std::vector<Entity>& entities){
+void ComponentManager<TextureComponent>::Update(Scene *scene,float frame_time){
     printf("Texture components don't need to be updated!\n");
 }
 
 template<>
-void ComponentManager<AnimatedTextureComponent>::Update(float frame_time,std::vector<Entity>& entities){
+void ComponentManager<AnimatedTextureComponent>::Update(Scene *scene,float frame_time){
     printf("Animated texture components don't need to be updated!\n");
 }
 
 template<>
-void ComponentManager<LightComponent>::Update(float frame_time,std::vector<Entity>& entities){
+void ComponentManager<LightComponent>::Update(Scene *scene,float frame_time){
     printf("Light components don't need to be updated!\n");
 }
 
 template<>
-void ComponentManager<TextureComponent>::Render(std::vector<Entity>& entities){
+void ComponentManager<NativeScriptComponent>::Update(Scene *scene,float frame_time){
     for(int i=0;i<m_Components.size();i++){
-        Entity *entity=BinarySearch(entities,m_Components[i].m_UID);
+        if(m_Components[i].OnUpdate){
+            m_Components[i].OnUpdate(scene,&m_Components[i],frame_time);
+        }
+    }
+}
+
+template<>
+void ComponentManager<TextureComponent>::Render(Scene *scene){
+    Entity *entity=nullptr;
+    for(int i=0;i<m_Components.size();i++){
+        entity=scene->GetEntity(m_Components[i].m_UID);
         RENDERER->DrawTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,m_Components[i].m_Texture);
     }
 }
 
 template<>
-void ComponentManager<AnimatedTextureComponent>::Render(std::vector<Entity>& entities){
+void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
-        entity=BinarySearch(entities,m_Components[i].m_UID);
+        entity=scene->GetEntity(m_Components[i].m_UID);
         RENDERER->DrawAnimatedTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,m_Components[i].m_AnimatedTexture);  
     }
 }
 
 template<>
-void ComponentManager<LightComponent>::Render(std::vector<Entity>& entities){
+void ComponentManager<LightComponent>::Render(Scene *scene){
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
-        entity=BinarySearch(entities,m_Components[i].m_UID);
+        entity=scene->GetEntity(m_Components[i].m_UID);
         RENDERER->DrawLight({Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_XOffset,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_YOffset},Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
     }
 }

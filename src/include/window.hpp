@@ -21,7 +21,7 @@ namespace Window{
     extern bool GetMouseButtonState(int button,int state);
     extern void GetMousePos(double *x,double *y);
 
-    extern void ShowFpsCounter();
+    extern void ShowMetrics();
     extern void PrintDebugInfo();
 
     extern void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam);
@@ -41,7 +41,7 @@ namespace Window{
 
     extern bool IsFullscreen;
     extern bool IsVSync;
-    extern bool ShowFpsCounter_;
+    extern bool ShowMetrics_;
 
     extern bool FramebufferUpdate;
     extern bool ProjUpdate;

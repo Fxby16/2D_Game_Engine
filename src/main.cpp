@@ -18,6 +18,26 @@ public:
         scene->AddComponent<LightComponent>(m_Entities[0],0.0f,0.0f,2.0f,0.3f,Vec3(1,1,1),LIGHT_AROUND_POS_COLL);
         scene->GetComponent<LightComponent>(m_Entities[0])->SetCentered(1.0f,1.0f);
         scene->SetEntityPosition(m_Entities[0],0.0f,0.0f);
+        scene->AddComponent<NativeScriptComponent>(m_Entities[0]);
+
+        auto nsc=scene->GetComponent<NativeScriptComponent>(m_Entities[0]);
+        nsc->OnUpdate=([](Scene *scene,NativeScriptComponent *nsc,float frame_time)->void{
+            Vec2 speed;
+
+            if(GetKeyState(KEY_UP,BUTTON_DOWN)){
+                speed.y+=10.0f;
+            }
+            if(GetKeyState(KEY_DOWN,BUTTON_DOWN)){
+                speed.y-=10.0f;
+            }
+            if(GetKeyState(KEY_LEFT,BUTTON_DOWN)){
+                speed.x-=10.0f;
+            }
+            if(GetKeyState(KEY_RIGHT,BUTTON_DOWN)){
+                speed.x+=10.0f;
+            }
+            scene->MoveEntity(nsc->m_UID,speed.x,speed.y);
+        });
 
         m_Entities.push_back(scene->AddEntity());
         scene->AddComponent<AnimatedTextureComponent>(m_Entities[1],"resources/textures/Run.png",(unsigned int)128,(unsigned int)128,GL_NEAREST,GL_NEAREST,3.0f,3.0f,0.0f);
@@ -27,7 +47,6 @@ public:
         scene->SetEntityPosition(m_Entities[1],7.5f,4.0f);
 
         scene->OnPhysicsStart();
-        //scene->SetGravity(0.0f,0.0f);
 
         m_SceneManager.AddScene("Test2");
         m_SceneManager.SetCurrentScene("Test2");
@@ -39,6 +58,26 @@ public:
         scene->AddComponent<BoxColliderComponent>(m_Entities[2],0.5f,0.5f,1.0f,1.0f,1.0f,0.0f,0.0f,0.5f);
         scene->AddComponent<LightComponent>(m_Entities[2],0.0f,0.0f,2.0f,0.3f,Vec3(1,1,1),LIGHT_AROUND_POS);
         scene->GetComponent<LightComponent>(m_Entities[2])->SetCentered(1.0f,1.0f);
+        scene->AddComponent<NativeScriptComponent>(m_Entities[2]);
+
+        nsc=scene->GetComponent<NativeScriptComponent>(m_Entities[2]);
+        nsc->OnUpdate=([](Scene *scene,NativeScriptComponent *nsc,float frame_time)->void{
+            Vec2 speed;
+            
+            if(GetKeyState(KEY_W,BUTTON_DOWN)){
+                speed.y+=10.0f;
+            }
+            if(GetKeyState(KEY_S,BUTTON_DOWN)){
+                speed.y-=10.0f;
+            }
+            if(GetKeyState(KEY_A,BUTTON_DOWN)){
+                speed.x-=10.0f;
+            }
+            if(GetKeyState(KEY_D,BUTTON_DOWN)){
+                speed.x+=10.0f;
+            }
+            scene->MoveEntity(nsc->m_UID,speed.x,speed.y);
+        });
 
         scene->OnPhysicsStart();
         scene->SetGravity(0.0f,0.0f);
@@ -102,38 +141,6 @@ public:
         if(GetKeyState(KEY_Y,BUTTON_DOWN)){
             m_Camera.Rotate(-1.0f);
         }
-        Vec2 speed1,speed2;
-
-        if(scene->GetName()=="Test"){
-            if(GetKeyState(KEY_UP,BUTTON_DOWN)){
-                speed1.y+=10.0f;
-            }
-            if(GetKeyState(KEY_DOWN,BUTTON_DOWN)){
-                speed1.y-=10.0f;
-            }
-            if(GetKeyState(KEY_LEFT,BUTTON_DOWN)){
-                speed1.x-=10.0f;
-            }
-            if(GetKeyState(KEY_RIGHT,BUTTON_DOWN)){
-                speed1.x+=10.0f;
-            }
-            scene->MoveEntity(m_Entities[0],speed1.x,speed1.y);
-        }else{
-            if(GetKeyState(KEY_W,BUTTON_DOWN)){
-                speed2.y+=10.0f;
-            }
-            if(GetKeyState(KEY_S,BUTTON_DOWN)){
-                speed2.y-=10.0f;
-            }
-            if(GetKeyState(KEY_A,BUTTON_DOWN)){
-                speed2.x-=10.0f;
-            }
-            if(GetKeyState(KEY_D,BUTTON_DOWN)){
-                speed2.x+=10.0f;
-            }
-            scene->MoveEntity(m_Entities[2],speed2.x,speed2.y);
-        }
-
     }
 private:
     std::vector<uint64_t> m_Entities;

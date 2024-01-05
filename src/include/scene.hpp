@@ -61,13 +61,15 @@ private:
     ComponentManager<BoxColliderComponent> m_BoxColliderComponents;
     ComponentManager<CircleColliderComponent> m_CircleColliderComponents;
     ComponentManager<LightComponent> m_LightComponents;
+    ComponentManager<NativeScriptComponent> m_NativeScriptComponents;
 
     std::string m_Name;
 };
 
 class SceneManager{
 public:
-    SceneManager(){}
+    SceneManager()=default;
+    ~SceneManager();
 
     void AddScene(const std::string &name);
     void RemoveScene(const std::string &name);
@@ -77,5 +79,5 @@ public:
 private:
     std::string m_CurrentSceneName;
 
-    std::vector<Scene> m_Scenes;
+    std::vector<Scene*> m_Scenes;
 };

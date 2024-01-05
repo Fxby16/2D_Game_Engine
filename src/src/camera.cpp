@@ -38,10 +38,13 @@ void Camera::InitializeProj(){
     RENDERER->m_SPostProcessing.Bind();
     RENDERER->m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_View),1);
 
-    glm::mat4 proj=glm::ortho(0.0f,Window::Width,0.0f,Window::Height,-1.0f,1.0f);
-    TEXT_RENDERERS[0]->UpdateProjMat(proj);
-    for(int i=1;i<TEXT_RENDERERS.size();i++)
-        TEXT_RENDERERS[i]->UpdateProjMat(m_View);
+    for(int i=0;i<TEXT_RENDERERS.size();i++){
+        if(TEXT_RENDERERS[i]->m_Fixed)    
+            TEXT_RENDERERS[i]->UpdateProjMat(m_Proj);
+        else{
+            TEXT_RENDERERS[i]->UpdateProjMat(m_View);
+        }
+    }
 }
 
 void Camera::DrawSceneProj(){

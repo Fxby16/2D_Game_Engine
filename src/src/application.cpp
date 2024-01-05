@@ -57,8 +57,8 @@ void Application::Run(){
 
         OnRender();
         
-        if(Window::ShowFpsCounter_)
-            Window::ShowFpsCounter();
+        if(Window::ShowMetrics_)
+            Window::ShowMetrics();
 
         if(m_ImGui){
             OnImGuiUpdate();

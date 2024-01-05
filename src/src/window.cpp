@@ -33,7 +33,7 @@ namespace Window{
         if(key==KEY_F10 && action==BUTTON_DOWN)
             ToggleVSync();
         if(key==KEY_F9 && action==BUTTON_DOWN)
-            ShowFpsCounter_=!ShowFpsCounter_;
+            ShowMetrics_=!ShowMetrics_;
         if(key==KEY_Q && action==BUTTON_DOWN)
             glfwSetWindowShouldClose(window,true);
     }
@@ -43,7 +43,7 @@ namespace Window{
         *y=Height-(*y);
     }
 
-    void ShowFpsCounter(){
+    void ShowMetrics(){
         static int FPS=0;
         static double last_time=0.0;
         double current_time=glfwGetTime();
@@ -51,7 +51,9 @@ namespace Window{
             last_time=current_time;
             FPS=1.0/DeltaTime;
         }
-        TEXT_RENDERERS[0]->DrawText("FPS: "+std::to_string(FPS),0.0f,Window::Height-TEXT_RENDERERS[0]->GetTextSize("FPS: "+std::to_string(FPS),0.7f).second,0.7f,Vec3(1.0f,1.0f,1.0f));
+        TEXT_RENDERERS[0]->DrawText("FPS: "+std::to_string(FPS)+"\nFrame Time: "+std::to_string(DeltaTime*1000.0f)+" ms",
+                           0.0f,Window::MAX_HEIGHT-TEXT_RENDERERS[0]->GetTextSize("FPS: "+std::to_string(FPS)+"\nFrame Time: "+std::to_string(DeltaTime*1000.0f)+" ms",
+                           0.5f).second,0.5f,Vec3(1.0f,1.0f,1.0f));
     }
 
     int InitGlfwWindow(const char *window_name){
@@ -92,7 +94,7 @@ namespace Window{
         glViewport(0,0,Width,Height);
 
         RENDERER=new Renderer;
-        TEXT_RENDERERS.push_back(new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf"));
+        TEXT_RENDERERS.push_back(new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",true));
 
         return 0;
     }
@@ -204,7 +206,7 @@ namespace Window{
 
     bool IsFullscreen;
     bool IsVSync;
-    bool ShowFpsCounter_;
+    bool ShowMetrics_;
 
     bool FramebufferUpdate;
     bool ProjUpdate;

@@ -124,6 +124,12 @@ void Scene::AddComponent<CircleColliderComponent,float,float,float,float,float,f
 }
 
 template<>
+void Scene::AddComponent<NativeScriptComponent>(uint64_t uid){
+    NativeScriptComponent temp(uid);
+    m_NativeScriptComponents.AddComponent(temp,uid);
+}
+
+template<>
 void Scene::RemoveComponent<TextureComponent>(uint64_t uid){
     m_TextureComponents.RemoveComponent(uid);
 }
@@ -151,6 +157,11 @@ void Scene::RemoveComponent<BoxColliderComponent>(uint64_t uid){
 template<>
 void Scene::RemoveComponent<CircleColliderComponent>(uint64_t uid){
     m_CircleColliderComponents.RemoveComponent(uid);
+}
+
+template<>
+void Scene::RemoveComponent<NativeScriptComponent>(uint64_t uid){
+    m_NativeScriptComponents.RemoveComponent(uid);
 }
 
 template<>
@@ -183,25 +194,36 @@ CircleColliderComponent* Scene::GetComponent<CircleColliderComponent>(uint64_t u
     return m_CircleColliderComponents.GetComponent(uid);
 }
 
+template<>
+NativeScriptComponent* Scene::GetComponent<NativeScriptComponent>(uint64_t uid){
+    return m_NativeScriptComponents.GetComponent(uid);
+}
+
 void Scene::Update(double frame_time){
+    m_NativeScriptComponents.Update(this,frame_time);
     OnPhysicsUpdate(frame_time);
 }
 
 void Scene::Render(){
-    m_TextureComponents.Render(m_Entities);
-    m_AnimatedTextureComponents.Render(m_Entities);
-    m_LightComponents.Render(m_Entities);
+    m_TextureComponents.Render(this);
+    m_AnimatedTextureComponents.Render(this);
+    m_LightComponents.Render(this);
+}
+
+SceneManager::~SceneManager(){
+    for(auto scene:m_Scenes)
+        delete scene;
 }
 
 void SceneManager::AddScene(const std::string &name){
-    m_Scenes.push_back(Scene(name));
+    m_Scenes.push_back(new Scene(name));
 }
 
 void SceneManager::RemoveScene(const std::string &name){
     if(name==m_CurrentSceneName)
         m_CurrentSceneName="";
     for(int i=0;i<m_Scenes.size();i++){
-        if(m_Scenes[i].m_Name==name){
+        if(m_Scenes[i]->m_Name==name){
             m_Scenes.erase(m_Scenes.begin()+i);
             break;
         }
@@ -217,9 +239,9 @@ Scene* SceneManager::GetCurrentScene(){
         printf("You must set a current scene before calling GetCurrentScene()\n");
         return nullptr;
     }
-    for(auto &scene:m_Scenes){
-        if(scene.m_Name==m_CurrentSceneName)
-            return &scene;
+    for(auto scene:m_Scenes){
+        if(scene->m_Name==m_CurrentSceneName)
+            return scene;
     }
     return nullptr;
 }

@@ -15,6 +15,8 @@
 
 namespace Window{
     extern float Width,Height;
+    extern const float MAX_WIDTH;
+    extern float MAX_HEIGHT;
 }
 
 inline constexpr unsigned int CH_LIMIT=400;
@@ -22,13 +24,16 @@ inline constexpr unsigned int CH_NUM=128;
 
 class TextRenderer{
 public:
-    TextRenderer(const char *font_path);
+    /**
+     * \param fixed false if its position should be relative to the camera
+    */
+    TextRenderer(const char *font_path,bool fixed);
     ~TextRenderer();
 
     void DrawText(std::string text,float x,float y,float scale,Vec3 color);
     std::pair<float,float> GetTextSize(std::string text,float scale); 
 
-    inline void UpdateProjMat(glm::mat4 proj){
+    inline void UpdateProjMat(glm::mat4 &proj){
         m_Shader.Bind();
         m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(proj),1);
     }
@@ -56,4 +61,7 @@ private:
     int *m_ToRender;
 
     void Render(int num_characters);  
+
+public:
+    bool m_Fixed;
 };

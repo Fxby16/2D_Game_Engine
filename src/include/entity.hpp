@@ -5,6 +5,7 @@
 #include <vector>
 #include <window.hpp>
 #include <box2d/b2_body.h>
+#include <functional>
 
 class Entity;
 class TextureComponent;
@@ -13,6 +14,8 @@ class RigidbodyComponent;
 class BoxColliderComponent;
 class CircleColliderComponent;
 class LightComponent;
+class NativeScriptComponent;
+class Scene;
 
 template<typename T>
 using ComponentType=typename std::enable_if<
@@ -21,7 +24,8 @@ using ComponentType=typename std::enable_if<
     std::is_same<T,RigidbodyComponent>::value ||
     std::is_same<T,BoxColliderComponent>::value ||
     std::is_same<T,CircleColliderComponent>::value ||
-    std::is_same<T,LightComponent>::value,
+    std::is_same<T,LightComponent>::value ||
+    std::is_same<T,NativeScriptComponent>::value,
     int>::type;
 
 template<typename T,ComponentType<T> = 0>
@@ -130,8 +134,8 @@ public:
 
 class RigidbodyComponent{
 public:
-    RigidbodyComponent()=default;
-    RigidbodyComponent(const RigidbodyComponent &other)=default;
+    RigidbodyComponent(){ m_UID=std::numeric_limits<uint64_t>::max(); }
+    RigidbodyComponent(uint64_t uid): m_UID(uid){}
 
     enum class BodyType{
         Static,
@@ -147,8 +151,8 @@ public:
 
 class BoxColliderComponent{
 public:
-    BoxColliderComponent()=default;
-    BoxColliderComponent(const BoxColliderComponent &other)=default;
+    BoxColliderComponent(){ m_UID=std::numeric_limits<uint64_t>::max(); }
+    BoxColliderComponent(uint64_t uid): m_UID(uid){}
 
     float m_XOffset=0.0f,m_YOffset=0.0f;
     float m_Width=0.0f,m_Height=0.0f;
@@ -165,8 +169,8 @@ public:
 
 class CircleColliderComponent{
 public:
-    CircleColliderComponent()=default;
-    CircleColliderComponent(const CircleColliderComponent &other)=default;
+    CircleColliderComponent(){ m_UID=std::numeric_limits<uint64_t>::max(); } 
+    CircleColliderComponent(uint64_t uid): m_UID(uid){}
 
     float m_XOffset=0.0f,m_YOffset=0.0f;
     float m_Radius=0.0f;
@@ -193,6 +197,18 @@ public:
     float m_Radius,m_Blur;
     Vec3 m_Color;
     LightType m_Type;
+
+    uint64_t m_UID;
+};
+
+class NativeScriptComponent{
+public:
+    NativeScriptComponent(): m_UID(std::numeric_limits<uint64_t>::max()){}
+    NativeScriptComponent(uint64_t uid): m_UID(uid){}
+
+    std::function<void(Scene*,NativeScriptComponent*)> OnCreate;
+    std::function<void(Scene*,NativeScriptComponent*,float)> OnUpdate;
+    std::function<void(Scene*,NativeScriptComponent*)> OnDestroy;
 
     uint64_t m_UID;
 };
@@ -269,8 +285,8 @@ public:
         return r;
     }
 
-    void Update(float frame_time,std::vector<Entity>& entities);
-    void Render(std::vector<Entity>& entities);
+    void Update(Scene *scene,float frame_time);
+    void Render(Scene *scene);
 };
 
 inline b2BodyType RigidbodyTypeToBox2DBody(RigidbodyComponent::BodyType bodyType){
