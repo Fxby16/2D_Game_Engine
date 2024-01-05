@@ -219,7 +219,12 @@ void Renderer::DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer){
 }
 
 void Renderer::SetLineWidth(float new_size){
-    glLineWidth(new_size/Window::MAX_WIDTH*Window::Width);
+    m_LineWidth=new_size;
+    glLineWidth((new_size*m_Zoom)/Window::MAX_WIDTH*Window::Width);
+}
+
+void Renderer::UpdateLineWidth(){
+    glLineWidth((m_LineWidth*m_Zoom)/Window::MAX_WIDTH*Window::Width);
 }
 
 /**
@@ -237,9 +242,7 @@ float Renderer::GetPointSize(){
 }
 
 float Renderer::GetLineWidth(){
-    float size;
-    glGetFloatv(GL_LINE_WIDTH,&size);
-    return size/Window::Width*Window::MAX_WIDTH;
+    return m_LineWidth;
 }
 
 void Renderer::SetAmbientLight(Vec3 color){

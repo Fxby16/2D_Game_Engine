@@ -38,6 +38,8 @@ void Camera::InitializeProj(){
     RENDERER->m_SPostProcessing.Bind();
     RENDERER->m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_View),1);
 
+    RENDERER->m_Zoom=m_Zoom;
+
     for(int i=0;i<TEXT_RENDERERS.size();i++){
         if(TEXT_RENDERERS[i]->m_Fixed)    
             TEXT_RENDERERS[i]->UpdateProjMat(m_Proj);
@@ -71,6 +73,8 @@ void Camera::Move(float x_offset,float y_offset){
 void Camera::SetZoom(float zoom){
     m_Zoom=zoom;
     m_Zoom=glm::clamp(m_Zoom,0.1f,3.0f);
+    RENDERER->m_Zoom=m_Zoom;
+    RENDERER->UpdateLineWidth();
 
     InitializeProj();
 }
@@ -78,6 +82,8 @@ void Camera::SetZoom(float zoom){
 void Camera::Zoom(float zoom_offset){
     m_Zoom+=zoom_offset;
     m_Zoom=glm::clamp(m_Zoom,0.1f,3.0f);
+    RENDERER->m_Zoom=m_Zoom;
+    RENDERER->UpdateLineWidth();
 
     InitializeProj();
 }

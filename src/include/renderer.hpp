@@ -68,6 +68,7 @@ public:
     void PostProcessing();
 
     void SetLineWidth(float new_size);
+    void UpdateLineWidth();
     void SetPointSize(float new_size);
     float GetPointSize();
     float GetLineWidth();
@@ -121,6 +122,8 @@ private:
     int m_MaxTextureSlots;
 
     float m_PointSize;
+    float m_LineWidth;
+    float m_Zoom;
 
     std::vector<std::pair<Vec2,Vec2>>segments; //used for lighting
 
