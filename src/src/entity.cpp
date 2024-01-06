@@ -4,6 +4,7 @@
 #include <application.hpp>
 #include <global.hpp>
 #include <scene.hpp>
+#include <Instrumentor.h>
 
 uint64_t NEXT_UID=0;
 
@@ -119,6 +120,8 @@ void ComponentManager<LightComponent>::Update(Scene *scene,float frame_time){
 
 template<>
 void ComponentManager<NativeScriptComponent>::Update(Scene *scene,float frame_time){
+    PROFILE_FUNCTION();
+
     for(int i=0;i<m_Components.size();i++){
         if(m_Components[i].OnUpdate){
             m_Components[i].OnUpdate(scene,&m_Components[i],frame_time);
@@ -128,6 +131,8 @@ void ComponentManager<NativeScriptComponent>::Update(Scene *scene,float frame_ti
 
 template<>
 void ComponentManager<TextureComponent>::Render(Scene *scene){
+    PROFILE_FUNCTION();
+
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
         entity=scene->GetEntity(m_Components[i].m_UID);
@@ -137,6 +142,8 @@ void ComponentManager<TextureComponent>::Render(Scene *scene){
 
 template<>
 void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
+    PROFILE_FUNCTION();
+
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
         entity=scene->GetEntity(m_Components[i].m_UID);
@@ -146,6 +153,8 @@ void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
 
 template<>
 void ComponentManager<LightComponent>::Render(Scene *scene){
+    PROFILE_FUNCTION();
+
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
         entity=scene->GetEntity(m_Components[i].m_UID);

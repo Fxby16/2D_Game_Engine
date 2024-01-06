@@ -1,6 +1,7 @@
 #include <scene.hpp>
 #include <box2d/box2d.h>
 #include <renderer.hpp>
+#include <Instrumentor.h>
 
 int BinarySearchi(std::vector<Entity> &v,uint64_t uid){
     int l=0,r=v.size()-1;
@@ -36,6 +37,8 @@ uint64_t Scene::AddEntity(){
 }
 
 Entity* Scene::GetEntity(uint64_t uid){
+    PROFILE_FUNCTION();
+
     int idx=BinarySearchi(m_Entities,uid);
     if(idx==-1)
         return nullptr;
@@ -43,6 +46,8 @@ Entity* Scene::GetEntity(uint64_t uid){
 }
 
 void Scene::RemoveEntity(uint64_t uid){
+    PROFILE_FUNCTION();
+
     m_TextureComponents.RemoveComponent(uid);
     m_AnimatedTextureComponents.RemoveComponent(uid);
     m_LightComponents.RemoveComponent(uid);
@@ -63,36 +68,48 @@ void Scene::SetEntityPosition(uint64_t uid,float x,float y){
 
 template<>
 void Scene::AddComponent<TextureComponent,const char*,int,int,float,float,float>(uint64_t uid,const char *path,int mag_filter,int min_filter,float width,float height,float layer){
+    PROFILE_FUNCTION();
+    
     TextureComponent temp(path,mag_filter,min_filter,width,height,layer,uid);
     m_TextureComponents.AddComponent(temp,uid);
 }
 
 template<>
 void Scene::AddComponent<TextureComponent,std::shared_ptr<Texture>,float,float,float>(uint64_t uid,std::shared_ptr<Texture>texture,float width,float height,float layer){
+    PROFILE_FUNCTION();
+    
     TextureComponent temp(texture,width,height,layer,uid);
     m_TextureComponents.AddComponent(temp,uid);
 }
 
 template<>
 void Scene::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsigned int,int,int,float,float,float>(uint64_t uid,const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer){
+    PROFILE_FUNCTION();
+    
     AnimatedTextureComponent temp(path,tile_width,tile_height,mag_filter,min_filter,width,height,layer,uid);
     m_AnimatedTextureComponents.AddComponent(temp,uid);
 }
 
 template<>
 void Scene::AddComponent<AnimatedTextureComponent,std::shared_ptr<AnimatedTexture>,float,float,float>(uint64_t uid,std::shared_ptr<AnimatedTexture>animated_texture,float width,float height,float layer){
+    PROFILE_FUNCTION();
+    
     AnimatedTextureComponent temp(animated_texture,width,height,layer,uid);
     m_AnimatedTextureComponents.AddComponent(temp,uid);
 }
 
 template<>
 void Scene::AddComponent<LightComponent,float,float,float,float,Vec3,LightType>(uint64_t uid,float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type){
+    PROFILE_FUNCTION();
+    
     LightComponent temp(x_offset,y_offset,radius,blur,color,type,uid);
     m_LightComponents.AddComponent(temp,uid);
 }   
 
 template<>
 void Scene::AddComponent<RigidbodyComponent,RigidbodyComponent::BodyType,bool>(uint64_t uid,RigidbodyComponent::BodyType body_type,bool fixed_rotation){
+    PROFILE_FUNCTION();
+    
     RigidbodyComponent temp;
     temp.m_BodyType=body_type;
     temp.m_FixedRotation=fixed_rotation;
@@ -104,6 +121,7 @@ template<>
 void Scene::AddComponent<BoxColliderComponent,float,float,float,float,float,float,float,float>(
         uint64_t uid,float x_offset,float y_offset,float width,float height,float density,float friction,
         float restitution,float restitution_threshold){
+    PROFILE_FUNCTION();
     
     BoxColliderComponent temp;
     temp.m_XOffset=x_offset;
@@ -122,6 +140,7 @@ template<>
 void Scene::AddComponent<CircleColliderComponent,float,float,float,float,float,float,float>(
         uint64_t uid,float x_offset,float y_offset,float radius,float density,float friction,
         float restitution,float restitution_threshold){
+    PROFILE_FUNCTION();
     
     CircleColliderComponent temp;
     temp.m_XOffset=x_offset;
@@ -137,86 +156,120 @@ void Scene::AddComponent<CircleColliderComponent,float,float,float,float,float,f
 
 template<>
 void Scene::AddComponent<NativeScriptComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     NativeScriptComponent temp(uid);
     m_NativeScriptComponents.AddComponent(temp,uid);
 }
 
 template<>
 void Scene::RemoveComponent<TextureComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     m_TextureComponents.RemoveComponent(uid);
 }
 
 template<>
 void Scene::RemoveComponent<AnimatedTextureComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     m_AnimatedTextureComponents.RemoveComponent(uid);
 }
 
 template<>
 void Scene::RemoveComponent<LightComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     m_LightComponents.RemoveComponent(uid);
 }
 
 template<>
 void Scene::RemoveComponent<RigidbodyComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     m_RigidbodyComponents.RemoveComponent(uid);
 }
 
 template<> 
 void Scene::RemoveComponent<BoxColliderComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     m_BoxColliderComponents.RemoveComponent(uid);
 }
 
 template<>
 void Scene::RemoveComponent<CircleColliderComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     m_CircleColliderComponents.RemoveComponent(uid);
 }
 
 template<>
 void Scene::RemoveComponent<NativeScriptComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     m_NativeScriptComponents.RemoveComponent(uid);
 }
 
 template<>
 TextureComponent* Scene::GetComponent<TextureComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     return m_TextureComponents.GetComponent(uid);
 }
 
 template<>
 AnimatedTextureComponent* Scene::GetComponent<AnimatedTextureComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     return m_AnimatedTextureComponents.GetComponent(uid);
 }
 
 template<>
 LightComponent* Scene::GetComponent<LightComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     return m_LightComponents.GetComponent(uid);
 }
 
 template<>
 RigidbodyComponent* Scene::GetComponent<RigidbodyComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+    
     return m_RigidbodyComponents.GetComponent(uid);
 }
 
 template<>
 BoxColliderComponent* Scene::GetComponent<BoxColliderComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+
     return m_BoxColliderComponents.GetComponent(uid);
 }
 
 template<>
 CircleColliderComponent* Scene::GetComponent<CircleColliderComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+
     return m_CircleColliderComponents.GetComponent(uid);
 }
 
 template<>
 NativeScriptComponent* Scene::GetComponent<NativeScriptComponent>(uint64_t uid){
+    PROFILE_FUNCTION();
+
     return m_NativeScriptComponents.GetComponent(uid);
 }
 
 void Scene::Update(double frame_time){
+    PROFILE_FUNCTION();
+
     m_NativeScriptComponents.Update(this,frame_time);
     OnPhysicsUpdate(frame_time);
 }
 
 void Scene::Render(){
+    PROFILE_FUNCTION();
+
     m_TextureComponents.Render(this);
     m_AnimatedTextureComponents.Render(this);
     m_LightComponents.Render(this);
@@ -259,6 +312,8 @@ Scene* SceneManager::GetCurrentScene(){
 }
 
 void Scene::MoveEntity(uint64_t uid,float x_offset,float y_offset){
+    PROFILE_FUNCTION();
+    
     RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
     if(rigidbody==nullptr){
         printf("Entity %llu does not have a rigidbody\n",uid);
@@ -317,6 +372,8 @@ void Scene::OnPhysicsStart(){
 }
 
 void Scene::OnPhysicsUpdate(double frame_time){
+    PROFILE_FUNCTION();
+    
     const int velocity_iterations=6;
     const int position_iterations=2;
     m_PhysicsWorld->Step(frame_time,velocity_iterations,position_iterations);

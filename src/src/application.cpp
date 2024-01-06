@@ -1,4 +1,5 @@
 #include <application.hpp>
+#include <Instrumentor.h>
 
 Application::Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui){
     m_WindowName=window_name;
@@ -19,14 +20,23 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
         last_time=glfwGetTime();
         Window::PrintDebugInfo();
     #endif
+
+    #ifdef ENABLE_PROFILING
+        Instrumentor::Get().BeginSession("Profile");
+    #endif
 }
 
 Application::~Application(){
     if(m_ImGui)
         Renderer::ImGui_Close();
+    #ifdef ENABLE_PROFILING
+        Instrumentor::Get().EndSession();
+    #endif
 }
 
 void Application::Run(){
+    PROFILE_FUNCTION();
+
     while(!glfwWindowShouldClose(Window::Window)){
         glfwPollEvents();
 
@@ -81,19 +91,27 @@ void Application::Run(){
 }
 
 void Application::OnUpdate(const double frame_time){
+    PROFILE_FUNCTION();
+
     RENDERER->Clear();
 }
 
 void Application::OnRender(){
+    PROFILE_FUNCTION();
+    
     RENDERER->Render();
     RENDERER->ApplyLight();
     RENDERER->DrawScene();
 }
 
 void Application::OnImGuiUpdate(){
+    PROFILE_FUNCTION();
+    
     Renderer::ImGui_Content();
 }
 
 void Application::OnImGuiRender(){
+    PROFILE_FUNCTION();
+    
     Renderer::ImGui_End_Frame();
 }

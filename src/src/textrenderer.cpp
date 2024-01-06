@@ -2,6 +2,7 @@
 #include <global.hpp>
 #include <cstdio>
 #include <memory.hpp>
+#include <Instrumentor.h>
 
 TextRenderer::TextRenderer(const char *font_path,bool fixed):
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
@@ -88,6 +89,8 @@ TextRenderer::~TextRenderer(){
 }
 
 void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 color){
+    PROFILE_FUNCTION();
+    
     scale=scale*48.0f/256.0f;
 
     float copyX=x;
@@ -124,6 +127,8 @@ void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 co
 }
 
 std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
+    PROFILE_FUNCTION();
+    
     scale=scale*48.0f/256.0f;
 
     float width_=0.0f;
@@ -145,6 +150,8 @@ std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
 }
 
 void TextRenderer::Render(int num_characters){
+    PROFILE_FUNCTION();
+    
     if(num_characters!=0){
         m_Shader.SetUniformMat4fv("transforms",glm::value_ptr(m_Transforms[0]),num_characters);
         m_Shader.SetUniform1iv("letterMap",&m_ToRender[0],num_characters);

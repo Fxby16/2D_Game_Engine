@@ -4,7 +4,6 @@
 #include <GLFW/glfw3.h>
 #include <window.hpp>
 #include <memory.hpp>
-
 #include <Instrumentor.h>
 
 RendererData::RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size): 
@@ -114,6 +113,8 @@ void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int 
 }
 
 void Renderer::DrawTexture(Vec2 pos,Vec2 size,float layer,float texID){
+    PROFILE_FUNCTION();
+
     auto [a,b,c,d]=VertexBuffer::CreateQuad(pos.x,pos.y,size.w,size.h,layer,texID);
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
@@ -126,6 +127,8 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,float layer,float texID){
 }
 
 void Renderer::DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,float layer,float texID){
+    PROFILE_FUNCTION();
+    
     auto [a,b,c,d]=VertexBuffer::CreateQuad(pos.x,pos.y,size.w,size.h,texture_pos.x,texture_pos.y,texture_size.w,texture_size.h,texture_total_size.w,texture_total_size.h,layer,texID);
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
@@ -138,6 +141,8 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size
 }
 
 void Renderer::DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,float layer,Texture &texture){
+    PROFILE_FUNCTION();
+    
     if(reverse_x && reverse_y)
         DrawTexture(pos,size,{texture.GetWidth(),texture.GetHeight()},{-texture.GetWidth(),-texture.GetHeight()},{texture.GetWidth(),texture.GetHeight()},layer,texture.GetTexID());
     else if(reverse_x)
@@ -149,6 +154,8 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,floa
 }
 
 void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s){
+    PROFILE_FUNCTION();
+    
     std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(pos.x,pos.y,size.w,size.h,row,col,layer,s.GetTexID());
     m_BufferT[m_Textures.NumVertices]=quad[0];
     m_BufferT[m_Textures.NumVertices+1]=quad[1];
@@ -161,6 +168,8 @@ void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float laye
 }
 
 void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,AnimatedTexture &at){
+    PROFILE_FUNCTION();
+    
     if(at.m_PlayAnimation){
         if(glfwGetTime()-at.m_LastAnimationTime>=at.m_AnimationDelay){
             at.m_LastAnimationTime=glfwGetTime();
@@ -178,6 +187,8 @@ void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,AnimatedTextur
 
 
 void Renderer::DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer){
+    PROFILE_FUNCTION();
+    
     m_BufferTR[m_Triangles.NumVertices]=TriangleVertex(pos1,color,layer);
     m_BufferTR[m_Triangles.NumVertices+1]=TriangleVertex(pos2,color,layer);
     m_BufferTR[m_Triangles.NumVertices+2]=TriangleVertex(pos3,color,layer);
@@ -188,6 +199,8 @@ void Renderer::DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer
 }
 
 void Renderer::DrawQuad(Vertex a,Vertex b,Vertex c,Vertex d){
+    PROFILE_FUNCTION();
+    
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
     m_BufferT[m_Textures.NumVertices+2]=c;
@@ -199,11 +212,15 @@ void Renderer::DrawQuad(Vertex a,Vertex b,Vertex c,Vertex d){
 }
 
 void Renderer::DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer){
+    PROFILE_FUNCTION();
+    
     DrawTriangle(pos,{pos.x+size.w,pos.y},{pos.x,pos.y+size.h},color,layer);
     DrawTriangle({pos.x,pos.y+size.h},{pos.x+size.w,pos.y+size.h},{pos.x+size.w,pos.y},color,layer);
 }
 
 void Renderer::DrawPoint(Vec2 pos,Vec4 color,float layer){
+    PROFILE_FUNCTION();
+    
     m_BufferP[m_Points.NumVertices]=LinePointVertex(pos,color,layer);
     ++m_Points.NumVertices;
 
@@ -212,6 +229,8 @@ void Renderer::DrawPoint(Vec2 pos,Vec4 color,float layer){
 }
 
 void Renderer::DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer){
+    PROFILE_FUNCTION();
+    
     m_BufferL[m_Lines.NumVertices]=LinePointVertex(pos1,color,layer);
     m_BufferL[m_Lines.NumVertices+1]=LinePointVertex(pos2,color,layer);
     m_Lines.NumVertices+=2;
@@ -256,6 +275,8 @@ void Renderer::SetClearColor(Vec3 color){
 }
 
 void Renderer::StartScene(){
+    PROFILE_FUNCTION();
+    
     m_TextureIndex=m_PointIndex=m_LineIndex=m_TriangleIndex=0;
     if(Window::FramebufferUpdate){
         Window::FramebufferUpdate=false;
@@ -284,6 +305,8 @@ void Renderer::StartScene(){
 }
 
 void Renderer::DrawScene(){
+    PROFILE_FUNCTION();
+    
     m_Framebuffer->Unbind();
     Clear();
     DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_Framebuffer->GetColorbufferID());
@@ -291,6 +314,8 @@ void Renderer::DrawScene(){
 }
 
 void Renderer::Render(bool post_processing){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect layer input for subsequent vertices
+    PROFILE_FUNCTION();
+    
     if(m_Textures.NumVertices>0)
         std::stable_sort(m_BufferT,m_BufferT+m_Textures.NumVertices,cmp1);
     if(m_Points.NumVertices>0)
@@ -323,6 +348,8 @@ void Renderer::Render(bool post_processing){ //if this function gets called beca
 }
 
 void Renderer::RenderTextures(bool post_processing,float max_layer){
+    PROFILE_FUNCTION();
+    
     int lastChecked=-1;
     int slot=-1;
     int lastIndex=0;
@@ -372,6 +399,8 @@ void Renderer::RenderTextures(bool post_processing,float max_layer){
 }
 
 void Renderer::RenderTriangles(float max_layer){
+       PROFILE_FUNCTION();
+
     m_Triangles.VAO.Bind();
     m_Triangles.VBO.Bind();
     m_Triangles.S.Bind();
@@ -393,6 +422,8 @@ void Renderer::RenderTriangles(float max_layer){
 }
 
 void Renderer::RenderPoints(float max_layer){
+    PROFILE_FUNCTION();
+    
     m_Points.VAO.Bind();
     m_Points.VBO.Bind();
     m_Points.S.Bind();
@@ -414,6 +445,8 @@ void Renderer::RenderPoints(float max_layer){
 }
 
 void Renderer::RenderLines(float max_layer){
+    PROFILE_FUNCTION();
+    
     m_Lines.VAO.Bind();    
     m_Lines.VBO.Bind();
     m_Lines.S.Bind();
@@ -474,6 +507,8 @@ std::vector<std::pair<Vec2,Vec2>> &Renderer::GetSegments(){
 }
 
 std::pair<Vec2,float> Renderer::GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg){
+    PROFILE_FUNCTION();
+    
     float r_px=ray.first.x;
     float r_py=ray.first.y;
     float r_dx=ray.second.x-ray.first.x;
@@ -500,6 +535,8 @@ std::pair<Vec2,float> Renderer::GetIntersection(const std::pair<Vec2,Vec2>&ray,c
 }
 
 void Renderer::DrawLight(Vec2 pos,Vec4 color,LightType light_type,float radius,float blurAmount){
+    PROFILE_FUNCTION();
+    
     if(light_type==ALL_LIGHT || light_type==LIGHT_AROUND_POS_COLL){
         std::vector<Vec2>points;
         auto find=[&points](Vec2 point)->bool{
@@ -589,6 +626,8 @@ void Renderer::DrawLight(Vec2 pos,Vec4 color,LightType light_type,float radius,f
 }
 
 void Renderer::KeepCircle(Vec2 pos,float radius,float blurAmount){
+    PROFILE_FUNCTION();
+    
     m_Lights.VBO.Bind();
 
     glActiveTexture(GL_TEXTURE0);
@@ -610,6 +649,8 @@ void Renderer::KeepCircle(Vec2 pos,float radius,float blurAmount){
 }
 
 void Renderer::ApplyLight(){
+    PROFILE_FUNCTION();
+    
     m_Lights.VBO.Bind();
 
     glActiveTexture(GL_TEXTURE0);
