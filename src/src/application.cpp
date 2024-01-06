@@ -1,9 +1,11 @@
 #include <application.hpp>
 
-Application::Application(const char *window_name,unsigned int width,unsigned int height,bool imgui){
+Application::Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui){
     m_WindowName=window_name;
     Window::BaseWidth=Window::Width=width;
     Window::BaseHeight=Window::Height=height;
+    Window::FullscreenWidth=fullscreen_width;
+    Window::FullscreenHeight=fullscreen_height;
     Window::MAX_HEIGHT=Window::MAX_WIDTH/(Window::Width/Window::Height);
 
     m_ImGui=imgui;

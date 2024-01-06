@@ -22,3 +22,6 @@
 [submodule "src/vendor/box2d"]
 	path = src/vendor/box2d
 	url = https://github.com/erincatto/box2d.git
+[submodule "src/vendor/instrumentor"]
+	path = src/vendor/instrumentor
+	url = https://gist.github.com/0e8d28b7e05138a3be81d741f5f517c3.git

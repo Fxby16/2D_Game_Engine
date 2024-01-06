@@ -6,6 +6,7 @@
 #include <window.hpp>
 #include <box2d/b2_body.h>
 #include <functional>
+#include <memory>
 
 class Entity;
 class TextureComponent;
@@ -69,7 +70,8 @@ inline float Interpolate(float current,float previous){
 class TextureComponent{
 public:
     TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint64_t uid);
-    TextureComponent(): m_Texture(),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint64_t>::max()){}
+    TextureComponent(std::shared_ptr<Texture>&t,float width,float height,float layer,uint64_t uid);
+    TextureComponent(): m_Texture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint64_t>::max()){}
     TextureComponent(TextureComponent &other);
     TextureComponent(TextureComponent &&other);
     
@@ -92,7 +94,7 @@ public:
         return *this;
     }
 
-    Texture m_Texture;
+    std::shared_ptr<Texture> m_Texture;
     float m_Width,m_Height;
     float m_Layer;
     uint64_t m_UID;
@@ -101,7 +103,8 @@ public:
 class AnimatedTextureComponent{
 public:
     AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,uint64_t uid);
-    AnimatedTextureComponent(): m_AnimatedTexture(),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint64_t>::max()){}
+    AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>&t,float width,float height,float layer,uint64_t uid);
+    AnimatedTextureComponent(): m_AnimatedTexture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint64_t>::max()){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
     AnimatedTextureComponent(AnimatedTextureComponent &&other);
 
@@ -126,7 +129,7 @@ public:
 
     void PlayAnimation(bool loop=false,float delay=0.0f);
 
-    AnimatedTexture m_AnimatedTexture;
+    std::shared_ptr<AnimatedTexture> m_AnimatedTexture;
     float m_Width,m_Height;
     float m_Layer;
     uint64_t m_UID;

@@ -25,6 +25,10 @@ namespace Window{
         RENDERER->SetPointSize(current_point_size);
         RENDERER->SetLineWidth(current_line_width);
         MAX_HEIGHT=MAX_WIDTH/(Width/Height);
+
+        #ifdef DEBUG
+            printf("Framebuffer resized to %dx%d\n",width,height);
+        #endif
     }  
 
     void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mods){
@@ -36,6 +40,10 @@ namespace Window{
             ShowMetrics_=!ShowMetrics_;
         if(key==KEY_Q && action==BUTTON_DOWN)
             glfwSetWindowShouldClose(window,true);
+    }
+
+    void GLAPIENTRY ErrorCallback(int error,const char *description){
+        fprintf(stderr, "Error: %s\n", description);
     }
 
     void GetMousePos(double *x,double *y){
@@ -83,6 +91,7 @@ namespace Window{
 
         glfwSetFramebufferSizeCallback(Window,FramebufferSizeCallback);
         glfwSetKeyCallback(Window,KeyCallback);
+        glfwSetErrorCallback(ErrorCallback);
 
         #ifdef DEBUG
             glEnable(GL_DEBUG_OUTPUT);
@@ -107,11 +116,17 @@ namespace Window{
     }
 
     void ToggleFullScreen(){
-        const GLFWvidmode *mode=glfwGetVideoMode(glfwGetPrimaryMonitor());
+        int count;
+        const GLFWvidmode* modes=glfwGetVideoModes(glfwGetPrimaryMonitor(), &count);
+
+        printf("Available modes:\n");
+        for(int i=0;i<count;i++){
+            printf("%d: %dx%d @ %dHz\n",i,modes[i].width,modes[i].height,modes[i].refreshRate);
+        }
         if(IsFullscreen)
-            glfwSetWindowMonitor(Window,nullptr,mode->width/2-BaseWidth/2,mode->height/2-BaseHeight/2,BaseWidth,BaseHeight,GLFW_DONT_CARE);
+            glfwSetWindowMonitor(Window,nullptr,modes[count-1].width/2-BaseWidth/2,modes[count-1].height/2-BaseHeight/2,BaseWidth,BaseHeight,GLFW_DONT_CARE);
         else
-            glfwSetWindowMonitor(Window,glfwGetPrimaryMonitor(),0,0,mode->width,mode->height,GLFW_DONT_CARE);
+            glfwSetWindowMonitor(Window,glfwGetPrimaryMonitor(),0,0,FullscreenWidth,FullscreenHeight,GLFW_DONT_CARE);
         ISFULLSCREEN=!ISFULLSCREEN;
         IsFullscreen=ISFULLSCREEN;
     }
@@ -197,6 +212,7 @@ namespace Window{
 
     float Width,Height;
     float BaseWidth,BaseHeight;
+    float FullscreenWidth,FullscreenHeight;
 
     float FPS;
     float CurrentFrameTime;

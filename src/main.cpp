@@ -5,13 +5,15 @@ using namespace Window;
 
 class Test : public Application{
 public:
-    Test(const char *title,int width,int height,bool imgui=false): Application(title,width,height,imgui){
+    Test(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui=false): Application(window_name,width,height,fullscreen_width,fullscreen_height,imgui){
         m_SceneManager.AddScene("Test");
         m_SceneManager.SetCurrentScene("Test");
         Scene *scene=m_SceneManager.GetCurrentScene();
 
+        m_Texture=std::make_shared<Texture>("/home/fabio/Scaricati/Red.png",GL_LINEAR,GL_LINEAR);
+
         m_Entities.push_back(scene->AddEntity());
-        scene->AddComponent<TextureComponent>(m_Entities[0],"/home/fabio/Scaricati/Red.png",GL_LINEAR,GL_LINEAR,1.0f,1.0f,0.0f);
+        scene->AddComponent<TextureComponent>(m_Entities[0],m_Texture,1.0f,1.0f,0.0f);
         scene->AddComponent<RigidbodyComponent>(m_Entities[0],RigidbodyComponent::BodyType::Dynamic,true);
         scene->AddComponent<BoxColliderComponent>(m_Entities[0],0.5f,0.5f,1.0f,1.0f,1.0f,0.0f,0.0f,0.5f);
         //scene->AddComponent<CircleColliderComponent>(m_Entities[0],0.5f,0.5f,1.0f,1.0f,0.0f,0.0f,0.5f);
@@ -53,7 +55,7 @@ public:
         scene=m_SceneManager.GetCurrentScene();
 
         m_Entities.push_back(scene->AddEntity());
-        scene->AddComponent<TextureComponent>(m_Entities[2],"/home/fabio/Scaricati/Red.png",GL_LINEAR,GL_LINEAR,1.0f,1.0f,0.0f);
+        scene->AddComponent<TextureComponent>(m_Entities[2],m_Texture,1.0f,1.0f,0.0f);
         scene->AddComponent<RigidbodyComponent>(m_Entities[2],RigidbodyComponent::BodyType::Dynamic,true);
         scene->AddComponent<BoxColliderComponent>(m_Entities[2],0.5f,0.5f,1.0f,1.0f,1.0f,0.0f,0.0f,0.5f);
         scene->AddComponent<LightComponent>(m_Entities[2],0.0f,0.0f,2.0f,0.3f,Vec3(1,1,1),LIGHT_AROUND_POS);
@@ -92,6 +94,7 @@ public:
         RENDERER->AddSegment({5,3},{5,4});
         RENDERER->AddSegment({5,3},{6,3});
     }
+
     void OnUpdate(double frame_time) override{
         HandleButtons();
         Scene *scene=m_SceneManager.GetCurrentScene();
@@ -144,10 +147,11 @@ public:
     }
 private:
     std::vector<uint64_t> m_Entities;
+    std::shared_ptr<Texture>m_Texture;
 };
 
 int main(){
-    Test *test=new Test("Test",1600,900);
+    Test *test=new Test("Test",1600,900,1920,1080);
     test->Run();
     delete test;
 

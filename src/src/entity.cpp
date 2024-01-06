@@ -45,10 +45,16 @@ Entity &Entity::operator=(Entity &&other){
 }
 
 TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint64_t uid):
-    m_Texture(path,mag_filter,min_filter),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
+    m_Texture(std::make_shared<Texture>(path,mag_filter,min_filter)),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
+
+TextureComponent::TextureComponent(std::shared_ptr<Texture>&t,float width,float height,float layer,uint64_t uid):
+    m_Texture(t),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
 AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,uint64_t uid):
-    m_AnimatedTexture(path,tile_width,tile_height,mag_filter,min_filter),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
+    m_AnimatedTexture(std::make_shared<AnimatedTexture>(path,tile_width,tile_height,mag_filter,min_filter)),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
+
+AnimatedTextureComponent::AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>&t,float width,float height,float layer,uint64_t uid):
+    m_AnimatedTexture(t),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
 TextureComponent::TextureComponent(TextureComponent &other){
     m_Texture=other.m_Texture;
@@ -58,7 +64,7 @@ TextureComponent::TextureComponent(TextureComponent &other){
 }
 
 TextureComponent::TextureComponent(TextureComponent &&other){
-    m_Texture=std::move(other.m_Texture);
+    m_Texture=other.m_Texture;
     m_Width=other.m_Width;
     m_Height=other.m_Height;
     m_UID=other.m_UID;
@@ -72,14 +78,14 @@ AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &oth
 }
 
 AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &&other){
-    m_AnimatedTexture=std::move(other.m_AnimatedTexture);
+    m_AnimatedTexture=other.m_AnimatedTexture;
     m_Width=other.m_Width;
     m_Height=other.m_Height;
     m_UID=other.m_UID;
-} 
+}
 
 void AnimatedTextureComponent::PlayAnimation(bool loop,float delay){
-    m_AnimatedTexture.PlayAnimation(loop,delay);
+    m_AnimatedTexture->PlayAnimation(loop,delay);
 }
 
 LightComponent::LightComponent(): m_XOffset(0.0f),m_YOffset(0.0f),m_Radius(0.0f),m_Blur(0.0f),m_Color(0.0f,0.0f,0.0f),m_Type(LIGHT_AROUND_POS),m_UID(std::numeric_limits<uint64_t>::max()){}
@@ -125,7 +131,7 @@ void ComponentManager<TextureComponent>::Render(Scene *scene){
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
         entity=scene->GetEntity(m_Components[i].m_UID);
-        RENDERER->DrawTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,m_Components[i].m_Texture);
+        RENDERER->DrawTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,*m_Components[i].m_Texture);
     }
 }
 
@@ -134,7 +140,7 @@ void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
         entity=scene->GetEntity(m_Components[i].m_UID);
-        RENDERER->DrawAnimatedTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,m_Components[i].m_AnimatedTexture);  
+        RENDERER->DrawAnimatedTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,*m_Components[i].m_AnimatedTexture);  
     }
 }
 

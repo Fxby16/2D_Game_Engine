@@ -13,6 +13,7 @@ project "2DGameEngine"
 
     includedirs { "include", 
                   "include/vendor", 
+                  "vendor/instrumentor",
                   "vendor/glad/include",
                   "vendor/stb_image",
                   "vendor/FreeType/include",
@@ -42,7 +43,7 @@ project "2DGameEngine"
     filter "configurations:Debug"
         optimize "Debug"
         symbols "On"
-        defines { "DEBUG" }
+        defines { "DEBUG","ENABLE_PROFILING" }
 
     filter "configurations:Release"
         optimize "Full"

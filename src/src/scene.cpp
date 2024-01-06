@@ -68,9 +68,21 @@ void Scene::AddComponent<TextureComponent,const char*,int,int,float,float,float>
 }
 
 template<>
+void Scene::AddComponent<TextureComponent,std::shared_ptr<Texture>,float,float,float>(uint64_t uid,std::shared_ptr<Texture>texture,float width,float height,float layer){
+    TextureComponent temp(texture,width,height,layer,uid);
+    m_TextureComponents.AddComponent(temp,uid);
+}
+
+template<>
 void Scene::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsigned int,int,int,float,float,float>(uint64_t uid,const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer){
     AnimatedTextureComponent temp(path,tile_width,tile_height,mag_filter,min_filter,width,height,layer,uid);
-    m_AnimatedTextureComponents.AddComponent(temp,uid);    
+    m_AnimatedTextureComponents.AddComponent(temp,uid);
+}
+
+template<>
+void Scene::AddComponent<AnimatedTextureComponent,std::shared_ptr<AnimatedTexture>,float,float,float>(uint64_t uid,std::shared_ptr<AnimatedTexture>animated_texture,float width,float height,float layer){
+    AnimatedTextureComponent temp(animated_texture,width,height,layer,uid);
+    m_AnimatedTextureComponents.AddComponent(temp,uid);
 }
 
 template<>
