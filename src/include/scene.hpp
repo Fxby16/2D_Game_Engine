@@ -24,21 +24,21 @@ public:
     */
     void SetGravity(float x,float y);
 
-    [[nodiscard]] uint64_t AddEntity();
-    Entity* GetEntity(uint64_t uid);
-    void RemoveEntity(uint64_t uid);
+    [[nodiscard]] uint32_t AddEntity();
+    Entity* GetEntity(uint32_t uid);
+    void RemoveEntity(uint32_t uid);
 
-    void MoveEntity(uint64_t uid,float x_offset,float y_offset);
-    void SetEntityPosition(uint64_t uid,float x,float y);
+    void MoveEntity(uint32_t uid,float x_offset,float y_offset);
+    void SetEntityPosition(uint32_t uid,float x,float y);
 
     template<typename T,typename...Args>
-    void AddComponent(uint64_t uid,Args...args);
+    void AddComponent(uint32_t uid,Args...args);
 
     template<typename T>
-    void RemoveComponent(uint64_t uid);
+    void RemoveComponent(uint32_t uid);
 
     template<typename T>
-    T* GetComponent(uint64_t uid);
+    T* GetComponent(uint32_t uid);
 
     void OnPhysicsStart();
     void OnPhysicsUpdate(double frame_time);

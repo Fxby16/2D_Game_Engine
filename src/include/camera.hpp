@@ -12,6 +12,8 @@ public:
     void DrawSceneProj();
     void ResetSceneProj();  
 
+    inline glm::mat4 GetViewMatrix() const{ return m_View; }
+
     void SetPosition(Vec2 pos);
     void Move(float x_offset,float y_offset);
     void SetZoom(float zoom);
@@ -32,4 +34,5 @@ private:
 
     glm::mat4 m_View;
     glm::mat4 m_Proj;
+    glm::mat4 m_ViewProj;
 };

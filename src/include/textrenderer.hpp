@@ -27,7 +27,7 @@ public:
     /**
      * \param fixed false if its position should be relative to the camera
     */
-    TextRenderer(const char *font_path,bool fixed);
+    TextRenderer(const char *font_path,float glyph_size,bool fixed);
     ~TextRenderer();
 
     void DrawText(std::string text,float x,float y,float scale,Vec3 color);
@@ -59,6 +59,8 @@ private:
     Character *m_Characters;
     glm::mat4 *m_Transforms;
     int *m_ToRender;
+
+    float m_GlyphSize;
 
     void Render(int num_characters);  
 

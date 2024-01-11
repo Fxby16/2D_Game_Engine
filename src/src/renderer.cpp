@@ -639,7 +639,7 @@ void Renderer::KeepCircle(Vec2 pos,float radius,float blurAmount){
     m_Lights.VAO.Bind();
     m_Lights.S.Bind();
 
-    m_Lights.S.SetUniform2f("lightPos",pos.x/Window::MAX_WIDTH*Window::Width,pos.y/Window::MAX_WIDTH*Window::Width);
+    m_Lights.S.SetUniform2f("lightPos",pos.x,pos.y);
     m_Lights.S.SetUniform1f("radius",radius/Window::MAX_WIDTH*Window::Width);
     m_Lights.S.SetUniform1f("blurAmount",blurAmount);
 

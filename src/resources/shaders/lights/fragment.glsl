@@ -7,11 +7,12 @@ in vec2 v_TexCoord;
 out vec4 FragColor;
 
 uniform vec2 lightPos;
-uniform float x_offset;
-uniform float y_offset;
 uniform float zoom;
 uniform float radius;
 uniform float blurAmount;
+
+uniform mat4 view_matrix;
+uniform float window_width;
 
 subroutine void Light();
 subroutine uniform Light light_sub;
@@ -28,7 +29,10 @@ void KeepCircle(){ //merge lighting framebuffer and temp framebuffer. used to re
     vec4 color1=texture(framebuffer,v_TexCoord);
     vec4 color2=texture(light,v_TexCoord);
 
-    vec2 centerCoord=gl_FragCoord.xy-vec2(lightPos.x*zoom+x_offset*zoom,lightPos.y*zoom+y_offset*zoom);
+    vec2 newLightCoords=(view_matrix*vec4(lightPos.x,lightPos.y,0.0,1.0)).xy;
+    newLightCoords=vec2(newLightCoords.x/10.0*window_width,newLightCoords.y/10.0*window_width);
+
+    vec2 centerCoord=gl_FragCoord.xy-newLightCoords;
     float dist=length(centerCoord);
 
     if(dist>radius*zoom){

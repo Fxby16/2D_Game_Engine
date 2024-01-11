@@ -1,6 +1,8 @@
 #include <application.hpp>
 #include <buttons.hpp>
 
+#include "test.hpp"
+
 using namespace Window;
 
 class Test : public Application{
@@ -9,6 +11,8 @@ public:
         m_SceneManager.AddScene("Test");
         m_SceneManager.SetCurrentScene("Test");
         Scene *scene=m_SceneManager.GetCurrentScene();
+
+        scene->OnPhysicsStart();
 
         m_Texture=std::make_shared<Texture>("/home/fabio/Scaricati/Red.png",GL_LINEAR,GL_LINEAR);
 
@@ -23,23 +27,7 @@ public:
         scene->AddComponent<NativeScriptComponent>(m_Entities[0]);
 
         auto nsc=scene->GetComponent<NativeScriptComponent>(m_Entities[0]);
-        nsc->OnUpdate=([](Scene *scene,NativeScriptComponent *nsc,float frame_time)->void{
-            Vec2 speed;
-
-            if(GetKeyState(KEY_UP,BUTTON_DOWN)){
-                speed.y+=10.0f;
-            }
-            if(GetKeyState(KEY_DOWN,BUTTON_DOWN)){
-                speed.y-=10.0f;
-            }
-            if(GetKeyState(KEY_LEFT,BUTTON_DOWN)){
-                speed.x-=10.0f;
-            }
-            if(GetKeyState(KEY_RIGHT,BUTTON_DOWN)){
-                speed.x+=10.0f;
-            }
-            scene->MoveEntity(nsc->m_UID,speed.x,speed.y);
-        });
+        nsc->OnUpdate=Entity1Update;
 
         m_Entities.push_back(scene->AddEntity());
         scene->AddComponent<AnimatedTextureComponent>(m_Entities[1],"resources/textures/Run.png",(unsigned int)128,(unsigned int)128,GL_NEAREST,GL_NEAREST,3.0f,3.0f,0.0f);
@@ -48,11 +36,13 @@ public:
         scene->AddComponent<CircleColliderComponent>(m_Entities[1],1.5f,1.5f,1.0f,1.0f,0.0f,0.0f,0.5f);
         scene->SetEntityPosition(m_Entities[1],7.5f,4.0f);
 
-        scene->OnPhysicsStart();
 
         m_SceneManager.AddScene("Test2");
         m_SceneManager.SetCurrentScene("Test2");
         scene=m_SceneManager.GetCurrentScene();
+        
+        scene->OnPhysicsStart();
+        scene->SetGravity(0.0f,0.0f);
 
         m_Entities.push_back(scene->AddEntity());
         scene->AddComponent<TextureComponent>(m_Entities[2],m_Texture,1.0f,1.0f,0.0f);
@@ -63,26 +53,8 @@ public:
         scene->AddComponent<NativeScriptComponent>(m_Entities[2]);
 
         nsc=scene->GetComponent<NativeScriptComponent>(m_Entities[2]);
-        nsc->OnUpdate=([](Scene *scene,NativeScriptComponent *nsc,float frame_time)->void{
-            Vec2 speed;
-            
-            if(GetKeyState(KEY_W,BUTTON_DOWN)){
-                speed.y+=10.0f;
-            }
-            if(GetKeyState(KEY_S,BUTTON_DOWN)){
-                speed.y-=10.0f;
-            }
-            if(GetKeyState(KEY_A,BUTTON_DOWN)){
-                speed.x-=10.0f;
-            }
-            if(GetKeyState(KEY_D,BUTTON_DOWN)){
-                speed.x+=10.0f;
-            }
-            scene->MoveEntity(nsc->m_UID,speed.x,speed.y);
-        });
+        nsc->OnUpdate=Entity2Update;
 
-        scene->OnPhysicsStart();
-        scene->SetGravity(0.0f,0.0f);
 
         m_SceneManager.SetCurrentScene("Test");
 
@@ -146,16 +118,10 @@ public:
         }
     }
 private:
-    std::vector<uint64_t> m_Entities;
+    std::vector<uint32_t> m_Entities;
     std::shared_ptr<Texture>m_Texture;
 };
 
-int main(){
-    Test *test=new Test("Test",1600,900,1920,1080);
-    test->Run();
-    delete test;
-
-    DeinitGlfwWindow();
-
-    return 0;
+Application* Window::CreateApplication(){
+    return new Test("Test",1600,900,1920,1080);
 }

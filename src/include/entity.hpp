@@ -30,7 +30,7 @@ using ComponentType=typename std::enable_if<
     int>::type;
 
 template<typename T,ComponentType<T> = 0>
-inline int BinarySearch(std::vector<T> &v,uint64_t uid){
+inline int BinarySearch(std::vector<T> &v,uint32_t uid){
     int l=0,r=v.size()-1;
     while(l<=r){
         int m=(l+r)/2;
@@ -45,7 +45,7 @@ inline int BinarySearch(std::vector<T> &v,uint64_t uid){
 }
 
 template<typename T,ComponentType<T> = 0>
-inline int FirstGreaterThan(std::vector<T> &v,uint64_t uid){
+inline int FirstGreaterThan(std::vector<T> &v,uint32_t uid){
     int l=0,r=v.size()-1;
     while(l<=r){
         int m=(l+r)/2;
@@ -69,9 +69,9 @@ inline float Interpolate(float current,float previous){
 
 class TextureComponent{
 public:
-    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint64_t uid);
-    TextureComponent(std::shared_ptr<Texture>&t,float width,float height,float layer,uint64_t uid);
-    TextureComponent(): m_Texture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint64_t>::max()){}
+    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid);
+    TextureComponent(std::shared_ptr<Texture>&t,float width,float height,float layer,uint32_t uid);
+    TextureComponent(): m_Texture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint32_t>::max()){}
     TextureComponent(TextureComponent &other);
     TextureComponent(TextureComponent &&other);
     
@@ -97,14 +97,14 @@ public:
     std::shared_ptr<Texture> m_Texture;
     float m_Width,m_Height;
     float m_Layer;
-    uint64_t m_UID;
+    uint32_t m_UID;
 };
 
 class AnimatedTextureComponent{
 public:
-    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,uint64_t uid);
-    AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>&t,float width,float height,float layer,uint64_t uid);
-    AnimatedTextureComponent(): m_AnimatedTexture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint64_t>::max()){}
+    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid);
+    AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>&t,float width,float height,float layer,uint32_t uid);
+    AnimatedTextureComponent(): m_AnimatedTexture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint32_t>::max()){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
     AnimatedTextureComponent(AnimatedTextureComponent &&other);
 
@@ -132,13 +132,13 @@ public:
     std::shared_ptr<AnimatedTexture> m_AnimatedTexture;
     float m_Width,m_Height;
     float m_Layer;
-    uint64_t m_UID;
+    uint32_t m_UID;
 };
 
 class RigidbodyComponent{
 public:
-    RigidbodyComponent(){ m_UID=std::numeric_limits<uint64_t>::max(); }
-    RigidbodyComponent(uint64_t uid): m_UID(uid){}
+    RigidbodyComponent(){ m_UID=std::numeric_limits<uint32_t>::max(); }
+    RigidbodyComponent(uint32_t uid): m_UID(uid){}
 
     enum class BodyType{
         Static,
@@ -149,13 +149,13 @@ public:
     bool m_FixedRotation=true;
     b2Body *m_RuntimeBody=nullptr;
 
-    uint64_t m_UID;
+    uint32_t m_UID;
 };
 
 class BoxColliderComponent{
 public:
-    BoxColliderComponent(){ m_UID=std::numeric_limits<uint64_t>::max(); }
-    BoxColliderComponent(uint64_t uid): m_UID(uid){}
+    BoxColliderComponent(){ m_UID=std::numeric_limits<uint32_t>::max(); }
+    BoxColliderComponent(uint32_t uid): m_UID(uid){}
 
     float m_XOffset=0.0f,m_YOffset=0.0f;
     float m_Width=0.0f,m_Height=0.0f;
@@ -167,13 +167,13 @@ public:
 
     b2Fixture *m_RuntimeFixture=nullptr;
 
-    uint64_t m_UID;
+    uint32_t m_UID;
 };
 
 class CircleColliderComponent{
 public:
-    CircleColliderComponent(){ m_UID=std::numeric_limits<uint64_t>::max(); } 
-    CircleColliderComponent(uint64_t uid): m_UID(uid){}
+    CircleColliderComponent(){ m_UID=std::numeric_limits<uint32_t>::max(); } 
+    CircleColliderComponent(uint32_t uid): m_UID(uid){}
 
     float m_XOffset=0.0f,m_YOffset=0.0f;
     float m_Radius=0.0f;
@@ -185,13 +185,13 @@ public:
 
     b2Fixture *m_RuntimeFixture=nullptr;
 
-    uint64_t m_UID;
+    uint32_t m_UID;
 };
 
 class LightComponent{
 public:
     LightComponent();
-    LightComponent(float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type,uint64_t uid);
+    LightComponent(float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type,uint32_t uid);
 
     void SetOffset(float x_offset,float y_offset);
     void SetCentered(float width,float height);
@@ -201,19 +201,19 @@ public:
     Vec3 m_Color;
     LightType m_Type;
 
-    uint64_t m_UID;
+    uint32_t m_UID;
 };
 
 class NativeScriptComponent{
 public:
-    NativeScriptComponent(): m_UID(std::numeric_limits<uint64_t>::max()){}
-    NativeScriptComponent(uint64_t uid): m_UID(uid){}
+    NativeScriptComponent(): m_UID(std::numeric_limits<uint32_t>::max()){}
+    NativeScriptComponent(uint32_t uid): m_UID(uid){}
 
     std::function<void(Scene*,NativeScriptComponent*)> OnCreate;
     std::function<void(Scene*,NativeScriptComponent*,float)> OnUpdate;
     std::function<void(Scene*,NativeScriptComponent*)> OnDestroy;
 
-    uint64_t m_UID;
+    uint32_t m_UID;
 };
 
 class Entity{
@@ -225,12 +225,12 @@ public:
     Entity &operator=(Entity &other);
     Entity &operator=(Entity &&other);
 
-    uint64_t m_UID;
+    uint32_t m_UID;
     float m_X,m_Y;
     float m_PreviousX,m_PreviousY;
 };
 
-inline Entity* BinarySearch(std::vector<Entity> &v,uint64_t uid){
+inline Entity* BinarySearch(std::vector<Entity> &v,uint32_t uid){
     int l=0,r=v.size()-1;
     while(l<=r){
         int m=(l+r)/2;
@@ -249,19 +249,22 @@ class ComponentManager{
 public:
     std::vector<T> m_Components;
 
-    void AddComponent(T &component,uint64_t uid){
+    void AddComponent(T &component,uint32_t uid){
         int idx=FirstGreaterThan(m_Components,uid);
         m_Components.resize(m_Components.size()+1);
         RightShift(m_Components,idx);
         m_Components[idx]=component;
     }
 
-    void RemoveComponent(uint64_t uid){
+    void RemoveComponent(uint32_t uid){
         int idx;
         if((idx=BinarySearch(m_Components,uid))!=-1){
             if constexpr(std::is_same<T,RigidbodyComponent>::value)
                 m_Components[idx].m_RuntimeBody->GetWorld()->DestroyBody(m_Components[idx].m_RuntimeBody);
-            
+            if constexpr(std::is_same<T,BoxColliderComponent>::value)
+                m_Components[idx].m_RuntimeFixture->GetBody()->DestroyFixture(m_Components[idx].m_RuntimeFixture);
+            if constexpr(std::is_same<T,CircleColliderComponent>::value)
+                m_Components[idx].m_RuntimeFixture->GetBody()->DestroyFixture(m_Components[idx].m_RuntimeFixture);
             m_Components.erase(m_Components.begin()+idx);
         }
     }
@@ -269,7 +272,7 @@ public:
     /**
      * \return pointer to the component with the given uid, or nullptr if not found
     */
-    T* GetComponent(uint64_t uid){
+    T* GetComponent(uint32_t uid){
         int idx;
         if((idx=BinarySearch(m_Components,uid))!=-1)
             return &m_Components[idx];

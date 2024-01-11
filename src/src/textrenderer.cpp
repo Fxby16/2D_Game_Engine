@@ -4,9 +4,10 @@
 #include <memory.hpp>
 #include <Instrumentor.h>
 
-TextRenderer::TextRenderer(const char *font_path,bool fixed):
+TextRenderer::TextRenderer(const char *font_path,float glyph_size,bool fixed):
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
     m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
+    m_GlyphSize(glyph_size),
     m_Fixed(fixed)
 {
 
@@ -21,13 +22,13 @@ TextRenderer::TextRenderer(const char *font_path,bool fixed):
         perror("FREETYPE ERROR: Failed to load font\n");
     else{
         FT_Select_Charmap(m_Face,ft_encoding_unicode);
-        FT_Set_Pixel_Sizes(m_Face,256,256);
+        FT_Set_Pixel_Sizes(m_Face,glyph_size,glyph_size);
         glPixelStorei(GL_UNPACK_ALIGNMENT,1); //disable byte-alignment restriction
 
         glGenTextures(1,&m_TextureArrayID);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D_ARRAY,m_TextureArrayID);
-        glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_R8,256,256,CH_NUM,0,GL_RED,GL_UNSIGNED_BYTE,0);
+        glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_R8,glyph_size,glyph_size,CH_NUM,0,GL_RED,GL_UNSIGNED_BYTE,0);
 
         for(int ch=0;ch<CH_NUM;ch++){
             if(FT_Load_Char(m_Face,ch,FT_LOAD_RENDER)){
@@ -35,7 +36,7 @@ TextRenderer::TextRenderer(const char *font_path,bool fixed):
                 continue;
             }
 
-            if(m_Face->glyph->bitmap.rows>256){
+            if(m_Face->glyph->bitmap.rows>glyph_size){
                 #ifdef DEBUG
                     printf("FREETYPE WARNING: Glyph %c is too tall\n",ch);
                 #endif
@@ -90,8 +91,6 @@ TextRenderer::~TextRenderer(){
 
 void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 color){
     PROFILE_FUNCTION();
-    
-    scale=scale*48.0f/256.0f;
 
     float copyX=x;
     m_Shader.Bind();
@@ -111,9 +110,9 @@ void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 co
             x+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH);
         else{
             float xpos=x+(ch.Bearing.x*scale/Window::Width*Window::MAX_WIDTH);
-            float ypos=y-((256-ch.Bearing.y)*scale/Window::Width*Window::MAX_WIDTH);
+            float ypos=y-((m_GlyphSize-ch.Bearing.y)*scale/Window::Width*Window::MAX_WIDTH);
 
-            m_Transforms[workingIndex]=glm::translate(glm::mat4(1.0f),glm::vec3(xpos,ypos,0))*glm::scale(glm::mat4(1.0f),glm::vec3(256*scale/Window::Width*Window::MAX_WIDTH,256*scale/Window::Width*Window::MAX_WIDTH,0));
+            m_Transforms[workingIndex]=glm::translate(glm::mat4(1.0f),glm::vec3(xpos,ypos,0))*glm::scale(glm::mat4(1.0f),glm::vec3(m_GlyphSize*scale/Window::Width*Window::MAX_WIDTH,m_GlyphSize*scale/Window::Width*Window::MAX_WIDTH,0));
             m_ToRender[workingIndex]=ch.TexID;
             x+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
             workingIndex++;
@@ -128,8 +127,6 @@ void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 co
 
 std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
     PROFILE_FUNCTION();
-    
-    scale=scale*48.0f/256.0f;
 
     float width_=0.0f;
     float height_=0.0f;

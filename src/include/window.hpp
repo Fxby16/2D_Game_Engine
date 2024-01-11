@@ -6,6 +6,8 @@
 #include <vector>
 #include <textrenderer.hpp>
 
+class Application;
+
 extern bool ISFULLSCREEN;
 extern Renderer *RENDERER;
 extern std::vector<TextRenderer*> TEXT_RENDERERS;
@@ -28,6 +30,8 @@ namespace Window{
     extern void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *window,int width,int height);
     extern void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mods);
     extern void GLAPIENTRY ErrorCallback(int error,const char *description);
+
+    extern Application* CreateApplication();
 
     extern GLFWwindow *Window;
 

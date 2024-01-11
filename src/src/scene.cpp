@@ -3,7 +3,7 @@
 #include <renderer.hpp>
 #include <Instrumentor.h>
 
-int BinarySearchi(std::vector<Entity> &v,uint64_t uid){
+int BinarySearchi(std::vector<Entity> &v,uint32_t uid){
     int l=0,r=v.size()-1;
     while(l<=r){
         int m=(l+r)/2;
@@ -31,12 +31,12 @@ void Scene::SetGravity(float x,float y){
     m_PhysicsWorld->SetGravity(b2Vec2(x,y));
 }
 
-uint64_t Scene::AddEntity(){
+uint32_t Scene::AddEntity(){
     m_Entities.push_back(Entity());
     return m_Entities.back().m_UID;
 }
 
-Entity* Scene::GetEntity(uint64_t uid){
+Entity* Scene::GetEntity(uint32_t uid){
     PROFILE_FUNCTION();
 
     int idx=BinarySearchi(m_Entities,uid);
@@ -45,7 +45,7 @@ Entity* Scene::GetEntity(uint64_t uid){
     return &m_Entities[idx];
 }
 
-void Scene::RemoveEntity(uint64_t uid){
+void Scene::RemoveEntity(uint32_t uid){
     PROFILE_FUNCTION();
 
     m_TextureComponents.RemoveComponent(uid);
@@ -58,16 +58,71 @@ void Scene::RemoveEntity(uint64_t uid){
     m_Entities.erase(m_Entities.begin()+idx);
 }
 
-void Scene::SetEntityPosition(uint64_t uid,float x,float y){
+template<>
+TextureComponent* Scene::GetComponent<TextureComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+    
+    return m_TextureComponents.GetComponent(uid);
+}
+
+template<>
+AnimatedTextureComponent* Scene::GetComponent<AnimatedTextureComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+    
+    return m_AnimatedTextureComponents.GetComponent(uid);
+}
+
+template<>
+LightComponent* Scene::GetComponent<LightComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+    
+    return m_LightComponents.GetComponent(uid);
+}
+
+template<>
+RigidbodyComponent* Scene::GetComponent<RigidbodyComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+    
+    return m_RigidbodyComponents.GetComponent(uid);
+}
+
+template<>
+BoxColliderComponent* Scene::GetComponent<BoxColliderComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+
+    return m_BoxColliderComponents.GetComponent(uid);
+}
+
+template<>
+CircleColliderComponent* Scene::GetComponent<CircleColliderComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+
+    return m_CircleColliderComponents.GetComponent(uid);
+}
+
+template<>
+NativeScriptComponent* Scene::GetComponent<NativeScriptComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+
+    return m_NativeScriptComponents.GetComponent(uid);
+}
+
+void Scene::SetEntityPosition(uint32_t uid,float x,float y){
     Entity *entity=GetEntity(uid);
     if(entity==nullptr)
         return;
     entity->m_X=x;
     entity->m_Y=y;
+
+    if(m_PhysicsWorld!=nullptr){
+        RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
+        if(rigidbody==nullptr){ return; }
+        rigidbody->m_RuntimeBody->SetTransform(b2Vec2(x*m_ScalingFactor,y*m_ScalingFactor),0.0f);
+    }
 }
 
 template<>
-void Scene::AddComponent<TextureComponent,const char*,int,int,float,float,float>(uint64_t uid,const char *path,int mag_filter,int min_filter,float width,float height,float layer){
+void Scene::AddComponent<TextureComponent,const char*,int,int,float,float,float>(uint32_t uid,const char *path,int mag_filter,int min_filter,float width,float height,float layer){
     PROFILE_FUNCTION();
     
     TextureComponent temp(path,mag_filter,min_filter,width,height,layer,uid);
@@ -75,7 +130,7 @@ void Scene::AddComponent<TextureComponent,const char*,int,int,float,float,float>
 }
 
 template<>
-void Scene::AddComponent<TextureComponent,std::shared_ptr<Texture>,float,float,float>(uint64_t uid,std::shared_ptr<Texture>texture,float width,float height,float layer){
+void Scene::AddComponent<TextureComponent,std::shared_ptr<Texture>,float,float,float>(uint32_t uid,std::shared_ptr<Texture>texture,float width,float height,float layer){
     PROFILE_FUNCTION();
     
     TextureComponent temp(texture,width,height,layer,uid);
@@ -83,7 +138,7 @@ void Scene::AddComponent<TextureComponent,std::shared_ptr<Texture>,float,float,f
 }
 
 template<>
-void Scene::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsigned int,int,int,float,float,float>(uint64_t uid,const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer){
+void Scene::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsigned int,int,int,float,float,float>(uint32_t uid,const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer){
     PROFILE_FUNCTION();
     
     AnimatedTextureComponent temp(path,tile_width,tile_height,mag_filter,min_filter,width,height,layer,uid);
@@ -91,7 +146,7 @@ void Scene::AddComponent<AnimatedTextureComponent,const char*,unsigned int,unsig
 }
 
 template<>
-void Scene::AddComponent<AnimatedTextureComponent,std::shared_ptr<AnimatedTexture>,float,float,float>(uint64_t uid,std::shared_ptr<AnimatedTexture>animated_texture,float width,float height,float layer){
+void Scene::AddComponent<AnimatedTextureComponent,std::shared_ptr<AnimatedTexture>,float,float,float>(uint32_t uid,std::shared_ptr<AnimatedTexture>animated_texture,float width,float height,float layer){
     PROFILE_FUNCTION();
     
     AnimatedTextureComponent temp(animated_texture,width,height,layer,uid);
@@ -99,7 +154,7 @@ void Scene::AddComponent<AnimatedTextureComponent,std::shared_ptr<AnimatedTextur
 }
 
 template<>
-void Scene::AddComponent<LightComponent,float,float,float,float,Vec3,LightType>(uint64_t uid,float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type){
+void Scene::AddComponent<LightComponent,float,float,float,float,Vec3,LightType>(uint32_t uid,float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type){
     PROFILE_FUNCTION();
     
     LightComponent temp(x_offset,y_offset,radius,blur,color,type,uid);
@@ -107,21 +162,38 @@ void Scene::AddComponent<LightComponent,float,float,float,float,Vec3,LightType>(
 }   
 
 template<>
-void Scene::AddComponent<RigidbodyComponent,RigidbodyComponent::BodyType,bool>(uint64_t uid,RigidbodyComponent::BodyType body_type,bool fixed_rotation){
+void Scene::AddComponent<RigidbodyComponent,RigidbodyComponent::BodyType,bool>(uint32_t uid,RigidbodyComponent::BodyType body_type,bool fixed_rotation){
     PROFILE_FUNCTION();
     
     RigidbodyComponent temp;
     temp.m_BodyType=body_type;
     temp.m_FixedRotation=fixed_rotation;
     temp.m_UID=uid;
+
+    Entity *entity=GetEntity(uid);
+    b2BodyDef body_def;
+    body_def.type=RigidbodyTypeToBox2DBody(temp.m_BodyType);
+    body_def.position.Set(entity->m_X*m_ScalingFactor,entity->m_Y*m_ScalingFactor);
+    body_def.angle=0.0f;
+
+    b2Body *body=m_PhysicsWorld->CreateBody(&body_def);
+    body->SetFixedRotation(temp.m_FixedRotation);
+    temp.m_RuntimeBody=body;
+
     m_RigidbodyComponents.AddComponent(temp,uid);
 }
 
 template<>
 void Scene::AddComponent<BoxColliderComponent,float,float,float,float,float,float,float,float>(
-        uint64_t uid,float x_offset,float y_offset,float width,float height,float density,float friction,
+        uint32_t uid,float x_offset,float y_offset,float width,float height,float density,float friction,
         float restitution,float restitution_threshold){
     PROFILE_FUNCTION();
+
+    RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
+    if(rigidbody==nullptr){
+        printf("Entity %d does not have a rigidbody\n",uid);
+        return;
+    }
     
     BoxColliderComponent temp;
     temp.m_XOffset=x_offset;
@@ -133,15 +205,33 @@ void Scene::AddComponent<BoxColliderComponent,float,float,float,float,float,floa
     temp.m_Restitution=restitution;
     temp.m_RestitutionThreshold=restitution_threshold;
     temp.m_UID=uid;
+
+    b2PolygonShape box_shape;
+    box_shape.SetAsBox(temp.m_Width/2.0f*m_ScalingFactor,temp.m_Height/2.0f*m_ScalingFactor,b2Vec2(temp.m_XOffset*m_ScalingFactor,temp.m_YOffset*m_ScalingFactor),0.0f);
+
+    b2FixtureDef fixture_def;
+    fixture_def.shape=&box_shape;
+    fixture_def.density=temp.m_Density;
+    fixture_def.friction=temp.m_Friction;
+    fixture_def.restitution=temp.m_Restitution;
+    fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
+    rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
+
     m_BoxColliderComponents.AddComponent(temp,uid);
 }
 
 template<>
 void Scene::AddComponent<CircleColliderComponent,float,float,float,float,float,float,float>(
-        uint64_t uid,float x_offset,float y_offset,float radius,float density,float friction,
+        uint32_t uid,float x_offset,float y_offset,float radius,float density,float friction,
         float restitution,float restitution_threshold){
     PROFILE_FUNCTION();
     
+    RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
+    if(rigidbody==nullptr){
+        printf("Entity %d does not have a rigidbody\n",uid);
+        return;
+    }
+
     CircleColliderComponent temp;
     temp.m_XOffset=x_offset;
     temp.m_YOffset=y_offset;
@@ -151,11 +241,24 @@ void Scene::AddComponent<CircleColliderComponent,float,float,float,float,float,f
     temp.m_Restitution=restitution;
     temp.m_RestitutionThreshold=restitution_threshold;
     temp.m_UID=uid;
+
+    b2CircleShape circle_shape;
+    circle_shape.m_p.Set((temp.m_XOffset)*m_ScalingFactor,(temp.m_YOffset)*m_ScalingFactor);
+    circle_shape.m_radius=(temp.m_Radius)*m_ScalingFactor;
+
+    b2FixtureDef fixture_def;
+    fixture_def.shape=&circle_shape;
+    fixture_def.density=temp.m_Density;
+    fixture_def.friction=temp.m_Friction;
+    fixture_def.restitution=temp.m_Restitution;
+    fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
+    rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
+
     m_CircleColliderComponents.AddComponent(temp,uid);
 }
 
 template<>
-void Scene::AddComponent<NativeScriptComponent>(uint64_t uid){
+void Scene::AddComponent<NativeScriptComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     NativeScriptComponent temp(uid);
@@ -163,101 +266,52 @@ void Scene::AddComponent<NativeScriptComponent>(uint64_t uid){
 }
 
 template<>
-void Scene::RemoveComponent<TextureComponent>(uint64_t uid){
+void Scene::RemoveComponent<TextureComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     m_TextureComponents.RemoveComponent(uid);
 }
 
 template<>
-void Scene::RemoveComponent<AnimatedTextureComponent>(uint64_t uid){
+void Scene::RemoveComponent<AnimatedTextureComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     m_AnimatedTextureComponents.RemoveComponent(uid);
 }
 
 template<>
-void Scene::RemoveComponent<LightComponent>(uint64_t uid){
+void Scene::RemoveComponent<LightComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     m_LightComponents.RemoveComponent(uid);
 }
 
 template<>
-void Scene::RemoveComponent<RigidbodyComponent>(uint64_t uid){
+void Scene::RemoveComponent<RigidbodyComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     m_RigidbodyComponents.RemoveComponent(uid);
 }
 
 template<> 
-void Scene::RemoveComponent<BoxColliderComponent>(uint64_t uid){
+void Scene::RemoveComponent<BoxColliderComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     m_BoxColliderComponents.RemoveComponent(uid);
 }
 
 template<>
-void Scene::RemoveComponent<CircleColliderComponent>(uint64_t uid){
+void Scene::RemoveComponent<CircleColliderComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     m_CircleColliderComponents.RemoveComponent(uid);
 }
 
 template<>
-void Scene::RemoveComponent<NativeScriptComponent>(uint64_t uid){
+void Scene::RemoveComponent<NativeScriptComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     m_NativeScriptComponents.RemoveComponent(uid);
-}
-
-template<>
-TextureComponent* Scene::GetComponent<TextureComponent>(uint64_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_TextureComponents.GetComponent(uid);
-}
-
-template<>
-AnimatedTextureComponent* Scene::GetComponent<AnimatedTextureComponent>(uint64_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_AnimatedTextureComponents.GetComponent(uid);
-}
-
-template<>
-LightComponent* Scene::GetComponent<LightComponent>(uint64_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_LightComponents.GetComponent(uid);
-}
-
-template<>
-RigidbodyComponent* Scene::GetComponent<RigidbodyComponent>(uint64_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_RigidbodyComponents.GetComponent(uid);
-}
-
-template<>
-BoxColliderComponent* Scene::GetComponent<BoxColliderComponent>(uint64_t uid){
-    PROFILE_FUNCTION();
-
-    return m_BoxColliderComponents.GetComponent(uid);
-}
-
-template<>
-CircleColliderComponent* Scene::GetComponent<CircleColliderComponent>(uint64_t uid){
-    PROFILE_FUNCTION();
-
-    return m_CircleColliderComponents.GetComponent(uid);
-}
-
-template<>
-NativeScriptComponent* Scene::GetComponent<NativeScriptComponent>(uint64_t uid){
-    PROFILE_FUNCTION();
-
-    return m_NativeScriptComponents.GetComponent(uid);
 }
 
 void Scene::Update(double frame_time){
@@ -311,7 +365,7 @@ Scene* SceneManager::GetCurrentScene(){
     return nullptr;
 }
 
-void Scene::MoveEntity(uint64_t uid,float x_offset,float y_offset){
+void Scene::MoveEntity(uint32_t uid,float x_offset,float y_offset){
     PROFILE_FUNCTION();
     
     RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
@@ -326,49 +380,6 @@ void Scene::MoveEntity(uint64_t uid,float x_offset,float y_offset){
 
 void Scene::OnPhysicsStart(){
     m_PhysicsWorld=new b2World(b2Vec2(0.0f,-0.3f));
-
-    std::vector<RigidbodyComponent> &rigidbodies=m_RigidbodyComponents.m_Components;
-    Entity *entity;
-    BoxColliderComponent *box_collider;
-    CircleColliderComponent *circle_collider;
-    for(int i=0;i<rigidbodies.size();i++){
-        entity=GetEntity(rigidbodies[i].m_UID);
-
-        b2BodyDef body_def;
-        body_def.type=RigidbodyTypeToBox2DBody(rigidbodies[i].m_BodyType);
-        body_def.position.Set(entity->m_X*m_ScalingFactor,entity->m_Y*m_ScalingFactor);
-        body_def.angle=0.0f;
-
-        b2Body *body=m_PhysicsWorld->CreateBody(&body_def);
-        body->SetFixedRotation(rigidbodies[i].m_FixedRotation);
-        rigidbodies[i].m_RuntimeBody=body;
-
-        if((box_collider=GetComponent<BoxColliderComponent>(entity->m_UID))!=nullptr){
-            b2PolygonShape box_shape;
-            box_shape.SetAsBox(box_collider->m_Width/2.0f*m_ScalingFactor,box_collider->m_Height/2.0f*m_ScalingFactor,b2Vec2(box_collider->m_XOffset*m_ScalingFactor,box_collider->m_YOffset*m_ScalingFactor),0.0f);
-        
-            b2FixtureDef fixture_def;
-            fixture_def.shape=&box_shape;
-            fixture_def.density=box_collider->m_Density;
-            fixture_def.friction=box_collider->m_Friction;
-            fixture_def.restitution=box_collider->m_Restitution;
-            fixture_def.restitutionThreshold=box_collider->m_RestitutionThreshold;
-            body->CreateFixture(&fixture_def);
-        }
-        if((circle_collider=GetComponent<CircleColliderComponent>(entity->m_UID))!=nullptr){
-            b2CircleShape circle_shape;
-            circle_shape.m_p.Set((circle_collider->m_XOffset)*m_ScalingFactor,(circle_collider->m_YOffset)*m_ScalingFactor);
-            circle_shape.m_radius=(circle_collider->m_Radius)*m_ScalingFactor;
-
-            b2FixtureDef fixture_def;
-            fixture_def.shape=&circle_shape;
-            fixture_def.density=circle_collider->m_Density;
-            fixture_def.friction=circle_collider->m_Friction;
-            fixture_def.restitution=circle_collider->m_Restitution;
-            fixture_def.restitutionThreshold=circle_collider->m_RestitutionThreshold;
-            body->CreateFixture(&fixture_def);
-        }
-    }
 }
 
 void Scene::OnPhysicsUpdate(double frame_time){

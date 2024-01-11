@@ -1,0 +1,15 @@
+# Directories
+
+.vscode
+src/bin
+src/obj
+
+src/editor/bin
+src/editor/obj
+
+# Files
+src/2DGameEngine.make
+src/Makefile
+
+src/editor/2DGameEngineEditor.make
+src/editor/Makefile

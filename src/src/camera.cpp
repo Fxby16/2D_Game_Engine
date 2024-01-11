@@ -17,29 +17,29 @@ void Camera::InitializeProj(){
     m_View=glm::rotate(m_View,glm::radians(m_Rotation),glm::vec3(0.0f,0.0f,1.0f));
     m_View=glm::scale(m_View,glm::vec3(m_Zoom,m_Zoom,1.0f));
 
-    m_View=m_Proj*m_View;
+    m_ViewProj=m_Proj*m_View;
 
     RENDERER->m_Points.S.Bind();
-    RENDERER->m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_View),1);
+    RENDERER->m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
     RENDERER->m_Points.S.SetUniform1f("zoom",m_Zoom);
 
     RENDERER->m_Lines.S.Bind();
-    RENDERER->m_Lines.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_View),1);
+    RENDERER->m_Lines.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
 
     RENDERER->m_Textures.S.Bind();
-    RENDERER->m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_View),1);
+    RENDERER->m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
     
     RENDERER->m_Triangles.S.Bind();
-    RENDERER->m_Triangles.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_View),1);
+    RENDERER->m_Triangles.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
 
     RENDERER->m_Lights.S.Bind();
+    RENDERER->m_Lights.S.SetUniformMat4fv("view_matrix",glm::value_ptr(m_View),1);
     RENDERER->m_Lights.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
-    RENDERER->m_Lights.S.SetUniform1f("x_offset",m_Position.x);
-    RENDERER->m_Lights.S.SetUniform1f("y_offset",m_Position.y);
+    RENDERER->m_Lights.S.SetUniform1f("window_width",Window::Width);
     RENDERER->m_Lights.S.SetUniform1f("zoom",m_Zoom);
 
     RENDERER->m_SPostProcessing.Bind();
-    RENDERER->m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_View),1);
+    RENDERER->m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
 
     RENDERER->m_Zoom=m_Zoom;
 
@@ -47,7 +47,7 @@ void Camera::InitializeProj(){
         if(TEXT_RENDERERS[i]->m_Fixed)    
             TEXT_RENDERERS[i]->UpdateProjMat(m_Proj);
         else{
-            TEXT_RENDERERS[i]->UpdateProjMat(m_View);
+            TEXT_RENDERERS[i]->UpdateProjMat(m_ViewProj);
         }
     }
 }
@@ -63,7 +63,7 @@ void Camera::ResetSceneProj(){
     PROFILE_FUNCTION();
     
     RENDERER->m_Textures.S.Bind();
-    RENDERER->m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_View),1);
+    RENDERER->m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
 }
 
 void Camera::SetPosition(Vec2 pos){

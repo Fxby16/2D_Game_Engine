@@ -83,6 +83,8 @@ public:
     void KeepCircle(Vec2 pos,float radius,float blurAmount);
     std::pair<Vec2,float> GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg);
 
+    inline RendererData* GetLightsData(){ return &m_Lights; }
+
     static void ImGui_Init();
     static void ImGui_Theme();
     static void ImGui_Start_Frame();

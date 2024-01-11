@@ -26,6 +26,9 @@ namespace Window{
         RENDERER->SetLineWidth(current_line_width);
         MAX_HEIGHT=MAX_WIDTH/(Width/Height);
 
+        RendererData *lights=RENDERER->GetLightsData();
+        lights->S.SetUniform1f("window_width",(float)width);
+
         #ifdef DEBUG
             printf("Framebuffer resized to %dx%d\n",width,height);
         #endif
@@ -103,7 +106,7 @@ namespace Window{
         glViewport(0,0,Width,Height);
 
         RENDERER=new Renderer;
-        TEXT_RENDERERS.push_back(new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",true));
+        TEXT_RENDERERS.push_back(new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",64,true));
 
         return 0;
     }

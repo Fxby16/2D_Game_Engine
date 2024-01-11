@@ -43,8 +43,12 @@ project "2DGameEngine"
     filter "configurations:Debug"
         optimize "Debug"
         symbols "On"
-        defines { "DEBUG","ENABLE_PROFILING" }
+        defines { "DEBUG" }
 
     filter "configurations:Release"
         optimize "Full"
+
+    filter "configurations:Profile"
+        optimize "Full"
+        defines { "ENABLE_PROFILING" }
         
