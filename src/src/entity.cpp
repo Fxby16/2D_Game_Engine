@@ -48,13 +48,13 @@ Entity &Entity::operator=(Entity &&other){
 TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid):
     m_Texture(std::make_shared<Texture>(path,mag_filter,min_filter)),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
-TextureComponent::TextureComponent(std::shared_ptr<Texture>&t,float width,float height,float layer,uint32_t uid):
+TextureComponent::TextureComponent(std::shared_ptr<Texture>t,float width,float height,float layer,uint32_t uid):
     m_Texture(t),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
 AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid):
     m_AnimatedTexture(std::make_shared<AnimatedTexture>(path,tile_width,tile_height,mag_filter,min_filter)),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
-AnimatedTextureComponent::AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>&t,float width,float height,float layer,uint32_t uid):
+AnimatedTextureComponent::AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>t,float width,float height,float layer,uint32_t uid):
     m_AnimatedTexture(t),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
 TextureComponent::TextureComponent(TextureComponent &other){

@@ -4,7 +4,6 @@
 - ensure consistent data types for the same variables across all definitions
 - collision callbacks
 - rotated quads (and triangles)
-- pack parameters in scene.cpp
 
 Others:
 - write the editor

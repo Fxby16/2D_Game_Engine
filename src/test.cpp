@@ -30,10 +30,12 @@ public:
         nsc->OnUpdate=Entity1Update;
 
         m_Entities.push_back(scene->AddEntity());
-        scene->AddComponent<AnimatedTextureComponent>(m_Entities[1],"resources/textures/Run.png",(unsigned int)128,(unsigned int)128,GL_NEAREST,GL_NEAREST,3.0f,3.0f,0.0f);
+        scene->AddComponent<AnimatedTextureComponent>(m_Entities[1],"resources/textures/Run.png",128,128,GL_NEAREST,GL_NEAREST,3.0f,3.0f,0.0f);
         scene->AddComponent<RigidbodyComponent>(m_Entities[1],RigidbodyComponent::BodyType::Static,true);
         //scene->AddComponent<BoxColliderComponent>(m_Entities[1],1.5f,1.5f,3.0f,3.0f,1.0f,0.0f,0.0f,0.5f);
         scene->AddComponent<CircleColliderComponent>(m_Entities[1],1.5f,1.5f,1.0f,1.0f,0.0f,0.0f,0.5f);
+        scene->AddComponent<LightComponent>(m_Entities[1],0.0f,0.0f,2.0f,0.3f,Vec3(1,1,1),LIGHT_AROUND_POS_COLL);
+        scene->GetComponent<LightComponent>(m_Entities[1])->SetCentered(3.0f,3.0f);
         scene->SetEntityPosition(m_Entities[1],7.5f,4.0f);
 
 
