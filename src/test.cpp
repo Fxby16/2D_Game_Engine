@@ -12,7 +12,7 @@ public:
         m_SceneManager.SetCurrentScene("Test");
         Scene *scene=m_SceneManager.GetCurrentScene();
 
-        scene->OnPhysicsStart();
+        scene->OnPhysicsStart(); 
 
         m_Texture=std::make_shared<Texture>("/home/fabio/Scaricati/Red.png",GL_LINEAR,GL_LINEAR);
 

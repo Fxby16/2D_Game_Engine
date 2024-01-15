@@ -1,11 +1,6 @@
 #pragma once
 
-#include <string>
-#include <array>
-
 #include <vertexbuffer.hpp>
-#include <glad/glad.h>
-#include <limits>
 
 class Renderer;
 

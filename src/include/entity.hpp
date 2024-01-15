@@ -2,11 +2,7 @@
 
 #include <structs.hpp>
 #include <texture.hpp>
-#include <vector>
 #include <window.hpp>
-#include <box2d/b2_body.h>
-#include <functional>
-#include <memory>
 
 class Entity;
 class TextureComponent;

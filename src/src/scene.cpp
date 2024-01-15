@@ -1,7 +1,6 @@
+#include <pch.hpp>
 #include <scene.hpp>
-#include <box2d/box2d.h>
 #include <renderer.hpp>
-#include <Instrumentor.h>
 
 int BinarySearchi(std::vector<Entity> &v,uint32_t uid){
     int l=0,r=v.size()-1;

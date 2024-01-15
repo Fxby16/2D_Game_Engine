@@ -1,9 +1,6 @@
 #pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <renderer.hpp>
-#include <vector>
 #include <textrenderer.hpp>
 
 class Application;

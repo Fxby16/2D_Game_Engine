@@ -1,9 +1,5 @@
+#include <pch.hpp>
 #include <indexbuffer.hpp>
-
-#include <glad/glad.h>
-#include <vector>
-
-#include <memory.hpp>
 
 IndexBuffer::IndexBuffer(){
     m_Indices=(unsigned int*)AllocateMemory(MAX_INDICES*sizeof(unsigned int));

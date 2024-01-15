@@ -1,8 +1,6 @@
+#include <pch.hpp>
 #include <textrenderer.hpp>
 #include <global.hpp>
-#include <cstdio>
-#include <memory.hpp>
-#include <Instrumentor.h>
 
 TextRenderer::TextRenderer(const char *font_path,float glyph_size,bool fixed):
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),

@@ -1,11 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
-
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
 #include <vertexarray.hpp>
 #include <vertexbuffer.hpp>
 #include <indexbuffer.hpp>
@@ -13,8 +7,6 @@
 #include <shader.hpp>
 #include <global.hpp>
 #include <texture.hpp>
-
-#include <glm/mat4x4.hpp>
 
 class Camera;
 

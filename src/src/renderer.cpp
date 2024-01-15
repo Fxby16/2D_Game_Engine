@@ -1,10 +1,6 @@
+#include <pch.hpp>
 #include <renderer.hpp>
-#include <vector>
-#include <algorithm>
-#include <GLFW/glfw3.h>
 #include <window.hpp>
-#include <memory.hpp>
-#include <Instrumentor.h>
 
 RendererData::RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size): 
                           VBO(MAX_VERTICES,vertex_size,GL_DYNAMIC_DRAW),S(vertex_path,fragment_path),NumVertices(0){}

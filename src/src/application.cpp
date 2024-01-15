@@ -1,5 +1,5 @@
+#include <pch.hpp>
 #include <application.hpp>
-#include <Instrumentor.h>
 
 Application::Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui){
     m_WindowName=window_name;

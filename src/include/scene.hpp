@@ -1,8 +1,6 @@
 #pragma once
 
 #include <entity.hpp>
-#include <box2d/box2d.h>
-#include <Instrumentor.h>
 
 class SceneManager;
 

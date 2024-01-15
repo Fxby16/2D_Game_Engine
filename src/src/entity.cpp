@@ -1,10 +1,9 @@
+#include <pch.hpp>  
 #include <entity.hpp>
-#include <cmath>
 #include <renderer.hpp>
 #include <application.hpp>
 #include <global.hpp>
 #include <scene.hpp>
-#include <Instrumentor.h>
 
 uint32_t NEXT_UID=0;
 

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <array>
-#include <vector>
 #include <global.hpp>
-#include <glad/glad.h>
 #include <structs.hpp>
 
 class VertexBuffer{

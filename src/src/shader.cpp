@@ -1,7 +1,4 @@
-#include <glad/glad.h>
-#include <string>
-#include <cstdio>
-#include <memory.hpp>
+#include <pch.hpp>
 #include <shader.hpp>
 
 Shader::Shader(const char *vertex_shader_path,const char *fragment_shader_path){

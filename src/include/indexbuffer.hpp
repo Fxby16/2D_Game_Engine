@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include <global.hpp>
 
 class IndexBuffer{

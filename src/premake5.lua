@@ -11,6 +11,8 @@ project "2DGameEngine"
     removefiles { "examples/**","vendor/**","editor/**" }
     files { "vendor/glad/src/glad.c" }
 
+    pchheader "pch.hpp"
+
     includedirs { "include", 
                   "include/vendor", 
                   "vendor/instrumentor",

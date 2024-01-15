@@ -1,7 +1,6 @@
-#include <source_location>
-#include <cstdio>
+#include <pch.hpp>
 
-void *AllocateMemory(size_t size,std::source_location src=std::source_location::current()){
+void *AllocateMemory(size_t size,std::source_location src){
     #ifdef DEBUG
         printf("Allocating %zu bytes from %s:%d\n",size,src.file_name(),src.line());
     #endif
@@ -9,7 +8,7 @@ void *AllocateMemory(size_t size,std::source_location src=std::source_location::
     return ptr;
 }
 
-void FreeMemory(void *ptr,std::source_location src=std::source_location::current()){
+void FreeMemory(void *ptr,std::source_location src){
     #ifdef DEBUG
         printf("Freeing memory from %s:%d\n",src.file_name(),src.line());
     #endif

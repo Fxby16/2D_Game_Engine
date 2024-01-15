@@ -1,7 +1,5 @@
+#include <pch.hpp>
 #include <window.hpp>
-#include <cstdio>
-#include <sys/types.h>
-#include <sys/sysinfo.h>
 #include <buttons.hpp>
 
 bool ISFULLSCREEN=false;

@@ -1,7 +1,6 @@
+#include <pch.hpp>
 #include <framebuffer.hpp>
-#include <glad/glad.h>
 #include <global.hpp>
-#include <iostream>
 #include <window.hpp>
 
 Framebuffer::Framebuffer(){

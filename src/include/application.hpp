@@ -8,8 +8,6 @@
 #include <window.hpp>
 #include <camera.hpp>
 
-#include <iostream>
-
 class Application{
 public:
     Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui=true);

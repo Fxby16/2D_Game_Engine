@@ -1,7 +1,6 @@
+#include <pch.hpp>
 #include <camera.hpp>
 #include <window.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <Instrumentor.h>
 
 Camera::Camera(){
     m_Position=Vec2(0.0f,0.0f);

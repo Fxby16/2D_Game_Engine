@@ -1,6 +1,5 @@
+#include <pch.hpp>
 #include <vertexbuffer.hpp>
-
-#include <glad/glad.h>
 
 VertexBuffer::VertexBuffer(unsigned int num_vertices,unsigned int vertex_size,GLenum usage){
     glGenBuffers(1,&m_ID);
