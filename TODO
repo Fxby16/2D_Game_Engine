@@ -1,4 +1,5 @@
 - add audio component
+- add text component
 - fix examples
 - write documentation
 - ensure consistent data types for the same variables across all definitions

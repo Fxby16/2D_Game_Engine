@@ -29,7 +29,7 @@ protected:
     float m_FixedTimeStep=1.0f/60.0f;
     float m_Accumulator=0.0f;
     bool m_ImGui;
-    SceneManager m_SceneManager;
+    Scene *m_Scene;
     Camera m_Camera;
 
     #ifdef DEBUG

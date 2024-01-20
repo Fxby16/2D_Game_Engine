@@ -1,5 +1,6 @@
+#include <pch.hpp>
 #include <glfw.hpp>
-#include <stdio.h>
+#include <window.hpp>
 
 int InitGlfwWindow(const char *window_name){
     glfwInit();
@@ -11,14 +12,14 @@ int InitGlfwWindow(const char *window_name){
     #endif
     glfwWindowHint(GLFW_RESIZABLE,false);
 
-    WINDOW=glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT,window_name,nullptr,nullptr);
-    if(WINDOW==NULL){
+    Window::Window=glfwCreateWindow(Window::Width,Window::Height,window_name,nullptr,nullptr);
+    if(Window::Window==NULL){
         perror("Failed to create GLFW WINDOW\n");
         glfwTerminate();
         return -1;
     }
 
-    glfwMakeContextCurrent(WINDOW);
+    glfwMakeContextCurrent(Window::Window);
     glfwSwapInterval(1); //v-sync
 
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
@@ -26,11 +27,11 @@ int InitGlfwWindow(const char *window_name){
         return -1;
     } 
 
-    glfwSetFramebufferSizeCallback(WINDOW,FramebufferSizeCallback);
+    glfwSetFramebufferSizeCallback(Window::Window,FramebufferSizeCallback);
 
     printf("%s\n%s\n",(char *)glGetString(GL_VERSION),(char *)glGetString(GL_RENDERER));
 
-    glViewport(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+    glViewport(0,0,Window::Width,Window::Height);
 
     return 0;
 }

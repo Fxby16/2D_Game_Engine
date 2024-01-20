@@ -91,7 +91,7 @@ Renderer::Renderer():
     segments.push_back(std::make_pair(Vec2(Window::MAX_WIDTH,Window::MAX_HEIGHT),Vec2(Window::MAX_WIDTH,0)));
     segments.push_back(std::make_pair(Vec2(Window::MAX_WIDTH,0),Vec2(0,0)));
 
-    m_AmbientLight=Vec3(0.0f,0.0f,0.0f);
+    m_AmbientLight=Vec3(1.0f,1.0f,1.0f);
 }
 
 Renderer::~Renderer(){
@@ -278,24 +278,29 @@ void Renderer::StartScene(){
         Window::FramebufferUpdate=false;
         delete m_Framebuffer;
         m_Framebuffer=new Framebuffer;
-        delete m_LightingFramebuffer;
-        m_LightingFramebuffer=new Framebuffer;
-        delete m_TempFramebuffer;
-        m_TempFramebuffer=new Framebuffer;
 
-        float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
-                       0.0f,Window::MAX_HEIGHT,0.0f,1.0f,
-                       Window::MAX_WIDTH,Window::MAX_HEIGHT,1.0f,1.0f,
-                       Window::MAX_WIDTH,0.0f,1.0f,0.0f};
+        #ifndef EDITOR
+            delete m_LightingFramebuffer;
+            m_LightingFramebuffer=new Framebuffer;
+            delete m_TempFramebuffer;
+            m_TempFramebuffer=new Framebuffer;
 
-        m_Lights.VBO.Bind();
-        m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
+            float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
+                        0.0f,Window::MAX_HEIGHT,0.0f,1.0f,
+                        Window::MAX_WIDTH,Window::MAX_HEIGHT,1.0f,1.0f,
+                        Window::MAX_WIDTH,0.0f,1.0f,0.0f};
+
+            m_Lights.VBO.Bind();
+            m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
+        #endif
     }
-    m_TempFramebuffer->Bind();
-    glClearColor(0.0f,0.0f,0.0f,1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    m_LightingFramebuffer->Bind();
-    Clear(true);
+    #ifndef EDITOR
+        m_TempFramebuffer->Bind();
+        glClearColor(0.0f,0.0f,0.0f,1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        m_LightingFramebuffer->Bind();
+        Clear(true);
+    #endif
     m_Framebuffer->Bind();
     Clear();
 }
@@ -308,6 +313,58 @@ void Renderer::DrawScene(){
     DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_Framebuffer->GetColorbufferID());
     Render(true);
 }
+
+#ifdef EDITOR
+void Renderer::StartEditorScene(Editor *editor){
+    PROFILE_FUNCTION();
+    
+    if(Window::ProjUpdate){
+        editor->m_Camera.InitializeProj();
+        Window::ProjUpdate=false;
+    }
+
+    if(Window::SceneFramebufferUpdate){
+        delete editor->m_SceneFramebuffer;
+        editor->m_SceneFramebuffer=new Framebuffer;
+        Window::SceneFramebufferUpdate=false;
+    }
+
+    m_TextureIndex=m_PointIndex=m_LineIndex=m_TriangleIndex=0;
+
+    if(Window::FramebufferUpdate){
+        delete m_LightingFramebuffer;
+        m_LightingFramebuffer=new Framebuffer;
+
+        delete m_TempFramebuffer;
+        m_TempFramebuffer=new Framebuffer;
+
+        float vertices[]={ 0.0f,0.0f,0.0f,0.0f, 
+                        0.0f,Window::MAX_HEIGHT,0.0f,1.0f,
+                        Window::MAX_WIDTH,Window::MAX_HEIGHT,1.0f,1.0f,
+                        Window::MAX_WIDTH,0.0f,1.0f,0.0f};
+
+        m_Lights.VBO.Bind();
+        m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
+    }
+
+    m_TempFramebuffer->Bind();
+    glClearColor(0.0f,0.0f,0.0f,1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    m_LightingFramebuffer->Bind();
+    Clear(true);
+
+    editor->m_SceneFramebuffer->Bind();
+    RENDERER->Clear();
+}
+
+void Renderer::DrawEditorScene(){
+    PROFILE_FUNCTION();
+    
+    Render();
+    ApplyLight();
+}
+#endif
 
 void Renderer::Render(bool post_processing){ //if this function gets called because there are MAX_VERTICES vertices, it's not guaranteed that it will respect layer input for subsequent vertices
     PROFILE_FUNCTION();

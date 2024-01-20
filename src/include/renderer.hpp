@@ -7,6 +7,9 @@
 #include <shader.hpp>
 #include <global.hpp>
 #include <texture.hpp>
+#ifdef EDITOR
+    #include <editor.hpp>
+#endif
 
 class Camera;
 
@@ -27,6 +30,10 @@ public:
 
     void StartScene();
     void DrawScene();
+    #ifdef EDITOR
+        void StartEditorScene(Editor *editor); 
+        void DrawEditorScene();
+    #endif
 
     void Clear(bool ambient_light=false) const;
     void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
@@ -76,6 +83,7 @@ public:
     std::pair<Vec2,float> GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg);
 
     inline RendererData* GetLightsData(){ return &m_Lights; }
+    inline unsigned int GetFramebufferID(){ return m_Framebuffer->GetColorbufferID(); }
 
     static void ImGui_Init();
     static void ImGui_Theme();

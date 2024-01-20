@@ -44,3 +44,8 @@
 #include <soloud.h>
 #include <soloud_wav.h>
 #include <soloud_wavstream.h>
+
+#ifdef EDITOR
+    //nfd
+    #include <nfd.h>
+#endif

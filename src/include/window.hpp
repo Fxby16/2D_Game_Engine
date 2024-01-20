@@ -49,6 +49,9 @@ namespace Window{
     extern bool FramebufferUpdate;
     extern bool ProjUpdate;
     extern bool TextProjUpdate;
+    #ifdef EDITOR
+        extern bool SceneFramebufferUpdate;
+    #endif
 
     extern const float MAX_WIDTH;
     extern float MAX_HEIGHT;

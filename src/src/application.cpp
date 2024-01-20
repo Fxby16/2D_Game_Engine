@@ -13,6 +13,8 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
 
     Window::InitGlfwWindow(window_name);
     m_Camera.InitializeProj();
+    m_Scene=new Scene;
+
     if(imgui)
         Renderer::ImGui_Init();
 

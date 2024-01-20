@@ -1,6 +1,9 @@
 #include <pch.hpp>
 #include <window.hpp>
 #include <buttons.hpp>
+#ifdef EDITOR
+    #include <editor.hpp>
+#endif
 
 bool ISFULLSCREEN=false;
 Renderer *RENDERER;
@@ -16,6 +19,9 @@ namespace Window{
         glViewport(0,0,width,height);
         FramebufferUpdate=true;
         ProjUpdate=true;
+        #ifdef EDITOR
+            SceneFramebufferUpdate=true;
+        #endif
         float current_point_size=RENDERER->GetPointSize();
         float current_line_width=RENDERER->GetLineWidth();
         Width=width;
@@ -25,6 +31,7 @@ namespace Window{
         MAX_HEIGHT=MAX_WIDTH/(Width/Height);
 
         RendererData *lights=RENDERER->GetLightsData();
+        lights->S.Bind();
         lights->S.SetUniform1f("window_width",(float)width);
 
         #ifdef DEBUG
@@ -35,12 +42,14 @@ namespace Window{
     void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mods){
         if(key==KEY_F11 && action==BUTTON_DOWN)
             ToggleFullScreen();
-        if(key==KEY_F10 && action==BUTTON_DOWN)
-            ToggleVSync();
-        if(key==KEY_F9 && action==BUTTON_DOWN)
-            ShowMetrics_=!ShowMetrics_;
         if(key==KEY_Q && action==BUTTON_DOWN)
             glfwSetWindowShouldClose(window,true);
+        #ifndef EDITOR
+            if(key==KEY_F10 && action==BUTTON_DOWN)
+                ToggleVSync();
+            if(key==KEY_F9 && action==BUTTON_DOWN)
+                ShowMetrics_=!ShowMetrics_;
+        #endif
     }
 
     void GLAPIENTRY ErrorCallback(int error,const char *description){
@@ -225,9 +234,12 @@ namespace Window{
     bool IsVSync;
     bool ShowMetrics_;
 
-    bool FramebufferUpdate;
-    bool ProjUpdate;
-    bool TextProjUpdate;
+    bool FramebufferUpdate=false;
+    bool ProjUpdate=false;
+    bool TextProjUpdate=false;
+    #ifdef EDITOR
+        bool SceneFramebufferUpdate=false;
+    #endif
 
     const float MAX_WIDTH=10.0f;
     float MAX_HEIGHT;

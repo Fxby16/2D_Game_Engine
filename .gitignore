@@ -13,3 +13,5 @@ src/Makefile
 
 src/editor/2DGameEngineEditor.make
 src/editor/Makefile
+
+**/imgui.ini

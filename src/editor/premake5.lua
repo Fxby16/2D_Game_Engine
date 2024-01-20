@@ -7,20 +7,35 @@ project "2DGameEngineEditor"
     cppdialect "C++20"
     targetdir "bin/%{cfg.buildcfg}"
 
-    files { "**.hpp", "**.cpp", "**.h", "**.c" }
-    removefiles { "vendor/NativeFileDialog/**" }
+    files { "**.hpp", "**.cpp", "**.h", "**.c",
+            "../include/**.hpp", "../src/**.cpp", "../include/**.h", "../src/**.c",
+            "../vendor/glad/src/glad.c" }
+    removefiles { "vendor/NativeFileDialog/**", "../src/entrypoint.cpp", "../src/application.cpp" }
+
+    pchheader "pch.hpp"
 
     includedirs { "include",
-                  "../include/vendor", 
+                  "../include",
                   "../vendor/glfw/include/GLFW",
                   "../vendor/ImGui",
                   "../vendor/ImGui/backends",
+                  "../vendor/glad/include",
                   "vendor/NativeFileDialog/src/include",
-                  "vendor/NativeFileDialog/src/"}
+                  "vendor/NativeFileDialog/src/",
+                  "../include/vendor", 
+                  "../vendor/instrumentor",
+                  "../vendor/glad/include",
+                  "../vendor/stb_image",
+                  "../vendor/FreeType/include",
+                  "../vendor/soloud/include",
+                  "../vendor/box2d/include/" }
 
     libdirs { "../vendor/glfw/build/src",
               "../vendor/ImGui",
-              "vendor/NativeFileDialog/build/lib/Release/x64/" }
+              "vendor/NativeFileDialog/build/lib/Release/x64/",
+              "../vendor/FreeType/objs",
+              "../vendor/soloud/lib",
+              "../vendor/box2d/build/bin" }
 
     links { "glfw3", 
             "imgui_static",
@@ -28,12 +43,18 @@ project "2DGameEngineEditor"
             "pthread",
             "dl",
             "z",
-            "nfd" }
+            "nfd",
+            "freetype", 
+            "soloud_static",
+            "asound",
+            "box2d" }
 
     filter "configurations:Debug"
         optimize "Debug"
+        defines { "DEBUG","EDITOR" }
         symbols "On"
 
     filter "configurations:Release"
         optimize "Full"
+        defines { "EDITOR" }
         

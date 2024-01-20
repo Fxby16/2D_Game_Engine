@@ -2,8 +2,6 @@
 
 #include <entity.hpp>
 
-class SceneManager;
-
 class Scene{
 public:
     Scene(){}
@@ -128,8 +126,6 @@ private:
     template<typename T>
     void AddComponentToContainer(T &component,uint32_t uid);
 
-    friend class SceneManager;
-
     b2World *m_PhysicsWorld=nullptr;
     float m_ScalingFactor=0.5f;
 
@@ -143,20 +139,4 @@ private:
     ComponentManager<NativeScriptComponent> m_NativeScriptComponents;
 
     std::string m_Name;
-};
-
-class SceneManager{
-public:
-    SceneManager()=default;
-    ~SceneManager();
-
-    void AddScene(const std::string &name);
-    void RemoveScene(const std::string &name);
-    void SetCurrentScene(const std::string &name);
-    Scene* GetCurrentScene();
-    inline std::string& GetCurrentSceneName(){ return m_CurrentSceneName; }
-private:
-    std::string m_CurrentSceneName;
-
-    std::vector<Scene*> m_Scenes;
 };
