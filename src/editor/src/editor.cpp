@@ -31,39 +31,6 @@ void Editor::Run(){
         RENDERER->StartScene();
         Renderer::ImGui_Start_Frame();
         Renderer::ImGui_Theme();
-
-        if(ImGui::BeginMainMenuBar()){
-            if(ImGui::BeginMenu("File")){
-                if(ImGui::MenuItem("New")){
-                }
-                if(ImGui::MenuItem("Open")){
-                    nfdchar_t *outPath=NULL;
-                    nfdresult_t result=NFD_OpenDialog(NULL,NULL,&outPath);
-                        
-                    if(result==NFD_OKAY){
-                        puts("Success!");
-                        puts(outPath);
-                        free(outPath);
-                    }
-                    else if(result==NFD_CANCEL){
-                        puts("User pressed cancel.");
-                    }
-                    else{
-                        printf("Error: %s\n",NFD_GetError());
-                    }
-                }
-                if(ImGui::MenuItem("Save")){
-                }
-                if(ImGui::MenuItem("Exit")){
-                    glfwSetWindowShouldClose(Window::Window, true);
-                }
-                ImGui::EndMenu();
-            }
-            if(ImGui::BeginMenu("Edit")){
-                ImGui::EndMenu();
-            }
-            ImGui::EndMainMenuBar();
-        }
         
         OnImGuiUpdate();
         OnImGuiRender();
