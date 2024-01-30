@@ -10,12 +10,13 @@ project "2DGameEngineEditor"
     files { "**.hpp", "**.cpp", "**.h", "**.c",
             "../include/**.hpp", "../src/**.cpp", "../include/**.h", "../src/**.c",
             "../vendor/glad/src/glad.c" }
-    removefiles { "vendor/NativeFileDialog/**", "../src/entrypoint.cpp", "../src/application.cpp" }
+    removefiles { "vendor/**", "../src/entrypoint.cpp", "../src/application.cpp" }
 
     pchheader "pch.hpp"
 
     includedirs { "include",
                   "../include",
+                  "../vendor/glm",
                   "../vendor/glfw/include/GLFW",
                   "../vendor/ImGui",
                   "../vendor/ImGui/backends",
@@ -28,14 +29,16 @@ project "2DGameEngineEditor"
                   "../vendor/stb_image",
                   "../vendor/FreeType/include",
                   "../vendor/soloud/include",
-                  "../vendor/box2d/include/" }
+                  "../vendor/box2d/include/",
+                  "vendor/yaml-cpp/include" }
 
     libdirs { "../vendor/glfw/build/src",
               "../vendor/ImGui",
               "vendor/NativeFileDialog/build/lib/Release/x64/",
               "../vendor/FreeType/objs",
               "../vendor/soloud/lib",
-              "../vendor/box2d/build/bin" }
+              "../vendor/box2d/build/bin",
+              "vendor/yaml-cpp/build" }
 
     links { "glfw3", 
             "imgui_static",
@@ -47,7 +50,8 @@ project "2DGameEngineEditor"
             "freetype", 
             "soloud_static",
             "asound",
-            "box2d" }
+            "box2d",
+            "yaml-cpp" }
 
     filter "configurations:Debug"
         optimize "Debug"

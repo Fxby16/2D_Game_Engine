@@ -4,7 +4,9 @@
 
 class Scene{
 public:
-    Scene(){}
+    Scene(){
+        OnPhysicsStart();
+    }
     Scene(const std::string &name);
 
     std::string &GetName();
@@ -21,7 +23,16 @@ public:
     */
     void SetGravity(float x,float y);
 
+    /**
+     * Set the gravity for the scene (m/s^2)
+     * Should be called after OnPhysicsStart()
+     * Default value is (0,-0.3)
+     * Adjust the gravity according to the scaling factor
+    */
+    void SetGravity(Vec2 gravity);
+
     [[nodiscard]] uint32_t AddEntity();
+    void AddEntity(uint32_t uid);
     Entity* GetEntity(uint32_t uid);
     void RemoveEntity(uint32_t uid);
 
@@ -29,11 +40,11 @@ public:
     void SetEntityPosition(uint32_t uid,float x,float y);
 
     /* Texture Component
-    * const char *path,int mag_filter,int min_filter,float width,float height,float layer
+    * const std::string &path,int mag_filter,int min_filter,float width,float height,float layer
     * std::shared_ptr<Texture>texture,float width,float height,float layer 
     */
     /* Animated Texture Component
-    * const char *path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer
+    * const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer
     * std::shared_ptr<AnimatedTexture>animated_texture,float width,float height,float layer
     */
     /* Light Component
@@ -120,16 +131,23 @@ public:
     void Update(double frame_time);
     void Render();
 
+    std::vector<Entity> &GetEntities();
+    template<typename T,ComponentType<T> = 0>
+    std::vector<T> &GetComponents();
+
     void DebugDraw();
 private:
+    friend class SceneSerializer;
 
     template<typename T>
     void AddComponentToContainer(T &component,uint32_t uid);
 
     b2World *m_PhysicsWorld=nullptr;
     float m_ScalingFactor=0.5f;
+    Vec2 m_Gravity;
 
     std::vector<Entity> m_Entities;
+    ComponentManager<TagComponent> m_TagComponents;
     ComponentManager<TextureComponent> m_TextureComponents;
     ComponentManager<AnimatedTextureComponent> m_AnimatedTextureComponents;
     ComponentManager<RigidbodyComponent> m_RigidbodyComponents;

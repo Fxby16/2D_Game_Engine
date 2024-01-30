@@ -62,7 +62,19 @@ cd ../../../..
 if ! [ -z "$1" ] && [ $1==1 ]; then
     cd editor/vendor/NativeFileDialog/build/gmake_linux_zenity
     make 
-    cd ../../../../../
+    cd ../../..
+
+    if ! [ -e yaml-cpp/build/libyaml-cpp.a ]; then
+        cd yaml-cpp
+        mkdir build
+        cd build
+        cmake ..
+        make
+
+        cd ../..
+    fi
+
+    cd ../..
 fi
 
 #setup box2d

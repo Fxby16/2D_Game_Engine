@@ -25,3 +25,6 @@
 [submodule "src/vendor/instrumentor"]
 	path = src/vendor/instrumentor
 	url = https://gist.github.com/0e8d28b7e05138a3be81d741f5f517c3.git
+[submodule "src/editor/vendor/yaml-cpp"]
+	path = src/editor/vendor/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git

@@ -4,7 +4,10 @@
 #include <texture.hpp>
 #include <window.hpp>
 
+extern uint32_t NEXT_UID;
+
 class Entity;
+class TagComponent;
 class TextureComponent;
 class AnimatedTextureComponent;
 class RigidbodyComponent;
@@ -16,6 +19,7 @@ class Scene;
 
 template<typename T>
 using ComponentType=typename std::enable_if<
+    std::is_same<T,TagComponent>::value ||
     std::is_same<T,TextureComponent>::value ||
     std::is_same<T,AnimatedTextureComponent>::value ||
     std::is_same<T,RigidbodyComponent>::value ||
@@ -63,6 +67,34 @@ inline float Interpolate(float current,float previous){
     return current*Window::Alpha+previous*(1.0f-Window::Alpha);
 }
 
+class TagComponent{
+public:
+    TagComponent(const std::string &tag,uint32_t uid): m_Tag(tag),m_UID(uid){
+        m_Tag.resize(64);
+    }
+    TagComponent(): m_UID(std::numeric_limits<uint32_t>::max()){
+        m_Tag.resize(64);
+    }
+    TagComponent(TagComponent &other);
+    TagComponent(TagComponent &&other);
+
+    TagComponent &operator=(TagComponent &b){
+        m_Tag=b.m_Tag;
+        m_UID=b.m_UID;
+        return *this;
+    }
+    TagComponent &operator=(TagComponent &&b){
+        if(this!=&b){
+            m_Tag=std::move(b.m_Tag);
+            m_UID=b.m_UID;
+        }
+        return *this;
+    }
+
+    std::string m_Tag;
+    uint32_t m_UID;
+};
+
 class TextureComponent{
 public:
     TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid);
@@ -98,7 +130,7 @@ public:
 
 class AnimatedTextureComponent{
 public:
-    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid);
+    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,bool play_animation,bool loop_animation,float animation_delay,uint32_t uid);
     AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>t,float width,float height,float layer,uint32_t uid);
     AnimatedTextureComponent(): m_AnimatedTexture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint32_t>::max()){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
@@ -224,9 +256,10 @@ class Entity{
 public:
     Entity();
     Entity(float x,float y);
-    Entity(Entity &other);
+    Entity(uint32_t uid);
+    Entity(const Entity &other);
     Entity(Entity &&other);
-    Entity &operator=(Entity &other);
+    Entity &operator=(const Entity &other);
     Entity &operator=(Entity &&other);
 
     uint32_t m_UID;
@@ -282,6 +315,10 @@ public:
             return &m_Components[idx];
         else
             return nullptr;
+    }
+
+    std::vector<T> &GetComponents(){
+        return m_Components;
     }
 
     Rect* GetComponentAsRect(int index){

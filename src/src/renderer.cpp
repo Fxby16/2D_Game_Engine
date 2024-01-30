@@ -102,6 +102,7 @@ Renderer::~Renderer(){
 
     delete m_Framebuffer;
     delete m_LightingFramebuffer;
+    delete m_TempFramebuffer;
 }
 
 void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized){

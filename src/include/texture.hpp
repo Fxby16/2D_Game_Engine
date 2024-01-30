@@ -3,6 +3,8 @@
 #include <vertexbuffer.hpp>
 
 class Renderer;
+class Entity;
+class Scene;
 
 class Texture{
 public:
@@ -43,8 +45,13 @@ public:
         return *this;
     }
 protected:
+    #ifdef EDITOR
+        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
+    #endif
+
     unsigned int m_ID;
     std::string m_FilePath;
+    int m_MagFilter,m_MinFilter;
     unsigned char *m_LocalBuffer;
     int m_Width,m_Height,m_BPP;
 };
@@ -90,14 +97,18 @@ public:
     std::array<Vertex,4> CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,float texID);
     
 protected:
+    #ifdef EDITOR
+        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
+    #endif
+
     int m_TileWidth;
     int m_TileHeight;
 };
 
 class AnimatedTexture : public SpriteSheet{
 public:
-    AnimatedTexture(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter):
-    SpriteSheet(path,tile_width,tile_height,mag_filter,min_filter),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0.0f),m_LastAnimationTime(0.0f),m_AnimationIndex(0){}
+    AnimatedTexture(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,bool playanimation,bool loopanimation,float animationdelay):
+    SpriteSheet(path,tile_width,tile_height,mag_filter,min_filter),m_PlayAnimation(playanimation),m_LoopAnimation(loopanimation),m_AnimationDelay(animationdelay),m_LastAnimationTime(0.0f),m_AnimationIndex(0){}
     AnimatedTexture(): SpriteSheet(),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0.0f),m_LastAnimationTime(0.0f),m_AnimationIndex(0){}
     AnimatedTexture(AnimatedTexture &other);
 
@@ -140,7 +151,11 @@ public:
 
     void PlayAnimation(bool loop=false,float delay=0.0f);
 
-    friend Renderer;
+    friend class Renderer;
+    #ifdef EDITOR
+        friend class Editor;
+        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
+    #endif
 private:
     bool m_PlayAnimation;
     bool m_LoopAnimation;

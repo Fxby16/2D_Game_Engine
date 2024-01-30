@@ -1,7 +1,8 @@
 - file browser
-- scene serializer
 - project serializer
 - images preview
-- entities and components menu
 - tilemap editor
 - project export
+- camera
+
+- if the same texture is required more than once, create only one and pass shared_ptr in scene deserialization

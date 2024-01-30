@@ -16,7 +16,9 @@ int BinarySearchi(std::vector<Entity> &v,uint32_t uid){
     return -1;
 }
 
-Scene::Scene(const std::string &name): m_Name(name){}
+Scene::Scene(const std::string &name): m_Name(name){
+    OnPhysicsStart();
+}
 
 std::string &Scene::GetName(){
     return m_Name;
@@ -27,12 +29,22 @@ void Scene::SetScalingFactor(float scaling_factor){
 }
 
 void Scene::SetGravity(float x,float y){
+    m_Gravity={x,y};
     m_PhysicsWorld->SetGravity(b2Vec2(x,y));
+}
+
+void Scene::SetGravity(Vec2 gravity){
+    m_Gravity=gravity;
+    m_PhysicsWorld->SetGravity(b2Vec2(gravity.x,gravity.y));
 }
 
 uint32_t Scene::AddEntity(){
     m_Entities.push_back(Entity());
     return m_Entities.back().m_UID;
+}
+
+void Scene::AddEntity(uint32_t uid){
+    m_Entities.push_back(Entity(uid));
 }
 
 Entity* Scene::GetEntity(uint32_t uid){
@@ -55,6 +67,13 @@ void Scene::RemoveEntity(uint32_t uid){
     if(idx==-1)
         return;
     m_Entities.erase(m_Entities.begin()+idx);
+}
+
+template<>
+TagComponent* Scene::GetComponent<TagComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+    
+    return m_TagComponents.GetComponent(uid);
 }
 
 template<>
@@ -111,13 +130,21 @@ void Scene::SetEntityPosition(uint32_t uid,float x,float y){
     if(entity==nullptr)
         return;
     entity->m_X=x;
+    entity->m_PreviousX=x;
     entity->m_Y=y;
+    entity->m_PreviousY=y;
 
     if(m_PhysicsWorld!=nullptr){
         RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
         if(rigidbody==nullptr){ return; }
         rigidbody->m_RuntimeBody->SetTransform(b2Vec2(x*m_ScalingFactor,y*m_ScalingFactor),0.0f);
     }
+}
+
+template<>
+void Scene::AddComponentToContainer<TagComponent>(TagComponent &component,uint32_t uid){
+    PROFILE_FUNCTION();
+    m_TagComponents.AddComponent(component,uid);
 }
 
 template<>
@@ -160,6 +187,13 @@ template<>
 void Scene::AddComponentToContainer<NativeScriptComponent>(NativeScriptComponent &component,uint32_t uid){
     PROFILE_FUNCTION();
     m_NativeScriptComponents.AddComponent(component,uid);
+}
+
+template<>
+void Scene::RemoveComponent<TagComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+    
+    m_TagComponents.RemoveComponent(uid);
 }
 
 template<>
@@ -267,6 +301,45 @@ void Scene::OnPhysicsUpdate(double frame_time){
 void Scene::OnPhysicsStop(){
     delete m_PhysicsWorld;
     m_PhysicsWorld=nullptr;
+}
+
+std::vector<Entity> &Scene::GetEntities(){
+    return m_Entities;
+}
+
+template<>
+std::vector<TextureComponent> &Scene::GetComponents<TextureComponent>(){
+    return m_TextureComponents.m_Components;
+}
+
+template<>
+std::vector<AnimatedTextureComponent> &Scene::GetComponents<AnimatedTextureComponent>(){
+    return m_AnimatedTextureComponents.m_Components;
+}
+
+template<>
+std::vector<LightComponent> &Scene::GetComponents<LightComponent>(){
+    return m_LightComponents.m_Components;
+}
+
+template<>
+std::vector<RigidbodyComponent> &Scene::GetComponents<RigidbodyComponent>(){
+    return m_RigidbodyComponents.m_Components;
+}
+
+template<>
+std::vector<BoxColliderComponent> &Scene::GetComponents<BoxColliderComponent>(){
+    return m_BoxColliderComponents.m_Components;
+}
+
+template<>
+std::vector<CircleColliderComponent> &Scene::GetComponents<CircleColliderComponent>(){
+    return m_CircleColliderComponents.m_Components;
+}
+
+template<>
+std::vector<NativeScriptComponent> &Scene::GetComponents<NativeScriptComponent>(){
+    return m_NativeScriptComponents.m_Components;
 }
 
 void Scene::DebugDraw(){

@@ -31,6 +31,7 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
 Application::~Application(){
     if(m_ImGui)
         Renderer::ImGui_Close();
+    delete m_Scene;
     #ifdef ENABLE_PROFILING
         Instrumentor::Get().EndSession();
     #endif

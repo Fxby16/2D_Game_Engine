@@ -9,8 +9,9 @@ uint32_t NEXT_UID=0;
 
 Entity::Entity(): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(NEXT_UID++){}
 Entity::Entity(float x,float y): m_X(x),m_Y(y),m_PreviousX(x),m_PreviousY(y),m_UID(NEXT_UID++){}
+Entity::Entity(uint32_t uid): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(uid){}
 
-Entity::Entity(Entity &other){
+Entity::Entity(const Entity &other){
     m_X=other.m_X;
     m_Y=other.m_Y;
     m_PreviousX=other.m_PreviousX;
@@ -26,7 +27,7 @@ Entity::Entity(Entity &&other){
     m_UID=other.m_UID;
 }
 
-Entity &Entity::operator=(Entity &other){
+Entity &Entity::operator=(const Entity &other){
     m_X=other.m_X;
     m_Y=other.m_Y;
     m_PreviousX=other.m_PreviousX;
@@ -44,14 +45,28 @@ Entity &Entity::operator=(Entity &&other){
     return *this;
 }
 
+TagComponent::TagComponent(TagComponent &other){
+    m_Tag=other.m_Tag;
+    m_UID=other.m_UID;
+}
+
+TagComponent::TagComponent(TagComponent &&other){
+    m_Tag=other.m_Tag;
+    m_UID=other.m_UID;
+}
+
 TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid):
     m_Texture(std::make_shared<Texture>(path,mag_filter,min_filter)),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
 TextureComponent::TextureComponent(std::shared_ptr<Texture>t,float width,float height,float layer,uint32_t uid):
     m_Texture(t),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
-AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid):
-    m_AnimatedTexture(std::make_shared<AnimatedTexture>(path,tile_width,tile_height,mag_filter,min_filter)),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
+AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,
+    unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,bool play_animation,
+    bool loop_animation,float animation_delay,uint32_t uid):
+    
+    m_AnimatedTexture(std::make_shared<AnimatedTexture>(path,tile_width,tile_height,mag_filter,min_filter,play_animation,loop_animation,animation_delay)),
+    m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
 
 AnimatedTextureComponent::AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>t,float width,float height,float layer,uint32_t uid):
     m_AnimatedTexture(t),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}

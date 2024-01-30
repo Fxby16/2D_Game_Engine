@@ -14,7 +14,8 @@ project "2DGameEngine"
     pchheader "pch.hpp"
 
     includedirs { "include", 
-                  "include/vendor", 
+                  "include/vendor",
+                  "vendor/glm", 
                   "vendor/instrumentor",
                   "vendor/glad/include",
                   "vendor/stb_image",

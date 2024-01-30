@@ -1,7 +1,10 @@
 #pragma once
 
 #include <camera.hpp>
-#include <framebuffer.hpp>
+
+class Scene;
+class Framebuffer;
+class SceneSerializer;
 
 class Editor{
 public:
@@ -15,6 +18,12 @@ public:
 private:   
     friend class Renderer;
 
+    void EntitiesMenu(ImVec2 pos);
+    void ComponentsMenu(ImVec2 pos);
+
     Camera m_Camera;
+    Scene *m_Scene=nullptr;
     Framebuffer *m_SceneFramebuffer=nullptr;
+    SceneSerializer *m_SceneSerializer;
+    uint32_t m_SelectedEntity=std::numeric_limits<uint32_t>::max();
 };

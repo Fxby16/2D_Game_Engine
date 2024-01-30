@@ -8,12 +8,6 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-namespace Window{
-    extern float Width,Height;
-    extern const float MAX_WIDTH;
-    extern float MAX_HEIGHT;
-}
-
 inline constexpr unsigned int CH_LIMIT=400;
 inline constexpr unsigned int CH_NUM=128;
 

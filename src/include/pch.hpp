@@ -37,6 +37,7 @@
 #include <map>
 #include <array>
 #include <limits>
+#include <fstream>
 
 #include <memory.hpp>
 
@@ -48,4 +49,7 @@
 #ifdef EDITOR
     //nfd
     #include <nfd.h>
+
+    //yaml
+    #include <yaml-cpp/yaml.h>
 #endif

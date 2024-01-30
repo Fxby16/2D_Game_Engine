@@ -1,11 +1,9 @@
-- add audio component
 - add text component
-- fix examples
 - write documentation
-- ensure consistent data types for the same variables across all definitions
 - collision callbacks
 - rotated quads (and triangles)
+- directional light
+- particle system
 
 Others:
-- write the editor
 - windows porting

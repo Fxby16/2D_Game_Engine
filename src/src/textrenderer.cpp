@@ -1,5 +1,6 @@
 #include <pch.hpp>
 #include <textrenderer.hpp>
+#include <window.hpp>
 #include <global.hpp>
 
 TextRenderer::TextRenderer(const char *font_path,float glyph_size,bool fixed):
