@@ -15,3 +15,7 @@ If not specified, the program will be compiled in debug mode. To compile in rele
 
 ## Execute
 Run `bin/Debug/2DGameEngine` or `bin/Release/2DGameEngine` depending on which config you used.
+
+## Documentation
+You can find the documentation [here](https://fxby16.github.io/2D_Game_Engine/).  
+**Note:** the documentation is not complete and will be updated in the future
