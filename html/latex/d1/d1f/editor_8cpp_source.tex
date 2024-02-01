@@ -1,0 +1,305 @@
+\doxysection{editor.\+cpp}
+\hypertarget{editor_8cpp_source}{}\label{editor_8cpp_source}\index{editor/src/editor.cpp@{editor/src/editor.cpp}}
+\mbox{\hyperlink{editor_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <pch.hpp>}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{editor_8hpp}{editor.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{window_8hpp}{window.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{utilities_8hpp}{utilities.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{scene_8hpp}{scene.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sceneserializer_8hpp}{sceneserializer.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00008}\mbox{\hyperlink{classEditor_a23e31a98fd9b36e73267ed8c1a8b4d20}{00008}}\ \mbox{\hyperlink{classEditor_a23e31a98fd9b36e73267ed8c1a8b4d20}{Editor::Editor}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ width,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ height,\textcolor{keywordtype}{float}\ fullscreen\_width,\textcolor{keywordtype}{float}\ fullscreen\_height)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00009}00009\ \ \ \ \ \mbox{\hyperlink{namespaceWindow_a44c483a6dbfc51774f22177b1ded68d3}{Window::BaseWidth}}=\mbox{\hyperlink{namespaceWindow_aa8e76ae23ad376f39a8a8ce12370b639}{Window::Width}}=width;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{namespaceWindow_ae7d54290660120ac9f5c3c99e9f37103}{Window::BaseHeight}}=\mbox{\hyperlink{namespaceWindow_a3e4f12e7755d9ae3254b61150cdf7a43}{Window::Height}}=height;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{namespaceWindow_adc0e113523e154b412adb342f1f7c7a4}{Window::FullscreenWidth}}=fullscreen\_width;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00012}00012\ \ \ \ \ \mbox{\hyperlink{namespaceWindow_aefe37281fdb2cf3938cd3bc956310648}{Window::FullscreenHeight}}=fullscreen\_height;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{namespaceWindow_abc0dde62833e07d7de56767029552ca5}{Window::MAX\_HEIGHT}}=\mbox{\hyperlink{namespaceWindow_a64051efc35641854c286cab752da39c4}{Window::MAX\_WIDTH}}/(\mbox{\hyperlink{namespaceWindow_aa8e76ae23ad376f39a8a8ce12370b639}{Window::Width}}/\mbox{\hyperlink{namespaceWindow_a3e4f12e7755d9ae3254b61150cdf7a43}{Window::Height}});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{namespaceWindow_a5ddfa336ae0d083de5c05fa08356def0}{Window::InitGlfwWindow}}(\textcolor{stringliteral}{"{}Editor"{}});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00016}00016\ \ \ \ \ m\_Camera.\mbox{\hyperlink{classCamera_a9f6cae59c47d1a26dfaac0727b8098d6}{InitializeProj}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00017}00017\ \ \ \ \ m\_SceneFramebuffer=\textcolor{keyword}{new}\ \mbox{\hyperlink{classFramebuffer}{Framebuffer}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00018}00018\ \ \ \ \ m\_Scene=\textcolor{keyword}{new}\ \mbox{\hyperlink{classScene}{Scene}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00019}00019\ \ \ \ \ m\_SceneSerializer=\textcolor{keyword}{new}\ \mbox{\hyperlink{classSceneSerializer}{SceneSerializer}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00020}00020\ \ \ \ \ m\_SceneSerializer-\/>\mbox{\hyperlink{classSceneSerializer_a76b8f605e81ddfc2874a377ff1f4071e}{SetScene}}(m\_Scene);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00021}00021\ \ \ \ \ \mbox{\hyperlink{window_8hpp_a2c876fdbc79628a796247811f2940cf0}{RENDERER}}-\/>\mbox{\hyperlink{classRenderer_af359509c7e57700e03c93c347cbc3865}{ImGui\_Init}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00023}00023\ \ \ \ \ m\_SceneSerializer-\/>\mbox{\hyperlink{classSceneSerializer_a88ead0631248aed1d300c1ee16975a81}{Deserialize}}(\textcolor{stringliteral}{"{}test.scene"{}});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00026}\mbox{\hyperlink{classEditor_ad465abc9575af92b4fa61525085172d6}{00026}}\ \mbox{\hyperlink{classEditor_ad465abc9575af92b4fa61525085172d6}{Editor::\string~Editor}}()\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keyword}{delete}\ m\_Scene;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{delete}\ m\_SceneFramebuffer;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{window_8hpp_a2c876fdbc79628a796247811f2940cf0}{RENDERER}}-\/>\mbox{\hyperlink{classRenderer_a136ae28025b8802e6f63b76baf288e36}{ImGui\_Close}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00032}\mbox{\hyperlink{classEditor_af74f2677c064415671557178f8c681e9}{00032}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEditor_af74f2677c064415671557178f8c681e9}{Editor::Run}}()\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{while}(!glfwWindowShouldClose(\mbox{\hyperlink{namespaceWindow_a027b3c1afd39e1f0e757c91b60c78deb}{Window::Window}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ glfwPollEvents();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{window_8hpp_a2c876fdbc79628a796247811f2940cf0}{RENDERER}}-\/>StartEditorScene(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classEditor_afe17da95ae7511d8f3f1c246d2c35eff}{OnSceneRender}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{window_8hpp_a2c876fdbc79628a796247811f2940cf0}{RENDERER}}-\/>DrawEditorScene();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{window_8hpp_a2c876fdbc79628a796247811f2940cf0}{RENDERER}}-\/>\mbox{\hyperlink{classRenderer_aae7529edbcbe2ed67356bda5ac584717}{StartScene}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRenderer_aea7fad4f1e5807117d98aaa78c4353d0}{Renderer::ImGui\_Start\_Frame}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRenderer_ac1db89a329e0dc1c58cf94004f048ab4}{Renderer::ImGui\_Theme}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classEditor_a243a7364a1829c8ea76294d84695a9f0}{OnImGuiUpdate}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classEditor_a8a19167711a7d06a31aab8c302f75bfd}{OnImGuiRender}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{window_8hpp_a2c876fdbc79628a796247811f2940cf0}{RENDERER}}-\/>\mbox{\hyperlink{classRenderer_ad0d6d6f351edac06f979194c593e9b2d}{DrawScene}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ glfwSwapBuffers(\mbox{\hyperlink{namespaceWindow_a027b3c1afd39e1f0e757c91b60c78deb}{Window::Window}});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00052}\mbox{\hyperlink{classEditor_afe17da95ae7511d8f3f1c246d2c35eff}{00052}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEditor_afe17da95ae7511d8f3f1c246d2c35eff}{Editor::OnSceneRender}}()\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00053}00053\ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a91913b921d41d374e00eac347358dc14}{Render}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00056}\mbox{\hyperlink{classEditor_a243a7364a1829c8ea76294d84695a9f0}{00056}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEditor_a243a7364a1829c8ea76294d84695a9f0}{Editor::OnImGuiUpdate}}()\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00057}00057\ \ \ \ \ ImVec2\ tempvec;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keywordtype}{float}\ tempf;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{if}(ImGui::BeginMainMenuBar())\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ tempvec=ImGui::GetWindowSize();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ImGui::BeginMenu(\textcolor{stringliteral}{"{}File"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ImGui::MenuItem(\textcolor{stringliteral}{"{}New"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ m\_Scene;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene=\textcolor{keyword}{new}\ \mbox{\hyperlink{classScene}{Scene}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_SceneSerializer-\/>\mbox{\hyperlink{classSceneSerializer_a76b8f605e81ddfc2874a377ff1f4071e}{SetScene}}(m\_Scene);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ImGui::MenuItem(\textcolor{stringliteral}{"{}Open"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nfdchar\_t\ *outPath=NULL;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nfdresult\_t\ result=NFD\_OpenDialog(\textcolor{stringliteral}{"{}scene"{}},NULL,\&outPath);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result==NFD\_OKAY)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ m\_Scene;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene=\textcolor{keyword}{new}\ \mbox{\hyperlink{classScene}{Scene}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_SceneSerializer-\/>\mbox{\hyperlink{classSceneSerializer_a76b8f605e81ddfc2874a377ff1f4071e}{SetScene}}(m\_Scene);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_SceneSerializer-\/>\mbox{\hyperlink{classSceneSerializer_a88ead0631248aed1d300c1ee16975a81}{Deserialize}}(outPath);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(result==NFD\_ERROR)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Error:\ \%s\(\backslash\)n"{}},NFD\_GetError());}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ImGui::MenuItem(\textcolor{stringliteral}{"{}Save"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nfdchar\_t\ *outPath=NULL;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nfdresult\_t\ result=NFD\_SaveDialog(\textcolor{stringliteral}{"{}scene"{}},NULL,\&outPath);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result==NFD\_OKAY)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_SceneSerializer-\/>\mbox{\hyperlink{classSceneSerializer_a2a354a60345ccbfb9991d9b945029b5e}{Serialize}}(outPath);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(result==NFD\_ERROR)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Error:\ \%s\(\backslash\)n"{}},NFD\_GetError());}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ImGui::MenuItem(\textcolor{stringliteral}{"{}Exit"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ glfwSetWindowShouldClose(\mbox{\hyperlink{namespaceWindow_a027b3c1afd39e1f0e757c91b60c78deb}{Window::Window}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::EndMenu();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ImGui::BeginMenu(\textcolor{stringliteral}{"{}Edit"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::EndMenu();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ ImGui::EndMainMenuBar();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00100}00100\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00102}00102\ \ \ \ \ EntitiesMenu(\{0,tempvec.y\});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00103}00103\ \ \ \ \ ComponentsMenu(\{0,(\mbox{\hyperlink{namespaceWindow_a3e4f12e7755d9ae3254b61150cdf7a43}{Window::Height}}-\/tempvec.y)/2.0f+tempvec.y\});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00105}00105\ \ \ \ \ ImGui::Begin(\textcolor{stringliteral}{"{}Viewport"{}},\textcolor{keyword}{nullptr},ImGuiWindowFlags\_NoMove|ImGuiWindowFlags\_NoResize|ImGuiWindowFlags\_NoCollapse|ImGuiWindowFlags\_NoTitleBar);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00106}00106\ \ \ \ \ ImGui::SetWindowPos(ImVec2(\mbox{\hyperlink{utilities_8hpp_ae4a949785c5fea12789793723796c367}{GetWidthPercentageInPx}}(20),tempvec.y));}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00107}00107\ \ \ \ \ ImGui::SetWindowSize(ImVec2(0,0));}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00108}00108\ \ \ \ \ tempf=\mbox{\hyperlink{utilities_8hpp_ae4a949785c5fea12789793723796c367}{GetWidthPercentageInPx}}(60);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00109}00109\ \ \ \ \ ImGui::Image((\textcolor{keywordtype}{void}*)m\_SceneFramebuffer-\/>\mbox{\hyperlink{classFramebuffer_a7121c68e266150ff0c9f53e5b07c9610}{GetColorbufferID}}(),ImVec2(tempf,tempf*9.0f/16.0f),ImVec2(0,1),ImVec2(1,0));}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00110}00110\ \ \ \ \ ImGui::End();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00111}00111\ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00113}00113\ \textcolor{keywordtype}{void}\ Editor::EntitiesMenu(ImVec2\ pos)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00114}00114\ \ \ \ \ ImGui::Begin(\textcolor{stringliteral}{"{}Entities"{}},\textcolor{keyword}{nullptr},ImGuiWindowFlags\_NoMove|ImGuiWindowFlags\_NoResize|ImGuiWindowFlags\_NoCollapse|ImGuiWindowFlags\_NoTitleBar);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00115}00115\ \ \ \ \ ImGui::SetWindowPos(pos);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00116}00116\ \ \ \ \ ImGui::SetWindowSize(ImVec2(\mbox{\hyperlink{utilities_8hpp_ae4a949785c5fea12789793723796c367}{GetWidthPercentageInPx}}(20),(\mbox{\hyperlink{namespaceWindow_a3e4f12e7755d9ae3254b61150cdf7a43}{Window::Height}}-\/pos.y)/2.0f));}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00118}00118\ \ \ \ \ \textcolor{keyword}{auto}\ entities=m\_Scene-\/>\mbox{\hyperlink{classScene_adaf5674e2add3977e70e11a70fab5440}{GetEntities}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00119}00119\ \ \ \ \ \textcolor{keywordtype}{int}\ k=0;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00120}00120\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ \&e:entities)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classTagComponent}{TagComponent}}>(e.m\_UID)!=\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ name=m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classTagComponent}{TagComponent}}>(e.m\_UID)-\/>m\_Tag;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Entity\ "{}}+std::to\_string(k);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ ImGui::PushID(k);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ImGui::Selectable(name.c\_str()))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(m\_SelectedEntity!=e.m\_UID)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_SelectedEntity=e.m\_UID;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_SelectedEntity=std::numeric\_limits<uint32\_t>::max();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ ImGui::PopID();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ k++;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00140}00140\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00141}00141\ \ \ \ \ ImGui::End();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00142}00142\ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00144}00144\ \textcolor{keywordtype}{void}\ Editor::ComponentsMenu(ImVec2\ pos)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00145}00145\ \ \ \ \ ImGui::Begin(\textcolor{stringliteral}{"{}Components"{}},\textcolor{keyword}{nullptr},ImGuiWindowFlags\_NoMove|ImGuiWindowFlags\_NoResize|ImGuiWindowFlags\_NoCollapse|ImGuiWindowFlags\_NoTitleBar);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00146}00146\ \ \ \ \ ImGui::SetWindowPos(pos);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00147}00147\ \ \ \ \ ImGui::SetWindowSize(ImVec2(\mbox{\hyperlink{utilities_8hpp_ae4a949785c5fea12789793723796c367}{GetWidthPercentageInPx}}(20),\mbox{\hyperlink{namespaceWindow_a3e4f12e7755d9ae3254b61150cdf7a43}{Window::Height}}-\/pos.y));}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00149}00149\ \ \ \ \ ImGui::PushItemWidth(ImGui::GetWindowWidth()*0.5f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00151}00151\ \ \ \ \ \mbox{\hyperlink{classTagComponent}{TagComponent}}\ *tag\_component=m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classTagComponent}{TagComponent}}>(m\_SelectedEntity);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00152}00152\ \ \ \ \ \textcolor{keywordflow}{if}(tag\_component)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{utilities_8hpp_ac7b00819d59902913fb5cb076f5a271f}{StartNode}}(\textcolor{stringliteral}{"{}TagComponent"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::InputText(\textcolor{stringliteral}{"{}Tag"{}},\&tag\_component-\/>\mbox{\hyperlink{classTagComponent_a7e1964f88fb587f89316012a5fefcd65}{m\_Tag}}[0],tag\_component-\/>\mbox{\hyperlink{classTagComponent_a7e1964f88fb587f89316012a5fefcd65}{m\_Tag}}.size());}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TreePop();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00157}00157\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00159}00159\ \ \ \ \ \mbox{\hyperlink{classTextureComponent}{TextureComponent}}\ *texture\_component=m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classTextureComponent}{TextureComponent}}>(m\_SelectedEntity);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00160}00160\ \ \ \ \ \textcolor{keywordflow}{if}(texture\_component)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{utilities_8hpp_ac7b00819d59902913fb5cb076f5a271f}{StartNode}}(\textcolor{stringliteral}{"{}TextureComponent"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Width"{}},\&texture\_component-\/>\mbox{\hyperlink{classTextureComponent_af49643c5c9ec0869605786974285b9f0}{m\_Width}},0.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Height"{}},\&texture\_component-\/>\mbox{\hyperlink{classTextureComponent_a0eb4cb2f402d508b06ebc57146b0ec9b}{m\_Height}},0.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderInt(\textcolor{stringliteral}{"{}Layer"{}},(\textcolor{keywordtype}{int}*)\&texture\_component-\/>\mbox{\hyperlink{classTextureComponent_acfca2080149b002284d265a8c174b762}{m\_Layer}},0,100);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TreePop();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00167}00167\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00169}00169\ \ \ \ \ \mbox{\hyperlink{classAnimatedTextureComponent}{AnimatedTextureComponent}}\ *animated\_texture\_component=m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classAnimatedTextureComponent}{AnimatedTextureComponent}}>(m\_SelectedEntity);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00170}00170\ \ \ \ \ \textcolor{keywordflow}{if}(animated\_texture\_component)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{utilities_8hpp_ac7b00819d59902913fb5cb076f5a271f}{StartNode}}(\textcolor{stringliteral}{"{}AnimatedTextureComponent"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Width"{}},\&animated\_texture\_component-\/>\mbox{\hyperlink{classAnimatedTextureComponent_ab047a44dd4f3aeb2ad4dac1351316aaa}{m\_Width}},0.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Height"{}},\&animated\_texture\_component-\/>\mbox{\hyperlink{classAnimatedTextureComponent_a78007848cc0bf9ef2b9a07fb87041e2a}{m\_Height}},0.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderInt(\textcolor{stringliteral}{"{}Layer"{}},(\textcolor{keywordtype}{int}*)\&animated\_texture\_component-\/>\mbox{\hyperlink{classAnimatedTextureComponent_ad7a0ef9cd1036d04862acec72e32370c}{m\_Layer}},0,100);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classAnimatedTexture}{AnimatedTexture}}\ *at=animated\_texture\_component-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Checkbox(\textcolor{stringliteral}{"{}Play\ Animation"{}},\&at-\/>m\_PlayAnimation);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Checkbox(\textcolor{stringliteral}{"{}Loop\ Animation"{}},\&at-\/>m\_LoopAnimation);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Animation\ Delay"{}},\&at-\/>m\_AnimationDelay,0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderInt(\textcolor{stringliteral}{"{}Animation\ Index"{}},\&at-\/>m\_AnimationIndex,0,ceil((\textcolor{keywordtype}{float})at-\/>\mbox{\hyperlink{classTexture_a812d08761f477e09ccabcb64ef8e03ea}{m\_Height}}/(\textcolor{keywordtype}{float})at-\/>\mbox{\hyperlink{classSpriteSheet_a5a0f9f477bf04859ae1cefd77bda5827}{m\_TileHeight}})-\/1);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TreePop();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00183}00183\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00185}00185\ \ \ \ \ \mbox{\hyperlink{classRigidbodyComponent}{RigidbodyComponent}}\ *rigidbody\_component=m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classRigidbodyComponent}{RigidbodyComponent}}>(m\_SelectedEntity);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00186}00186\ \ \ \ \ \textcolor{keywordflow}{if}(rigidbody\_component)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{utilities_8hpp_ac7b00819d59902913fb5cb076f5a271f}{StartNode}}(\textcolor{stringliteral}{"{}RigidbodyComponent"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *bodyTypes[]=\{\textcolor{stringliteral}{"{}Static"{}},\textcolor{stringliteral}{"{}Dynamic"{}},\textcolor{stringliteral}{"{}Kinematic"{}}\};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ currentBodyType;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(rigidbody\_component-\/>\mbox{\hyperlink{classRigidbodyComponent_a851b575febe33622a9e3545860e24606}{m\_BodyType}})\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a84a8921b25f505d0d2077aeb5db4bc16}{RigidbodyComponent::BodyType::Static}}:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentBodyType=0;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a971fd8cc345d8bd9f92e9f7d88fdf20c}{RigidbodyComponent::BodyType::Dynamic}}:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentBodyType=1;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a40c78b58b86002ee38fad2d3c9dd787e}{RigidbodyComponent::BodyType::Kinematic}}:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentBodyType=2;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Combo(\textcolor{stringliteral}{"{}Body\ Type"{}},\&currentBodyType,bodyTypes,3);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(currentBodyType)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rigidbody\_component-\/>\mbox{\hyperlink{classRigidbodyComponent_a851b575febe33622a9e3545860e24606}{m\_BodyType}}=\mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a84a8921b25f505d0d2077aeb5db4bc16}{RigidbodyComponent::BodyType::Static}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rigidbody\_component-\/>\mbox{\hyperlink{classRigidbodyComponent_a851b575febe33622a9e3545860e24606}{m\_BodyType}}=\mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a971fd8cc345d8bd9f92e9f7d88fdf20c}{RigidbodyComponent::BodyType::Dynamic}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rigidbody\_component-\/>\mbox{\hyperlink{classRigidbodyComponent_a851b575febe33622a9e3545860e24606}{m\_BodyType}}=\mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a40c78b58b86002ee38fad2d3c9dd787e}{RigidbodyComponent::BodyType::Kinematic}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//TO\ IMPLEMENT:\ }}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//ImGui::Checkbox("{}Fixed\ Rotation"{},\&rigidbody\_component-\/>m\_FixedRotation);}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TreePop();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00221}00221\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00223}00223\ \ \ \ \ \mbox{\hyperlink{classBoxColliderComponent}{BoxColliderComponent}}\ *box\_collider\_component=m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classBoxColliderComponent}{BoxColliderComponent}}>(m\_SelectedEntity);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00224}00224\ \ \ \ \ \textcolor{keywordflow}{if}(box\_collider\_component)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{utilities_8hpp_ac7b00819d59902913fb5cb076f5a271f}{StartNode}}(\textcolor{stringliteral}{"{}BoxColliderComponent"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}X\ Offset"{}},\&box\_collider\_component-\/>\mbox{\hyperlink{classBoxColliderComponent_a44af36ad2d5388000084d363a66db966}{m\_XOffset}},-\/30.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Y\ Offset"{}},\&box\_collider\_component-\/>\mbox{\hyperlink{classBoxColliderComponent_a4f6c6d7dcfe51610b5445c3efab4b42a}{m\_YOffset}},-\/30.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Width"{}},\&box\_collider\_component-\/>\mbox{\hyperlink{classBoxColliderComponent_a6bd76f6213f6eb0b6a2e250eb531bb8c}{m\_Width}},0.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Height"{}},\&box\_collider\_component-\/>\mbox{\hyperlink{classBoxColliderComponent_a88c12beec06d2de2b91574a78e85da4a}{m\_Height}},0.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Density"{}},\&box\_collider\_component-\/>\mbox{\hyperlink{classBoxColliderComponent_a3b603d3d20a9c73b6669fe035a3060c0}{m\_Density}},0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Friction"{}},\&box\_collider\_component-\/>\mbox{\hyperlink{classBoxColliderComponent_ad8e1fd1d18102f21a981dce813c0f0da}{m\_Friction}},0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Restitution"{}},\&box\_collider\_component-\/>\mbox{\hyperlink{classBoxColliderComponent_a0d74b24ce0e892775b9539159f534204}{m\_Restitution}},0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Restitution\ Threshold"{}},\&box\_collider\_component-\/>\mbox{\hyperlink{classBoxColliderComponent_a36535a4c6401b0244fa8b4dca1d7bd35}{m\_RestitutionThreshold}},0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TreePop();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00236}00236\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00238}00238\ \ \ \ \ \mbox{\hyperlink{classCircleColliderComponent}{CircleColliderComponent}}\ *circle\_collider\_component=m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classCircleColliderComponent}{CircleColliderComponent}}>(m\_SelectedEntity);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00239}00239\ \ \ \ \ \textcolor{keywordflow}{if}(circle\_collider\_component)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{utilities_8hpp_ac7b00819d59902913fb5cb076f5a271f}{StartNode}}(\textcolor{stringliteral}{"{}CircleColliderComponent"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}X\ Offset"{}},\&circle\_collider\_component-\/>\mbox{\hyperlink{classCircleColliderComponent_ad00e591f8ffeed96d5df7e64a72fcee5}{m\_XOffset}},-\/30.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Y\ Offset"{}},\&circle\_collider\_component-\/>\mbox{\hyperlink{classCircleColliderComponent_a71396a7a30796548cec3f651c6c3345f}{m\_YOffset}},-\/30.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Radius"{}},\&circle\_collider\_component-\/>\mbox{\hyperlink{classCircleColliderComponent_a085bdd54f4aafec97b6fe266373f7cfb}{m\_Radius}},0.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Density"{}},\&circle\_collider\_component-\/>\mbox{\hyperlink{classCircleColliderComponent_a49b53c5aec689e3fa438efde60c14db7}{m\_Density}},0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Friction"{}},\&circle\_collider\_component-\/>\mbox{\hyperlink{classCircleColliderComponent_ade341c0edd79b03c9469d002f7166999}{m\_Friction}},0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Restitution"{}},\&circle\_collider\_component-\/>\mbox{\hyperlink{classCircleColliderComponent_a8399c9e4ff306dc961312d7d23a4144a}{m\_Restitution}},0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Restitution\ Threshold"{}},\&circle\_collider\_component-\/>\mbox{\hyperlink{classCircleColliderComponent_ac148749a7454652a238a50f6088a2a09}{m\_RestitutionThreshold}},0.0f,10.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TreePop();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00250}00250\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00251}00251\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00252}00252\ \ \ \ \ \mbox{\hyperlink{classLightComponent}{LightComponent}}\ *light\_component=m\_Scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classLightComponent}{LightComponent}}>(m\_SelectedEntity);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00253}00253\ \ \ \ \ \textcolor{keywordflow}{if}(light\_component)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{utilities_8hpp_ac7b00819d59902913fb5cb076f5a271f}{StartNode}}(\textcolor{stringliteral}{"{}LightComponent"{}}))\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}X\ Offset"{}},\&light\_component-\/>\mbox{\hyperlink{classLightComponent_a0d9c36270f64b0c6a1a78514efeae908}{m\_XOffset}},-\/30.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Y\ Offset"{}},\&light\_component-\/>\mbox{\hyperlink{classLightComponent_af1560e21b9ede51f9641a8a38c0e3902}{m\_YOffset}},-\/30.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Radius"{}},\&light\_component-\/>\mbox{\hyperlink{classLightComponent_a1a4bc6ede97593b15c670dafbbe0505c}{m\_Radius}},0.0f,30.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SliderFloat(\textcolor{stringliteral}{"{}Blur"{}},\&light\_component-\/>\mbox{\hyperlink{classLightComponent_a2fd9a193bd2c85644eefc853a40b3e96}{m\_Blur}},0.0f,1.0f);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::ColorPicker3(\textcolor{stringliteral}{"{}Color"{}},\&light\_component-\/>\mbox{\hyperlink{classLightComponent_a511af346c0d85c36639764ce4efa56be}{m\_Color}}.\mbox{\hyperlink{structVec3_a88b99c08343ebb9782ced649f141bdfa}{r}});}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00260}00260\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *lightTypes[]=\{\textcolor{stringliteral}{"{}All\ Light"{}},\textcolor{stringliteral}{"{}Spot\ Light"{}},\textcolor{stringliteral}{"{}Spot\ Light\ (Collisions\ on)"{}}\};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ currentLightType;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(light\_component-\/>\mbox{\hyperlink{classLightComponent_ae1e6c43f39c974b1ecc7bc268289e1ac}{m\_Type}})\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a70c7d8a6420e4a53e68e58826e80e1a9}{LightType::ALL\_LIGHT}}:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentLightType=0;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638ac71b25f8ac5f0870057cc6760ffb85a2}{LightType::LIGHT\_AROUND\_POS}}:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentLightType=1;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a384f360d73e3f96bc6dded48bdce7984}{LightType::LIGHT\_AROUND\_POS\_COLL}}:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentLightType=2;}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Combo(\textcolor{stringliteral}{"{}Light\ Type"{}},\&currentLightType,lightTypes,3);}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(currentLightType)\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ light\_component-\/>\mbox{\hyperlink{classLightComponent_ae1e6c43f39c974b1ecc7bc268289e1ac}{m\_Type}}=\mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a70c7d8a6420e4a53e68e58826e80e1a9}{LightType::ALL\_LIGHT}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ light\_component-\/>\mbox{\hyperlink{classLightComponent_ae1e6c43f39c974b1ecc7bc268289e1ac}{m\_Type}}=\mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638ac71b25f8ac5f0870057cc6760ffb85a2}{LightType::LIGHT\_AROUND\_POS}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ light\_component-\/>\mbox{\hyperlink{classLightComponent_ae1e6c43f39c974b1ecc7bc268289e1ac}{m\_Type}}=\mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a384f360d73e3f96bc6dded48bdce7984}{LightType::LIGHT\_AROUND\_POS\_COLL}};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TreePop();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00291}00291\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00292}00292\ \ \ \ \ ImGui::PopItemWidth();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00294}00294\ \ \ \ \ ImGui::End();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00295}00295\ \}}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00297}\mbox{\hyperlink{classEditor_a8a19167711a7d06a31aab8c302f75bfd}{00297}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEditor_a8a19167711a7d06a31aab8c302f75bfd}{Editor::OnImGuiRender}}()\{}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00298}00298\ \ \ \ \ \mbox{\hyperlink{classRenderer_a0087733bd01d2e282b26f3c91112638f}{Renderer::ImGui\_End\_Frame}}();}
+\DoxyCodeLine{\Hypertarget{editor_8cpp_source_l00299}00299\ \}}
+
+\end{DoxyCode}

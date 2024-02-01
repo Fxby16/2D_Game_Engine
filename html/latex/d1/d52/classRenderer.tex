@@ -1,0 +1,619 @@
+\doxysection{Renderer Class Reference}
+\hypertarget{classRenderer}{}\label{classRenderer}\index{Renderer@{Renderer}}
+
+
+{\ttfamily \#include $<$renderer.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classRenderer_a7ebf46f54dab9905f79b80f7fddb76a6}{Renderer}} ()
+\item 
+\mbox{\hyperlink{classRenderer_afeee408862d5bd6255a6882d47e6d5cd}{\texorpdfstring{$\sim$}{\string~}\+Renderer}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_aae7529edbcbe2ed67356bda5ac584717}{Start\+Scene}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_ad0d6d6f351edac06f979194c593e9b2d}{Draw\+Scene}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_a0e95624fabe063fbc939f1d52cabe9d8}{Clear}} (bool ambient\+\_\+light=false) const
+\item 
+void \mbox{\hyperlink{classRenderer_a0aa13a7ed5c6689d213f58bf8b0ead43}{Add\+Layout}} (\mbox{\hyperlink{classVertexBufferLayout}{Vertex\+Buffer\+Layout}} \&VBL, unsigned int type, unsigned int count, bool normalized)
+\item 
+void \mbox{\hyperlink{classRenderer_a1e4d3be9c855c8b4cb13965835bd0c17}{Draw\+Texture}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, \mbox{\hyperlink{structVec2}{Vec2}} size, float layer, float tex\+ID)
+\item 
+void \mbox{\hyperlink{classRenderer_aa2516339ef40fc24a38a72a98edaaad0}{Draw\+Texture}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, \mbox{\hyperlink{structVec2}{Vec2}} size, \mbox{\hyperlink{structVec2}{Vec2}} texture\+\_\+pos, \mbox{\hyperlink{structVec2}{Vec2}} texture\+\_\+size, \mbox{\hyperlink{structVec2}{Vec2}} texture\+\_\+total\+\_\+size, float layer, float tex\+ID)
+\item 
+void \mbox{\hyperlink{classRenderer_ae28d03e796858b18ec80e96679d9f56c}{Draw\+Texture}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, \mbox{\hyperlink{structVec2}{Vec2}} size, bool reverse\+\_\+x, bool reverse\+\_\+y, float layer, \mbox{\hyperlink{classTexture}{Texture}} \&texture)
+\item 
+void \mbox{\hyperlink{classRenderer_aba07a6385b3c57eb704fa200453356cb}{Draw\+Sprite\+Sheet}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, \mbox{\hyperlink{structVec2}{Vec2}} size, float row, float col, float layer, \mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&s)
+\item 
+void \mbox{\hyperlink{classRenderer_a0a2ff27834c7d26082238867b75185d8}{Draw\+Animated\+Texture}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, \mbox{\hyperlink{structVec2}{Vec2}} size, float layer, \mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \&at)
+\item 
+void \mbox{\hyperlink{classRenderer_a9dd8b741a49adcf393471220b2eb6aa9}{Draw\+Triangle}} (\mbox{\hyperlink{structVec2}{Vec2}} pos1, \mbox{\hyperlink{structVec2}{Vec2}} pos2, \mbox{\hyperlink{structVec2}{Vec2}} pos3, \mbox{\hyperlink{structVec4}{Vec4}} color, float layer)
+\item 
+void \mbox{\hyperlink{classRenderer_a46c94dc656a4890687d37579561a107b}{Draw\+Quad}} (\mbox{\hyperlink{structVertex}{Vertex}} v1, \mbox{\hyperlink{structVertex}{Vertex}} v2, \mbox{\hyperlink{structVertex}{Vertex}} v3, \mbox{\hyperlink{structVertex}{Vertex}} v4)
+\item 
+void \mbox{\hyperlink{classRenderer_ad2d88bc138bd01e9ca031f55d65d580e}{Draw\+Solid\+Quad}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, \mbox{\hyperlink{structVec2}{Vec2}} size, \mbox{\hyperlink{structVec4}{Vec4}} color, float layer)
+\item 
+void \mbox{\hyperlink{classRenderer_a73b559b2f8e84a0c49199a6dd50b4362}{Draw\+Point}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, \mbox{\hyperlink{structVec4}{Vec4}} color, float layer)
+\item 
+void \mbox{\hyperlink{classRenderer_a7e2770929351a69b0b3d33dff0da8328}{Draw\+Line}} (\mbox{\hyperlink{structVec2}{Vec2}} pos1, \mbox{\hyperlink{structVec2}{Vec2}} pos2, \mbox{\hyperlink{structVec4}{Vec4}} color, float layer)
+\item 
+void \mbox{\hyperlink{classRenderer_aa517e626fdd89f9734d50dab9392cdf6}{Draw\+Light}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, \mbox{\hyperlink{structVec4}{Vec4}} color, \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638}{Light\+Type}} light\+\_\+type, float radius=0.\+0f, float blur\+Amount=0.\+0f)
+\item 
+void \mbox{\hyperlink{classRenderer_afb52a0f909197fb58dbd76610d897d83}{Render}} (bool post\+\_\+processing=false)
+\item 
+void \mbox{\hyperlink{classRenderer_a192b326802e2546cacdc0df8dcc19f02}{Render\+Textures}} (bool post\+\_\+processing, float max\+\_\+layer)
+\item 
+void \mbox{\hyperlink{classRenderer_a1fac171486072531c0229a03a2ac20a2}{Render\+Triangles}} (float max\+\_\+layer)
+\item 
+void \mbox{\hyperlink{classRenderer_afac314eddd06a0d5dd529ccf29128a47}{Render\+Lines}} (float max\+\_\+layer)
+\item 
+void \mbox{\hyperlink{classRenderer_a15eae777c77615ce1e230325522d64cc}{Render\+Points}} (float max\+\_\+layer)
+\item 
+void \mbox{\hyperlink{classRenderer_a207600ba6ebf07c66bdca45576c2f6b6}{Set\+Post\+Processing}} (const char \texorpdfstring{$\ast$}{*}uniform\+\_\+name)
+\item 
+void \mbox{\hyperlink{classRenderer_a50d8bb9b9af0075a5190880cc90cb903}{Post\+Processing}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_a808953b70b7307a7ae634c7a2222e8a7}{Set\+Line\+Width}} (float new\+\_\+size)
+\item 
+void \mbox{\hyperlink{classRenderer_a491fa10f0dcb5350219d6ddab67ec8a9}{Update\+Line\+Width}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_a0b15cacda9dc8f5bb17bc31817d05044}{Set\+Point\+Size}} (float new\+\_\+size)
+\item 
+float \mbox{\hyperlink{classRenderer_afdaef6e4a00e043b5550771ff0e95990}{Get\+Point\+Size}} ()
+\item 
+float \mbox{\hyperlink{classRenderer_ae52fc7e259598b8ac64d17a38b7f287e}{Get\+Line\+Width}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_aa1a2c9a104fbca2459180a7cc9caed18}{Set\+Ambient\+Light}} (\mbox{\hyperlink{structVec3}{Vec3}} color)
+\item 
+void \mbox{\hyperlink{classRenderer_a058defd18f9f8b4a7e9bc4e5d7bffaa1}{Set\+Clear\+Color}} (\mbox{\hyperlink{structVec3}{Vec3}} color)
+\item 
+void \mbox{\hyperlink{classRenderer_aa3f822f822b19645e2ad4c9202aac3a8}{Add\+Segment}} (\mbox{\hyperlink{structVec2}{Vec2}} start\+\_\+point, \mbox{\hyperlink{structVec2}{Vec2}} end\+\_\+point)
+\item 
+void \mbox{\hyperlink{classRenderer_a60e61d13fa06067f926c3da225ea7a58}{Update\+Screen\+Segments}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_a6ee8a5770e4a4c2f02699a45f2a83c2d}{Clear\+Segments}} ()
+\item 
+std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{structVec2}{Vec2}}, \mbox{\hyperlink{structVec2}{Vec2}} $>$ $>$ \& \mbox{\hyperlink{classRenderer_a504fde396da71e3ac4ec69ca98cfdb5d}{Get\+Segments}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_adcfc678c30f086aa11e95b498707d541}{Apply\+Light}} ()
+\item 
+void \mbox{\hyperlink{classRenderer_a79f6fed1bd265625b2ced97c5ca24da0}{Keep\+Circle}} (\mbox{\hyperlink{structVec2}{Vec2}} pos, float radius, float blur\+Amount)
+\item 
+std\+::pair$<$ \mbox{\hyperlink{structVec2}{Vec2}}, float $>$ \mbox{\hyperlink{classRenderer_a3cd597ab29233a5a14b666df13209c0a}{Get\+Intersection}} (const std\+::pair$<$ \mbox{\hyperlink{structVec2}{Vec2}}, \mbox{\hyperlink{structVec2}{Vec2}} $>$ \&ray, const std\+::pair$<$ \mbox{\hyperlink{structVec2}{Vec2}}, \mbox{\hyperlink{structVec2}{Vec2}} $>$ \&seg)
+\item 
+\mbox{\hyperlink{structRendererData}{Renderer\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classRenderer_aee2533de307432966cf6408237050ded}{Get\+Lights\+Data}} ()
+\item 
+unsigned int \mbox{\hyperlink{classRenderer_aff0595f20aa72ce023a9f16772a393f1}{Get\+Framebuffer\+ID}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classRenderer_af359509c7e57700e03c93c347cbc3865}{Im\+Gui\+\_\+\+Init}} ()
+\item 
+static void \mbox{\hyperlink{classRenderer_ac1db89a329e0dc1c58cf94004f048ab4}{Im\+Gui\+\_\+\+Theme}} ()
+\item 
+static void \mbox{\hyperlink{classRenderer_aea7fad4f1e5807117d98aaa78c4353d0}{Im\+Gui\+\_\+\+Start\+\_\+\+Frame}} ()
+\item 
+static void \mbox{\hyperlink{classRenderer_af1df06c1340ba4f80792c3da5dd535ac}{Im\+Gui\+\_\+\+Content}} ()
+\item 
+static void \mbox{\hyperlink{classRenderer_a0087733bd01d2e282b26f3c91112638f}{Im\+Gui\+\_\+\+End\+\_\+\+Frame}} ()
+\item 
+static void \mbox{\hyperlink{classRenderer_a136ae28025b8802e6f63b76baf288e36}{Im\+Gui\+\_\+\+Close}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classRenderer_ad8bd9afbbd7af19d996da80e9d25890d}{Camera}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{renderer_8hpp_source_l00026}{26}} of file \mbox{\hyperlink{renderer_8hpp_source}{renderer.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classRenderer_a7ebf46f54dab9905f79b80f7fddb76a6}\label{classRenderer_a7ebf46f54dab9905f79b80f7fddb76a6} 
+\index{Renderer@{Renderer}!Renderer@{Renderer}}
+\index{Renderer@{Renderer}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{Renderer()}{Renderer()}}
+{\footnotesize\ttfamily Renderer\+::\+Renderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_afeee408862d5bd6255a6882d47e6d5cd}\label{classRenderer_afeee408862d5bd6255a6882d47e6d5cd} 
+\index{Renderer@{Renderer}!````~Renderer@{\texorpdfstring{$\sim$}{\string~}Renderer}}
+\index{````~Renderer@{\texorpdfstring{$\sim$}{\string~}Renderer}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Renderer()}{\string~Renderer()}}
+{\footnotesize\ttfamily Renderer\+::\texorpdfstring{$\sim$}{\string~}\+Renderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00097}{97}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classRenderer_a0aa13a7ed5c6689d213f58bf8b0ead43}\label{classRenderer_a0aa13a7ed5c6689d213f58bf8b0ead43} 
+\index{Renderer@{Renderer}!AddLayout@{AddLayout}}
+\index{AddLayout@{AddLayout}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{AddLayout()}{AddLayout()}}
+{\footnotesize\ttfamily void Renderer\+::\+Add\+Layout (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVertexBufferLayout}{Vertex\+Buffer\+Layout}} \&}]{VBL,  }\item[{unsigned int}]{type,  }\item[{unsigned int}]{count,  }\item[{bool}]{normalized }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00108}{108}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aa3f822f822b19645e2ad4c9202aac3a8}\label{classRenderer_aa3f822f822b19645e2ad4c9202aac3a8} 
+\index{Renderer@{Renderer}!AddSegment@{AddSegment}}
+\index{AddSegment@{AddSegment}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{AddSegment()}{AddSegment()}}
+{\footnotesize\ttfamily void Renderer\+::\+Add\+Segment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{start\+\_\+point,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{end\+\_\+point }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00543}{543}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_adcfc678c30f086aa11e95b498707d541}\label{classRenderer_adcfc678c30f086aa11e95b498707d541} 
+\index{Renderer@{Renderer}!ApplyLight@{ApplyLight}}
+\index{ApplyLight@{ApplyLight}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{ApplyLight()}{ApplyLight()}}
+{\footnotesize\ttfamily void Renderer\+::\+Apply\+Light (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00705}{705}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a0e95624fabe063fbc939f1d52cabe9d8}\label{classRenderer_a0e95624fabe063fbc939f1d52cabe9d8} 
+\index{Renderer@{Renderer}!Clear@{Clear}}
+\index{Clear@{Clear}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily void Renderer\+::\+Clear (\begin{DoxyParamCaption}\item[{bool}]{ambient\+\_\+light = {\ttfamily false} }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00524}{524}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a6ee8a5770e4a4c2f02699a45f2a83c2d}\label{classRenderer_a6ee8a5770e4a4c2f02699a45f2a83c2d} 
+\index{Renderer@{Renderer}!ClearSegments@{ClearSegments}}
+\index{ClearSegments@{ClearSegments}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{ClearSegments()}{ClearSegments()}}
+{\footnotesize\ttfamily void Renderer\+::\+Clear\+Segments (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00554}{554}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a0a2ff27834c7d26082238867b75185d8}\label{classRenderer_a0a2ff27834c7d26082238867b75185d8} 
+\index{Renderer@{Renderer}!DrawAnimatedTexture@{DrawAnimatedTexture}}
+\index{DrawAnimatedTexture@{DrawAnimatedTexture}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawAnimatedTexture()}{DrawAnimatedTexture()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Animated\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{size,  }\item[{float}]{layer,  }\item[{\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \&}]{at }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00167}{167}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aa517e626fdd89f9734d50dab9392cdf6}\label{classRenderer_aa517e626fdd89f9734d50dab9392cdf6} 
+\index{Renderer@{Renderer}!DrawLight@{DrawLight}}
+\index{DrawLight@{DrawLight}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawLight()}{DrawLight()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Light (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{\mbox{\hyperlink{structVec4}{Vec4}}}]{color,  }\item[{\mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638}{Light\+Type}}}]{light\+\_\+type,  }\item[{float}]{radius = {\ttfamily 0.0f},  }\item[{float}]{blur\+Amount = {\ttfamily 0.0f} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00591}{591}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a7e2770929351a69b0b3d33dff0da8328}\label{classRenderer_a7e2770929351a69b0b3d33dff0da8328} 
+\index{Renderer@{Renderer}!DrawLine@{DrawLine}}
+\index{DrawLine@{DrawLine}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawLine()}{DrawLine()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos1,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos2,  }\item[{\mbox{\hyperlink{structVec4}{Vec4}}}]{color,  }\item[{float}]{layer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00228}{228}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a73b559b2f8e84a0c49199a6dd50b4362}\label{classRenderer_a73b559b2f8e84a0c49199a6dd50b4362} 
+\index{Renderer@{Renderer}!DrawPoint@{DrawPoint}}
+\index{DrawPoint@{DrawPoint}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawPoint()}{DrawPoint()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Point (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{\mbox{\hyperlink{structVec4}{Vec4}}}]{color,  }\item[{float}]{layer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00218}{218}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a46c94dc656a4890687d37579561a107b}\label{classRenderer_a46c94dc656a4890687d37579561a107b} 
+\index{Renderer@{Renderer}!DrawQuad@{DrawQuad}}
+\index{DrawQuad@{DrawQuad}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawQuad()}{DrawQuad()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Quad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertex}{Vertex}}}]{v1,  }\item[{\mbox{\hyperlink{structVertex}{Vertex}}}]{v2,  }\item[{\mbox{\hyperlink{structVertex}{Vertex}}}]{v3,  }\item[{\mbox{\hyperlink{structVertex}{Vertex}}}]{v4 }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00198}{198}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_ad0d6d6f351edac06f979194c593e9b2d}\label{classRenderer_ad0d6d6f351edac06f979194c593e9b2d} 
+\index{Renderer@{Renderer}!DrawScene@{DrawScene}}
+\index{DrawScene@{DrawScene}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawScene()}{DrawScene()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00309}{309}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_ad2d88bc138bd01e9ca031f55d65d580e}\label{classRenderer_ad2d88bc138bd01e9ca031f55d65d580e} 
+\index{Renderer@{Renderer}!DrawSolidQuad@{DrawSolidQuad}}
+\index{DrawSolidQuad@{DrawSolidQuad}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawSolidQuad()}{DrawSolidQuad()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Solid\+Quad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{size,  }\item[{\mbox{\hyperlink{structVec4}{Vec4}}}]{color,  }\item[{float}]{layer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00211}{211}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aba07a6385b3c57eb704fa200453356cb}\label{classRenderer_aba07a6385b3c57eb704fa200453356cb} 
+\index{Renderer@{Renderer}!DrawSpriteSheet@{DrawSpriteSheet}}
+\index{DrawSpriteSheet@{DrawSpriteSheet}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawSpriteSheet()}{DrawSpriteSheet()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{size,  }\item[{float}]{row,  }\item[{float}]{col,  }\item[{float}]{layer,  }\item[{\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&}]{s }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00153}{153}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_ae28d03e796858b18ec80e96679d9f56c}\label{classRenderer_ae28d03e796858b18ec80e96679d9f56c} 
+\index{Renderer@{Renderer}!DrawTexture@{DrawTexture}}
+\index{DrawTexture@{DrawTexture}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawTexture()}{DrawTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{size,  }\item[{bool}]{reverse\+\_\+x,  }\item[{bool}]{reverse\+\_\+y,  }\item[{float}]{layer,  }\item[{\mbox{\hyperlink{classTexture}{Texture}} \&}]{texture }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00140}{140}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a1e4d3be9c855c8b4cb13965835bd0c17}\label{classRenderer_a1e4d3be9c855c8b4cb13965835bd0c17} 
+\index{Renderer@{Renderer}!DrawTexture@{DrawTexture}}
+\index{DrawTexture@{DrawTexture}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawTexture()}{DrawTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{size,  }\item[{float}]{layer,  }\item[{float}]{tex\+ID }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00112}{112}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aa2516339ef40fc24a38a72a98edaaad0}\label{classRenderer_aa2516339ef40fc24a38a72a98edaaad0} 
+\index{Renderer@{Renderer}!DrawTexture@{DrawTexture}}
+\index{DrawTexture@{DrawTexture}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawTexture()}{DrawTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{size,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{texture\+\_\+pos,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{texture\+\_\+size,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{texture\+\_\+total\+\_\+size,  }\item[{float}]{layer,  }\item[{float}]{tex\+ID }\end{DoxyParamCaption})}
+
+Render a portion of a texture 
+\begin{DoxyParams}{Parameters}
+{\em pos} & Position of the texture \\
+\hline
+{\em size} & Size of the texture \\
+\hline
+{\em texture\+\_\+pos} & Position of the portion of the texture \\
+\hline
+{\em texture\+\_\+size} & Size of the portion of the texture \\
+\hline
+{\em texture\+\_\+total\+\_\+size} & Size of the whole texture \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00126}{126}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a9dd8b741a49adcf393471220b2eb6aa9}\label{classRenderer_a9dd8b741a49adcf393471220b2eb6aa9} 
+\index{Renderer@{Renderer}!DrawTriangle@{DrawTriangle}}
+\index{DrawTriangle@{DrawTriangle}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{DrawTriangle()}{DrawTriangle()}}
+{\footnotesize\ttfamily void Renderer\+::\+Draw\+Triangle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos1,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos2,  }\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos3,  }\item[{\mbox{\hyperlink{structVec4}{Vec4}}}]{color,  }\item[{float}]{layer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00186}{186}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aff0595f20aa72ce023a9f16772a393f1}\label{classRenderer_aff0595f20aa72ce023a9f16772a393f1} 
+\index{Renderer@{Renderer}!GetFramebufferID@{GetFramebufferID}}
+\index{GetFramebufferID@{GetFramebufferID}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{GetFramebufferID()}{GetFramebufferID()}}
+{\footnotesize\ttfamily unsigned int Renderer\+::\+Get\+Framebuffer\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8hpp_source_l00086}{86}} of file \mbox{\hyperlink{renderer_8hpp_source}{renderer.\+hpp}}.
+
+\Hypertarget{classRenderer_a3cd597ab29233a5a14b666df13209c0a}\label{classRenderer_a3cd597ab29233a5a14b666df13209c0a} 
+\index{Renderer@{Renderer}!GetIntersection@{GetIntersection}}
+\index{GetIntersection@{GetIntersection}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{GetIntersection()}{GetIntersection()}}
+{\footnotesize\ttfamily std\+::pair$<$ \mbox{\hyperlink{structVec2}{Vec2}}, float $>$ Renderer\+::\+Get\+Intersection (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ \mbox{\hyperlink{structVec2}{Vec2}}, \mbox{\hyperlink{structVec2}{Vec2}} $>$ \&}]{ray,  }\item[{const std\+::pair$<$ \mbox{\hyperlink{structVec2}{Vec2}}, \mbox{\hyperlink{structVec2}{Vec2}} $>$ \&}]{seg }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00563}{563}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aee2533de307432966cf6408237050ded}\label{classRenderer_aee2533de307432966cf6408237050ded} 
+\index{Renderer@{Renderer}!GetLightsData@{GetLightsData}}
+\index{GetLightsData@{GetLightsData}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{GetLightsData()}{GetLightsData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structRendererData}{Renderer\+Data}} \texorpdfstring{$\ast$}{*} Renderer\+::\+Get\+Lights\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8hpp_source_l00085}{85}} of file \mbox{\hyperlink{renderer_8hpp_source}{renderer.\+hpp}}.
+
+\Hypertarget{classRenderer_ae52fc7e259598b8ac64d17a38b7f287e}\label{classRenderer_ae52fc7e259598b8ac64d17a38b7f287e} 
+\index{Renderer@{Renderer}!GetLineWidth@{GetLineWidth}}
+\index{GetLineWidth@{GetLineWidth}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{GetLineWidth()}{GetLineWidth()}}
+{\footnotesize\ttfamily float Renderer\+::\+Get\+Line\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00262}{262}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_afdaef6e4a00e043b5550771ff0e95990}\label{classRenderer_afdaef6e4a00e043b5550771ff0e95990} 
+\index{Renderer@{Renderer}!GetPointSize@{GetPointSize}}
+\index{GetPointSize@{GetPointSize}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{GetPointSize()}{GetPointSize()}}
+{\footnotesize\ttfamily float Renderer\+::\+Get\+Point\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00258}{258}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a504fde396da71e3ac4ec69ca98cfdb5d}\label{classRenderer_a504fde396da71e3ac4ec69ca98cfdb5d} 
+\index{Renderer@{Renderer}!GetSegments@{GetSegments}}
+\index{GetSegments@{GetSegments}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{GetSegments()}{GetSegments()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{structVec2}{Vec2}}, \mbox{\hyperlink{structVec2}{Vec2}} $>$ $>$ \& Renderer\+::\+Get\+Segments (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00559}{559}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a136ae28025b8802e6f63b76baf288e36}\label{classRenderer_a136ae28025b8802e6f63b76baf288e36} 
+\index{Renderer@{Renderer}!ImGui\_Close@{ImGui\_Close}}
+\index{ImGui\_Close@{ImGui\_Close}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{ImGui\_Close()}{ImGui\_Close()}}
+{\footnotesize\ttfamily void Renderer\+::\+Im\+Gui\+\_\+\+Close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00835}{835}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_af1df06c1340ba4f80792c3da5dd535ac}\label{classRenderer_af1df06c1340ba4f80792c3da5dd535ac} 
+\index{Renderer@{Renderer}!ImGui\_Content@{ImGui\_Content}}
+\index{ImGui\_Content@{ImGui\_Content}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{ImGui\_Content()}{ImGui\_Content()}}
+{\footnotesize\ttfamily void Renderer\+::\+Im\+Gui\+\_\+\+Content (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00812}{812}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a0087733bd01d2e282b26f3c91112638f}\label{classRenderer_a0087733bd01d2e282b26f3c91112638f} 
+\index{Renderer@{Renderer}!ImGui\_End\_Frame@{ImGui\_End\_Frame}}
+\index{ImGui\_End\_Frame@{ImGui\_End\_Frame}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{ImGui\_End\_Frame()}{ImGui\_End\_Frame()}}
+{\footnotesize\ttfamily void Renderer\+::\+Im\+Gui\+\_\+\+End\+\_\+\+Frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00829}{829}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_af359509c7e57700e03c93c347cbc3865}\label{classRenderer_af359509c7e57700e03c93c347cbc3865} 
+\index{Renderer@{Renderer}!ImGui\_Init@{ImGui\_Init}}
+\index{ImGui\_Init@{ImGui\_Init}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{ImGui\_Init()}{ImGui\_Init()}}
+{\footnotesize\ttfamily void Renderer\+::\+Im\+Gui\+\_\+\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00724}{724}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aea7fad4f1e5807117d98aaa78c4353d0}\label{classRenderer_aea7fad4f1e5807117d98aaa78c4353d0} 
+\index{Renderer@{Renderer}!ImGui\_Start\_Frame@{ImGui\_Start\_Frame}}
+\index{ImGui\_Start\_Frame@{ImGui\_Start\_Frame}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{ImGui\_Start\_Frame()}{ImGui\_Start\_Frame()}}
+{\footnotesize\ttfamily void Renderer\+::\+Im\+Gui\+\_\+\+Start\+\_\+\+Frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00806}{806}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_ac1db89a329e0dc1c58cf94004f048ab4}\label{classRenderer_ac1db89a329e0dc1c58cf94004f048ab4} 
+\index{Renderer@{Renderer}!ImGui\_Theme@{ImGui\_Theme}}
+\index{ImGui\_Theme@{ImGui\_Theme}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{ImGui\_Theme()}{ImGui\_Theme()}}
+{\footnotesize\ttfamily void Renderer\+::\+Im\+Gui\+\_\+\+Theme (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00733}{733}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a79f6fed1bd265625b2ced97c5ca24da0}\label{classRenderer_a79f6fed1bd265625b2ced97c5ca24da0} 
+\index{Renderer@{Renderer}!KeepCircle@{KeepCircle}}
+\index{KeepCircle@{KeepCircle}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{KeepCircle()}{KeepCircle()}}
+{\footnotesize\ttfamily void Renderer\+::\+Keep\+Circle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos,  }\item[{float}]{radius,  }\item[{float}]{blur\+Amount }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00682}{682}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a50d8bb9b9af0075a5190880cc90cb903}\label{classRenderer_a50d8bb9b9af0075a5190880cc90cb903} 
+\index{Renderer@{Renderer}!PostProcessing@{PostProcessing}}
+\index{PostProcessing@{PostProcessing}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{PostProcessing()}{PostProcessing()}}
+{\footnotesize\ttfamily void Renderer\+::\+Post\+Processing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00538}{538}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_afb52a0f909197fb58dbd76610d897d83}\label{classRenderer_afb52a0f909197fb58dbd76610d897d83} 
+\index{Renderer@{Renderer}!Render@{Render}}
+\index{Render@{Render}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily void Renderer\+::\+Render (\begin{DoxyParamCaption}\item[{bool}]{post\+\_\+processing = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00370}{370}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_afac314eddd06a0d5dd529ccf29128a47}\label{classRenderer_afac314eddd06a0d5dd529ccf29128a47} 
+\index{Renderer@{Renderer}!RenderLines@{RenderLines}}
+\index{RenderLines@{RenderLines}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{RenderLines()}{RenderLines()}}
+{\footnotesize\ttfamily void Renderer\+::\+Render\+Lines (\begin{DoxyParamCaption}\item[{float}]{max\+\_\+layer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00501}{501}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a15eae777c77615ce1e230325522d64cc}\label{classRenderer_a15eae777c77615ce1e230325522d64cc} 
+\index{Renderer@{Renderer}!RenderPoints@{RenderPoints}}
+\index{RenderPoints@{RenderPoints}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{RenderPoints()}{RenderPoints()}}
+{\footnotesize\ttfamily void Renderer\+::\+Render\+Points (\begin{DoxyParamCaption}\item[{float}]{max\+\_\+layer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00478}{478}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a192b326802e2546cacdc0df8dcc19f02}\label{classRenderer_a192b326802e2546cacdc0df8dcc19f02} 
+\index{Renderer@{Renderer}!RenderTextures@{RenderTextures}}
+\index{RenderTextures@{RenderTextures}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{RenderTextures()}{RenderTextures()}}
+{\footnotesize\ttfamily void Renderer\+::\+Render\+Textures (\begin{DoxyParamCaption}\item[{bool}]{post\+\_\+processing,  }\item[{float}]{max\+\_\+layer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00404}{404}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a1fac171486072531c0229a03a2ac20a2}\label{classRenderer_a1fac171486072531c0229a03a2ac20a2} 
+\index{Renderer@{Renderer}!RenderTriangles@{RenderTriangles}}
+\index{RenderTriangles@{RenderTriangles}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{RenderTriangles()}{RenderTriangles()}}
+{\footnotesize\ttfamily void Renderer\+::\+Render\+Triangles (\begin{DoxyParamCaption}\item[{float}]{max\+\_\+layer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00455}{455}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aa1a2c9a104fbca2459180a7cc9caed18}\label{classRenderer_aa1a2c9a104fbca2459180a7cc9caed18} 
+\index{Renderer@{Renderer}!SetAmbientLight@{SetAmbientLight}}
+\index{SetAmbientLight@{SetAmbientLight}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{SetAmbientLight()}{SetAmbientLight()}}
+{\footnotesize\ttfamily void Renderer\+::\+Set\+Ambient\+Light (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec3}{Vec3}}}]{color }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00266}{266}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a058defd18f9f8b4a7e9bc4e5d7bffaa1}\label{classRenderer_a058defd18f9f8b4a7e9bc4e5d7bffaa1} 
+\index{Renderer@{Renderer}!SetClearColor@{SetClearColor}}
+\index{SetClearColor@{SetClearColor}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{SetClearColor()}{SetClearColor()}}
+{\footnotesize\ttfamily void Renderer\+::\+Set\+Clear\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec3}{Vec3}}}]{color }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00270}{270}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a808953b70b7307a7ae634c7a2222e8a7}\label{classRenderer_a808953b70b7307a7ae634c7a2222e8a7} 
+\index{Renderer@{Renderer}!SetLineWidth@{SetLineWidth}}
+\index{SetLineWidth@{SetLineWidth}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{SetLineWidth()}{SetLineWidth()}}
+{\footnotesize\ttfamily void Renderer\+::\+Set\+Line\+Width (\begin{DoxyParamCaption}\item[{float}]{new\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00239}{239}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a0b15cacda9dc8f5bb17bc31817d05044}\label{classRenderer_a0b15cacda9dc8f5bb17bc31817d05044} 
+\index{Renderer@{Renderer}!SetPointSize@{SetPointSize}}
+\index{SetPointSize@{SetPointSize}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{SetPointSize()}{SetPointSize()}}
+{\footnotesize\ttfamily void Renderer\+::\+Set\+Point\+Size (\begin{DoxyParamCaption}\item[{float}]{new\+\_\+size }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+size} & the new diameter \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00251}{251}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a207600ba6ebf07c66bdca45576c2f6b6}\label{classRenderer_a207600ba6ebf07c66bdca45576c2f6b6} 
+\index{Renderer@{Renderer}!SetPostProcessing@{SetPostProcessing}}
+\index{SetPostProcessing@{SetPostProcessing}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{SetPostProcessing()}{SetPostProcessing()}}
+{\footnotesize\ttfamily void Renderer\+::\+Set\+Post\+Processing (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{uniform\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00534}{534}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_aae7529edbcbe2ed67356bda5ac584717}\label{classRenderer_aae7529edbcbe2ed67356bda5ac584717} 
+\index{Renderer@{Renderer}!StartScene@{StartScene}}
+\index{StartScene@{StartScene}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{StartScene()}{StartScene()}}
+{\footnotesize\ttfamily void Renderer\+::\+Start\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00274}{274}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a491fa10f0dcb5350219d6ddab67ec8a9}\label{classRenderer_a491fa10f0dcb5350219d6ddab67ec8a9} 
+\index{Renderer@{Renderer}!UpdateLineWidth@{UpdateLineWidth}}
+\index{UpdateLineWidth@{UpdateLineWidth}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{UpdateLineWidth()}{UpdateLineWidth()}}
+{\footnotesize\ttfamily void Renderer\+::\+Update\+Line\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00244}{244}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+\Hypertarget{classRenderer_a60e61d13fa06067f926c3da225ea7a58}\label{classRenderer_a60e61d13fa06067f926c3da225ea7a58} 
+\index{Renderer@{Renderer}!UpdateScreenSegments@{UpdateScreenSegments}}
+\index{UpdateScreenSegments@{UpdateScreenSegments}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{UpdateScreenSegments()}{UpdateScreenSegments()}}
+{\footnotesize\ttfamily void Renderer\+::\+Update\+Screen\+Segments (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8cpp_source_l00547}{547}} of file \mbox{\hyperlink{renderer_8cpp_source}{renderer.\+cpp}}.
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classRenderer_ad8bd9afbbd7af19d996da80e9d25890d}\label{classRenderer_ad8bd9afbbd7af19d996da80e9d25890d} 
+\index{Renderer@{Renderer}!Camera@{Camera}}
+\index{Camera@{Camera}!Renderer@{Renderer}}
+\doxysubsubsection{\texorpdfstring{Camera}{Camera}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{classCamera}{Camera}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8hpp_source_l00096}{96}} of file \mbox{\hyperlink{renderer_8hpp_source}{renderer.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{renderer_8hpp}{renderer.\+hpp}}\item 
+src/\mbox{\hyperlink{renderer_8cpp}{renderer.\+cpp}}\end{DoxyCompactItemize}

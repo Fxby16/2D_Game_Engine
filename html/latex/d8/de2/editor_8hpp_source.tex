@@ -1,0 +1,35 @@
+\doxysection{editor.\+hpp}
+\hypertarget{editor_8hpp_source}{}\label{editor_8hpp_source}\index{editor/include/editor.hpp@{editor/include/editor.hpp}}
+\mbox{\hyperlink{editor_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{camera_8hpp}{camera.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00005}00005\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classScene}{Scene}};}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00006}00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFramebuffer}{Framebuffer}};}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00007}00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSceneSerializer}{SceneSerializer}};}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00009}\mbox{\hyperlink{classEditor}{00009}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classEditor}{Editor}}\{}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00010}00010\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classEditor_a23e31a98fd9b36e73267ed8c1a8b4d20}{Editor}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ width,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ height,\textcolor{keywordtype}{float}\ fullscreen\_width,\textcolor{keywordtype}{float}\ fullscreen\_height);}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00012}00012\ \ \ \ \ \mbox{\hyperlink{classEditor_ad465abc9575af92b4fa61525085172d6}{\string~Editor}}();}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00014}00014\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEditor_af74f2677c064415671557178f8c681e9}{Run}}();}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00015}00015\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEditor_a243a7364a1829c8ea76294d84695a9f0}{OnImGuiUpdate}}();}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEditor_a8a19167711a7d06a31aab8c302f75bfd}{OnImGuiRender}}();\ \ \ }
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEditor_afe17da95ae7511d8f3f1c246d2c35eff}{OnSceneRender}}();}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00018}00018\ \textcolor{keyword}{private}:\ \ \ }
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00019}\mbox{\hyperlink{classEditor_a70538530bc36e033e360880ef311df61}{00019}}\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRenderer}{Renderer}};}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{void}\ EntitiesMenu(ImVec2\ pos);}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordtype}{void}\ ComponentsMenu(ImVec2\ pos);}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{classCamera}{Camera}}\ m\_Camera;}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{classScene}{Scene}}\ *m\_Scene=\textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{classFramebuffer}{Framebuffer}}\ *m\_SceneFramebuffer=\textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{classSceneSerializer}{SceneSerializer}}\ *m\_SceneSerializer;}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00028}00028\ \ \ \ \ uint32\_t\ m\_SelectedEntity=std::numeric\_limits<uint32\_t>::max();}
+\DoxyCodeLine{\Hypertarget{editor_8hpp_source_l00029}00029\ \};}
+
+\end{DoxyCode}

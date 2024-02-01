@@ -1,0 +1,204 @@
+\doxysection{Application Class Reference}
+\hypertarget{classApplication}{}\label{classApplication}\index{Application@{Application}}
+
+
+{\ttfamily \#include $<$application.\+hpp$>$}
+
+Inheritance diagram for Application\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d5/d4c/classApplication}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classApplication_a23e8b894faf5caaa59713e68cab69d7f}{Application}} (const char \texorpdfstring{$\ast$}{*}window\+\_\+name, unsigned int width, unsigned int height, float fullscreen\+\_\+width, float fullscreen\+\_\+height, bool imgui=true)
+\item 
+\mbox{\hyperlink{classApplication_a748bca84fefb9c12661cfaa2f623748d}{\texorpdfstring{$\sim$}{\string~}\+Application}} ()
+\item 
+void \mbox{\hyperlink{classApplication_aaf09cd6cb412086dc039e28cdb059f0d}{Run}} ()
+\item 
+virtual void \mbox{\hyperlink{classApplication_a000ed886585f09f57294b9f406f1ae23}{On\+Update}} (const double frame\+\_\+time)
+\item 
+virtual void \mbox{\hyperlink{classApplication_a0a2c6622abc34739ab8686283afd7704}{On\+Render}} ()
+\item 
+virtual void \mbox{\hyperlink{classApplication_a8df4fb9994788e74891e42028fc1db49}{On\+Im\+Gui\+Update}} ()
+\item 
+virtual void \mbox{\hyperlink{classApplication_a00e932a44f240a5dcd93617b9bdf0c43}{On\+Im\+Gui\+Render}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classApplication_a3b3d1c5023b40c815e4eb1dc1066839c}{m\+\_\+\+Window\+Name}}
+\item 
+float \mbox{\hyperlink{classApplication_a4d0d1abd924a9c680c453728083f8d4a}{m\+\_\+\+Fixed\+Time\+Step}} =1.\+0f/60.\+0f
+\item 
+float \mbox{\hyperlink{classApplication_a221d669e16598cc12791a1c41ebe67b6}{m\+\_\+\+Accumulator}} =0.\+0f
+\item 
+bool \mbox{\hyperlink{classApplication_a02c1619056211e3db407a65e8d87f2ba}{m\+\_\+\+Im\+Gui}}
+\item 
+\mbox{\hyperlink{classScene}{Scene}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classApplication_a8b7ebd7f8eed9e198d1685635c4f1a11}{m\+\_\+\+Scene}}
+\item 
+\mbox{\hyperlink{classCamera}{Camera}} \mbox{\hyperlink{classApplication_a239ef61b036edaa377da668e9eb848fe}{m\+\_\+\+Camera}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{application_8hpp_source_l00011}{11}} of file \mbox{\hyperlink{application_8hpp_source}{application.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classApplication_a23e8b894faf5caaa59713e68cab69d7f}\label{classApplication_a23e8b894faf5caaa59713e68cab69d7f} 
+\index{Application@{Application}!Application@{Application}}
+\index{Application@{Application}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{Application()}{Application()}}
+{\footnotesize\ttfamily Application\+::\+Application (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{window\+\_\+name,  }\item[{unsigned int}]{width,  }\item[{unsigned int}]{height,  }\item[{float}]{fullscreen\+\_\+width,  }\item[{float}]{fullscreen\+\_\+height,  }\item[{bool}]{imgui = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{application_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{application_8cpp_source}{application.\+cpp}}.
+
+\Hypertarget{classApplication_a748bca84fefb9c12661cfaa2f623748d}\label{classApplication_a748bca84fefb9c12661cfaa2f623748d} 
+\index{Application@{Application}!````~Application@{\texorpdfstring{$\sim$}{\string~}Application}}
+\index{````~Application@{\texorpdfstring{$\sim$}{\string~}Application}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Application()}{\string~Application()}}
+{\footnotesize\ttfamily Application\+::\texorpdfstring{$\sim$}{\string~}\+Application (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{application_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{application_8cpp_source}{application.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classApplication_a00e932a44f240a5dcd93617b9bdf0c43}\label{classApplication_a00e932a44f240a5dcd93617b9bdf0c43} 
+\index{Application@{Application}!OnImGuiRender@{OnImGuiRender}}
+\index{OnImGuiRender@{OnImGuiRender}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{OnImGuiRender()}{OnImGuiRender()}}
+{\footnotesize\ttfamily void Application\+::\+On\+Im\+Gui\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{application_8cpp_source_l00116}{116}} of file \mbox{\hyperlink{application_8cpp_source}{application.\+cpp}}.
+
+\Hypertarget{classApplication_a8df4fb9994788e74891e42028fc1db49}\label{classApplication_a8df4fb9994788e74891e42028fc1db49} 
+\index{Application@{Application}!OnImGuiUpdate@{OnImGuiUpdate}}
+\index{OnImGuiUpdate@{OnImGuiUpdate}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{OnImGuiUpdate()}{OnImGuiUpdate()}}
+{\footnotesize\ttfamily void Application\+::\+On\+Im\+Gui\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{application_8cpp_source_l00110}{110}} of file \mbox{\hyperlink{application_8cpp_source}{application.\+cpp}}.
+
+\Hypertarget{classApplication_a0a2c6622abc34739ab8686283afd7704}\label{classApplication_a0a2c6622abc34739ab8686283afd7704} 
+\index{Application@{Application}!OnRender@{OnRender}}
+\index{OnRender@{OnRender}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{OnRender()}{OnRender()}}
+{\footnotesize\ttfamily void Application\+::\+On\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classTest_a9f2ba727c2d79e89732165454353d2b9}{Test}}.
+
+
+
+Definition at line \mbox{\hyperlink{application_8cpp_source_l00102}{102}} of file \mbox{\hyperlink{application_8cpp_source}{application.\+cpp}}.
+
+\Hypertarget{classApplication_a000ed886585f09f57294b9f406f1ae23}\label{classApplication_a000ed886585f09f57294b9f406f1ae23} 
+\index{Application@{Application}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily void Application\+::\+On\+Update (\begin{DoxyParamCaption}\item[{const double}]{frame\+\_\+time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+This function is called every m\+\_\+\+Fixed\+Time\+Step seconds. It\textquotesingle{}s independent from the framerate. Edit m\+\_\+\+Fixed\+Time\+Step to change the time between two calls. 
+
+Reimplemented in \mbox{\hyperlink{classTest_a8f69d3c514830e9e421042409d12acd0}{Test}}.
+
+
+
+Definition at line \mbox{\hyperlink{application_8cpp_source_l00096}{96}} of file \mbox{\hyperlink{application_8cpp_source}{application.\+cpp}}.
+
+\Hypertarget{classApplication_aaf09cd6cb412086dc039e28cdb059f0d}\label{classApplication_aaf09cd6cb412086dc039e28cdb059f0d} 
+\index{Application@{Application}!Run@{Run}}
+\index{Run@{Run}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{Run()}{Run()}}
+{\footnotesize\ttfamily void Application\+::\+Run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{application_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{application_8cpp_source}{application.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classApplication_a221d669e16598cc12791a1c41ebe67b6}\label{classApplication_a221d669e16598cc12791a1c41ebe67b6} 
+\index{Application@{Application}!m\_Accumulator@{m\_Accumulator}}
+\index{m\_Accumulator@{m\_Accumulator}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{m\_Accumulator}{m\_Accumulator}}
+{\footnotesize\ttfamily float Application\+::m\+\_\+\+Accumulator =0.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{application_8hpp_source_l00030}{30}} of file \mbox{\hyperlink{application_8hpp_source}{application.\+hpp}}.
+
+\Hypertarget{classApplication_a239ef61b036edaa377da668e9eb848fe}\label{classApplication_a239ef61b036edaa377da668e9eb848fe} 
+\index{Application@{Application}!m\_Camera@{m\_Camera}}
+\index{m\_Camera@{m\_Camera}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{m\_Camera}{m\_Camera}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCamera}{Camera}} Application\+::m\+\_\+\+Camera\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{application_8hpp_source_l00033}{33}} of file \mbox{\hyperlink{application_8hpp_source}{application.\+hpp}}.
+
+\Hypertarget{classApplication_a4d0d1abd924a9c680c453728083f8d4a}\label{classApplication_a4d0d1abd924a9c680c453728083f8d4a} 
+\index{Application@{Application}!m\_FixedTimeStep@{m\_FixedTimeStep}}
+\index{m\_FixedTimeStep@{m\_FixedTimeStep}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{m\_FixedTimeStep}{m\_FixedTimeStep}}
+{\footnotesize\ttfamily float Application\+::m\+\_\+\+Fixed\+Time\+Step =1.\+0f/60.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{application_8hpp_source_l00029}{29}} of file \mbox{\hyperlink{application_8hpp_source}{application.\+hpp}}.
+
+\Hypertarget{classApplication_a02c1619056211e3db407a65e8d87f2ba}\label{classApplication_a02c1619056211e3db407a65e8d87f2ba} 
+\index{Application@{Application}!m\_ImGui@{m\_ImGui}}
+\index{m\_ImGui@{m\_ImGui}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{m\_ImGui}{m\_ImGui}}
+{\footnotesize\ttfamily bool Application\+::m\+\_\+\+Im\+Gui\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{application_8hpp_source_l00031}{31}} of file \mbox{\hyperlink{application_8hpp_source}{application.\+hpp}}.
+
+\Hypertarget{classApplication_a8b7ebd7f8eed9e198d1685635c4f1a11}\label{classApplication_a8b7ebd7f8eed9e198d1685635c4f1a11} 
+\index{Application@{Application}!m\_Scene@{m\_Scene}}
+\index{m\_Scene@{m\_Scene}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{m\_Scene}{m\_Scene}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene}{Scene}}\texorpdfstring{$\ast$}{*} Application\+::m\+\_\+\+Scene\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{application_8hpp_source_l00032}{32}} of file \mbox{\hyperlink{application_8hpp_source}{application.\+hpp}}.
+
+\Hypertarget{classApplication_a3b3d1c5023b40c815e4eb1dc1066839c}\label{classApplication_a3b3d1c5023b40c815e4eb1dc1066839c} 
+\index{Application@{Application}!m\_WindowName@{m\_WindowName}}
+\index{m\_WindowName@{m\_WindowName}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{m\_WindowName}{m\_WindowName}}
+{\footnotesize\ttfamily const char\texorpdfstring{$\ast$}{*} Application\+::m\+\_\+\+Window\+Name\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{application_8hpp_source_l00028}{28}} of file \mbox{\hyperlink{application_8hpp_source}{application.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{application_8hpp}{application.\+hpp}}\item 
+src/\mbox{\hyperlink{application_8cpp}{application.\+cpp}}\end{DoxyCompactItemize}

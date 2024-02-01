@@ -1,0 +1,131 @@
+\doxysection{Component\+Manager\texorpdfstring{$<$}{<} T, \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classComponentManager}{}\label{classComponentManager}\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+
+
+{\ttfamily \#include $<$entity.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{void}} \mbox{\hyperlink{classComponentManager_a673419ac6525975a6bddf3ccb9adcf3b}{Add\+Component}} (\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} \&\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{component}}, \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{uint32\+\_\+t}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{uid}})
+\item 
+\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{void}} \mbox{\hyperlink{classComponentManager_a9cca261af041371777ea173cb8d58286}{Remove\+Component}} (\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{uint32\+\_\+t}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{uid}})
+\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$ \& \mbox{\hyperlink{classComponentManager_adf1666245f68db2c7d22a27e73624cec}{Get\+Components}} ()
+\item 
+\mbox{\hyperlink{structRect}{Rect}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classComponentManager_a829d5919fbba3d6504e5184a8c9bddd7}{Get\+Component\+As\+Rect}} (\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{int}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{index}})
+\item 
+\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{void}} \mbox{\hyperlink{classComponentManager_acb0e5422075057a00f697ecf5e3e29f9}{Update}} (\mbox{\hyperlink{classScene}{Scene}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{scene}}, \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{float}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{frame\+\_\+time}})
+\item 
+\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{void}} \mbox{\hyperlink{classComponentManager_a28e818f06b5b38a6f0527ce0235e497d}{Render}} (\mbox{\hyperlink{classScene}{Scene}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{scene}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$ \mbox{\hyperlink{classComponentManager_a97168bd123b9ebd0c187272325233aac}{m\+\_\+\+Components}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{typename}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}, \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$ = 0$>$\newline
+class Component\+Manager$<$ T, $>$}
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00285}{285}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classComponentManager_a673419ac6525975a6bddf3ccb9adcf3b}\label{classComponentManager_a673419ac6525975a6bddf3ccb9adcf3b} 
+\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}!AddComponent@{AddComponent}}
+\index{AddComponent@{AddComponent}!ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+\doxysubsubsection{\texorpdfstring{AddComponent()}{AddComponent()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{typename}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$  = 0$>$ \\
+\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{void}} \mbox{\hyperlink{classComponentManager}{Component\+Manager}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}, $>$\+::\+Add\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} \&}]{component,  }\item[{\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00289}{289}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}\label{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c} 
+\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}}
+{\footnotesize\ttfamily template$<$typename T , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ T $>$  = 0$>$ \\
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classComponentManager}{Component\+Manager}}$<$ T, $>$\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+pointer to the component with the given uid, or nullptr if not found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00312}{312}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classComponentManager_a829d5919fbba3d6504e5184a8c9bddd7}\label{classComponentManager_a829d5919fbba3d6504e5184a8c9bddd7} 
+\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}!GetComponentAsRect@{GetComponentAsRect}}
+\index{GetComponentAsRect@{GetComponentAsRect}!ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+\doxysubsubsection{\texorpdfstring{GetComponentAsRect()}{GetComponentAsRect()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{typename}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$  = 0$>$ \\
+\mbox{\hyperlink{structRect}{Rect}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classComponentManager}{Component\+Manager}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}, $>$\+::\+Get\+Component\+As\+Rect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{int}}}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00324}{324}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classComponentManager_adf1666245f68db2c7d22a27e73624cec}\label{classComponentManager_adf1666245f68db2c7d22a27e73624cec} 
+\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{typename}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$  = 0$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$ \& \mbox{\hyperlink{classComponentManager}{Component\+Manager}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}, $>$\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00320}{320}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classComponentManager_a9cca261af041371777ea173cb8d58286}\label{classComponentManager_a9cca261af041371777ea173cb8d58286} 
+\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{typename}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$  = 0$>$ \\
+\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{void}} \mbox{\hyperlink{classComponentManager}{Component\+Manager}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}, $>$\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00296}{296}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classComponentManager_a28e818f06b5b38a6f0527ce0235e497d}\label{classComponentManager_a28e818f06b5b38a6f0527ce0235e497d} 
+\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}!Render@{Render}}
+\index{Render@{Render}!ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{typename}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$  = 0$>$ \\
+\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{void}} \mbox{\hyperlink{classComponentManager}{Component\+Manager}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}, $>$\+::\+Render (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene}{Scene}} \texorpdfstring{$\ast$}{*}}]{scene }\end{DoxyParamCaption})}
+
+\Hypertarget{classComponentManager_acb0e5422075057a00f697ecf5e3e29f9}\label{classComponentManager_acb0e5422075057a00f697ecf5e3e29f9} 
+\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}!Update@{Update}}
+\index{Update@{Update}!ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{typename}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$  = 0$>$ \\
+\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{void}} \mbox{\hyperlink{classComponentManager}{Component\+Manager}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}, $>$\+::\+Update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene}{Scene}} \texorpdfstring{$\ast$}{*}}]{scene,  }\item[{\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{float}}}]{frame\+\_\+time }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classComponentManager_a97168bd123b9ebd0c187272325233aac}\label{classComponentManager_a97168bd123b9ebd0c187272325233aac} 
+\index{ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}!m\_Components@{m\_Components}}
+\index{m\_Components@{m\_Components}!ComponentManager$<$ T, $>$@{ComponentManager$<$ T, $>$}}
+\doxysubsubsection{\texorpdfstring{m\_Components}{m\_Components}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{typename}} \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}} $>$  = 0$>$ \\
+std\+::vector$<$\mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}$>$ \mbox{\hyperlink{classComponentManager}{Component\+Manager}}$<$ \mbox{\hyperlink{classComponentManager_a064f9bb1141a26e0a0bcff1dff67a94c}{T}}, $>$\+::m\+\_\+\+Components}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00287}{287}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{entity_8hpp}{entity.\+hpp}}\end{DoxyCompactItemize}

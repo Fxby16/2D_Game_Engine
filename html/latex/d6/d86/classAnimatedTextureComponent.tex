@@ -1,0 +1,190 @@
+\doxysection{Animated\+Texture\+Component Class Reference}
+\hypertarget{classAnimatedTextureComponent}{}\label{classAnimatedTextureComponent}\index{AnimatedTextureComponent@{AnimatedTextureComponent}}
+
+
+{\ttfamily \#include $<$entity.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classAnimatedTextureComponent_a23fc92a9260807c9b0a04c6cc49d63e1}{Animated\+Texture\+Component}} (const std\+::string \&path, unsigned int tile\+\_\+width, unsigned int tile\+\_\+height, int mag\+\_\+filter, int min\+\_\+filter, float width, float height, float layer, bool play\+\_\+animation, bool loop\+\_\+animation, float animation\+\_\+delay, uint32\+\_\+t uid)
+\item 
+\mbox{\hyperlink{classAnimatedTextureComponent_af16629dd44d6a8ff93e06ddec711eb5e}{Animated\+Texture\+Component}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} $>$t, float width, float height, float layer, uint32\+\_\+t uid)
+\item 
+\mbox{\hyperlink{classAnimatedTextureComponent_a3793c8cd76720b192f0e52dbb01c3f0a}{Animated\+Texture\+Component}} ()
+\item 
+\mbox{\hyperlink{classAnimatedTextureComponent_a07f7d75ec522a97bde05608e345fbc51}{Animated\+Texture\+Component}} (\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \&other)
+\item 
+\mbox{\hyperlink{classAnimatedTextureComponent_a9bde02b41ea9e57fc0f00096a6c6cce9}{Animated\+Texture\+Component}} (\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \&\&other)
+\item 
+\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \& \mbox{\hyperlink{classAnimatedTextureComponent_a416ff11bc06eb6e1062ad0838d04d911}{operator=}} (\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \&b)
+\item 
+\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \& \mbox{\hyperlink{classAnimatedTextureComponent_af6f67689bed181154adf8466ff07c962}{operator=}} (\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \&\&b)
+\item 
+void \mbox{\hyperlink{classAnimatedTextureComponent_ab8bd4db7696d02be2b16692475f519b5}{Play\+Animation}} (bool loop=false, float delay=0.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} $>$ \mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\+\_\+\+Animated\+Texture}}
+\item 
+float \mbox{\hyperlink{classAnimatedTextureComponent_ab047a44dd4f3aeb2ad4dac1351316aaa}{m\+\_\+\+Width}}
+\item 
+float \mbox{\hyperlink{classAnimatedTextureComponent_a78007848cc0bf9ef2b9a07fb87041e2a}{m\+\_\+\+Height}}
+\item 
+float \mbox{\hyperlink{classAnimatedTextureComponent_ad7a0ef9cd1036d04862acec72e32370c}{m\+\_\+\+Layer}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classAnimatedTextureComponent_aa5109339a63aed90f3d2e39431463d06}{m\+\_\+\+UID}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00131}{131}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classAnimatedTextureComponent_a23fc92a9260807c9b0a04c6cc49d63e1}\label{classAnimatedTextureComponent_a23fc92a9260807c9b0a04c6cc49d63e1} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{AnimatedTextureComponent()}{AnimatedTextureComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily Animated\+Texture\+Component\+::\+Animated\+Texture\+Component (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path,  }\item[{unsigned int}]{tile\+\_\+width,  }\item[{unsigned int}]{tile\+\_\+height,  }\item[{int}]{mag\+\_\+filter,  }\item[{int}]{min\+\_\+filter,  }\item[{float}]{width,  }\item[{float}]{height,  }\item[{float}]{layer,  }\item[{bool}]{play\+\_\+animation,  }\item[{bool}]{loop\+\_\+animation,  }\item[{float}]{animation\+\_\+delay,  }\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8cpp_source_l00064}{64}} of file \mbox{\hyperlink{entity_8cpp_source}{entity.\+cpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_af16629dd44d6a8ff93e06ddec711eb5e}\label{classAnimatedTextureComponent_af16629dd44d6a8ff93e06ddec711eb5e} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{AnimatedTextureComponent()}{AnimatedTextureComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily Animated\+Texture\+Component\+::\+Animated\+Texture\+Component (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} $>$}]{t,  }\item[{float}]{width,  }\item[{float}]{height,  }\item[{float}]{layer,  }\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8cpp_source_l00071}{71}} of file \mbox{\hyperlink{entity_8cpp_source}{entity.\+cpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_a3793c8cd76720b192f0e52dbb01c3f0a}\label{classAnimatedTextureComponent_a3793c8cd76720b192f0e52dbb01c3f0a} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{AnimatedTextureComponent()}{AnimatedTextureComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily Animated\+Texture\+Component\+::\+Animated\+Texture\+Component (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00135}{135}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_a07f7d75ec522a97bde05608e345fbc51}\label{classAnimatedTextureComponent_a07f7d75ec522a97bde05608e345fbc51} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{AnimatedTextureComponent()}{AnimatedTextureComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily Animated\+Texture\+Component\+::\+Animated\+Texture\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8cpp_source_l00088}{88}} of file \mbox{\hyperlink{entity_8cpp_source}{entity.\+cpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_a9bde02b41ea9e57fc0f00096a6c6cce9}\label{classAnimatedTextureComponent_a9bde02b41ea9e57fc0f00096a6c6cce9} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{AnimatedTextureComponent()}{AnimatedTextureComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily Animated\+Texture\+Component\+::\+Animated\+Texture\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \&\&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8cpp_source_l00095}{95}} of file \mbox{\hyperlink{entity_8cpp_source}{entity.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classAnimatedTextureComponent_af6f67689bed181154adf8466ff07c962}\label{classAnimatedTextureComponent_af6f67689bed181154adf8466ff07c962} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!operator=@{operator=}}
+\index{operator=@{operator=}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \& Animated\+Texture\+Component\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \&\&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00147}{147}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_a416ff11bc06eb6e1062ad0838d04d911}\label{classAnimatedTextureComponent_a416ff11bc06eb6e1062ad0838d04d911} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!operator=@{operator=}}
+\index{operator=@{operator=}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \& Animated\+Texture\+Component\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00139}{139}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_ab8bd4db7696d02be2b16692475f519b5}\label{classAnimatedTextureComponent_ab8bd4db7696d02be2b16692475f519b5} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!PlayAnimation@{PlayAnimation}}
+\index{PlayAnimation@{PlayAnimation}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{PlayAnimation()}{PlayAnimation()}}
+{\footnotesize\ttfamily void Animated\+Texture\+Component\+::\+Play\+Animation (\begin{DoxyParamCaption}\item[{bool}]{loop = {\ttfamily false},  }\item[{float}]{delay = {\ttfamily 0.0f} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8cpp_source_l00102}{102}} of file \mbox{\hyperlink{entity_8cpp_source}{entity.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}\label{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!m\_AnimatedTexture@{m\_AnimatedTexture}}
+\index{m\_AnimatedTexture@{m\_AnimatedTexture}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{m\_AnimatedTexture}{m\_AnimatedTexture}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}}$>$ Animated\+Texture\+Component\+::m\+\_\+\+Animated\+Texture}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00160}{160}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_a78007848cc0bf9ef2b9a07fb87041e2a}\label{classAnimatedTextureComponent_a78007848cc0bf9ef2b9a07fb87041e2a} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!m\_Height@{m\_Height}}
+\index{m\_Height@{m\_Height}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{m\_Height}{m\_Height}}
+{\footnotesize\ttfamily float Animated\+Texture\+Component\+::m\+\_\+\+Height}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00161}{161}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_ad7a0ef9cd1036d04862acec72e32370c}\label{classAnimatedTextureComponent_ad7a0ef9cd1036d04862acec72e32370c} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!m\_Layer@{m\_Layer}}
+\index{m\_Layer@{m\_Layer}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{m\_Layer}{m\_Layer}}
+{\footnotesize\ttfamily float Animated\+Texture\+Component\+::m\+\_\+\+Layer}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00162}{162}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_aa5109339a63aed90f3d2e39431463d06}\label{classAnimatedTextureComponent_aa5109339a63aed90f3d2e39431463d06} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!m\_UID@{m\_UID}}
+\index{m\_UID@{m\_UID}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{m\_UID}{m\_UID}}
+{\footnotesize\ttfamily uint32\+\_\+t Animated\+Texture\+Component\+::m\+\_\+\+UID}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00163}{163}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+\Hypertarget{classAnimatedTextureComponent_ab047a44dd4f3aeb2ad4dac1351316aaa}\label{classAnimatedTextureComponent_ab047a44dd4f3aeb2ad4dac1351316aaa} 
+\index{AnimatedTextureComponent@{AnimatedTextureComponent}!m\_Width@{m\_Width}}
+\index{m\_Width@{m\_Width}!AnimatedTextureComponent@{AnimatedTextureComponent}}
+\doxysubsubsection{\texorpdfstring{m\_Width}{m\_Width}}
+{\footnotesize\ttfamily float Animated\+Texture\+Component\+::m\+\_\+\+Width}
+
+
+
+Definition at line \mbox{\hyperlink{entity_8hpp_source_l00161}{161}} of file \mbox{\hyperlink{entity_8hpp_source}{entity.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{entity_8hpp}{entity.\+hpp}}\item 
+src/\mbox{\hyperlink{entity_8cpp}{entity.\+cpp}}\end{DoxyCompactItemize}

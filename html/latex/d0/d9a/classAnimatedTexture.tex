@@ -1,0 +1,195 @@
+\doxysection{Animated\+Texture Class Reference}
+\hypertarget{classAnimatedTexture}{}\label{classAnimatedTexture}\index{AnimatedTexture@{AnimatedTexture}}
+
+
+{\ttfamily \#include $<$texture.\+hpp$>$}
+
+Inheritance diagram for Animated\+Texture\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{d0/d9a/classAnimatedTexture}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classAnimatedTexture_ae70e507c2b15537e67d0011da362f854}{Animated\+Texture}} (const std\+::string \&path, unsigned int tile\+\_\+width, unsigned int tile\+\_\+height, int mag\+\_\+filter, int min\+\_\+filter, bool playanimation, bool loopanimation, float animationdelay)
+\item 
+\mbox{\hyperlink{classAnimatedTexture_aea75d69283ec118ddd9fd261888ac345}{Animated\+Texture}} ()
+\item 
+\mbox{\hyperlink{classAnimatedTexture_a88787c65334cfafa45bbfedd29554818}{Animated\+Texture}} (\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \&other)
+\item 
+\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \& \mbox{\hyperlink{classAnimatedTexture_aee4c9702f41159beac42bf2148730146}{operator=}} (\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \&other)
+\item 
+\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \& \mbox{\hyperlink{classAnimatedTexture_a16788a96c2e0ff37f53d2c36706c8992}{operator=}} (\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \&\&other)
+\item 
+void \mbox{\hyperlink{classAnimatedTexture_acc14116c4dd8a6848eff735e43ec09b5}{Play\+Animation}} (bool loop=false, float delay=0.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSpriteSheet_ad72eabbfccf11d05657e4fdbf246a8af}{Sprite\+Sheet}} (const std\+::string \&path, unsigned int tile\+\_\+width, unsigned int tile\+\_\+height, int mag\+\_\+filter, int min\+\_\+filter)
+\item 
+\mbox{\hyperlink{classSpriteSheet_a668a486e11f46fc46b31f5b1eaf17242}{Sprite\+Sheet}} ()
+\item 
+\mbox{\hyperlink{classSpriteSheet_a6d9d71cb13648b20b7cd24f963023b40}{Sprite\+Sheet}} (\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&other)
+\item 
+\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \& \mbox{\hyperlink{classSpriteSheet_a5c6a3e68d40019858f6a5f3fea5846a8}{operator=}} (\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&other)
+\item 
+\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \& \mbox{\hyperlink{classSpriteSheet_a062fbd43eba3abff77777b03adf83f4f}{operator=}} (\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&\&other)
+\item 
+int \mbox{\hyperlink{classSpriteSheet_a4a7a6844268528ef44d07a0085786c64}{Get\+Tile\+Width}} () const
+\item 
+int \mbox{\hyperlink{classSpriteSheet_a4048a969b34dfb7c85b1a10cc901c883}{Get\+Tile\+Height}} () const
+\item 
+std\+::array$<$ \mbox{\hyperlink{structVertex}{Vertex}}, 4 $>$ \mbox{\hyperlink{classSpriteSheet_a2516769e6543a233ae1e85e2179c4bc7}{Create\+Quad\+Sprite\+Sheet}} (float x, float y, float width, float height, float row, float col, float layer, float tex\+ID)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classTexture}{Texture}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTexture_a6c275e3f186675ff6ed73ccf970e552f}{Texture}} ()
+\item 
+\mbox{\hyperlink{classTexture_adb5bc7d2becd52433aa2051e604b4103}{Texture}} (const std\+::string \&path, int mag\+\_\+filter, int min\+\_\+filter)
+\item 
+\mbox{\hyperlink{classTexture_ada21440a464408141990370fe4e47216}{Texture}} (\mbox{\hyperlink{classTexture}{Texture}} \&other)
+\item 
+\mbox{\hyperlink{classTexture_a09c4bcb7462f64c1d20fa69dba3cee8a}{\texorpdfstring{$\sim$}{\string~}\+Texture}} ()
+\item 
+void \mbox{\hyperlink{classTexture_a14a2a70d9f130ac91a5ac95c8a4c7831}{Bind}} (unsigned int slot=0) const
+\item 
+void \mbox{\hyperlink{classTexture_a0bff249ecfb46e9b08c6ba52d64a921e}{Unbind}} () const
+\item 
+int \mbox{\hyperlink{classTexture_a7f5ee18c7466f904fa371bd97399a944}{Get\+Width}} () const
+\item 
+int \mbox{\hyperlink{classTexture_a289701837e23c9272509f377524ee8f2}{Get\+Height}} () const
+\item 
+unsigned int \mbox{\hyperlink{classTexture_a0d60206f4ebb8f25b27d7357fc66acaf}{Get\+Tex\+ID}} () const
+\item 
+\mbox{\hyperlink{classTexture}{Texture}} \& \mbox{\hyperlink{classTexture_addccb8f98ef64ddab7466183081342ef}{operator=}} (\mbox{\hyperlink{classTexture}{Texture}} \&other)
+\item 
+\mbox{\hyperlink{classTexture}{Texture}} \& \mbox{\hyperlink{classTexture_ae8d19c696efaf700f78cd070832732c9}{operator=}} (\mbox{\hyperlink{classTexture}{Texture}} \&\&other)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classAnimatedTexture_a70538530bc36e033e360880ef311df61}{Renderer}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classSpriteSheet_a572f69aa021c8f8344beddd46e067580}{m\+\_\+\+Tile\+Width}}
+\item 
+int \mbox{\hyperlink{classSpriteSheet_a5a0f9f477bf04859ae1cefd77bda5827}{m\+\_\+\+Tile\+Height}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classTexture}{Texture}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \mbox{\hyperlink{classTexture_adc7d177537708975e58494a5270ed4c1}{m\+\_\+\+ID}}
+\item 
+std\+::string \mbox{\hyperlink{classTexture_a9d4481cb414758aa1dbfcd3d00f71659}{m\+\_\+\+File\+Path}}
+\item 
+int \mbox{\hyperlink{classTexture_a9f275c654e1904d7153c2b93620f0b10}{m\+\_\+\+Mag\+Filter}}
+\item 
+int \mbox{\hyperlink{classTexture_a7b61d1b966dbb4ddbfb8396ff3dec3d2}{m\+\_\+\+Min\+Filter}}
+\item 
+unsigned char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTexture_abaf199219963518e56d62c5997c0496e}{m\+\_\+\+Local\+Buffer}}
+\item 
+int \mbox{\hyperlink{classTexture_ad5fdfa61997967621f06cea669f1fc45}{m\+\_\+\+Width}}
+\item 
+int \mbox{\hyperlink{classTexture_a812d08761f477e09ccabcb64ef8e03ea}{m\+\_\+\+Height}}
+\item 
+int \mbox{\hyperlink{classTexture_a79cab6a926eb0c3d8d84c12cad762a4c}{m\+\_\+\+BPP}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00108}{108}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classAnimatedTexture_ae70e507c2b15537e67d0011da362f854}\label{classAnimatedTexture_ae70e507c2b15537e67d0011da362f854} 
+\index{AnimatedTexture@{AnimatedTexture}!AnimatedTexture@{AnimatedTexture}}
+\index{AnimatedTexture@{AnimatedTexture}!AnimatedTexture@{AnimatedTexture}}
+\doxysubsubsection{\texorpdfstring{AnimatedTexture()}{AnimatedTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Animated\+Texture\+::\+Animated\+Texture (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path,  }\item[{unsigned int}]{tile\+\_\+width,  }\item[{unsigned int}]{tile\+\_\+height,  }\item[{int}]{mag\+\_\+filter,  }\item[{int}]{min\+\_\+filter,  }\item[{bool}]{playanimation,  }\item[{bool}]{loopanimation,  }\item[{float}]{animationdelay }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00110}{110}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classAnimatedTexture_aea75d69283ec118ddd9fd261888ac345}\label{classAnimatedTexture_aea75d69283ec118ddd9fd261888ac345} 
+\index{AnimatedTexture@{AnimatedTexture}!AnimatedTexture@{AnimatedTexture}}
+\index{AnimatedTexture@{AnimatedTexture}!AnimatedTexture@{AnimatedTexture}}
+\doxysubsubsection{\texorpdfstring{AnimatedTexture()}{AnimatedTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Animated\+Texture\+::\+Animated\+Texture (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00112}{112}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classAnimatedTexture_a88787c65334cfafa45bbfedd29554818}\label{classAnimatedTexture_a88787c65334cfafa45bbfedd29554818} 
+\index{AnimatedTexture@{AnimatedTexture}!AnimatedTexture@{AnimatedTexture}}
+\index{AnimatedTexture@{AnimatedTexture}!AnimatedTexture@{AnimatedTexture}}
+\doxysubsubsection{\texorpdfstring{AnimatedTexture()}{AnimatedTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Animated\+Texture\+::\+Animated\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8cpp_source_l00094}{94}} of file \mbox{\hyperlink{texture_8cpp_source}{texture.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classAnimatedTexture_a16788a96c2e0ff37f53d2c36706c8992}\label{classAnimatedTexture_a16788a96c2e0ff37f53d2c36706c8992} 
+\index{AnimatedTexture@{AnimatedTexture}!operator=@{operator=}}
+\index{operator=@{operator=}!AnimatedTexture@{AnimatedTexture}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \& Animated\+Texture\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00133}{133}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classAnimatedTexture_aee4c9702f41159beac42bf2148730146}\label{classAnimatedTexture_aee4c9702f41159beac42bf2148730146} 
+\index{AnimatedTexture@{AnimatedTexture}!operator=@{operator=}}
+\index{operator=@{operator=}!AnimatedTexture@{AnimatedTexture}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \& Animated\+Texture\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classAnimatedTexture}{Animated\+Texture}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00115}{115}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classAnimatedTexture_acc14116c4dd8a6848eff735e43ec09b5}\label{classAnimatedTexture_acc14116c4dd8a6848eff735e43ec09b5} 
+\index{AnimatedTexture@{AnimatedTexture}!PlayAnimation@{PlayAnimation}}
+\index{PlayAnimation@{PlayAnimation}!AnimatedTexture@{AnimatedTexture}}
+\doxysubsubsection{\texorpdfstring{PlayAnimation()}{PlayAnimation()}}
+{\footnotesize\ttfamily void Animated\+Texture\+::\+Play\+Animation (\begin{DoxyParamCaption}\item[{bool}]{loop = {\ttfamily false},  }\item[{float}]{delay = {\ttfamily 0.0f} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8cpp_source_l00110}{110}} of file \mbox{\hyperlink{texture_8cpp_source}{texture.\+cpp}}.
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classAnimatedTexture_a70538530bc36e033e360880ef311df61}\label{classAnimatedTexture_a70538530bc36e033e360880ef311df61} 
+\index{AnimatedTexture@{AnimatedTexture}!Renderer@{Renderer}}
+\index{Renderer@{Renderer}!AnimatedTexture@{AnimatedTexture}}
+\doxysubsubsection{\texorpdfstring{Renderer}{Renderer}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{classRenderer}{Renderer}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00154}{154}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{texture_8hpp}{texture.\+hpp}}\item 
+src/\mbox{\hyperlink{texture_8cpp}{texture.\+cpp}}\end{DoxyCompactItemize}

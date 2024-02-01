@@ -1,0 +1,76 @@
+\doxysection{audio.\+cpp}
+\hypertarget{audio_8cpp_source}{}\label{audio_8cpp_source}\index{src/audio.cpp@{src/audio.cpp}}
+\mbox{\hyperlink{audio_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <pch.hpp>}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{audio_8hpp}{audio.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00004}\mbox{\hyperlink{audio_8hpp_af77251f0c7c42dafc1fbd3ad54dbd475}{00004}}\ SoLoud::Soloud\ \mbox{\hyperlink{audio_8cpp_af77251f0c7c42dafc1fbd3ad54dbd475}{SOLOUD}};}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00006}\mbox{\hyperlink{audio_8hpp_aa02f7c9cede3094b896d573cd1f2016e}{00006}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{audio_8cpp_aa02f7c9cede3094b896d573cd1f2016e}{InitAudio}}()\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00007}00007\ \ \ \ \ \mbox{\hyperlink{audio_8cpp_af77251f0c7c42dafc1fbd3ad54dbd475}{SOLOUD}}.init();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00008}00008\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00010}\mbox{\hyperlink{audio_8hpp_a7ce85b4c3a8968b0cc8b07dd711ddcb1}{00010}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{audio_8cpp_a7ce85b4c3a8968b0cc8b07dd711ddcb1}{DeinitAudio}}()\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{audio_8cpp_af77251f0c7c42dafc1fbd3ad54dbd475}{SOLOUD}}.deinit();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00012}00012\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00014}\mbox{\hyperlink{classAudioPlayer_a7b120d52f3a969874a02cc8238706924}{00014}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classAudioPlayer_a7b120d52f3a969874a02cc8238706924}{AudioPlayer::LoadAudio}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path)\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00015}00015\ \ \ \ \ PROFILE\_FUNCTION();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00017}00017\ \ \ \ \ m\_Wavs.resize(m\_WavIndex+1);}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00018}00018\ \ \ \ \ m\_Wavs[m\_WavIndex].load(path);}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00019}00019\ \ \ \ \ ++m\_WavIndex;}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{return}\ m\_WavIndex-\/1;}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00022}00022\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00024}\mbox{\hyperlink{classAudioPlayer_a78d4719f8b38905d42f16b9690409cca}{00024}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classAudioPlayer_a78d4719f8b38905d42f16b9690409cca}{AudioPlayer::LoadAudioLong}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path)\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00025}00025\ \ \ \ \ PROFILE\_FUNCTION();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00027}00027\ \ \ \ \ m\_WavStreams.resize(m\_WavStreamIndex+1);}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00028}00028\ \ \ \ \ m\_WavStreams[m\_WavStreamIndex].load(path);}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00029}00029\ \ \ \ \ ++m\_WavStreamIndex;}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{return}\ m\_WavStreamIndex-\/1;}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00032}00032\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00034}\mbox{\hyperlink{classAudioPlayer_a81b1457aa7c43228b09fa19ced723406}{00034}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAudioPlayer_a81b1457aa7c43228b09fa19ced723406}{AudioPlayer::PlayAudio}}(\textcolor{keywordtype}{int}\ index)\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00035}00035\ \ \ \ \ PROFILE\_FUNCTION();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00037}00037\ \ \ \ \ \mbox{\hyperlink{audio_8hpp_af77251f0c7c42dafc1fbd3ad54dbd475}{SOLOUD}}.play(m\_Wavs[index]);}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00038}00038\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00040}\mbox{\hyperlink{classAudioPlayer_aa8ed851a328e7b24a5e6aa941159d400}{00040}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAudioPlayer_aa8ed851a328e7b24a5e6aa941159d400}{AudioPlayer::PlayAudioLong}}(\textcolor{keywordtype}{int}\ index)\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00041}00041\ \ \ \ \ PROFILE\_FUNCTION();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00043}00043\ \ \ \ \ \mbox{\hyperlink{audio_8hpp_af77251f0c7c42dafc1fbd3ad54dbd475}{SOLOUD}}.play(m\_WavStreams[index]);}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00044}00044\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00046}\mbox{\hyperlink{classAudioPlayer_a504fddf8a2b1475f8257b3e0bea5ff09}{00046}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAudioPlayer_a504fddf8a2b1475f8257b3e0bea5ff09}{AudioPlayer::StopAudio}}(\textcolor{keywordtype}{int}\ index)\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00047}00047\ \ \ \ \ PROFILE\_FUNCTION();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00049}00049\ \ \ \ \ m\_Wavs[index].stop();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00052}\mbox{\hyperlink{classAudioPlayer_ad6d45fddebb7106751b6feb805daa9e8}{00052}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAudioPlayer_ad6d45fddebb7106751b6feb805daa9e8}{AudioPlayer::StopAudioLong}}(\textcolor{keywordtype}{int}\ index)\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00053}00053\ \ \ \ \ PROFILE\_FUNCTION();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00055}00055\ \ \ \ \ m\_WavStreams[index].stop();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00056}00056\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00058}\mbox{\hyperlink{classAudioPlayer_a0e4a79d992229867c0b7fa91ab14f5c2}{00058}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAudioPlayer_a0e4a79d992229867c0b7fa91ab14f5c2}{AudioPlayer::ClearAudio}}()\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00059}00059\ \ \ \ \ PROFILE\_FUNCTION();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00061}00061\ \ \ \ \ m\_Wavs.clear();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00062}00062\ \ \ \ \ m\_WavIndex=0;}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00063}00063\ \}}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00065}\mbox{\hyperlink{classAudioPlayer_a0781d029760855e4725253103881daf5}{00065}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAudioPlayer_a0781d029760855e4725253103881daf5}{AudioPlayer::ClearAudioLong}}()\{}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00066}00066\ \ \ \ \ PROFILE\_FUNCTION();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00068}00068\ \ \ \ \ m\_WavStreams.clear();}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00069}00069\ \ \ \ \ m\_WavStreamIndex=0;}
+\DoxyCodeLine{\Hypertarget{audio_8cpp_source_l00070}00070\ \}}
+
+\end{DoxyCode}

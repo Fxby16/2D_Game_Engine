@@ -1,0 +1,114 @@
+\doxysection{Test Class Reference}
+\hypertarget{classTest}{}\label{classTest}\index{Test@{Test}}
+Inheritance diagram for Test\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{df/da6/classTest}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTest_a7a12f77aa7cb11ed3834e087658e5d99}{Test}} (const char \texorpdfstring{$\ast$}{*}window\+\_\+name, unsigned int width, unsigned int height, float fullscreen\+\_\+width, float fullscreen\+\_\+height, bool imgui=false)
+\item 
+void \mbox{\hyperlink{classTest_a8f69d3c514830e9e421042409d12acd0}{On\+Update}} (double frame\+\_\+time) override
+\item 
+void \mbox{\hyperlink{classTest_a9f2ba727c2d79e89732165454353d2b9}{On\+Render}} () override
+\item 
+void \mbox{\hyperlink{classTest_a22e8f049cf50b93e7da8a134b1694d73}{Handle\+Buttons}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classApplication}{Application}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classApplication_a23e8b894faf5caaa59713e68cab69d7f}{Application}} (const char \texorpdfstring{$\ast$}{*}window\+\_\+name, unsigned int width, unsigned int height, float fullscreen\+\_\+width, float fullscreen\+\_\+height, bool imgui=true)
+\item 
+\mbox{\hyperlink{classApplication_a748bca84fefb9c12661cfaa2f623748d}{\texorpdfstring{$\sim$}{\string~}\+Application}} ()
+\item 
+void \mbox{\hyperlink{classApplication_aaf09cd6cb412086dc039e28cdb059f0d}{Run}} ()
+\item 
+virtual void \mbox{\hyperlink{classApplication_a8df4fb9994788e74891e42028fc1db49}{On\+Im\+Gui\+Update}} ()
+\item 
+virtual void \mbox{\hyperlink{classApplication_a00e932a44f240a5dcd93617b9bdf0c43}{On\+Im\+Gui\+Render}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classApplication}{Application}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classApplication_a3b3d1c5023b40c815e4eb1dc1066839c}{m\+\_\+\+Window\+Name}}
+\item 
+float \mbox{\hyperlink{classApplication_a4d0d1abd924a9c680c453728083f8d4a}{m\+\_\+\+Fixed\+Time\+Step}} =1.\+0f/60.\+0f
+\item 
+float \mbox{\hyperlink{classApplication_a221d669e16598cc12791a1c41ebe67b6}{m\+\_\+\+Accumulator}} =0.\+0f
+\item 
+bool \mbox{\hyperlink{classApplication_a02c1619056211e3db407a65e8d87f2ba}{m\+\_\+\+Im\+Gui}}
+\item 
+\mbox{\hyperlink{classScene}{Scene}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classApplication_a8b7ebd7f8eed9e198d1685635c4f1a11}{m\+\_\+\+Scene}}
+\item 
+\mbox{\hyperlink{classCamera}{Camera}} \mbox{\hyperlink{classApplication_a239ef61b036edaa377da668e9eb848fe}{m\+\_\+\+Camera}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{test_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{test_8cpp_source}{test.\+cpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTest_a7a12f77aa7cb11ed3834e087658e5d99}\label{classTest_a7a12f77aa7cb11ed3834e087658e5d99} 
+\index{Test@{Test}!Test@{Test}}
+\index{Test@{Test}!Test@{Test}}
+\doxysubsubsection{\texorpdfstring{Test()}{Test()}}
+{\footnotesize\ttfamily Test\+::\+Test (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{window\+\_\+name,  }\item[{unsigned int}]{width,  }\item[{unsigned int}]{height,  }\item[{float}]{fullscreen\+\_\+width,  }\item[{float}]{fullscreen\+\_\+height,  }\item[{bool}]{imgui = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{test_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{test_8cpp_source}{test.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTest_a22e8f049cf50b93e7da8a134b1694d73}\label{classTest_a22e8f049cf50b93e7da8a134b1694d73} 
+\index{Test@{Test}!HandleButtons@{HandleButtons}}
+\index{HandleButtons@{HandleButtons}!Test@{Test}}
+\doxysubsubsection{\texorpdfstring{HandleButtons()}{HandleButtons()}}
+{\footnotesize\ttfamily void Test\+::\+Handle\+Buttons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{test_8cpp_source_l00068}{68}} of file \mbox{\hyperlink{test_8cpp_source}{test.\+cpp}}.
+
+\Hypertarget{classTest_a9f2ba727c2d79e89732165454353d2b9}\label{classTest_a9f2ba727c2d79e89732165454353d2b9} 
+\index{Test@{Test}!OnRender@{OnRender}}
+\index{OnRender@{OnRender}!Test@{Test}}
+\doxysubsubsection{\texorpdfstring{OnRender()}{OnRender()}}
+{\footnotesize\ttfamily void Test\+::\+On\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classApplication_a0a2c6622abc34739ab8686283afd7704}{Application}}.
+
+
+
+Definition at line \mbox{\hyperlink{test_8cpp_source_l00051}{51}} of file \mbox{\hyperlink{test_8cpp_source}{test.\+cpp}}.
+
+\Hypertarget{classTest_a8f69d3c514830e9e421042409d12acd0}\label{classTest_a8f69d3c514830e9e421042409d12acd0} 
+\index{Test@{Test}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!Test@{Test}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily void Test\+::\+On\+Update (\begin{DoxyParamCaption}\item[{double}]{frame\+\_\+time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+This function is called every m\+\_\+\+Fixed\+Time\+Step seconds. It\textquotesingle{}s independent from the framerate. Edit m\+\_\+\+Fixed\+Time\+Step to change the time between two calls. 
+
+Reimplemented from \mbox{\hyperlink{classApplication_a000ed886585f09f57294b9f406f1ae23}{Application}}.
+
+
+
+Definition at line \mbox{\hyperlink{test_8cpp_source_l00046}{46}} of file \mbox{\hyperlink{test_8cpp_source}{test.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test_8cpp}{test.\+cpp}}\end{DoxyCompactItemize}

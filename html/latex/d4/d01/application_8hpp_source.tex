@@ -1,0 +1,40 @@
+\doxysection{application.\+hpp}
+\hypertarget{application_8hpp_source}{}\label{application_8hpp_source}\index{include/application.hpp@{include/application.hpp}}
+\mbox{\hyperlink{application_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{renderer_8hpp}{renderer.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{audio_8hpp}{audio.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{textrenderer_8hpp}{textrenderer.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{texture_8hpp}{texture.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{scene_8hpp}{scene.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{window_8hpp}{window.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{camera_8hpp}{camera.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00011}\mbox{\hyperlink{classApplication}{00011}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classApplication}{Application}}\{}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00012}00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{classApplication_a23e8b894faf5caaa59713e68cab69d7f}{Application}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *window\_name,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ width,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ height,\textcolor{keywordtype}{float}\ fullscreen\_width,\textcolor{keywordtype}{float}\ fullscreen\_height,\textcolor{keywordtype}{bool}\ imgui=\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{classApplication_a748bca84fefb9c12661cfaa2f623748d}{\string~Application}}();}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classApplication_aaf09cd6cb412086dc039e28cdb059f0d}{Run}}();}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classApplication_a000ed886585f09f57294b9f406f1ae23}{OnUpdate}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ frame\_time);}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classApplication_a0a2c6622abc34739ab8686283afd7704}{OnRender}}();}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00024}00024\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classApplication_a8df4fb9994788e74891e42028fc1db49}{OnImGuiUpdate}}();}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classApplication_a00e932a44f240a5dcd93617b9bdf0c43}{OnImGuiRender}}();}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00027}00027\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00028}\mbox{\hyperlink{classApplication_a3b3d1c5023b40c815e4eb1dc1066839c}{00028}}\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{classApplication_a3b3d1c5023b40c815e4eb1dc1066839c}{m\_WindowName}};}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00029}\mbox{\hyperlink{classApplication_a4d0d1abd924a9c680c453728083f8d4a}{00029}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classApplication_a4d0d1abd924a9c680c453728083f8d4a}{m\_FixedTimeStep}}=1.0f/60.0f;}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00030}\mbox{\hyperlink{classApplication_a221d669e16598cc12791a1c41ebe67b6}{00030}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classApplication_a221d669e16598cc12791a1c41ebe67b6}{m\_Accumulator}}=0.0f;}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00031}\mbox{\hyperlink{classApplication_a02c1619056211e3db407a65e8d87f2ba}{00031}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classApplication_a02c1619056211e3db407a65e8d87f2ba}{m\_ImGui}};}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00032}\mbox{\hyperlink{classApplication_a8b7ebd7f8eed9e198d1685635c4f1a11}{00032}}\ \ \ \ \ \mbox{\hyperlink{classScene}{Scene}}\ *\mbox{\hyperlink{classApplication_a8b7ebd7f8eed9e198d1685635c4f1a11}{m\_Scene}};}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00033}\mbox{\hyperlink{classApplication_a239ef61b036edaa377da668e9eb848fe}{00033}}\ \ \ \ \ \mbox{\hyperlink{classCamera}{Camera}}\ \mbox{\hyperlink{classApplication_a239ef61b036edaa377da668e9eb848fe}{m\_Camera}};}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00035}00035\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ DEBUG}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ last\_time;}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00037}00037\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{application_8hpp_source_l00038}00038\ \};}
+
+\end{DoxyCode}

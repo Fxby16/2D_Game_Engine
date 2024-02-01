@@ -1,0 +1,28 @@
+\doxysection{test.\+hpp}
+\hypertarget{test_8hpp_source}{}\label{test_8hpp_source}\mbox{\hyperlink{test_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{scene_8hpp}{scene.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{buttons_8hpp}{buttons.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{window_8hpp}{window.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00005}00005\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespaceWindow}{Window}};}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00007}\mbox{\hyperlink{test_8hpp_aaa85367f4a49e5bd671f1e0ffba68f65}{00007}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{test_8hpp_aaa85367f4a49e5bd671f1e0ffba68f65}{Entity1Update}}(\mbox{\hyperlink{classScene}{Scene}}\ *scene,\mbox{\hyperlink{classNativeScriptComponent}{NativeScriptComponent}}\ *nsc,\textcolor{keywordtype}{float}\ frame\_time)\{}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00008}00008\ \ \ \ \ \mbox{\hyperlink{structVec2}{Vec2}}\ speed;}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00009}00009\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00010}00010\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{namespaceWindow_a6b80ef9ec5db71705905e96b1b560978}{GetKeyState}}(\mbox{\hyperlink{buttons_8hpp_afdebd5d771ee260c703a74f459767c09}{KEY\_W}},\mbox{\hyperlink{buttons_8hpp_a7e8516b8781963aa69154f9fc67b658a}{BUTTON\_DOWN}}))\{}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00011}00011\ \ \ \ \ \ \ \ \ speed.\mbox{\hyperlink{structVec2_a30543787e62f6d915543cf1dfb04c094}{y}}+=10.0f;}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00012}00012\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{namespaceWindow_a6b80ef9ec5db71705905e96b1b560978}{GetKeyState}}(\mbox{\hyperlink{buttons_8hpp_a6f09e2899747f5db41369ce1dae11ebd}{KEY\_S}},\mbox{\hyperlink{buttons_8hpp_a7e8516b8781963aa69154f9fc67b658a}{BUTTON\_DOWN}}))\{}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00014}00014\ \ \ \ \ \ \ \ \ speed.\mbox{\hyperlink{structVec2_a30543787e62f6d915543cf1dfb04c094}{y}}-\/=10.0f;}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00015}00015\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{namespaceWindow_a6b80ef9ec5db71705905e96b1b560978}{GetKeyState}}(\mbox{\hyperlink{buttons_8hpp_a024e62650f02bfd64a4ce2b158ec2dd7}{KEY\_A}},\mbox{\hyperlink{buttons_8hpp_a7e8516b8781963aa69154f9fc67b658a}{BUTTON\_DOWN}}))\{}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00017}00017\ \ \ \ \ \ \ \ \ speed.\mbox{\hyperlink{structVec2_adf8ee322d4b4bcc04146762c018d731f}{x}}-\/=10.0f;}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00018}00018\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{namespaceWindow_a6b80ef9ec5db71705905e96b1b560978}{GetKeyState}}(\mbox{\hyperlink{buttons_8hpp_ad2017b35fcff527a10050ab7c9af2d5c}{KEY\_D}},\mbox{\hyperlink{buttons_8hpp_a7e8516b8781963aa69154f9fc67b658a}{BUTTON\_DOWN}}))\{}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00020}00020\ \ \ \ \ \ \ \ \ speed.\mbox{\hyperlink{structVec2_adf8ee322d4b4bcc04146762c018d731f}{x}}+=10.0f;}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00021}00021\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00022}00022\ \ \ \ \ scene-\/>\mbox{\hyperlink{classScene_a4ad4cf92c611dd0b03d2111ecf259dab}{MoveEntity}}(nsc-\/>\mbox{\hyperlink{classNativeScriptComponent_a4294148364c65220c91ea3f22f32e2b9}{m\_UID}},speed.\mbox{\hyperlink{structVec2_adf8ee322d4b4bcc04146762c018d731f}{x}},speed.\mbox{\hyperlink{structVec2_a30543787e62f6d915543cf1dfb04c094}{y}});}
+\DoxyCodeLine{\Hypertarget{test_8hpp_source_l00023}00023\ \}}
+
+\end{DoxyCode}

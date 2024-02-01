@@ -1,0 +1,371 @@
+\doxysection{sceneserializer.\+cpp}
+\hypertarget{sceneserializer_8cpp_source}{}\label{sceneserializer_8cpp_source}\index{editor/src/sceneserializer.cpp@{editor/src/sceneserializer.cpp}}
+\mbox{\hyperlink{sceneserializer_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <pch.hpp>}\ \ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sceneserializer_8hpp}{sceneserializer.hpp}}>}\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{entity_8hpp}{entity.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{global_8hpp}{global.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00006}\mbox{\hyperlink{classSceneSerializer_a76b8f605e81ddfc2874a377ff1f4071e}{00006}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSceneSerializer_a76b8f605e81ddfc2874a377ff1f4071e}{SceneSerializer::SetScene}}(\mbox{\hyperlink{classScene}{Scene}}\ *scene)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00007}00007\ \ \ \ \ m\_Scene=scene;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00008}00008\ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00010}\mbox{\hyperlink{sceneserializer_8cpp_a805110e85516825f00a76a1a480c1134}{00010}}\ std::string\ \mbox{\hyperlink{sceneserializer_8cpp_a805110e85516825f00a76a1a480c1134}{BodyTypeToString}}(\mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1}{RigidbodyComponent::BodyType}}\ bodytype)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{switch}(bodytype)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a84a8921b25f505d0d2077aeb5db4bc16}{RigidbodyComponent::BodyType::Static}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Static"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a971fd8cc345d8bd9f92e9f7d88fdf20c}{RigidbodyComponent::BodyType::Dynamic}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Dynamic"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a40c78b58b86002ee38fad2d3c9dd787e}{RigidbodyComponent::BodyType::Kinematic}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Kinematic"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00016}00016\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00019}\mbox{\hyperlink{sceneserializer_8cpp_ad0d49f7258b52640e83382af8242b4ab}{00019}}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1}{RigidbodyComponent::BodyType}}\ \mbox{\hyperlink{sceneserializer_8cpp_ad0d49f7258b52640e83382af8242b4ab}{BodyTypeFromString}}(std::string\ bodytype)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{if}(bodytype==\textcolor{stringliteral}{"{}Static"{}})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a84a8921b25f505d0d2077aeb5db4bc16}{RigidbodyComponent::BodyType::Static}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{if}(bodytype==\textcolor{stringliteral}{"{}Dynamic"{}})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a971fd8cc345d8bd9f92e9f7d88fdf20c}{RigidbodyComponent::BodyType::Dynamic}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{if}(bodytype==\textcolor{stringliteral}{"{}Kinematic"{}})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a40c78b58b86002ee38fad2d3c9dd787e}{RigidbodyComponent::BodyType::Kinematic}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1a84a8921b25f505d0d2077aeb5db4bc16}{RigidbodyComponent::BodyType::Static}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00026}\mbox{\hyperlink{sceneserializer_8cpp_a1b2b15a33da2a673af6821e41e50914d}{00026}}\ std::string\ \mbox{\hyperlink{sceneserializer_8cpp_a1b2b15a33da2a673af6821e41e50914d}{LightTypeToString}}(\mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638}{LightType}}\ lighttype)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{switch}(lighttype)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a70c7d8a6420e4a53e68e58826e80e1a9}{LightType::ALL\_LIGHT}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}AllLight"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638ac71b25f8ac5f0870057cc6760ffb85a2}{LightType::LIGHT\_AROUND\_POS}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}LightAroundPos"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a384f360d73e3f96bc6dded48bdce7984}{LightType::LIGHT\_AROUND\_POS\_COLL}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}LightAroundPosColl"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00032}00032\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00033}00033\ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00035}\mbox{\hyperlink{sceneserializer_8cpp_a98ee0354222e0338a419e2de20966515}{00035}}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638}{LightType}}\ \mbox{\hyperlink{sceneserializer_8cpp_a98ee0354222e0338a419e2de20966515}{LightTypeFromString}}(std::string\ lighttype)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{if}(lighttype==\textcolor{stringliteral}{"{}AllLight"{}})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a70c7d8a6420e4a53e68e58826e80e1a9}{LightType::ALL\_LIGHT}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{keywordflow}{if}(lighttype==\textcolor{stringliteral}{"{}LightAroundPos"{}})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638ac71b25f8ac5f0870057cc6760ffb85a2}{LightType::LIGHT\_AROUND\_POS}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{if}(lighttype==\textcolor{stringliteral}{"{}LightAroundPosColl"{}})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a384f360d73e3f96bc6dded48bdce7984}{LightType::LIGHT\_AROUND\_POS\_COLL}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638a70c7d8a6420e4a53e68e58826e80e1a9}{LightType::ALL\_LIGHT}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00040}00040\ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00042}\mbox{\hyperlink{namespaceYAML}{00042}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceYAML}{YAML}}\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00044}\mbox{\hyperlink{structYAML_1_1convert_3_01Vec3_01_4}{00044}}\ \ \ \ \ \textcolor{keyword}{struct\ }convert<\mbox{\hyperlink{structVec3}{Vec3}}>\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00045}\mbox{\hyperlink{structYAML_1_1convert_3_01Vec3_01_4_a09c569d6bd280b5f3ad149b830ebf563}{00045}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Node\ \mbox{\hyperlink{structYAML_1_1convert_3_01Vec3_01_4_a09c569d6bd280b5f3ad149b830ebf563}{encode}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structVec3}{Vec3}}\ \&rhs)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ Node\ node;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ node.push\_back(rhs.\mbox{\hyperlink{structVec3_a88b99c08343ebb9782ced649f141bdfa}{r}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ node.push\_back(rhs.\mbox{\hyperlink{structVec3_aaa2eeb7391467ae32284d68dfdce099a}{g}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ node.push\_back(rhs.\mbox{\hyperlink{structVec3_a669a2d3429dc0a0f4a09fe69caa21a61}{b}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00053}\mbox{\hyperlink{structYAML_1_1convert_3_01Vec3_01_4_aa5c205ba4f56e096a24f8484d5a572c3}{00053}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structYAML_1_1convert_3_01Vec3_01_4_aa5c205ba4f56e096a24f8484d5a572c3}{decode}}(\textcolor{keyword}{const}\ Node\ \&node,\mbox{\hyperlink{structVec3}{Vec3}}\ \&rhs)\ \{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!node.IsSequence()\ ||\ node.size()!=3)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ rhs.\mbox{\hyperlink{structVec3_a88b99c08343ebb9782ced649f141bdfa}{r}}=node[0].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ rhs.\mbox{\hyperlink{structVec3_aaa2eeb7391467ae32284d68dfdce099a}{g}}=node[1].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ rhs.\mbox{\hyperlink{structVec3_a669a2d3429dc0a0f4a09fe69caa21a61}{b}}=node[2].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00063}00063\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00066}\mbox{\hyperlink{structYAML_1_1convert_3_01Vec2_01_4}{00066}}\ \ \ \ \ \textcolor{keyword}{struct\ }convert<\mbox{\hyperlink{structVec2}{Vec2}}>\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00067}\mbox{\hyperlink{structYAML_1_1convert_3_01Vec2_01_4_aa4a1a932018349bdb618a87cf08c4237}{00067}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Node\ \mbox{\hyperlink{structYAML_1_1convert_3_01Vec2_01_4_aa4a1a932018349bdb618a87cf08c4237}{encode}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structVec2}{Vec2}}\ \&rhs)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ Node\ node;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ node.push\_back(rhs.\mbox{\hyperlink{structVec2_adf8ee322d4b4bcc04146762c018d731f}{x}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ node.push\_back(rhs.\mbox{\hyperlink{structVec2_a30543787e62f6d915543cf1dfb04c094}{y}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00074}\mbox{\hyperlink{structYAML_1_1convert_3_01Vec2_01_4_aee20ab9ccea529154babac9f8893bb5e}{00074}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structYAML_1_1convert_3_01Vec2_01_4_aee20ab9ccea529154babac9f8893bb5e}{decode}}(\textcolor{keyword}{const}\ Node\ \&node,\mbox{\hyperlink{structVec2}{Vec2}}\ \&rhs)\ \{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!node.IsSequence()\ ||\ node.size()!=2)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ rhs.\mbox{\hyperlink{structVec2_adf8ee322d4b4bcc04146762c018d731f}{x}}=node[0].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ rhs.\mbox{\hyperlink{structVec2_a30543787e62f6d915543cf1dfb04c094}{y}}=node[1].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00083}00083\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00084}00084\ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00085}\mbox{\hyperlink{sceneserializer_8cpp_afafb983baad6911eb94f718c75f1e516}{00085}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sceneserializer_8cpp_afafb983baad6911eb94f718c75f1e516}{SerializeEntity}}(YAML::Emitter\ \&out,\mbox{\hyperlink{classEntity}{Entity}}\ \&entity,\mbox{\hyperlink{classScene}{Scene}}\ *scene)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00086}00086\ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//entity\ and\ components}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00087}00087\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00088}00088\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Entity"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00089}00089\ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//entity}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00091}00091\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}UID"{}}<<YAML::Value<<entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00092}00092\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}X"{}}<<YAML::Value<<entity.\mbox{\hyperlink{classEntity_a5d3cc96decb10d35855c216cb44c4b4a}{m\_X}};\ \ \ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00093}00093\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Y"{}}<<YAML::Value<<entity.\mbox{\hyperlink{classEntity_aa90e6e96463b1c9df5401782c4f02859}{m\_Y}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00094}00094\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}PreviousX"{}}<<YAML::Value<<entity.\mbox{\hyperlink{classEntity_a223aed4aa20b3ca19ce9c3c5b9dad25c}{m\_PreviousX}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00095}00095\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}PreviousY"{}}<<YAML::Value<<entity.\mbox{\hyperlink{classEntity_adc2bfde2009b609aa4a2b0dc2c913ba0}{m\_PreviousY}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00097}00097\ \ \ \ \ out<<YAML::EndMap;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{if}(scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classTagComponent}{TagComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}})!=\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}TagComponent"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//tag\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTagComponent}{TagComponent}}\ *tagcomponent=scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classTagComponent}{TagComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ std::string\ tag=tagcomponent-\/>\mbox{\hyperlink{classTagComponent_a7e1964f88fb587f89316012a5fefcd65}{m\_Tag}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ tag.erase(std::remove(tag.begin(),tag.end(),\textcolor{charliteral}{'\(\backslash\)0'}),tag.end());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Tag"{}}<<YAML::Value<<tag;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ out<<YAML::EndMap;\ \textcolor{comment}{//tag\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00111}00111\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00113}00113\ \ \ \ \ \textcolor{keywordflow}{if}(scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classTextureComponent}{TextureComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}})!=\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}TextureComponent"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//texture\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTextureComponent}{TextureComponent}}\ *texturecomponent=scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classTextureComponent}{TextureComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Filepath"{}}<<YAML::Value<<texturecomponent-\/>\mbox{\hyperlink{classTextureComponent_a69e1e33386dc9129a0c87d8b893faef9}{m\_Texture}}.get()-\/>m\_FilePath;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}MagFilter"{}}<<YAML::Value<<texturecomponent-\/>\mbox{\hyperlink{classTextureComponent_a69e1e33386dc9129a0c87d8b893faef9}{m\_Texture}}.get()-\/>m\_MagFilter;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}MinFilter"{}}<<YAML::Value<<texturecomponent-\/>\mbox{\hyperlink{classTextureComponent_a69e1e33386dc9129a0c87d8b893faef9}{m\_Texture}}.get()-\/>m\_MinFilter;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Width"{}}<<YAML::Value<<texturecomponent-\/>\mbox{\hyperlink{classTextureComponent_af49643c5c9ec0869605786974285b9f0}{m\_Width}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Height"{}}<<YAML::Value<<texturecomponent-\/>\mbox{\hyperlink{classTextureComponent_a0eb4cb2f402d508b06ebc57146b0ec9b}{m\_Height}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Layer"{}}<<YAML::Value<<texturecomponent-\/>\mbox{\hyperlink{classTextureComponent_acfca2080149b002284d265a8c174b762}{m\_Layer}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ out<<YAML::EndMap;\ \textcolor{comment}{//texture\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00128}00128\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00130}00130\ \ \ \ \ \textcolor{keywordflow}{if}(scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classAnimatedTextureComponent}{AnimatedTextureComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}})!=\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}AnimatedTextureComponent"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//animated\ texture\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classAnimatedTextureComponent}{AnimatedTextureComponent}}\ *animatedtexturecomponent=scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classAnimatedTextureComponent}{AnimatedTextureComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Filepath"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get()-\/>m\_FilePath;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}MagFilter"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get()-\/>m\_MagFilter;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}MinFilter"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get()-\/>m\_MinFilter;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}TileWidth"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get()-\/>m\_TileWidth;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}TileHeight"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get()-\/>m\_TileHeight;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}PlayAnimation"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get()-\/>m\_PlayAnimation;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}LoopAnimation"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get()-\/>m\_LoopAnimation;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}AnimationDelay"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_adf3d7524750ee75eb3f67b16cbe88935}{m\_AnimatedTexture}}.get()-\/>m\_AnimationDelay;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Width"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_ab047a44dd4f3aeb2ad4dac1351316aaa}{m\_Width}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Height"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_a78007848cc0bf9ef2b9a07fb87041e2a}{m\_Height}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Layer"{}}<<YAML::Value<<animatedtexturecomponent-\/>\mbox{\hyperlink{classAnimatedTextureComponent_ad7a0ef9cd1036d04862acec72e32370c}{m\_Layer}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ out<<YAML::EndMap;\ \textcolor{comment}{//animated\ texture\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00152}00152\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{if}(scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classRigidbodyComponent}{RigidbodyComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}})!=\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}RigidbodyComponent"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//rigidbody\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRigidbodyComponent}{RigidbodyComponent}}\ *rigidbodycomponent=scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classRigidbodyComponent}{RigidbodyComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}BodyType"{}}<<YAML::Value<<\mbox{\hyperlink{sceneserializer_8cpp_a805110e85516825f00a76a1a480c1134}{BodyTypeToString}}(rigidbodycomponent-\/>\mbox{\hyperlink{classRigidbodyComponent_a851b575febe33622a9e3545860e24606}{m\_BodyType}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}FixedRotation"{}}<<YAML::Value<<rigidbodycomponent-\/>\mbox{\hyperlink{classRigidbodyComponent_aa7b654d1b32ca52cec8cb875cd7edb68}{m\_FixedRotation}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ out<<YAML::EndMap;\ \textcolor{comment}{//rigidbody\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00164}00164\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00166}00166\ \ \ \ \ \textcolor{keywordflow}{if}(scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classBoxColliderComponent}{BoxColliderComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}})!=\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}BoxColliderComponent"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//box\ collider\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classBoxColliderComponent}{BoxColliderComponent}}\ *boxcollidercomponent=scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classBoxColliderComponent}{BoxColliderComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}XOffset"{}}<<YAML::Value<<boxcollidercomponent-\/>\mbox{\hyperlink{classBoxColliderComponent_a44af36ad2d5388000084d363a66db966}{m\_XOffset}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}YOffset"{}}<<YAML::Value<<boxcollidercomponent-\/>\mbox{\hyperlink{classBoxColliderComponent_a4f6c6d7dcfe51610b5445c3efab4b42a}{m\_YOffset}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Width"{}}<<YAML::Value<<boxcollidercomponent-\/>\mbox{\hyperlink{classBoxColliderComponent_a6bd76f6213f6eb0b6a2e250eb531bb8c}{m\_Width}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Height"{}}<<YAML::Value<<boxcollidercomponent-\/>\mbox{\hyperlink{classBoxColliderComponent_a88c12beec06d2de2b91574a78e85da4a}{m\_Height}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Density"{}}<<YAML::Value<<boxcollidercomponent-\/>\mbox{\hyperlink{classBoxColliderComponent_a3b603d3d20a9c73b6669fe035a3060c0}{m\_Density}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Friction"{}}<<YAML::Value<<boxcollidercomponent-\/>\mbox{\hyperlink{classBoxColliderComponent_ad8e1fd1d18102f21a981dce813c0f0da}{m\_Friction}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Restitution"{}}<<YAML::Value<<boxcollidercomponent-\/>\mbox{\hyperlink{classBoxColliderComponent_a0d74b24ce0e892775b9539159f534204}{m\_Restitution}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}RestitutionThreshold"{}}<<YAML::Value<<boxcollidercomponent-\/>\mbox{\hyperlink{classBoxColliderComponent_a36535a4c6401b0244fa8b4dca1d7bd35}{m\_RestitutionThreshold}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ out<<YAML::EndMap;\ \textcolor{comment}{//box\ collider\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00182}00182\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00184}00184\ \ \ \ \ \textcolor{keywordflow}{if}(scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classCircleColliderComponent}{CircleColliderComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}})!=\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}CircleColliderComponent"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//circle\ collider\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCircleColliderComponent}{CircleColliderComponent}}\ *circlecollidercomponent=scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classCircleColliderComponent}{CircleColliderComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}XOffset"{}}<<YAML::Value<<circlecollidercomponent-\/>\mbox{\hyperlink{classCircleColliderComponent_ad00e591f8ffeed96d5df7e64a72fcee5}{m\_XOffset}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}YOffset"{}}<<YAML::Value<<circlecollidercomponent-\/>\mbox{\hyperlink{classCircleColliderComponent_a71396a7a30796548cec3f651c6c3345f}{m\_YOffset}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Radius"{}}<<YAML::Value<<circlecollidercomponent-\/>\mbox{\hyperlink{classCircleColliderComponent_a085bdd54f4aafec97b6fe266373f7cfb}{m\_Radius}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Density"{}}<<YAML::Value<<circlecollidercomponent-\/>\mbox{\hyperlink{classCircleColliderComponent_a49b53c5aec689e3fa438efde60c14db7}{m\_Density}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Friction"{}}<<YAML::Value<<circlecollidercomponent-\/>\mbox{\hyperlink{classCircleColliderComponent_ade341c0edd79b03c9469d002f7166999}{m\_Friction}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Restitution"{}}<<YAML::Value<<circlecollidercomponent-\/>\mbox{\hyperlink{classCircleColliderComponent_a8399c9e4ff306dc961312d7d23a4144a}{m\_Restitution}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}RestitutionThreshold"{}}<<YAML::Value<<circlecollidercomponent-\/>\mbox{\hyperlink{classCircleColliderComponent_ac148749a7454652a238a50f6088a2a09}{m\_RestitutionThreshold}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ out<<YAML::EndMap;\ \textcolor{comment}{//circle\ collider\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00199}00199\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00201}00201\ \ \ \ \ \textcolor{keywordflow}{if}(scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classLightComponent}{LightComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}})!=\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}LightComponent"{}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ out<<YAML::BeginMap;\ \textcolor{comment}{//light\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classLightComponent}{LightComponent}}\ *lightcomponent=scene-\/>\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{GetComponent}}<\mbox{\hyperlink{classLightComponent}{LightComponent}}>(entity.\mbox{\hyperlink{classEntity_a8bec3f22c5fca5da948d5418462cf7c4}{m\_UID}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}XOffset"{}}<<YAML::Value<<lightcomponent-\/>\mbox{\hyperlink{classLightComponent_a0d9c36270f64b0c6a1a78514efeae908}{m\_XOffset}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}YOffset"{}}<<YAML::Value<<lightcomponent-\/>\mbox{\hyperlink{classLightComponent_af1560e21b9ede51f9641a8a38c0e3902}{m\_YOffset}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Radius"{}}<<YAML::Value<<lightcomponent-\/>\mbox{\hyperlink{classLightComponent_a1a4bc6ede97593b15c670dafbbe0505c}{m\_Radius}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Blur"{}}<<YAML::Value<<lightcomponent-\/>\mbox{\hyperlink{classLightComponent_a2fd9a193bd2c85644eefc853a40b3e96}{m\_Blur}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Color"{}}<<YAML::Value<<YAML::Flow<<YAML::BeginSeq<<lightcomponent-\/>\mbox{\hyperlink{classLightComponent_a511af346c0d85c36639764ce4efa56be}{m\_Color}}.\mbox{\hyperlink{structVec3_a88b99c08343ebb9782ced649f141bdfa}{r}}<<lightcomponent-\/>\mbox{\hyperlink{classLightComponent_a511af346c0d85c36639764ce4efa56be}{m\_Color}}.\mbox{\hyperlink{structVec3_aaa2eeb7391467ae32284d68dfdce099a}{g}}<<lightcomponent-\/>\mbox{\hyperlink{classLightComponent_a511af346c0d85c36639764ce4efa56be}{m\_Color}}.\mbox{\hyperlink{structVec3_a669a2d3429dc0a0f4a09fe69caa21a61}{b}}<<YAML::EndSeq;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}LightType"{}}<<YAML::Value<<\mbox{\hyperlink{sceneserializer_8cpp_a1b2b15a33da2a673af6821e41e50914d}{LightTypeToString}}(lightcomponent-\/>\mbox{\hyperlink{classLightComponent_ae1e6c43f39c974b1ecc7bc268289e1ac}{m\_Type}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ out<<YAML::EndMap;\ \textcolor{comment}{//light\ component}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00215}00215\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00217}00217\ \ \ \ \ out<<YAML::EndMap;\ \textcolor{comment}{//entity\ and\ components}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00218}00218\ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00220}\mbox{\hyperlink{classSceneSerializer_a2a354a60345ccbfb9991d9b945029b5e}{00220}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSceneSerializer_a2a354a60345ccbfb9991d9b945029b5e}{SceneSerializer::Serialize}}(\textcolor{keyword}{const}\ std::string\ \&path)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00221}00221\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Starting\ serialization\ of\ scene\ file\ \%s\(\backslash\)n"{}},path.c\_str());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00222}00222\ \ \ \ \ YAML::Emitter\ out;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00223}00223\ \ \ \ \ out<<YAML::BeginMap;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00224}00224\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Scene"{}}<<YAML::Value<<m\_Scene-\/>m\_Name;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00225}00225\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}ScalingFactor"{}}<<YAML::Value<<m\_Scene-\/>m\_ScalingFactor;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00226}00226\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Gravity"{}}<<YAML::Value<<YAML::Flow<<YAML::BeginSeq<<m\_Scene-\/>m\_Gravity.\mbox{\hyperlink{structVec2_adf8ee322d4b4bcc04146762c018d731f}{x}}<<m\_Scene-\/>m\_Gravity.\mbox{\hyperlink{structVec2_a30543787e62f6d915543cf1dfb04c094}{y}}<<YAML::EndSeq;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00227}00227\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}NextUID"{}}<<YAML::Value<<\mbox{\hyperlink{entity_8hpp_a93c23238a6fb697425d7a300e55a1a12}{NEXT\_UID}};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00228}00228\ \ \ \ \ out<<YAML::Key<<\textcolor{stringliteral}{"{}Entities"{}}<<YAML::Value<<YAML::BeginSeq;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00230}00230\ \ \ \ \ std::vector<Entity>\&\ entities=m\_Scene-\/>\mbox{\hyperlink{classScene_adaf5674e2add3977e70e11a70fab5440}{GetEntities}}();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00231}00231\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;i<entities.size();i++)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sceneserializer_8cpp_afafb983baad6911eb94f718c75f1e516}{SerializeEntity}}(out,entities[i],m\_Scene);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00233}00233\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00235}00235\ \ \ \ \ out<<YAML::EndSeq;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00236}00236\ \ \ \ \ out<<YAML::EndMap;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00238}00238\ \ \ \ \ FILE\ *fout=fopen(path.c\_str(),\textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00239}00239\ \ \ \ \ \textcolor{keywordflow}{if}(fout==NULL)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Failed\ to\ open\ scene\ file\ \%s:\ \%s\(\backslash\)n"{}},path.c\_str(),strerror(errno));}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00242}00242\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00243}00243\ \ \ \ \ fprintf(fout,\textcolor{stringliteral}{"{}\%s"{}},out.c\_str());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00244}00244\ \ \ \ \ fclose(fout);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00245}00245\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Serialization\ of\ scene\ file\ \%s\ completed\(\backslash\)n"{}},path.c\_str());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00246}00246\ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00248}\mbox{\hyperlink{classSceneSerializer_a88ead0631248aed1d300c1ee16975a81}{00248}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSceneSerializer_a88ead0631248aed1d300c1ee16975a81}{SceneSerializer::Deserialize}}(\textcolor{keyword}{const}\ std::string\ \&path)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00249}00249\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Starting\ deserialization\ of\ scene\ file\ \%s\(\backslash\)n"{}},path.c\_str());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00250}00250\ \ \ \ \ YAML::Node\ data;}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00251}00251\ \ \ \ \ \textcolor{keywordflow}{try}\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ data=YAML::LoadFile(path);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00253}00253\ \ \ \ \ \}\textcolor{keywordflow}{catch}(YAML::ParserException\ e)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Failed\ to\ load\ scene\ file\ \%s\(\backslash\)n"{}},path.c\_str());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00256}00256\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00258}00258\ \ \ \ \ \textcolor{keywordflow}{if}(!data[\textcolor{stringliteral}{"{}Scene"{}}])\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Scene\ file\ \%s\ is\ invalid\(\backslash\)n"{}},path.c\_str());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00261}00261\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00263}00263\ \ \ \ \ m\_Scene-\/>m\_Name=data[\textcolor{stringliteral}{"{}Scene"{}}].as<std::string>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00264}00264\ \ \ \ \ m\_Scene-\/>m\_ScalingFactor=data[\textcolor{stringliteral}{"{}ScalingFactor"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00265}00265\ \ \ \ \ m\_Scene-\/>m\_Gravity=data[\textcolor{stringliteral}{"{}Gravity"{}}].as<\mbox{\hyperlink{structVec2}{Vec2}}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00266}00266\ \ \ \ \ \mbox{\hyperlink{entity_8hpp_a93c23238a6fb697425d7a300e55a1a12}{NEXT\_UID}}=data[\textcolor{stringliteral}{"{}NextUID"{}}].as<uint32\_t>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00267}00267\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00268}00268\ \ \ \ \ \textcolor{keyword}{auto}\ entities=data[\textcolor{stringliteral}{"{}Entities"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00269}00269\ \ \ \ \ \textcolor{keywordflow}{if}(entities)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ e:entities)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ent=e[\textcolor{stringliteral}{"{}Entity"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ uid=ent[\textcolor{stringliteral}{"{}UID"{}}].as<uint32\_t>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a273b967a3d5b7846e544278a44e373af}{AddEntity}}(uid);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ entity=m\_Scene-\/>\mbox{\hyperlink{classScene_aa64be32b1695d97feaba19c05aba5287}{GetEntity}}(uid);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ entity-\/>\mbox{\hyperlink{classEntity_a5d3cc96decb10d35855c216cb44c4b4a}{m\_X}}=ent[\textcolor{stringliteral}{"{}X"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ entity-\/>m\_Y=ent[\textcolor{stringliteral}{"{}Y"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ entity-\/>m\_PreviousX=ent[\textcolor{stringliteral}{"{}PreviousX"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ entity-\/>m\_PreviousY=ent[\textcolor{stringliteral}{"{}PreviousY"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00279}00279\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ tagcomponent=e[\textcolor{stringliteral}{"{}TagComponent"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(tagcomponent)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ tag=tagcomponent[\textcolor{stringliteral}{"{}Tag"{}}].as<std::string>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a1cd6f186c048dd806260cbd7f4931f28}{AddComponent}}<\mbox{\hyperlink{classTagComponent}{TagComponent}}>(uid,tag);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ texturecomponent=e[\textcolor{stringliteral}{"{}TextureComponent"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(texturecomponent)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ filepath=texturecomponent[\textcolor{stringliteral}{"{}Filepath"{}}].as<std::string>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ magfilter=texturecomponent[\textcolor{stringliteral}{"{}MagFilter"{}}].as<\textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ minfilter=texturecomponent[\textcolor{stringliteral}{"{}MinFilter"{}}].as<\textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width=texturecomponent[\textcolor{stringliteral}{"{}Width"{}}].as<\textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ height=texturecomponent[\textcolor{stringliteral}{"{}Height"{}}].as<\textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ layer=texturecomponent[\textcolor{stringliteral}{"{}Layer"{}}].as<\textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00294}00294\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a1cd6f186c048dd806260cbd7f4931f28}{AddComponent}}<\mbox{\hyperlink{classTextureComponent}{TextureComponent}}>(uid,filepath,magfilter,minfilter,width,height,layer);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00297}00297\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ animatedtexturecomponent=e[\textcolor{stringliteral}{"{}AnimatedTextureComponent"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(animatedtexturecomponent)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ filepath=animatedtexturecomponent[\textcolor{stringliteral}{"{}Filepath"{}}].as<std::string>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ magfilter=animatedtexturecomponent[\textcolor{stringliteral}{"{}MagFilter"{}}].as<\textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ minfilter=animatedtexturecomponent[\textcolor{stringliteral}{"{}MinFilter"{}}].as<\textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tilewidth=animatedtexturecomponent[\textcolor{stringliteral}{"{}TileWidth"{}}].as<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tileheight=animatedtexturecomponent[\textcolor{stringliteral}{"{}TileHeight"{}}].as<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ playanimation=animatedtexturecomponent[\textcolor{stringliteral}{"{}PlayAnimation"{}}].as<\textcolor{keywordtype}{bool}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ loopanimation=animatedtexturecomponent[\textcolor{stringliteral}{"{}LoopAnimation"{}}].as<\textcolor{keywordtype}{bool}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ animationdelay=animatedtexturecomponent[\textcolor{stringliteral}{"{}AnimationDelay"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width=animatedtexturecomponent[\textcolor{stringliteral}{"{}Width"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ height=animatedtexturecomponent[\textcolor{stringliteral}{"{}Height"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ layer=animatedtexturecomponent[\textcolor{stringliteral}{"{}Layer"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00311}00311\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a1cd6f186c048dd806260cbd7f4931f28}{AddComponent}}<\mbox{\hyperlink{classAnimatedTextureComponent}{AnimatedTextureComponent}}>(uid,filepath,tilewidth,tileheight,magfilter,minfilter,width,height,layer,playanimation,loopanimation,animationdelay);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00314}00314\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rigidbodycomponent=e[\textcolor{stringliteral}{"{}RigidbodyComponent"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rigidbodycomponent)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRigidbodyComponent_aea9a870cc0b5ff0b73b041241d2defc1}{RigidbodyComponent::BodyType}}\ bodytype=\mbox{\hyperlink{sceneserializer_8cpp_ad0d49f7258b52640e83382af8242b4ab}{BodyTypeFromString}}(rigidbodycomponent[\textcolor{stringliteral}{"{}BodyType"{}}].as<std::string>());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ fixedrotation=rigidbodycomponent[\textcolor{stringliteral}{"{}FixedRotation"{}}].as<\textcolor{keywordtype}{bool}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a1cd6f186c048dd806260cbd7f4931f28}{AddComponent}}<\mbox{\hyperlink{classRigidbodyComponent}{RigidbodyComponent}}>(uid,bodytype,fixedrotation);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00322}00322\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ boxcollidercomponent=e[\textcolor{stringliteral}{"{}BoxColliderComponent"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(boxcollidercomponent)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xoffset=boxcollidercomponent[\textcolor{stringliteral}{"{}XOffset"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yoffset=boxcollidercomponent[\textcolor{stringliteral}{"{}YOffset"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ width=boxcollidercomponent[\textcolor{stringliteral}{"{}Width"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ height=boxcollidercomponent[\textcolor{stringliteral}{"{}Height"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ density=boxcollidercomponent[\textcolor{stringliteral}{"{}Density"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ friction=boxcollidercomponent[\textcolor{stringliteral}{"{}Friction"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ restitution=boxcollidercomponent[\textcolor{stringliteral}{"{}Restitution"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ restitutionthreshold=boxcollidercomponent[\textcolor{stringliteral}{"{}RestitutionThreshold"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00333}00333\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a1cd6f186c048dd806260cbd7f4931f28}{AddComponent}}<\mbox{\hyperlink{classBoxColliderComponent}{BoxColliderComponent}}>(uid,xoffset,yoffset,width,height,density,friction,restitution,restitutionthreshold);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00336}00336\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ circlecollidercomponent=e[\textcolor{stringliteral}{"{}CircleColliderComponent"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(circlecollidercomponent)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xoffset=circlecollidercomponent[\textcolor{stringliteral}{"{}XOffset"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yoffset=circlecollidercomponent[\textcolor{stringliteral}{"{}YOffset"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius=circlecollidercomponent[\textcolor{stringliteral}{"{}Radius"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ density=circlecollidercomponent[\textcolor{stringliteral}{"{}Density"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ friction=circlecollidercomponent[\textcolor{stringliteral}{"{}Friction"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ restitution=circlecollidercomponent[\textcolor{stringliteral}{"{}Restitution"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ restitutionthreshold=circlecollidercomponent[\textcolor{stringliteral}{"{}RestitutionThreshold"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a1cd6f186c048dd806260cbd7f4931f28}{AddComponent}}<\mbox{\hyperlink{classCircleColliderComponent}{CircleColliderComponent}}>(uid,xoffset,yoffset,radius,density,friction,restitution,restitutionthreshold);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ lightcomponent=e[\textcolor{stringliteral}{"{}LightComponent"{}}];}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(lightcomponent)\{}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xoffset=lightcomponent[\textcolor{stringliteral}{"{}XOffset"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yoffset=lightcomponent[\textcolor{stringliteral}{"{}YOffset"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius=lightcomponent[\textcolor{stringliteral}{"{}Radius"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ blur=lightcomponent[\textcolor{stringliteral}{"{}Blur"{}}].as<\textcolor{keywordtype}{float}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structVec3}{Vec3}}\ color=lightcomponent[\textcolor{stringliteral}{"{}Color"{}}].as<\mbox{\hyperlink{structVec3}{Vec3}}>();}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{global_8hpp_adc3ec8293e6a97ebe43f0196b9a7f638}{LightType}}\ lighttype=\mbox{\hyperlink{sceneserializer_8cpp_a98ee0354222e0338a419e2de20966515}{LightTypeFromString}}(lightcomponent[\textcolor{stringliteral}{"{}LightType"{}}].as<std::string>());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00358}00358\ }
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_Scene-\/>\mbox{\hyperlink{classScene_a1cd6f186c048dd806260cbd7f4931f28}{AddComponent}}<\mbox{\hyperlink{classLightComponent}{LightComponent}}>(uid,xoffset,yoffset,radius,blur,color,lighttype);}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00362}00362\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00363}00363\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Deserialization\ of\ scene\ file\ \%s\ completed\(\backslash\)n"{}},path.c\_str());}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00364}00364\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{sceneserializer_8cpp_source_l00365}00365\ \}}
+
+\end{DoxyCode}

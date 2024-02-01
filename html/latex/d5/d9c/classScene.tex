@@ -1,0 +1,613 @@
+\doxysection{Scene Class Reference}
+\hypertarget{classScene}{}\label{classScene}\index{Scene@{Scene}}
+
+
+{\ttfamily \#include $<$scene.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classScene_ad10176d75a9cc0da56626f682d083507}{Scene}} ()
+\item 
+\mbox{\hyperlink{classScene_aa8f88e4c6ad29a3f30b0c3f8a8fdace3}{Scene}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{const}} std\+::string \&\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{name}})
+\item 
+std\+::string \& \mbox{\hyperlink{classScene_a7f21877ce16e58f82787a8a01c882c76}{Get\+Name}} ()
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a9407db026adf6c1f86f6a0a6cf9e0e9a}{Set\+Scaling\+Factor}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{scaling\+\_\+factor}})
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a814180789581f482b75dd23beac9a906}{Set\+Gravity}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}} x, \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}} y)
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_ada8b3d8f095772285ce8d689d2278e84}{Set\+Gravity}} (\mbox{\hyperlink{structVec2}{Vec2}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{gravity}})
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a273b967a3d5b7846e544278a44e373af}{Add\+Entity}} ()
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a28fd9c5fcb3afe60fc37372e66ce3e82}{Add\+Entity}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+\mbox{\hyperlink{classEntity}{Entity}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_aa64be32b1695d97feaba19c05aba5287}{Get\+Entity}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a97efe78e04bfc2f99be0b1b1d9a51671}{Remove\+Entity}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a4ad4cf92c611dd0b03d2111ecf259dab}{Move\+Entity}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}}, \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{x\+\_\+offset}}, \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{y\+\_\+offset}})
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a53f017ed8ee436c16e53e332a7b1342b}{Set\+Entity\+Position}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}}, \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}} x, \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}} y)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{typename}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} , \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{typename}} ... Args$>$ }\\\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a1cd6f186c048dd806260cbd7f4931f28}{Add\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}}, Args...\+args)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{typename}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} $>$ }\\\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a4b6824f0299932f1b6e1f809932188ce}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a0b70f74cedb7612e54668ac8ffc9b467}{On\+Physics\+Start}} ()
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a03c5e1b0f60630efd53ed50e9e4aab78}{On\+Physics\+Update}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{double}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{frame\+\_\+time}})
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_ae91ca1e921506a0fc8293d1abf867906}{On\+Physics\+Stop}} ()
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_abbdc49300b936ea295f1b15616c3d7a4}{Update}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{double}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{frame\+\_\+time}})
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a91913b921d41d374e00eac347358dc14}{Render}} ()
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classEntity}{Entity}} $>$ \& \mbox{\hyperlink{classScene_adaf5674e2add3977e70e11a70fab5440}{Get\+Entities}} ()
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{typename}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} $>$  = 0$>$ }\\std\+::vector$<$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} $>$ \& \mbox{\hyperlink{classScene_acddaad611303a234391599cb4b9ed19c}{Get\+Components}} ()
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_a56b5d6e663697789ef940891a1358080}{Debug\+Draw}} ()
+\item 
+template$<$$>$ \mbox{\hyperlink{classTagComponent}{Tag\+Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_a86927272f9542b785b1923cc51e005f0}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+template$<$$>$ \mbox{\hyperlink{classTextureComponent}{Texture\+Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_a5c520a05fe74d45cb5dbf74d6c8fac80}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+template$<$$>$ \mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_a1822ac7d45c341ead04dd5cb59ac13ea}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+template$<$$>$ \mbox{\hyperlink{classLightComponent}{Light\+Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_ab9d1944fcadfafdff3dcec7af74c2ef3}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+template$<$$>$ \mbox{\hyperlink{classRigidbodyComponent}{Rigidbody\+Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_ac4afbebc08510c0fe991e280087fe40b}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+template$<$$>$ \mbox{\hyperlink{classBoxColliderComponent}{Box\+Collider\+Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_a52fdb3596037506f4308e5432cf78195}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+template$<$$>$ \mbox{\hyperlink{classCircleColliderComponent}{Circle\+Collider\+Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_ae2c8228b048416ebb628684c1b54fd31}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+template$<$$>$ \mbox{\hyperlink{classNativeScriptComponent}{Native\+Script\+Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classScene_ae5c735859f4e141cc63172e42d922481}{Get\+Component}} (uint32\+\_\+t uid)
+\item 
+template$<$$>$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_aa4abcc75d5da04de6e91e630188b4e42}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_aa4abcc75d5da04de6e91e630188b4e42}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_aa4abcc75d5da04de6e91e630188b4e42}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_aa4abcc75d5da04de6e91e630188b4e42}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_aa4abcc75d5da04de6e91e630188b4e42}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_aa4abcc75d5da04de6e91e630188b4e42}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_aa4abcc75d5da04de6e91e630188b4e42}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} \mbox{\hyperlink{classScene_aa4abcc75d5da04de6e91e630188b4e42}{Remove\+Component}} (\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uid}})
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{classTextureComponent}{Texture\+Component}} $>$ \& \mbox{\hyperlink{classScene_a5ec5f9dfacf4e072b069f45203f8df0a}{Get\+Components}} ()
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} $>$ \& \mbox{\hyperlink{classScene_a077700650ea84695fe78ad54030d466b}{Get\+Components}} ()
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{classLightComponent}{Light\+Component}} $>$ \& \mbox{\hyperlink{classScene_a0ece3b83c74736c017ab0b46f05880f5}{Get\+Components}} ()
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{classRigidbodyComponent}{Rigidbody\+Component}} $>$ \& \mbox{\hyperlink{classScene_ad9ed24502f386aa5eb3cea6b91d97401}{Get\+Components}} ()
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{classBoxColliderComponent}{Box\+Collider\+Component}} $>$ \& \mbox{\hyperlink{classScene_adde5553f4824b6e05c9ad4cd78705a4a}{Get\+Components}} ()
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{classCircleColliderComponent}{Circle\+Collider\+Component}} $>$ \& \mbox{\hyperlink{classScene_ae55e041b5d297b82b46b9ac63e37040d}{Get\+Components}} ()
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{classNativeScriptComponent}{Native\+Script\+Component}} $>$ \& \mbox{\hyperlink{classScene_a3ddb8962794954c1431c2c5036626955}{Get\+Components}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{class}} \mbox{\hyperlink{classScene_a5fa7cde0ffbc72d80ef032c1ea3e9c85}{Scene\+Serializer}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{scene_8hpp_source_l00005}{5}} of file \mbox{\hyperlink{scene_8hpp_source}{scene.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classScene_ad10176d75a9cc0da56626f682d083507}\label{classScene_ad10176d75a9cc0da56626f682d083507} 
+\index{Scene@{Scene}!Scene@{Scene}}
+\index{Scene@{Scene}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{Scene()}{Scene()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Scene\+::\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8hpp_source_l00007}{7}} of file \mbox{\hyperlink{scene_8hpp_source}{scene.\+hpp}}.
+
+\Hypertarget{classScene_aa8f88e4c6ad29a3f30b0c3f8a8fdace3}\label{classScene_aa8f88e4c6ad29a3f30b0c3f8a8fdace3} 
+\index{Scene@{Scene}!Scene@{Scene}}
+\index{Scene@{Scene}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{Scene()}{Scene()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Scene\+::\+Scene (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{const}} std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classScene_a1cd6f186c048dd806260cbd7f4931f28}\label{classScene_a1cd6f186c048dd806260cbd7f4931f28} 
+\index{Scene@{Scene}!AddComponent@{AddComponent}}
+\index{AddComponent@{AddComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{AddComponent()}{AddComponent()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{typename}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} , \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{typename}} ... Args$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Add\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid,  }\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8hpp_source_l00066}{66}} of file \mbox{\hyperlink{scene_8hpp_source}{scene.\+hpp}}.
+
+\Hypertarget{classScene_a273b967a3d5b7846e544278a44e373af}\label{classScene_a273b967a3d5b7846e544278a44e373af} 
+\index{Scene@{Scene}!AddEntity@{AddEntity}}
+\index{AddEntity@{AddEntity}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{AddEntity()}{AddEntity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}} Scene\+::\+Add\+Entity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a28fd9c5fcb3afe60fc37372e66ce3e82}\label{classScene_a28fd9c5fcb3afe60fc37372e66ce3e82} 
+\index{Scene@{Scene}!AddEntity@{AddEntity}}
+\index{AddEntity@{AddEntity}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{AddEntity()}{AddEntity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Add\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00046}{46}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a56b5d6e663697789ef940891a1358080}\label{classScene_a56b5d6e663697789ef940891a1358080} 
+\index{Scene@{Scene}!DebugDraw@{DebugDraw}}
+\index{DebugDraw@{DebugDraw}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{DebugDraw()}{DebugDraw()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Debug\+Draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00345}{345}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a4fdf11767e9c07c26234df7f4192b6ad}\label{classScene_a4fdf11767e9c07c26234df7f4192b6ad} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/9]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+\Hypertarget{classScene_a86927272f9542b785b1923cc51e005f0}\label{classScene_a86927272f9542b785b1923cc51e005f0} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classTagComponent}{Tag\+Component}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a5c520a05fe74d45cb5dbf74d6c8fac80}\label{classScene_a5c520a05fe74d45cb5dbf74d6c8fac80} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [3/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classTextureComponent}{Texture\+Component}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00080}{80}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a1822ac7d45c341ead04dd5cb59ac13ea}\label{classScene_a1822ac7d45c341ead04dd5cb59ac13ea} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [4/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_ab9d1944fcadfafdff3dcec7af74c2ef3}\label{classScene_ab9d1944fcadfafdff3dcec7af74c2ef3} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [5/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classLightComponent}{Light\+Component}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00094}{94}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_ac4afbebc08510c0fe991e280087fe40b}\label{classScene_ac4afbebc08510c0fe991e280087fe40b} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [6/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classRigidbodyComponent}{Rigidbody\+Component}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00101}{101}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a52fdb3596037506f4308e5432cf78195}\label{classScene_a52fdb3596037506f4308e5432cf78195} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [7/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classBoxColliderComponent}{Box\+Collider\+Component}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00108}{108}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_ae2c8228b048416ebb628684c1b54fd31}\label{classScene_ae2c8228b048416ebb628684c1b54fd31} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [8/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classCircleColliderComponent}{Circle\+Collider\+Component}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00115}{115}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_ae5c735859f4e141cc63172e42d922481}\label{classScene_ae5c735859f4e141cc63172e42d922481} 
+\index{Scene@{Scene}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [9/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classNativeScriptComponent}{Native\+Script\+Component}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00122}{122}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_acddaad611303a234391599cb4b9ed19c}\label{classScene_acddaad611303a234391599cb4b9ed19c} 
+\index{Scene@{Scene}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}\hspace{0.1cm}{\footnotesize\ttfamily [1/8]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{typename}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} , \mbox{\hyperlink{entity_8hpp_a8c263fb75c207f7bb05d74fc5b1a9d78}{Component\+Type}}$<$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} $>$  = 0$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} $>$ \& Scene\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classScene_a3ddb8962794954c1431c2c5036626955}\label{classScene_a3ddb8962794954c1431c2c5036626955} 
+\index{Scene@{Scene}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}\hspace{0.1cm}{\footnotesize\ttfamily [2/8]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classNativeScriptComponent}{Native\+Script\+Component}} $>$ \& Scene\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_ad9ed24502f386aa5eb3cea6b91d97401}\label{classScene_ad9ed24502f386aa5eb3cea6b91d97401} 
+\index{Scene@{Scene}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}\hspace{0.1cm}{\footnotesize\ttfamily [3/8]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classRigidbodyComponent}{Rigidbody\+Component}} $>$ \& Scene\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_ae55e041b5d297b82b46b9ac63e37040d}\label{classScene_ae55e041b5d297b82b46b9ac63e37040d} 
+\index{Scene@{Scene}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}\hspace{0.1cm}{\footnotesize\ttfamily [4/8]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classCircleColliderComponent}{Circle\+Collider\+Component}} $>$ \& Scene\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a5ec5f9dfacf4e072b069f45203f8df0a}\label{classScene_a5ec5f9dfacf4e072b069f45203f8df0a} 
+\index{Scene@{Scene}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}\hspace{0.1cm}{\footnotesize\ttfamily [5/8]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classTextureComponent}{Texture\+Component}} $>$ \& Scene\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a077700650ea84695fe78ad54030d466b}\label{classScene_a077700650ea84695fe78ad54030d466b} 
+\index{Scene@{Scene}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}\hspace{0.1cm}{\footnotesize\ttfamily [6/8]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classAnimatedTextureComponent}{Animated\+Texture\+Component}} $>$ \& Scene\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a0ece3b83c74736c017ab0b46f05880f5}\label{classScene_a0ece3b83c74736c017ab0b46f05880f5} 
+\index{Scene@{Scene}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}\hspace{0.1cm}{\footnotesize\ttfamily [7/8]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classLightComponent}{Light\+Component}} $>$ \& Scene\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_adde5553f4824b6e05c9ad4cd78705a4a}\label{classScene_adde5553f4824b6e05c9ad4cd78705a4a} 
+\index{Scene@{Scene}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}\hspace{0.1cm}{\footnotesize\ttfamily [8/8]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classBoxColliderComponent}{Box\+Collider\+Component}} $>$ \& Scene\+::\+Get\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_adaf5674e2add3977e70e11a70fab5440}\label{classScene_adaf5674e2add3977e70e11a70fab5440} 
+\index{Scene@{Scene}!GetEntities@{GetEntities}}
+\index{GetEntities@{GetEntities}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetEntities()}{GetEntities()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classEntity}{Entity}} $>$ \& Scene\+::\+Get\+Entities (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_aa64be32b1695d97feaba19c05aba5287}\label{classScene_aa64be32b1695d97feaba19c05aba5287} 
+\index{Scene@{Scene}!GetEntity@{GetEntity}}
+\index{GetEntity@{GetEntity}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetEntity()}{GetEntity()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classEntity}{Entity}} \texorpdfstring{$\ast$}{*} Scene\+::\+Get\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00050}{50}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a7f21877ce16e58f82787a8a01c882c76}\label{classScene_a7f21877ce16e58f82787a8a01c882c76} 
+\index{Scene@{Scene}!GetName@{GetName}}
+\index{GetName@{GetName}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{GetName()}{GetName()}}
+{\footnotesize\ttfamily std\+::string \& Scene\+::\+Get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a4ad4cf92c611dd0b03d2111ecf259dab}\label{classScene_a4ad4cf92c611dd0b03d2111ecf259dab} 
+\index{Scene@{Scene}!MoveEntity@{MoveEntity}}
+\index{MoveEntity@{MoveEntity}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{MoveEntity()}{MoveEntity()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Move\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid,  }\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}}}]{x\+\_\+offset,  }\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}}}]{y\+\_\+offset }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00263}{263}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a0b70f74cedb7612e54668ac8ffc9b467}\label{classScene_a0b70f74cedb7612e54668ac8ffc9b467} 
+\index{Scene@{Scene}!OnPhysicsStart@{OnPhysicsStart}}
+\index{OnPhysicsStart@{OnPhysicsStart}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{OnPhysicsStart()}{OnPhysicsStart()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+On\+Physics\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00276}{276}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_ae91ca1e921506a0fc8293d1abf867906}\label{classScene_ae91ca1e921506a0fc8293d1abf867906} 
+\index{Scene@{Scene}!OnPhysicsStop@{OnPhysicsStop}}
+\index{OnPhysicsStop@{OnPhysicsStop}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{OnPhysicsStop()}{OnPhysicsStop()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+On\+Physics\+Stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00301}{301}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a03c5e1b0f60630efd53ed50e9e4aab78}\label{classScene_a03c5e1b0f60630efd53ed50e9e4aab78} 
+\index{Scene@{Scene}!OnPhysicsUpdate@{OnPhysicsUpdate}}
+\index{OnPhysicsUpdate@{OnPhysicsUpdate}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{OnPhysicsUpdate()}{OnPhysicsUpdate()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+On\+Physics\+Update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{double}}}]{frame\+\_\+time }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00280}{280}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a4b6824f0299932f1b6e1f809932188ce}\label{classScene_a4b6824f0299932f1b6e1f809932188ce} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/9]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{typename}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{T}} $>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+\Hypertarget{classScene_aa4abcc75d5da04de6e91e630188b4e42}\label{classScene_aa4abcc75d5da04de6e91e630188b4e42} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00193}{193}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_aa4abcc75d5da04de6e91e630188b4e42}\label{classScene_aa4abcc75d5da04de6e91e630188b4e42} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [3/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00200}{200}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_aa4abcc75d5da04de6e91e630188b4e42}\label{classScene_aa4abcc75d5da04de6e91e630188b4e42} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [4/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00207}{207}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_aa4abcc75d5da04de6e91e630188b4e42}\label{classScene_aa4abcc75d5da04de6e91e630188b4e42} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [5/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00214}{214}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_aa4abcc75d5da04de6e91e630188b4e42}\label{classScene_aa4abcc75d5da04de6e91e630188b4e42} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [6/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00221}{221}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_aa4abcc75d5da04de6e91e630188b4e42}\label{classScene_aa4abcc75d5da04de6e91e630188b4e42} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [7/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00228}{228}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_aa4abcc75d5da04de6e91e630188b4e42}\label{classScene_aa4abcc75d5da04de6e91e630188b4e42} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [8/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00235}{235}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_aa4abcc75d5da04de6e91e630188b4e42}\label{classScene_aa4abcc75d5da04de6e91e630188b4e42} 
+\index{Scene@{Scene}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [9/9]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00242}{242}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a97efe78e04bfc2f99be0b1b1d9a51671}\label{classScene_a97efe78e04bfc2f99be0b1b1d9a51671} 
+\index{Scene@{Scene}!RemoveEntity@{RemoveEntity}}
+\index{RemoveEntity@{RemoveEntity}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{RemoveEntity()}{RemoveEntity()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Remove\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a91913b921d41d374e00eac347358dc14}\label{classScene_a91913b921d41d374e00eac347358dc14} 
+\index{Scene@{Scene}!Render@{Render}}
+\index{Render@{Render}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00255}{255}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a53f017ed8ee436c16e53e332a7b1342b}\label{classScene_a53f017ed8ee436c16e53e332a7b1342b} 
+\index{Scene@{Scene}!SetEntityPosition@{SetEntityPosition}}
+\index{SetEntityPosition@{SetEntityPosition}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{SetEntityPosition()}{SetEntityPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Set\+Entity\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{uint32\+\_\+t}}}]{uid,  }\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}}}]{x,  }\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}}}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00128}{128}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a814180789581f482b75dd23beac9a906}\label{classScene_a814180789581f482b75dd23beac9a906} 
+\index{Scene@{Scene}!SetGravity@{SetGravity}}
+\index{SetGravity@{SetGravity}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{SetGravity()}{SetGravity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Set\+Gravity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}}}]{x,  }\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}}}]{y }\end{DoxyParamCaption})}
+
+Set the gravity for the scene (m/s\texorpdfstring{$^\wedge$}{\string^}2) Should be called after \doxylink{classScene_a0b70f74cedb7612e54668ac8ffc9b467}{On\+Physics\+Start()} Default value is (0,-\/0.\+3) Adjust the gravity according to the scaling factor 
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_ada8b3d8f095772285ce8d689d2278e84}\label{classScene_ada8b3d8f095772285ce8d689d2278e84} 
+\index{Scene@{Scene}!SetGravity@{SetGravity}}
+\index{SetGravity@{SetGravity}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{SetGravity()}{SetGravity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Set\+Gravity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{gravity }\end{DoxyParamCaption})}
+
+Set the gravity for the scene (m/s\texorpdfstring{$^\wedge$}{\string^}2) Should be called after \doxylink{classScene_a0b70f74cedb7612e54668ac8ffc9b467}{On\+Physics\+Start()} Default value is (0,-\/0.\+3) Adjust the gravity according to the scaling factor 
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00036}{36}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_a9407db026adf6c1f86f6a0a6cf9e0e9a}\label{classScene_a9407db026adf6c1f86f6a0a6cf9e0e9a} 
+\index{Scene@{Scene}!SetScalingFactor@{SetScalingFactor}}
+\index{SetScalingFactor@{SetScalingFactor}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{SetScalingFactor()}{SetScalingFactor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Set\+Scaling\+Factor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{float}}}]{scaling\+\_\+factor }\end{DoxyParamCaption})}
+
+Set the scaling factor for the scene. Default value is 0.\+5 (1 meter = 0.\+5 units) 
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+\Hypertarget{classScene_abbdc49300b936ea295f1b15616c3d7a4}\label{classScene_abbdc49300b936ea295f1b15616c3d7a4} 
+\index{Scene@{Scene}!Update@{Update}}
+\index{Update@{Update}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{void}} Scene\+::\+Update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{double}}}]{frame\+\_\+time }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8cpp_source_l00248}{248}} of file \mbox{\hyperlink{scene_8cpp_source}{scene.\+cpp}}.
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classScene_a5fa7cde0ffbc72d80ef032c1ea3e9c85}\label{classScene_a5fa7cde0ffbc72d80ef032c1ea3e9c85} 
+\index{Scene@{Scene}!SceneSerializer@{SceneSerializer}}
+\index{SceneSerializer@{SceneSerializer}!Scene@{Scene}}
+\doxysubsubsection{\texorpdfstring{SceneSerializer}{SceneSerializer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{friend}} \mbox{\hyperlink{classScene_a4fdf11767e9c07c26234df7f4192b6ad}{class}} \mbox{\hyperlink{classSceneSerializer}{Scene\+Serializer}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line \mbox{\hyperlink{scene_8hpp_source_l00140}{140}} of file \mbox{\hyperlink{scene_8hpp_source}{scene.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{scene_8hpp}{scene.\+hpp}}\item 
+src/\mbox{\hyperlink{scene_8cpp}{scene.\+cpp}}\end{DoxyCompactItemize}

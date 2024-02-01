@@ -1,0 +1,47 @@
+\doxysection{editor/src/glfw.cpp File Reference}
+\hypertarget{glfw_8cpp}{}\label{glfw_8cpp}\index{editor/src/glfw.cpp@{editor/src/glfw.cpp}}
+{\ttfamily \#include $<$pch.\+hpp$>$}\newline
+{\ttfamily \#include $<$glfw.\+hpp$>$}\newline
+{\ttfamily \#include $<$window.\+hpp$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{glfw_8cpp_adb180918d1d062e281e3dd4a59997a8c}{Init\+Glfw\+Window}} (const char \texorpdfstring{$\ast$}{*}window\+\_\+name)
+\item 
+void GLAPIENTRY \mbox{\hyperlink{glfw_8cpp_a76259e93488aa188c59d8b8a80517f74}{Message\+Callback}} (GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar \texorpdfstring{$\ast$}{*}message, const void \texorpdfstring{$\ast$}{*}user\+Param)
+\item 
+void GLAPIENTRY \mbox{\hyperlink{glfw_8cpp_a6a77eac6d379016b70e8a6dda4429dbd}{Framebuffer\+Size\+Callback}} (GLFWwindow \texorpdfstring{$\ast$}{*}WINDOW, int width, int height)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{glfw_8cpp_a6a77eac6d379016b70e8a6dda4429dbd}\label{glfw_8cpp_a6a77eac6d379016b70e8a6dda4429dbd} 
+\index{glfw.cpp@{glfw.cpp}!FramebufferSizeCallback@{FramebufferSizeCallback}}
+\index{FramebufferSizeCallback@{FramebufferSizeCallback}!glfw.cpp@{glfw.cpp}}
+\doxysubsubsection{\texorpdfstring{FramebufferSizeCallback()}{FramebufferSizeCallback()}}
+{\footnotesize\ttfamily void GLAPIENTRY Framebuffer\+Size\+Callback (\begin{DoxyParamCaption}\item[{GLFWwindow \texorpdfstring{$\ast$}{*}}]{WINDOW,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{glfw_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{glfw_8cpp_source}{glfw.\+cpp}}.
+
+\Hypertarget{glfw_8cpp_adb180918d1d062e281e3dd4a59997a8c}\label{glfw_8cpp_adb180918d1d062e281e3dd4a59997a8c} 
+\index{glfw.cpp@{glfw.cpp}!InitGlfwWindow@{InitGlfwWindow}}
+\index{InitGlfwWindow@{InitGlfwWindow}!glfw.cpp@{glfw.cpp}}
+\doxysubsubsection{\texorpdfstring{InitGlfwWindow()}{InitGlfwWindow()}}
+{\footnotesize\ttfamily int Init\+Glfw\+Window (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{window\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{glfw_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{glfw_8cpp_source}{glfw.\+cpp}}.
+
+\Hypertarget{glfw_8cpp_a76259e93488aa188c59d8b8a80517f74}\label{glfw_8cpp_a76259e93488aa188c59d8b8a80517f74} 
+\index{glfw.cpp@{glfw.cpp}!MessageCallback@{MessageCallback}}
+\index{MessageCallback@{MessageCallback}!glfw.cpp@{glfw.cpp}}
+\doxysubsubsection{\texorpdfstring{MessageCallback()}{MessageCallback()}}
+{\footnotesize\ttfamily void GLAPIENTRY Message\+Callback (\begin{DoxyParamCaption}\item[{GLenum}]{source,  }\item[{GLenum}]{type,  }\item[{GLuint}]{id,  }\item[{GLenum}]{severity,  }\item[{GLsizei}]{length,  }\item[{const GLchar \texorpdfstring{$\ast$}{*}}]{message,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{user\+Param }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{glfw_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{glfw_8cpp_source}{glfw.\+cpp}}.
+

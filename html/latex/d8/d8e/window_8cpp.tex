@@ -1,0 +1,87 @@
+\doxysection{src/window.cpp File Reference}
+\hypertarget{window_8cpp}{}\label{window_8cpp}\index{src/window.cpp@{src/window.cpp}}
+{\ttfamily \#include $<$pch.\+hpp$>$}\newline
+{\ttfamily \#include $<$window.\+hpp$>$}\newline
+{\ttfamily \#include $<$buttons.\+hpp$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceWindow}{Window}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void GLAPIENTRY \mbox{\hyperlink{namespaceWindow_add6c2f98ed064236335c03f95eb6a456}{Window\+::\+Message\+Callback}} (GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar \texorpdfstring{$\ast$}{*}message, const void \texorpdfstring{$\ast$}{*}user\+Param)
+\item 
+void GLAPIENTRY \mbox{\hyperlink{namespaceWindow_a616f77c5a0754ca88f92add86863760b}{Window\+::\+Framebuffer\+Size\+Callback}} (GLFWwindow \texorpdfstring{$\ast$}{*}window, int width, int height)
+\item 
+void GLAPIENTRY \mbox{\hyperlink{namespaceWindow_a8d39fcb32c60884b8ff2317718c358a0}{Window\+::\+Key\+Callback}} (GLFWwindow \texorpdfstring{$\ast$}{*}window, int key, int scancode, int action, int mods)
+\item 
+void GLAPIENTRY \mbox{\hyperlink{namespaceWindow_a84cfc040a360382eea695025cd2e9e2e}{Window\+::\+Error\+Callback}} (int error, const char \texorpdfstring{$\ast$}{*}description)
+\item 
+void \mbox{\hyperlink{namespaceWindow_a0737af29b0e54294ebe96023d68d721b}{Window\+::\+Get\+Mouse\+Pos}} (double \texorpdfstring{$\ast$}{*}x, double \texorpdfstring{$\ast$}{*}y)
+\item 
+void \mbox{\hyperlink{namespaceWindow_a62d46e8fa33ba0df9d8e812f9cf59002}{Window\+::\+Show\+Metrics}} ()
+\item 
+int \mbox{\hyperlink{namespaceWindow_a5ddfa336ae0d083de5c05fa08356def0}{Window\+::\+Init\+Glfw\+Window}} (const char \texorpdfstring{$\ast$}{*}window\+\_\+name)
+\item 
+void \mbox{\hyperlink{namespaceWindow_acfe0c8c7ad26a342673640a0c479913a}{Window\+::\+Deinit\+Glfw\+Window}} ()
+\item 
+void \mbox{\hyperlink{namespaceWindow_a65149d93f9842363f53bdc3e07f459a6}{Window\+::\+Toggle\+Full\+Screen}} ()
+\item 
+void \mbox{\hyperlink{namespaceWindow_ae4ea98bf375c44b1158916bd468ab350}{Window\+::\+Toggle\+VSync}} ()
+\item 
+int \mbox{\hyperlink{namespaceWindow_a97906460b96ee4b01211b33c81d7d57f}{Window\+::parse\+Line}} (char \texorpdfstring{$\ast$}{*}line)
+\item 
+int \mbox{\hyperlink{namespaceWindow_aef584200e3f3655b1880f4dfbb395a9b}{Window\+::get\+Mem\+Info\+Value}} (const char \texorpdfstring{$\ast$}{*}value)
+\item 
+int \mbox{\hyperlink{namespaceWindow_a497aa98a2ebd188f1014f9a078f72f99}{Window\+::get\+Status\+Value}} (const char \texorpdfstring{$\ast$}{*}value)
+\item 
+void \mbox{\hyperlink{namespaceWindow_ac05f91e58394c275578fca7d4721ae75}{Window\+::\+Print\+Debug\+Info}} ()
+\item 
+bool \mbox{\hyperlink{namespaceWindow_a6b80ef9ec5db71705905e96b1b560978}{Window\+::\+Get\+Key\+State}} (int key, int state)
+\item 
+bool \mbox{\hyperlink{namespaceWindow_a29d93d3646e0281c8559963bf336bb30}{Window\+::\+Get\+Mouse\+Button\+State}} (int button, int state)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{window_8cpp_aa6768651109aee2bbfbba49394c74468}{ISFULLSCREEN}} =false
+\item 
+\mbox{\hyperlink{classRenderer}{Renderer}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{window_8cpp_a2c876fdbc79628a796247811f2940cf0}{RENDERER}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTextRenderer}{Text\+Renderer}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{window_8cpp_a09d462f1af34dedd95b9754af5468693}{TEXT\+\_\+\+RENDERERS}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{window_8cpp_aa6768651109aee2bbfbba49394c74468}\label{window_8cpp_aa6768651109aee2bbfbba49394c74468} 
+\index{window.cpp@{window.cpp}!ISFULLSCREEN@{ISFULLSCREEN}}
+\index{ISFULLSCREEN@{ISFULLSCREEN}!window.cpp@{window.cpp}}
+\doxysubsubsection{\texorpdfstring{ISFULLSCREEN}{ISFULLSCREEN}}
+{\footnotesize\ttfamily bool ISFULLSCREEN =false}
+
+
+
+Definition at line \mbox{\hyperlink{window_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{window_8cpp_source}{window.\+cpp}}.
+
+\Hypertarget{window_8cpp_a2c876fdbc79628a796247811f2940cf0}\label{window_8cpp_a2c876fdbc79628a796247811f2940cf0} 
+\index{window.cpp@{window.cpp}!RENDERER@{RENDERER}}
+\index{RENDERER@{RENDERER}!window.cpp@{window.cpp}}
+\doxysubsubsection{\texorpdfstring{RENDERER}{RENDERER}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classRenderer}{Renderer}}\texorpdfstring{$\ast$}{*} RENDERER}
+
+
+
+Definition at line \mbox{\hyperlink{window_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{window_8cpp_source}{window.\+cpp}}.
+
+\Hypertarget{window_8cpp_a09d462f1af34dedd95b9754af5468693}\label{window_8cpp_a09d462f1af34dedd95b9754af5468693} 
+\index{window.cpp@{window.cpp}!TEXT\_RENDERERS@{TEXT\_RENDERERS}}
+\index{TEXT\_RENDERERS@{TEXT\_RENDERERS}!window.cpp@{window.cpp}}
+\doxysubsubsection{\texorpdfstring{TEXT\_RENDERERS}{TEXT\_RENDERERS}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classTextRenderer}{Text\+Renderer}}\texorpdfstring{$\ast$}{*}$>$ TEXT\+\_\+\+RENDERERS}
+
+
+
+Definition at line \mbox{\hyperlink{window_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{window_8cpp_source}{window.\+cpp}}.
+

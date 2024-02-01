@@ -1,0 +1,178 @@
+\doxysection{Camera Class Reference}
+\hypertarget{classCamera}{}\label{classCamera}\index{Camera@{Camera}}
+
+
+{\ttfamily \#include $<$camera.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCamera_a01f94c3543f56ede7af49dc778f19331}{Camera}} ()
+\item 
+\mbox{\hyperlink{classCamera_adcb96efefa7af58e3ee6534b15d4979b}{\texorpdfstring{$\sim$}{\string~}\+Camera}} ()=default
+\item 
+void \mbox{\hyperlink{classCamera_a9f6cae59c47d1a26dfaac0727b8098d6}{Initialize\+Proj}} ()
+\item 
+void \mbox{\hyperlink{classCamera_a6bb42297bb090eab41b4e1418743c3d6}{Draw\+Scene\+Proj}} ()
+\item 
+void \mbox{\hyperlink{classCamera_ae253999714e9dbf5a44f21f4f3235b37}{Reset\+Scene\+Proj}} ()
+\item 
+glm\+::mat4 \mbox{\hyperlink{classCamera_ac5be0b9a950effe0e5f5993c182c12da}{Get\+View\+Matrix}} () const
+\item 
+void \mbox{\hyperlink{classCamera_afc2c44b634d26a1a0e77e309fe1a5e08}{Set\+Position}} (\mbox{\hyperlink{structVec2}{Vec2}} pos)
+\item 
+void \mbox{\hyperlink{classCamera_a8123dc885e91f95c1c3f941279007a3c}{Move}} (float x\+\_\+offset, float y\+\_\+offset)
+\item 
+void \mbox{\hyperlink{classCamera_a4137b9f6f3ed1098328f40bc70b4b7e8}{Set\+Zoom}} (float zoom)
+\item 
+void \mbox{\hyperlink{classCamera_a5392ede538e3d598e25526ebb9477634}{Zoom}} (float zoom\+\_\+offset)
+\item 
+void \mbox{\hyperlink{classCamera_a94bc315bc726cb13994346c349c3fcd5}{Set\+Rotation}} (float rotation)
+\item 
+void \mbox{\hyperlink{classCamera_ab7f4c4cb5c972f95b786f43686e5b184}{Rotate}} (float rotation\+\_\+offset)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{camera_8hpp_source_l00005}{5}} of file \mbox{\hyperlink{camera_8hpp_source}{camera.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCamera_a01f94c3543f56ede7af49dc778f19331}\label{classCamera_a01f94c3543f56ede7af49dc778f19331} 
+\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{Camera()}{Camera()}}
+{\footnotesize\ttfamily Camera\+::\+Camera (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_adcb96efefa7af58e3ee6534b15d4979b}\label{classCamera_adcb96efefa7af58e3ee6534b15d4979b} 
+\index{Camera@{Camera}!````~Camera@{\texorpdfstring{$\sim$}{\string~}Camera}}
+\index{````~Camera@{\texorpdfstring{$\sim$}{\string~}Camera}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Camera()}{\string~Camera()}}
+{\footnotesize\ttfamily Camera\+::\texorpdfstring{$\sim$}{\string~}\+Camera (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCamera_a6bb42297bb090eab41b4e1418743c3d6}\label{classCamera_a6bb42297bb090eab41b4e1418743c3d6} 
+\index{Camera@{Camera}!DrawSceneProj@{DrawSceneProj}}
+\index{DrawSceneProj@{DrawSceneProj}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{DrawSceneProj()}{DrawSceneProj()}}
+{\footnotesize\ttfamily void Camera\+::\+Draw\+Scene\+Proj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_ac5be0b9a950effe0e5f5993c182c12da}\label{classCamera_ac5be0b9a950effe0e5f5993c182c12da} 
+\index{Camera@{Camera}!GetViewMatrix@{GetViewMatrix}}
+\index{GetViewMatrix@{GetViewMatrix}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{GetViewMatrix()}{GetViewMatrix()}}
+{\footnotesize\ttfamily glm\+::mat4 Camera\+::\+Get\+View\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8hpp_source_l00014}{14}} of file \mbox{\hyperlink{camera_8hpp_source}{camera.\+hpp}}.
+
+\Hypertarget{classCamera_a9f6cae59c47d1a26dfaac0727b8098d6}\label{classCamera_a9f6cae59c47d1a26dfaac0727b8098d6} 
+\index{Camera@{Camera}!InitializeProj@{InitializeProj}}
+\index{InitializeProj@{InitializeProj}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{InitializeProj()}{InitializeProj()}}
+{\footnotesize\ttfamily void Camera\+::\+Initialize\+Proj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_a8123dc885e91f95c1c3f941279007a3c}\label{classCamera_a8123dc885e91f95c1c3f941279007a3c} 
+\index{Camera@{Camera}!Move@{Move}}
+\index{Move@{Move}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{Move()}{Move()}}
+{\footnotesize\ttfamily void Camera\+::\+Move (\begin{DoxyParamCaption}\item[{float}]{x\+\_\+offset,  }\item[{float}]{y\+\_\+offset }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_ae253999714e9dbf5a44f21f4f3235b37}\label{classCamera_ae253999714e9dbf5a44f21f4f3235b37} 
+\index{Camera@{Camera}!ResetSceneProj@{ResetSceneProj}}
+\index{ResetSceneProj@{ResetSceneProj}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{ResetSceneProj()}{ResetSceneProj()}}
+{\footnotesize\ttfamily void Camera\+::\+Reset\+Scene\+Proj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00061}{61}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_ab7f4c4cb5c972f95b786f43686e5b184}\label{classCamera_ab7f4c4cb5c972f95b786f43686e5b184} 
+\index{Camera@{Camera}!Rotate@{Rotate}}
+\index{Rotate@{Rotate}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{Rotate()}{Rotate()}}
+{\footnotesize\ttfamily void Camera\+::\+Rotate (\begin{DoxyParamCaption}\item[{float}]{rotation\+\_\+offset }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotation\+\_\+offset} & Angle offset in degrees \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00112}{112}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_afc2c44b634d26a1a0e77e309fe1a5e08}\label{classCamera_afc2c44b634d26a1a0e77e309fe1a5e08} 
+\index{Camera@{Camera}!SetPosition@{SetPosition}}
+\index{SetPosition@{SetPosition}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{SetPosition()}{SetPosition()}}
+{\footnotesize\ttfamily void Camera\+::\+Set\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVec2}{Vec2}}}]{pos }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00068}{68}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_a94bc315bc726cb13994346c349c3fcd5}\label{classCamera_a94bc315bc726cb13994346c349c3fcd5} 
+\index{Camera@{Camera}!SetRotation@{SetRotation}}
+\index{SetRotation@{SetRotation}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{SetRotation()}{SetRotation()}}
+{\footnotesize\ttfamily void Camera\+::\+Set\+Rotation (\begin{DoxyParamCaption}\item[{float}]{rotation }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotation} & Angle in degrees \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00105}{105}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_a4137b9f6f3ed1098328f40bc70b4b7e8}\label{classCamera_a4137b9f6f3ed1098328f40bc70b4b7e8} 
+\index{Camera@{Camera}!SetZoom@{SetZoom}}
+\index{SetZoom@{SetZoom}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{SetZoom()}{SetZoom()}}
+{\footnotesize\ttfamily void Camera\+::\+Set\+Zoom (\begin{DoxyParamCaption}\item[{float}]{zoom }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00083}{83}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+\Hypertarget{classCamera_a5392ede538e3d598e25526ebb9477634}\label{classCamera_a5392ede538e3d598e25526ebb9477634} 
+\index{Camera@{Camera}!Zoom@{Zoom}}
+\index{Zoom@{Zoom}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{Zoom()}{Zoom()}}
+{\footnotesize\ttfamily void Camera\+::\+Zoom (\begin{DoxyParamCaption}\item[{float}]{zoom\+\_\+offset }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8cpp_source_l00094}{94}} of file \mbox{\hyperlink{camera_8cpp_source}{camera.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{camera_8hpp}{camera.\+hpp}}\item 
+src/\mbox{\hyperlink{camera_8cpp}{camera.\+cpp}}\end{DoxyCompactItemize}

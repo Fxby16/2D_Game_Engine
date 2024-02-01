@@ -1,0 +1,44 @@
+\doxysection{vertexarray.\+cpp}
+\hypertarget{vertexarray_8cpp_source}{}\label{vertexarray_8cpp_source}\index{src/vertexarray.cpp@{src/vertexarray.cpp}}
+\mbox{\hyperlink{vertexarray_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <pch.hpp>}}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{vertexarray_8hpp}{vertexarray.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00004}\mbox{\hyperlink{classVertexArray_ab8a2dcce9698f96dac5f9a19c6979d03}{00004}}\ \mbox{\hyperlink{classVertexArray_ab8a2dcce9698f96dac5f9a19c6979d03}{VertexArray::VertexArray}}()\{}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00005}00005\ \ \ \ \ glGenVertexArrays(1,\&m\_ID);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00006}00006\ \ \ \ \ glBindVertexArray(m\_ID);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00007}00007\ \}}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00008}00008\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00009}\mbox{\hyperlink{classVertexArray_a82597eb9daba5ad66dd3cf898e159a95}{00009}}\ \mbox{\hyperlink{classVertexArray_a82597eb9daba5ad66dd3cf898e159a95}{VertexArray::\string~VertexArray}}()\{}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00010}00010\ \ \ \ \ glDeleteVertexArrays(1,\&m\_ID);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00011}00011\ \}}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00013}\mbox{\hyperlink{classVertexArray_a994a9dc780ecc0c725b0814a9e7ab532}{00013}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVertexArray_a994a9dc780ecc0c725b0814a9e7ab532}{VertexArray::AddBuffer}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classVertexBuffer}{VertexBuffer}}\ \&vb,\textcolor{keyword}{const}\ \mbox{\hyperlink{classVertexBufferLayout}{VertexBufferLayout}}\ \&layout)\{}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{classVertexArray_ad5059455f0864327028636c628d5a661}{Bind}}();}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00015}00015\ \ \ \ \ vb.\mbox{\hyperlink{classVertexBuffer_a13019e8580ca3e369fad4166500ad2b9}{Bind}}();}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ offset=0;}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&elements=layout.\mbox{\hyperlink{classVertexBufferLayout_aba7ad4feb91be25b597b903fe93668fe}{GetElements}}();}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;i<elements.size();i++)\{}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&element=elements[i];}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ glEnableVertexAttribArray(i);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ glVertexAttribPointer(i,element.count,element.type,element.normalized,layout.\mbox{\hyperlink{classVertexBufferLayout_aca33593016f0360720489d25b933ac4a}{GetStride}}(),(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*)offset);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ offset+=element.count*\mbox{\hyperlink{structVertexBufferElement_a8465417a435f8bcd68a71bc414f1d0ee}{VertexBufferElement::GetSizeOfType}}(element.type);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00023}00023\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00026}\mbox{\hyperlink{classVertexArray_aa9b1a9c8f5a33741d4ae5c35f540f55f}{00026}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVertexArray_aa9b1a9c8f5a33741d4ae5c35f540f55f}{VertexArray::DisableAttribs}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classVertexBufferLayout}{VertexBufferLayout}}\ \&layout)\{}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&elements=layout.\mbox{\hyperlink{classVertexBufferLayout_aba7ad4feb91be25b597b903fe93668fe}{GetElements}}();}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;i<elements.size();i++)}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ glDisableVertexAttribArray(i);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00032}\mbox{\hyperlink{classVertexArray_ad5059455f0864327028636c628d5a661}{00032}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVertexArray_ad5059455f0864327028636c628d5a661}{VertexArray::Bind}}()\textcolor{keyword}{\ const}\{}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00033}00033\ \ \ \ \ glBindVertexArray(m\_ID);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00034}00034\ \}}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00036}\mbox{\hyperlink{classVertexArray_a73f0d868a6c76622bcd57063a2c2d8d4}{00036}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVertexArray_a73f0d868a6c76622bcd57063a2c2d8d4}{VertexArray::Unbind}}()\textcolor{keyword}{\ const}\{}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00037}00037\ \ \ \ \ glBindVertexArray(0);}
+\DoxyCodeLine{\Hypertarget{vertexarray_8cpp_source_l00038}00038\ \}}
+
+\end{DoxyCode}

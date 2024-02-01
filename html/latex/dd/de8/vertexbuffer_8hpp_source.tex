@@ -1,0 +1,25 @@
+\doxysection{vertexbuffer.\+hpp}
+\hypertarget{vertexbuffer_8hpp_source}{}\label{vertexbuffer_8hpp_source}\index{include/vertexbuffer.hpp@{include/vertexbuffer.hpp}}
+\mbox{\hyperlink{vertexbuffer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{global_8hpp}{global.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{structs_8hpp}{structs.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00006}\mbox{\hyperlink{classVertexBuffer}{00006}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVertexBuffer}{VertexBuffer}}\{}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00007}00007\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00008}00008\ \ \ \ \ \mbox{\hyperlink{classVertexBuffer_a7c2206d3eef5c405f8a950c1cc538b07}{VertexBuffer}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num\_vertices,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vertex\_size,GLenum\ usage);}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00009}00009\ \ \ \ \ \mbox{\hyperlink{classVertexBuffer_a5216726fdd43b2ae8e1439e347717fdd}{\string~VertexBuffer}}();}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVertexBuffer_a0b64b4cc0d1a6daba328092774dccaa4}{SetData}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vertex\_index,\textcolor{keywordtype}{float}\ *data,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num\_vertices,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ VertexSize);}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00012}00012\ \ \ \ \ \textcolor{keyword}{static}\ std::array<Vertex,4>\ \mbox{\hyperlink{classVertexBuffer_a83dc26446b83d6caf8ec87dee7a6689b}{CreateQuad}}(\textcolor{keywordtype}{float}\ x,\textcolor{keywordtype}{float}\ y,\textcolor{keywordtype}{float}\ w,\textcolor{keywordtype}{float}\ h,\textcolor{keywordtype}{float}\ layer,\textcolor{keywordtype}{float}\ texID);}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00013}00013\ \ \ \ \ \textcolor{keyword}{static}\ std::array<Vertex,4>\ \mbox{\hyperlink{classVertexBuffer_a83dc26446b83d6caf8ec87dee7a6689b}{CreateQuad}}(\textcolor{keywordtype}{float}\ x,\textcolor{keywordtype}{float}\ y,\textcolor{keywordtype}{float}\ w,\textcolor{keywordtype}{float}\ h,\textcolor{keywordtype}{float}\ tx,\textcolor{keywordtype}{float}\ ty,\textcolor{keywordtype}{float}\ tw,\textcolor{keywordtype}{float}\ th,\textcolor{keywordtype}{float}\ ttw,\textcolor{keywordtype}{float}\ tth,\textcolor{keywordtype}{float}\ layer,\textcolor{keywordtype}{float}\ texID);}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00014}00014\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVertexBuffer_a13019e8580ca3e369fad4166500ad2b9}{Bind}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00015}00015\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVertexBuffer_abfdb36238d60f2cd7bf63093f914b61f}{Unbind}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00017}00017\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00018}00018\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ m\_ID;}
+\DoxyCodeLine{\Hypertarget{vertexbuffer_8hpp_source_l00019}00019\ \};}
+
+\end{DoxyCode}

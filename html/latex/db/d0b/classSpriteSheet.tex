@@ -1,0 +1,204 @@
+\doxysection{Sprite\+Sheet Class Reference}
+\hypertarget{classSpriteSheet}{}\label{classSpriteSheet}\index{SpriteSheet@{SpriteSheet}}
+
+
+{\ttfamily \#include $<$texture.\+hpp$>$}
+
+Inheritance diagram for Sprite\+Sheet\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{db/d0b/classSpriteSheet}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSpriteSheet_ad72eabbfccf11d05657e4fdbf246a8af}{Sprite\+Sheet}} (const std\+::string \&path, unsigned int tile\+\_\+width, unsigned int tile\+\_\+height, int mag\+\_\+filter, int min\+\_\+filter)
+\item 
+\mbox{\hyperlink{classSpriteSheet_a668a486e11f46fc46b31f5b1eaf17242}{Sprite\+Sheet}} ()
+\item 
+\mbox{\hyperlink{classSpriteSheet_a6d9d71cb13648b20b7cd24f963023b40}{Sprite\+Sheet}} (\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&other)
+\item 
+\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \& \mbox{\hyperlink{classSpriteSheet_a5c6a3e68d40019858f6a5f3fea5846a8}{operator=}} (\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&other)
+\item 
+\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \& \mbox{\hyperlink{classSpriteSheet_a062fbd43eba3abff77777b03adf83f4f}{operator=}} (\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&\&other)
+\item 
+int \mbox{\hyperlink{classSpriteSheet_a4a7a6844268528ef44d07a0085786c64}{Get\+Tile\+Width}} () const
+\item 
+int \mbox{\hyperlink{classSpriteSheet_a4048a969b34dfb7c85b1a10cc901c883}{Get\+Tile\+Height}} () const
+\item 
+std\+::array$<$ \mbox{\hyperlink{structVertex}{Vertex}}, 4 $>$ \mbox{\hyperlink{classSpriteSheet_a2516769e6543a233ae1e85e2179c4bc7}{Create\+Quad\+Sprite\+Sheet}} (float x, float y, float width, float height, float row, float col, float layer, float tex\+ID)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classTexture}{Texture}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTexture_a6c275e3f186675ff6ed73ccf970e552f}{Texture}} ()
+\item 
+\mbox{\hyperlink{classTexture_adb5bc7d2becd52433aa2051e604b4103}{Texture}} (const std\+::string \&path, int mag\+\_\+filter, int min\+\_\+filter)
+\item 
+\mbox{\hyperlink{classTexture_ada21440a464408141990370fe4e47216}{Texture}} (\mbox{\hyperlink{classTexture}{Texture}} \&other)
+\item 
+\mbox{\hyperlink{classTexture_a09c4bcb7462f64c1d20fa69dba3cee8a}{\texorpdfstring{$\sim$}{\string~}\+Texture}} ()
+\item 
+void \mbox{\hyperlink{classTexture_a14a2a70d9f130ac91a5ac95c8a4c7831}{Bind}} (unsigned int slot=0) const
+\item 
+void \mbox{\hyperlink{classTexture_a0bff249ecfb46e9b08c6ba52d64a921e}{Unbind}} () const
+\item 
+int \mbox{\hyperlink{classTexture_a7f5ee18c7466f904fa371bd97399a944}{Get\+Width}} () const
+\item 
+int \mbox{\hyperlink{classTexture_a289701837e23c9272509f377524ee8f2}{Get\+Height}} () const
+\item 
+unsigned int \mbox{\hyperlink{classTexture_a0d60206f4ebb8f25b27d7357fc66acaf}{Get\+Tex\+ID}} () const
+\item 
+\mbox{\hyperlink{classTexture}{Texture}} \& \mbox{\hyperlink{classTexture_addccb8f98ef64ddab7466183081342ef}{operator=}} (\mbox{\hyperlink{classTexture}{Texture}} \&other)
+\item 
+\mbox{\hyperlink{classTexture}{Texture}} \& \mbox{\hyperlink{classTexture_ae8d19c696efaf700f78cd070832732c9}{operator=}} (\mbox{\hyperlink{classTexture}{Texture}} \&\&other)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classSpriteSheet_a572f69aa021c8f8344beddd46e067580}{m\+\_\+\+Tile\+Width}}
+\item 
+int \mbox{\hyperlink{classSpriteSheet_a5a0f9f477bf04859ae1cefd77bda5827}{m\+\_\+\+Tile\+Height}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classTexture}{Texture}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \mbox{\hyperlink{classTexture_adc7d177537708975e58494a5270ed4c1}{m\+\_\+\+ID}}
+\item 
+std\+::string \mbox{\hyperlink{classTexture_a9d4481cb414758aa1dbfcd3d00f71659}{m\+\_\+\+File\+Path}}
+\item 
+int \mbox{\hyperlink{classTexture_a9f275c654e1904d7153c2b93620f0b10}{m\+\_\+\+Mag\+Filter}}
+\item 
+int \mbox{\hyperlink{classTexture_a7b61d1b966dbb4ddbfb8396ff3dec3d2}{m\+\_\+\+Min\+Filter}}
+\item 
+unsigned char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTexture_abaf199219963518e56d62c5997c0496e}{m\+\_\+\+Local\+Buffer}}
+\item 
+int \mbox{\hyperlink{classTexture_ad5fdfa61997967621f06cea669f1fc45}{m\+\_\+\+Width}}
+\item 
+int \mbox{\hyperlink{classTexture_a812d08761f477e09ccabcb64ef8e03ea}{m\+\_\+\+Height}}
+\item 
+int \mbox{\hyperlink{classTexture_a79cab6a926eb0c3d8d84c12cad762a4c}{m\+\_\+\+BPP}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00059}{59}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSpriteSheet_ad72eabbfccf11d05657e4fdbf246a8af}\label{classSpriteSheet_ad72eabbfccf11d05657e4fdbf246a8af} 
+\index{SpriteSheet@{SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\index{SpriteSheet@{SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{SpriteSheet()}{SpriteSheet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Sprite\+Sheet\+::\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path,  }\item[{unsigned int}]{tile\+\_\+width,  }\item[{unsigned int}]{tile\+\_\+height,  }\item[{int}]{mag\+\_\+filter,  }\item[{int}]{min\+\_\+filter }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00061}{61}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classSpriteSheet_a668a486e11f46fc46b31f5b1eaf17242}\label{classSpriteSheet_a668a486e11f46fc46b31f5b1eaf17242} 
+\index{SpriteSheet@{SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\index{SpriteSheet@{SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{SpriteSheet()}{SpriteSheet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Sprite\+Sheet\+::\+Sprite\+Sheet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00063}{63}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classSpriteSheet_a6d9d71cb13648b20b7cd24f963023b40}\label{classSpriteSheet_a6d9d71cb13648b20b7cd24f963023b40} 
+\index{SpriteSheet@{SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\index{SpriteSheet@{SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{SpriteSheet()}{SpriteSheet()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Sprite\+Sheet\+::\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8cpp_source_l00055}{55}} of file \mbox{\hyperlink{texture_8cpp_source}{texture.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSpriteSheet_a2516769e6543a233ae1e85e2179c4bc7}\label{classSpriteSheet_a2516769e6543a233ae1e85e2179c4bc7} 
+\index{SpriteSheet@{SpriteSheet}!CreateQuadSpriteSheet@{CreateQuadSpriteSheet}}
+\index{CreateQuadSpriteSheet@{CreateQuadSpriteSheet}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{CreateQuadSpriteSheet()}{CreateQuadSpriteSheet()}}
+{\footnotesize\ttfamily std\+::array$<$ \mbox{\hyperlink{structVertex}{Vertex}}, 4 $>$ Sprite\+Sheet\+::\+Create\+Quad\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{width,  }\item[{float}]{height,  }\item[{float}]{row,  }\item[{float}]{col,  }\item[{float}]{layer,  }\item[{float}]{tex\+ID }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8cpp_source_l00066}{66}} of file \mbox{\hyperlink{texture_8cpp_source}{texture.\+cpp}}.
+
+\Hypertarget{classSpriteSheet_a4048a969b34dfb7c85b1a10cc901c883}\label{classSpriteSheet_a4048a969b34dfb7c85b1a10cc901c883} 
+\index{SpriteSheet@{SpriteSheet}!GetTileHeight@{GetTileHeight}}
+\index{GetTileHeight@{GetTileHeight}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{GetTileHeight()}{GetTileHeight()}}
+{\footnotesize\ttfamily int Sprite\+Sheet\+::\+Get\+Tile\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00095}{95}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classSpriteSheet_a4a7a6844268528ef44d07a0085786c64}\label{classSpriteSheet_a4a7a6844268528ef44d07a0085786c64} 
+\index{SpriteSheet@{SpriteSheet}!GetTileWidth@{GetTileWidth}}
+\index{GetTileWidth@{GetTileWidth}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{GetTileWidth()}{GetTileWidth()}}
+{\footnotesize\ttfamily int Sprite\+Sheet\+::\+Get\+Tile\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00094}{94}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classSpriteSheet_a062fbd43eba3abff77777b03adf83f4f}\label{classSpriteSheet_a062fbd43eba3abff77777b03adf83f4f} 
+\index{SpriteSheet@{SpriteSheet}!operator=@{operator=}}
+\index{operator=@{operator=}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \& Sprite\+Sheet\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00079}{79}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classSpriteSheet_a5c6a3e68d40019858f6a5f3fea5846a8}\label{classSpriteSheet_a5c6a3e68d40019858f6a5f3fea5846a8} 
+\index{SpriteSheet@{SpriteSheet}!operator=@{operator=}}
+\index{operator=@{operator=}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \& Sprite\+Sheet\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSpriteSheet}{Sprite\+Sheet}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00066}{66}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classSpriteSheet_a5a0f9f477bf04859ae1cefd77bda5827}\label{classSpriteSheet_a5a0f9f477bf04859ae1cefd77bda5827} 
+\index{SpriteSheet@{SpriteSheet}!m\_TileHeight@{m\_TileHeight}}
+\index{m\_TileHeight@{m\_TileHeight}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{m\_TileHeight}{m\_TileHeight}}
+{\footnotesize\ttfamily int Sprite\+Sheet\+::m\+\_\+\+Tile\+Height\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00105}{105}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+\Hypertarget{classSpriteSheet_a572f69aa021c8f8344beddd46e067580}\label{classSpriteSheet_a572f69aa021c8f8344beddd46e067580} 
+\index{SpriteSheet@{SpriteSheet}!m\_TileWidth@{m\_TileWidth}}
+\index{m\_TileWidth@{m\_TileWidth}!SpriteSheet@{SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{m\_TileWidth}{m\_TileWidth}}
+{\footnotesize\ttfamily int Sprite\+Sheet\+::m\+\_\+\+Tile\+Width\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8hpp_source_l00104}{104}} of file \mbox{\hyperlink{texture_8hpp_source}{texture.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{texture_8hpp}{texture.\+hpp}}\item 
+src/\mbox{\hyperlink{texture_8cpp}{texture.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,12 @@
+\doxysection{vertexbufferlayout.\+cpp}
+\hypertarget{vertexbufferlayout_8cpp_source}{}\label{vertexbufferlayout_8cpp_source}\index{src/vertexbufferlayout.cpp@{src/vertexbufferlayout.cpp}}
+\mbox{\hyperlink{vertexbufferlayout_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{vertexbufferlayout_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{vertexbufferlayout_8hpp}{vertexbufferlayout.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{vertexbufferlayout_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{vertexbufferlayout_8cpp_source_l00003}\mbox{\hyperlink{classVertexBufferLayout_a0b7b2221e62d4191b062b97b7b667354}{00003}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVertexBufferLayout_a0b7b2221e62d4191b062b97b7b667354}{VertexBufferLayout::Push}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ type,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ count,\textcolor{keywordtype}{bool}\ normalized)\{}
+\DoxyCodeLine{\Hypertarget{vertexbufferlayout_8cpp_source_l00004}00004\ \ \ \ \ m\_Elements.push\_back(\{type,count,normalized\});}
+\DoxyCodeLine{\Hypertarget{vertexbufferlayout_8cpp_source_l00005}00005\ \ \ \ \ m\_Stride+=count*\mbox{\hyperlink{structVertexBufferElement_a8465417a435f8bcd68a71bc414f1d0ee}{VertexBufferElement::GetSizeOfType}}(type);}
+\DoxyCodeLine{\Hypertarget{vertexbufferlayout_8cpp_source_l00006}00006\ \}}
+
+\end{DoxyCode}
