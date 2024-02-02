@@ -6,6 +6,5 @@ var searchData=
   ['updateprojmat_3',['UpdateProjMat',['../d6/db3/classTextRenderer.html#adcf44c3a426ca9f3b4a859f6ce02d9a7',1,'TextRenderer']]],
   ['updatescreensegments_4',['UpdateScreenSegments',['../d1/d52/classRenderer.html#a60e61d13fa06067f926c3da225ea7a58',1,'Renderer']]],
   ['utilities_2ecpp_5',['utilities.cpp',['../de/da5/utilities_8cpp.html',1,'']]],
-  ['utilities_2ed_6',['utilities.d',['../d3/d07/utilities_8d.html',1,'']]],
-  ['utilities_2ehpp_7',['utilities.hpp',['../dc/d5f/utilities_8hpp.html',1,'']]]
+  ['utilities_2ehpp_6',['utilities.hpp',['../dc/d5f/utilities_8hpp.html',1,'']]]
 ];

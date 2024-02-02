@@ -10,15 +10,12 @@ var searchData=
   ['vertex_7',['Vertex',['../df/dd0/structVertex.html',1,'Vertex'],['../df/dd0/structVertex.html#a97488994a2482d70da74e1b91d40e169',1,'Vertex::Vertex()'],['../df/dd0/structVertex.html#ac6a4eb7b737cdbaec68f04261b000901',1,'Vertex::Vertex(Vec2 pos, Vec2 texcoords, float layer, float texID)']]],
   ['vertexarray_8',['VertexArray',['../da/dd7/classVertexArray.html',1,'VertexArray'],['../da/dd7/classVertexArray.html#ab8a2dcce9698f96dac5f9a19c6979d03',1,'VertexArray::VertexArray()']]],
   ['vertexarray_2ecpp_9',['vertexarray.cpp',['../da/dc0/vertexarray_8cpp.html',1,'']]],
-  ['vertexarray_2ed_10',['vertexarray.d',['../d0/d25/editor_2obj_2Debug_2vertexarray_8d.html',1,'(Global Namespace)'],['../de/ddb/obj_2Debug_2vertexarray_8d.html',1,'(Global Namespace)']]],
-  ['vertexarray_2ehpp_11',['vertexarray.hpp',['../dd/d45/vertexarray_8hpp.html',1,'']]],
-  ['vertexbuffer_12',['VertexBuffer',['../d7/d72/classVertexBuffer.html',1,'VertexBuffer'],['../d7/d72/classVertexBuffer.html#a7c2206d3eef5c405f8a950c1cc538b07',1,'VertexBuffer::VertexBuffer()']]],
-  ['vertexbuffer_2ecpp_13',['vertexbuffer.cpp',['../da/dc8/vertexbuffer_8cpp.html',1,'']]],
-  ['vertexbuffer_2ed_14',['vertexbuffer.d',['../d9/df1/editor_2obj_2Debug_2vertexbuffer_8d.html',1,'(Global Namespace)'],['../df/d4c/obj_2Debug_2vertexbuffer_8d.html',1,'(Global Namespace)']]],
-  ['vertexbuffer_2ehpp_15',['vertexbuffer.hpp',['../dd/de8/vertexbuffer_8hpp.html',1,'']]],
-  ['vertexbufferelement_16',['VertexBufferElement',['../dc/dab/structVertexBufferElement.html',1,'']]],
-  ['vertexbufferlayout_17',['VertexBufferLayout',['../d2/dd9/classVertexBufferLayout.html',1,'VertexBufferLayout'],['../d2/dd9/classVertexBufferLayout.html#a1e10e1d0c533a91948466fa4f88bab09',1,'VertexBufferLayout::VertexBufferLayout()']]],
-  ['vertexbufferlayout_2ecpp_18',['vertexbufferlayout.cpp',['../dd/d1e/vertexbufferlayout_8cpp.html',1,'']]],
-  ['vertexbufferlayout_2ed_19',['vertexbufferlayout.d',['../d5/d50/editor_2obj_2Debug_2vertexbufferlayout_8d.html',1,'(Global Namespace)'],['../d5/dd2/obj_2Debug_2vertexbufferlayout_8d.html',1,'(Global Namespace)']]],
-  ['vertexbufferlayout_2ehpp_20',['vertexbufferlayout.hpp',['../dc/de8/vertexbufferlayout_8hpp.html',1,'']]]
+  ['vertexarray_2ehpp_10',['vertexarray.hpp',['../dd/d45/vertexarray_8hpp.html',1,'']]],
+  ['vertexbuffer_11',['VertexBuffer',['../d7/d72/classVertexBuffer.html',1,'VertexBuffer'],['../d7/d72/classVertexBuffer.html#a7c2206d3eef5c405f8a950c1cc538b07',1,'VertexBuffer::VertexBuffer()']]],
+  ['vertexbuffer_2ecpp_12',['vertexbuffer.cpp',['../da/dc8/vertexbuffer_8cpp.html',1,'']]],
+  ['vertexbuffer_2ehpp_13',['vertexbuffer.hpp',['../dd/de8/vertexbuffer_8hpp.html',1,'']]],
+  ['vertexbufferelement_14',['VertexBufferElement',['../dc/dab/structVertexBufferElement.html',1,'']]],
+  ['vertexbufferlayout_15',['VertexBufferLayout',['../d2/dd9/classVertexBufferLayout.html',1,'VertexBufferLayout'],['../d2/dd9/classVertexBufferLayout.html#a1e10e1d0c533a91948466fa4f88bab09',1,'VertexBufferLayout::VertexBufferLayout()']]],
+  ['vertexbufferlayout_2ecpp_16',['vertexbufferlayout.cpp',['../dd/d1e/vertexbufferlayout_8cpp.html',1,'']]],
+  ['vertexbufferlayout_2ehpp_17',['vertexbufferlayout.hpp',['../dc/de8/vertexbufferlayout_8hpp.html',1,'']]]
 ];

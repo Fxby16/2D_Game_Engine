@@ -34,11 +34,8 @@ var searchData=
   ['getviewmatrix_31',['GetViewMatrix',['../d1/df0/classCamera.html#ac5be0b9a950effe0e5f5993c182c12da',1,'Camera']]],
   ['getwidth_32',['GetWidth',['../d6/d97/classTexture.html#a7f5ee18c7466f904fa371bd97399a944',1,'Texture']]],
   ['getwidthpercentageinpx_33',['GetWidthPercentageInPx',['../dc/d5f/utilities_8hpp.html#ae4a949785c5fea12789793723796c367',1,'GetWidthPercentageInPx(float percentage):&#160;utilities.cpp'],['../de/da5/utilities_8cpp.html#ae4a949785c5fea12789793723796c367',1,'GetWidthPercentageInPx(float percentage):&#160;utilities.cpp']]],
-  ['glad_2ed_34',['glad.d',['../d0/d88/editor_2obj_2Debug_2glad_8d.html',1,'(Global Namespace)'],['../d5/dfe/obj_2Debug_2glad_8d.html',1,'(Global Namespace)']]],
-  ['glfw_2ecpp_35',['glfw.cpp',['../db/d91/glfw_8cpp.html',1,'']]],
-  ['glfw_2ed_36',['glfw.d',['../d5/d54/glfw_8d.html',1,'']]],
-  ['glfw_2ehpp_37',['glfw.hpp',['../de/d49/glfw_8hpp.html',1,'']]],
-  ['global_2ecpp_38',['global.cpp',['../db/d7d/global_8cpp.html',1,'']]],
-  ['global_2ed_39',['global.d',['../d5/d1f/editor_2obj_2Debug_2global_8d.html',1,'(Global Namespace)'],['../df/ddc/obj_2Debug_2global_8d.html',1,'(Global Namespace)']]],
-  ['global_2ehpp_40',['global.hpp',['../d9/d3a/global_8hpp.html',1,'']]]
+  ['glfw_2ecpp_34',['glfw.cpp',['../db/d91/glfw_8cpp.html',1,'']]],
+  ['glfw_2ehpp_35',['glfw.hpp',['../de/d49/glfw_8hpp.html',1,'']]],
+  ['global_2ecpp_36',['global.cpp',['../db/d7d/global_8cpp.html',1,'']]],
+  ['global_2ehpp_37',['global.hpp',['../d9/d3a/global_8hpp.html',1,'']]]
 ];
