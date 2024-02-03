@@ -113,6 +113,14 @@ Functions</h2></td></tr>
 <tr class="separator:a98ee0354222e0338a419e2de20966515"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afafb983baad6911eb94f718c75f1e516" id="r_afafb983baad6911eb94f718c75f1e516"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afafb983baad6911eb94f718c75f1e516">SerializeEntity</a> (YAML::Emitter &amp;out, <a class="el" href="../../da/d61/classEntity.html">Entity</a> &amp;entity, <a class="el" href="../../d5/d9c/classScene.html">Scene</a> *scene)</td></tr>
 <tr class="separator:afafb983baad6911eb94f718c75f1e516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6059aa18f5dd51b8d4c4cc97e68d801" id="r_ab6059aa18f5dd51b8d4c4cc97e68d801"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6059aa18f5dd51b8d4c4cc97e68d801">EncodeTexture</a> (bool animated, const std::string &amp;path, unsigned int *tile_width, unsigned int *tile_height, int mag_filter, int min_filter, bool *playanimation, bool *loopanimation, float *animationdelay)</td></tr>
+<tr class="separator:ab6059aa18f5dd51b8d4c4cc97e68d801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a238fce384ca8f42a6d40bd7b7a3934e5" id="r_a238fce384ca8f42a6d40bd7b7a3934e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a238fce384ca8f42a6d40bd7b7a3934e5">GetTextureType</a> (const std::string &amp;encoded)</td></tr>
+<tr class="separator:a238fce384ca8f42a6d40bd7b7a3934e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2abf63ba93c0015f8ef9a3c08be927c" id="r_ab2abf63ba93c0015f8ef9a3c08be927c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2abf63ba93c0015f8ef9a3c08be927c">DecodeTexture</a> (const std::string &amp;encoded, std::string &amp;path, unsigned int &amp;tile_width, unsigned int &amp;tile_height, int &amp;mag_filter, int &amp;min_filter, bool &amp;playanimation, bool &amp;loopanimation, float &amp;animationdelay)</td></tr>
+<tr class="separator:ab2abf63ba93c0015f8ef9a3c08be927c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b430993d22cdd11ccb0a41aeef52cfb" id="r_a5b430993d22cdd11ccb0a41aeef52cfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b430993d22cdd11ccb0a41aeef52cfb">DecodeTexture</a> (const std::string &amp;encoded, std::string &amp;path, int &amp;mag_filter, int &amp;min_filter)</td></tr>
+<tr class="separator:a5b430993d22cdd11ccb0a41aeef52cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ad0d49f7258b52640e83382af8242b4ab" name="ad0d49f7258b52640e83382af8242b4ab"></a>
@@ -150,6 +158,174 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00010">10</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5b430993d22cdd11ccb0a41aeef52cfb" name="a5b430993d22cdd11ccb0a41aeef52cfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b430993d22cdd11ccb0a41aeef52cfb">&#9670;&#160;</a></span>DecodeTexture() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DecodeTexture </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>encoded</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>mag_filter</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>min_filter</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00297">297</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab2abf63ba93c0015f8ef9a3c08be927c" name="ab2abf63ba93c0015f8ef9a3c08be927c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2abf63ba93c0015f8ef9a3c08be927c">&#9670;&#160;</a></span>DecodeTexture() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DecodeTexture </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>encoded</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int &amp;</td>          <td class="paramname"><span class="paramname"><em>tile_width</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int &amp;</td>          <td class="paramname"><span class="paramname"><em>tile_height</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>mag_filter</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>min_filter</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;</td>          <td class="paramname"><span class="paramname"><em>playanimation</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;</td>          <td class="paramname"><span class="paramname"><em>loopanimation</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;</td>          <td class="paramname"><span class="paramname"><em>animationdelay</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00280">280</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab6059aa18f5dd51b8d4c4cc97e68d801" name="ab6059aa18f5dd51b8d4c4cc97e68d801"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6059aa18f5dd51b8d4c4cc97e68d801">&#9670;&#160;</a></span>EncodeTexture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string EncodeTexture </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>animated</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int *</td>          <td class="paramname"><span class="paramname"><em>tile_width</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int *</td>          <td class="paramname"><span class="paramname"><em>tile_height</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>mag_filter</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>min_filter</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *</td>          <td class="paramname"><span class="paramname"><em>playanimation</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *</td>          <td class="paramname"><span class="paramname"><em>loopanimation</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>animationdelay</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00248">248</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a238fce384ca8f42a6d40bd7b7a3934e5" name="a238fce384ca8f42a6d40bd7b7a3934e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a238fce384ca8f42a6d40bd7b7a3934e5">&#9670;&#160;</a></span>GetTextureType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GetTextureType </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>encoded</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00272">272</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
 
 </div>
 </div>

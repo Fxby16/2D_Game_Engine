@@ -13,7 +13,7 @@ var searchData=
   ['initglfwwindow_10',['InitGlfwWindow',['../de/d49/glfw_8hpp.html#adb180918d1d062e281e3dd4a59997a8c',1,'InitGlfwWindow(const char *window_name):&#160;glfw.cpp'],['../db/d91/glfw_8cpp.html#adb180918d1d062e281e3dd4a59997a8c',1,'InitGlfwWindow(const char *window_name):&#160;glfw.cpp'],['../d3/df3/namespaceWindow.html#a5ddfa336ae0d083de5c05fa08356def0',1,'Window::InitGlfwWindow()']]],
   ['initializeproj_11',['InitializeProj',['../d1/df0/classCamera.html#a9f6cae59c47d1a26dfaac0727b8098d6',1,'Camera']]],
   ['interpolate_12',['Interpolate',['../db/de2/entity_8hpp.html#a350b7821fd1aae9ecb31fe7906257e40',1,'entity.hpp']]],
-  ['isfullscreen_13',['ISFULLSCREEN',['../d2/d5a/window_8hpp.html#aa6768651109aee2bbfbba49394c74468',1,'ISFULLSCREEN:&#160;window.cpp'],['../d8/d8e/window_8cpp.html#aa6768651109aee2bbfbba49394c74468',1,'ISFULLSCREEN:&#160;window.cpp']]],
-  ['isfullscreen_14',['IsFullscreen',['../d3/df3/namespaceWindow.html#ad481e8e5c15f08cfd588ee1f665eb395',1,'Window']]],
+  ['isfullscreen_13',['IsFullscreen',['../d3/df3/namespaceWindow.html#ad481e8e5c15f08cfd588ee1f665eb395',1,'Window']]],
+  ['isfullscreen_14',['ISFULLSCREEN',['../d2/d5a/window_8hpp.html#aa6768651109aee2bbfbba49394c74468',1,'ISFULLSCREEN:&#160;window.cpp'],['../d8/d8e/window_8cpp.html#aa6768651109aee2bbfbba49394c74468',1,'ISFULLSCREEN:&#160;window.cpp']]],
   ['isvsync_15',['IsVSync',['../d3/df3/namespaceWindow.html#a3c6de6b5a6aa116874bfa121141d21bd',1,'Window']]]
 ];

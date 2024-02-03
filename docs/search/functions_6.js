@@ -28,9 +28,10 @@ var searchData=
   ['getsubroutineindex_25',['GetSubroutineIndex',['../d9/d69/classShader.html#a1855d01ffa373c0b24dff5f379740efa',1,'Shader']]],
   ['gettexid_26',['GetTexID',['../d6/d97/classTexture.html#a0d60206f4ebb8f25b27d7357fc66acaf',1,'Texture']]],
   ['gettextsize_27',['GetTextSize',['../d6/db3/classTextRenderer.html#a4ceb4d9b2e271efdff8ef31434af8ac1',1,'TextRenderer']]],
-  ['gettileheight_28',['GetTileHeight',['../db/d0b/classSpriteSheet.html#a4048a969b34dfb7c85b1a10cc901c883',1,'SpriteSheet']]],
-  ['gettilewidth_29',['GetTileWidth',['../db/d0b/classSpriteSheet.html#a4a7a6844268528ef44d07a0085786c64',1,'SpriteSheet']]],
-  ['getviewmatrix_30',['GetViewMatrix',['../d1/df0/classCamera.html#ac5be0b9a950effe0e5f5993c182c12da',1,'Camera']]],
-  ['getwidth_31',['GetWidth',['../d6/d97/classTexture.html#a7f5ee18c7466f904fa371bd97399a944',1,'Texture']]],
-  ['getwidthpercentageinpx_32',['GetWidthPercentageInPx',['../dc/d5f/utilities_8hpp.html#ae4a949785c5fea12789793723796c367',1,'GetWidthPercentageInPx(float percentage):&#160;utilities.cpp'],['../de/da5/utilities_8cpp.html#ae4a949785c5fea12789793723796c367',1,'GetWidthPercentageInPx(float percentage):&#160;utilities.cpp']]]
+  ['gettexturetype_28',['GetTextureType',['../d4/dac/sceneserializer_8cpp.html#a238fce384ca8f42a6d40bd7b7a3934e5',1,'sceneserializer.cpp']]],
+  ['gettileheight_29',['GetTileHeight',['../db/d0b/classSpriteSheet.html#a4048a969b34dfb7c85b1a10cc901c883',1,'SpriteSheet']]],
+  ['gettilewidth_30',['GetTileWidth',['../db/d0b/classSpriteSheet.html#a4a7a6844268528ef44d07a0085786c64',1,'SpriteSheet']]],
+  ['getviewmatrix_31',['GetViewMatrix',['../d1/df0/classCamera.html#ac5be0b9a950effe0e5f5993c182c12da',1,'Camera']]],
+  ['getwidth_32',['GetWidth',['../d6/d97/classTexture.html#a7f5ee18c7466f904fa371bd97399a944',1,'Texture']]],
+  ['getwidthpercentageinpx_33',['GetWidthPercentageInPx',['../dc/d5f/utilities_8hpp.html#ae4a949785c5fea12789793723796c367',1,'GetWidthPercentageInPx(float percentage):&#160;utilities.cpp'],['../de/da5/utilities_8cpp.html#ae4a949785c5fea12789793723796c367',1,'GetWidthPercentageInPx(float percentage):&#160;utilities.cpp']]]
 ];
