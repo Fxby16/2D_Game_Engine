@@ -25,5 +25,6 @@ private:
     Scene *m_Scene=nullptr;
     Framebuffer *m_SceneFramebuffer=nullptr;
     SceneSerializer *m_SceneSerializer;
+    std::string m_ScenePath;
     uint32_t m_SelectedEntity=std::numeric_limits<uint32_t>::max();
 };

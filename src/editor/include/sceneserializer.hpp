@@ -14,3 +14,13 @@ public:
 private:
     Scene *m_Scene=nullptr;
 };
+
+struct TextureData{
+    TextureData(uint32_t uid,float width,float height,float layer):
+        uid(uid),width(width),height(height),layer(layer){}
+
+    uint32_t uid;
+
+    float width,height;
+    float layer;
+};

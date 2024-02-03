@@ -146,6 +146,16 @@ void Editor::ComponentsMenu(ImVec2 pos){
     ImGui::SetWindowPos(pos);
     ImGui::SetWindowSize(ImVec2(GetWidthPercentageInPx(20),Window::Height-pos.y));
 
+    if(m_Scene->GetEntity(m_SelectedEntity)!=nullptr){
+        ImGui::Text("Entity UID: %d", m_Scene->GetEntity(m_SelectedEntity)->m_UID);
+    }
+    if(m_Scene->GetComponent<TextureComponent>(m_SelectedEntity)){
+        ImGui::Text("Layer: %f", m_Scene->GetComponent<TextureComponent>(m_SelectedEntity)->m_Layer);
+    }
+    if(m_Scene->GetComponent<AnimatedTextureComponent>(m_SelectedEntity)){
+        ImGui::Text("Layer: %f", m_Scene->GetComponent<AnimatedTextureComponent>(m_SelectedEntity)->m_Layer);
+    }
+
     ImGui::PushItemWidth(ImGui::GetWindowWidth()*0.5f);
 
     TagComponent *tag_component=m_Scene->GetComponent<TagComponent>(m_SelectedEntity);
@@ -161,7 +171,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
         if(StartNode("TextureComponent")){
             ImGui::SliderFloat("Width",&texture_component->m_Width,0.0f,30.0f);
             ImGui::SliderFloat("Height",&texture_component->m_Height,0.0f,30.0f);
-            ImGui::SliderInt("Layer",(int*)&texture_component->m_Layer,0,100);
+            ImGui::SliderFloat("Layer",&texture_component->m_Layer,0,100);
             ImGui::TreePop();
         }
     }
@@ -171,7 +181,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
         if(StartNode("AnimatedTextureComponent")){
             ImGui::SliderFloat("Width",&animated_texture_component->m_Width,0.0f,30.0f);
             ImGui::SliderFloat("Height",&animated_texture_component->m_Height,0.0f,30.0f);
-            ImGui::SliderInt("Layer",(int*)&animated_texture_component->m_Layer,0,100);
+            ImGui::SliderFloat("Layer",&animated_texture_component->m_Layer,0,100);
 
             AnimatedTexture *at=animated_texture_component->m_AnimatedTexture.get();
             ImGui::Checkbox("Play Animation",&at->m_PlayAnimation);

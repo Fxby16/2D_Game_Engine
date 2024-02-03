@@ -1,7 +1,7 @@
 Scene: ""
 ScalingFactor: 0.5
 Gravity: [0, 0]
-NextUID: 2
+NextUID: 4
 Entities:
   - Entity:
       UID: 0
@@ -53,3 +53,53 @@ Entities:
       Friction: 0
       Restitution: 0
       RestitutionThreshold: 0.5
+  - Entity:
+      UID: 2
+      X: 4.5
+      Y: 0
+      PreviousX: 4.5
+      PreviousY: 0
+    TagComponent:
+      Tag: prova2
+    TextureComponent:
+      Filepath: /home/fabio/Scaricati/Red.png
+      MagFilter: 9729
+      MinFilter: 9729
+      Width: 1
+      Height: 1
+      Layer: 0
+    RigidbodyComponent:
+      BodyType: Dynamic
+      FixedRotation: true
+    BoxColliderComponent:
+      XOffset: 0.5
+      YOffset: 0.5
+      Width: 1
+      Height: 1
+      Density: 1
+      Friction: 0
+      Restitution: 0
+      RestitutionThreshold: 0.5
+  - Entity:
+      UID: 3
+      X: 0
+      Y: 3
+      PreviousX: 0
+      PreviousY: 3
+    TagComponent:
+      Tag: prova
+    AnimatedTextureComponent:
+      Filepath: ../resources/textures/Run.png
+      MagFilter: 9728
+      MinFilter: 9728
+      TileWidth: 128
+      TileHeight: 128
+      PlayAnimation: false
+      LoopAnimation: false
+      AnimationDelay: 0
+      Width: 3
+      Height: 3
+      Layer: 0
+    RigidbodyComponent:
+      BodyType: Static
+      FixedRotation: true

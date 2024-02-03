@@ -245,7 +245,71 @@ void SceneSerializer::Serialize(const std::string &path){
     printf("Serialization of scene file %s completed\n",path.c_str());
 }
 
+std::string EncodeTexture(bool animated,const std::string &path,unsigned int *tile_width,unsigned int *tile_height,int mag_filter,int min_filter,bool *playanimation,bool *loopanimation,float *animationdelay){
+    std::string encoded;
+    encoded+=std::to_string(animated)+";";
+    encoded+=path+";";
+    encoded+=std::to_string(mag_filter)+";";
+    encoded+=std::to_string(min_filter)+";";
+    if(animated){
+        #ifdef DEBUG
+            assert(tile_width!=nullptr);
+            assert(tile_height!=nullptr);
+            assert(playanimation!=nullptr);
+            assert(loopanimation!=nullptr);
+            assert(animationdelay!=nullptr);
+
+            encoded+=std::to_string(*tile_width)+";";
+            encoded+=std::to_string(*tile_height)+";";
+            encoded+=std::to_string(*playanimation)+";";
+            encoded+=std::to_string(*loopanimation)+";";
+            encoded+=std::to_string(*animationdelay)+";";
+        #endif
+    }
+    return encoded;
+}
+
+bool GetTextureType(const std::string &encoded){
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenstream(encoded);
+    std::getline(tokenstream,token,';');
+    return std::stoi(token);
+}
+
+void DecodeTexture(const std::string &encoded,std::string &path,unsigned int &tile_width,unsigned int &tile_height,int &mag_filter,int &min_filter,bool &playanimation,bool &loopanimation,float &animationdelay){
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenstream(encoded);
+    while(std::getline(tokenstream,token,';')){
+        tokens.push_back(token);
+    }
+    path=tokens[1];
+    mag_filter=std::stoi(tokens[2]);
+    min_filter=std::stoi(tokens[3]);
+    tile_width=std::stoi(tokens[4]);
+    tile_height=std::stoi(tokens[5]);
+    playanimation=std::stoi(tokens[6]);
+    loopanimation=std::stoi(tokens[7]);
+    animationdelay=std::stof(tokens[8]);
+}
+
+void DecodeTexture(const std::string &encoded,std::string &path,int &mag_filter,int &min_filter){
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenstream(encoded);
+    while(std::getline(tokenstream,token,';')){
+        tokens.push_back(token);
+    }
+    path=tokens[1];
+    mag_filter=std::stoi(tokens[2]);
+    min_filter=std::stoi(tokens[3]);
+}
+
 bool SceneSerializer::Deserialize(const std::string &path){
+
+    std::map<std::string,std::vector<TextureData>> textures;
+
     printf("Starting deserialization of scene file %s\n",path.c_str());
     YAML::Node data;
     try{
@@ -292,7 +356,8 @@ bool SceneSerializer::Deserialize(const std::string &path){
                 int height=texturecomponent["Height"].as<int>();
                 int layer=texturecomponent["Layer"].as<int>();
 
-                m_Scene->AddComponent<TextureComponent>(uid,filepath,magfilter,minfilter,width,height,layer);
+                textures[EncodeTexture(false,filepath,nullptr,nullptr,magfilter,minfilter,nullptr,nullptr,nullptr)].push_back(TextureData(uid,width,height,layer));
+                //m_Scene->AddComponent<TextureComponent>(uid,filepath,magfilter,minfilter,width,height,layer);
             }
 
             auto animatedtexturecomponent=e["AnimatedTextureComponent"];
@@ -300,8 +365,8 @@ bool SceneSerializer::Deserialize(const std::string &path){
                 std::string filepath=animatedtexturecomponent["Filepath"].as<std::string>();
                 int magfilter=animatedtexturecomponent["MagFilter"].as<int>();
                 int minfilter=animatedtexturecomponent["MinFilter"].as<int>();
-                int tilewidth=animatedtexturecomponent["TileWidth"].as<unsigned int>();
-                int tileheight=animatedtexturecomponent["TileHeight"].as<unsigned int>();
+                unsigned int tilewidth=animatedtexturecomponent["TileWidth"].as<unsigned int>();
+                unsigned int tileheight=animatedtexturecomponent["TileHeight"].as<unsigned int>();
                 bool playanimation=animatedtexturecomponent["PlayAnimation"].as<bool>();
                 bool loopanimation=animatedtexturecomponent["LoopAnimation"].as<bool>();
                 float animationdelay=animatedtexturecomponent["AnimationDelay"].as<float>();
@@ -309,7 +374,8 @@ bool SceneSerializer::Deserialize(const std::string &path){
                 int height=animatedtexturecomponent["Height"].as<float>();
                 int layer=animatedtexturecomponent["Layer"].as<float>();
 
-                m_Scene->AddComponent<AnimatedTextureComponent>(uid,filepath,tilewidth,tileheight,magfilter,minfilter,width,height,layer,playanimation,loopanimation,animationdelay);
+                textures[EncodeTexture(true,filepath,&tilewidth,&tileheight,magfilter,minfilter,&playanimation,&loopanimation,&animationdelay)].push_back(TextureData(uid,width,height,layer));
+                //m_Scene->AddComponent<AnimatedTextureComponent>(uid,filepath,tilewidth,tileheight,magfilter,minfilter,width,height,layer,playanimation,loopanimation,animationdelay);
             }
 
             auto rigidbodycomponent=e["RigidbodyComponent"];
@@ -360,6 +426,31 @@ bool SceneSerializer::Deserialize(const std::string &path){
             }
         }
     }
+
+    for(auto &[key,val]:textures){
+        //create components
+        if(GetTextureType(key)){
+            std::string path;
+            unsigned int tilewidth,tileheight;
+            int magfilter,minfilter;
+            bool playanimation,loopanimation;
+            float animationdelay;
+            DecodeTexture(key,path,tilewidth,tileheight,magfilter,minfilter,playanimation,loopanimation,animationdelay);
+            std::shared_ptr<AnimatedTexture>texture=std::make_shared<AnimatedTexture>(path,tilewidth,tileheight,magfilter,minfilter,playanimation,loopanimation,animationdelay);
+            for(auto &data:val){
+                m_Scene->AddComponent<AnimatedTextureComponent>(data.uid,texture,data.width,data.height,data.layer);
+            }
+        }else{
+            std::string path;
+            int magfilter,minfilter;
+            DecodeTexture(key,path,magfilter,minfilter);
+            std::shared_ptr<Texture>texture=std::make_shared<Texture>(path,magfilter,minfilter);
+            for(auto &data:val){
+                m_Scene->AddComponent<TextureComponent>(data.uid,texture,data.width,data.height,data.layer);
+            }
+        }
+    }
+
     printf("Deserialization of scene file %s completed\n",path.c_str());
     return true;
 }
