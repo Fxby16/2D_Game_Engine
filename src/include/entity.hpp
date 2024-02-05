@@ -130,9 +130,9 @@ public:
 
 class AnimatedTextureComponent{
 public:
-    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,bool play_animation,bool loop_animation,float animation_delay,uint32_t uid);
-    AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>t,float width,float height,float layer,uint32_t uid);
-    AnimatedTextureComponent(): m_AnimatedTexture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint32_t>::max()){}
+    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,bool play_animation,bool loop_animation,float animation_delay,int animation_index,uint32_t uid);
+    AnimatedTextureComponent(std::shared_ptr<SpriteSheet>t,float width,float height,float layer,bool play_animation,bool loop_animation,float animation_delay,int animation_index,uint32_t uid);
+    AnimatedTextureComponent(): m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint32_t>::max()){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
     AnimatedTextureComponent(AnimatedTextureComponent &&other);
 
@@ -141,6 +141,11 @@ public:
         m_Width=b.m_Width;
         m_Height=b.m_Height;
         m_Layer=b.m_Layer;
+        m_PlayAnimation=b.m_PlayAnimation;
+        m_LoopAnimation=b.m_LoopAnimation;
+        m_AnimationDelay=b.m_AnimationDelay;
+        m_AnimationIndex=b.m_AnimationIndex;
+        m_LastAnimationTime=b.m_LastAnimationTime;
         m_UID=b.m_UID;
         return *this;
     }
@@ -150,6 +155,11 @@ public:
             m_Width=b.m_Width;
             m_Height=b.m_Height;
             m_Layer=b.m_Layer;
+            m_PlayAnimation=b.m_PlayAnimation;
+            m_LoopAnimation=b.m_LoopAnimation;
+            m_AnimationDelay=b.m_AnimationDelay;
+            m_AnimationIndex=b.m_AnimationIndex;
+            m_LastAnimationTime=b.m_LastAnimationTime;
             m_UID=b.m_UID;
         }
         return *this;
@@ -157,9 +167,13 @@ public:
 
     void PlayAnimation(bool loop=false,float delay=0.0f);
 
-    std::shared_ptr<AnimatedTexture> m_AnimatedTexture;
+    std::shared_ptr<SpriteSheet> m_AnimatedTexture;
     float m_Width,m_Height;
     float m_Layer;
+    bool m_PlayAnimation,m_LoopAnimation;
+    float m_AnimationDelay;
+    int m_AnimationIndex;
+    float m_LastAnimationTime;
     uint32_t m_UID;
 };
 

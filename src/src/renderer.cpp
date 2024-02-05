@@ -164,22 +164,22 @@ void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float laye
         Render();
 }
 
-void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,AnimatedTexture &at){
+void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index){
     PROFILE_FUNCTION();
     
-    if(at.m_PlayAnimation){
-        if(glfwGetTime()-at.m_LastAnimationTime>=at.m_AnimationDelay){
-            at.m_LastAnimationTime=glfwGetTime();
-            at.m_AnimationIndex++;
-            if(at.m_AnimationIndex>=at.m_Width/at.m_TileWidth){
-                if(!at.m_LoopAnimation){
-                    at.m_PlayAnimation=false;
+    if(play_animation){
+        if(glfwGetTime()-last_animation_time>=animation_delay){
+            last_animation_time=glfwGetTime();
+            animation_index++;
+            if(animation_index>=s.m_Width/s.m_TileWidth){
+                if(!loop_animation){
+                    play_animation=false;
                 }
-                at.m_AnimationIndex=0;
+                animation_index=0;
             }
         }
     }
-    DrawSpriteSheet(pos,size,ceil((float)at.m_Height/(float)at.m_TileHeight)-1,at.m_AnimationIndex,layer,at);
+    DrawSpriteSheet(pos,size,ceil((float)s.m_Height/(float)s.m_TileHeight)-1,animation_index,layer,s);
 }
 
 

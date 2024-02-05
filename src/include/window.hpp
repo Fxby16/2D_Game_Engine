@@ -2,12 +2,14 @@
 
 #include <renderer.hpp>
 #include <textrenderer.hpp>
+#include <input.hpp>
 
 class Application;
 
 extern bool ISFULLSCREEN;
 extern Renderer *RENDERER;
 extern std::vector<TextRenderer*> TEXT_RENDERERS;
+extern Input *INPUT;
 
 namespace Window{
     extern int InitGlfwWindow(const char *window_name);
@@ -25,7 +27,6 @@ namespace Window{
 
     extern void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam);
     extern void GLAPIENTRY FramebufferSizeCallback(GLFWwindow *window,int width,int height);
-    extern void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mods);
     extern void GLAPIENTRY ErrorCallback(int error,const char *description);
 
     extern Application* CreateApplication();

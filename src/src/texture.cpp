@@ -90,25 +90,3 @@ std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float wi
     
     return {v1,v2,v3,v4};
 }
-
-AnimatedTexture::AnimatedTexture(AnimatedTexture &other){
-    m_ID=other.m_ID;
-    m_FilePath=other.m_FilePath;
-    m_LocalBuffer=other.m_LocalBuffer;
-    m_Width=other.m_Width;
-    m_Height=other.m_Height;
-    m_BPP=other.m_BPP;
-    m_TileWidth=other.m_TileWidth;
-    m_TileHeight=other.m_TileHeight;
-    m_PlayAnimation=other.m_PlayAnimation;
-    m_LoopAnimation=other.m_LoopAnimation;
-    m_AnimationDelay=other.m_AnimationDelay;
-    m_LastAnimationTime=other.m_LastAnimationTime;
-    m_AnimationIndex=other.m_AnimationIndex;
-}
-
-void AnimatedTexture::PlayAnimation(bool loop,float delay){
-    m_PlayAnimation=true;
-    m_LoopAnimation=loop;
-    m_AnimationDelay=delay;
-}

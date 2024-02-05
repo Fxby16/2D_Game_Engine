@@ -50,7 +50,7 @@ public:
     void DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,float layer,float texID);
     void DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,float layer,Texture &texture);
     void DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s);
-    void DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,AnimatedTexture &at);
+    void DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index);
     void DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer);
     void DrawQuad(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
     void DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer);

@@ -8,6 +8,7 @@
 bool ISFULLSCREEN=false;
 Renderer *RENDERER;
 std::vector<TextRenderer*> TEXT_RENDERERS;
+Input *INPUT;
 
 namespace Window{
     void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam){
@@ -38,19 +39,6 @@ namespace Window{
             printf("Framebuffer resized to %dx%d\n",width,height);
         #endif
     }  
-
-    void GLAPIENTRY KeyCallback(GLFWwindow *window,int key,int scancode,int action,int mods){
-        if(key==KEY_F11 && action==BUTTON_DOWN)
-            ToggleFullScreen();
-        if(key==KEY_Q && action==BUTTON_DOWN)
-            glfwSetWindowShouldClose(window,true);
-        #ifndef EDITOR
-            if(key==KEY_F10 && action==BUTTON_DOWN)
-                ToggleVSync();
-            if(key==KEY_F9 && action==BUTTON_DOWN)
-                ShowMetrics_=!ShowMetrics_;
-        #endif
-    }
 
     void GLAPIENTRY ErrorCallback(int error,const char *description){
         fprintf(stderr, "Error: %s\n", description);
@@ -92,7 +80,7 @@ namespace Window{
         }
 
         glfwMakeContextCurrent(Window);
-        glfwSwapInterval(1); //v-sync
+        glfwSwapInterval(1); //v-sync on
 
         if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
             perror("Failed to initialize GLAD\n");
@@ -100,7 +88,6 @@ namespace Window{
         } 
 
         glfwSetFramebufferSizeCallback(Window,FramebufferSizeCallback);
-        glfwSetKeyCallback(Window,KeyCallback);
         glfwSetErrorCallback(ErrorCallback);
 
         #ifdef DEBUG
@@ -114,6 +101,7 @@ namespace Window{
 
         RENDERER=new Renderer;
         TEXT_RENDERERS.push_back(new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",64,true));
+        INPUT=new Input;
 
         return 0;
     }

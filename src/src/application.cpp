@@ -1,5 +1,6 @@
 #include <pch.hpp>
 #include <application.hpp>
+#include <buttons.hpp>
 
 Application::Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui){
     m_WindowName=window_name;
@@ -37,11 +38,32 @@ Application::~Application(){
     #endif
 }
 
+void HandleInputs(){
+    KeyState f11=INPUT->GetKey(KEY_F11);
+    if(f11.current && !f11.previous)
+        Window::ToggleFullScreen();
+
+    KeyState f10=INPUT->GetKey(KEY_F10);
+    if(f10.current && !f10.previous)
+        Window::ToggleVSync();
+
+    KeyState f9=INPUT->GetKey(KEY_F9);
+    if(f9.current && !f9.previous)
+        Window::ShowMetrics_=!Window::ShowMetrics_;
+
+    KeyState q=INPUT->GetKey(KEY_Q);
+    if(q.current && !q.previous)
+        glfwSetWindowShouldClose(Window::Window,GL_TRUE);
+}
+
 void Application::Run(){
     PROFILE_FUNCTION();
 
     while(!glfwWindowShouldClose(Window::Window)){
         glfwPollEvents();
+
+        INPUT->UpdateStates();
+        HandleInputs();
 
         if(Window::ProjUpdate){
             m_Camera.InitializeProj();

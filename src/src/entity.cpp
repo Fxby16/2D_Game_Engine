@@ -63,13 +63,15 @@ TextureComponent::TextureComponent(std::shared_ptr<Texture>t,float width,float h
 
 AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,
     unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,bool play_animation,
-    bool loop_animation,float animation_delay,uint32_t uid):
+    bool loop_animation,float animation_delay,int animation_index,uint32_t uid):
     
-    m_AnimatedTexture(std::make_shared<AnimatedTexture>(path,tile_width,tile_height,mag_filter,min_filter,play_animation,loop_animation,animation_delay)),
-    m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
+    m_AnimatedTexture(std::make_shared<SpriteSheet>(path,tile_width,tile_height,mag_filter,min_filter)),
+    m_Width(width),m_Height(height),m_Layer(layer),m_PlayAnimation(play_animation),
+    m_LoopAnimation(loop_animation),m_AnimationDelay(animation_delay),m_AnimationIndex(animation_index),m_LastAnimationTime(0),m_UID(uid){}
 
-AnimatedTextureComponent::AnimatedTextureComponent(std::shared_ptr<AnimatedTexture>t,float width,float height,float layer,uint32_t uid):
-    m_AnimatedTexture(t),m_Width(width),m_Height(height),m_Layer(layer),m_UID(uid){}
+AnimatedTextureComponent::AnimatedTextureComponent(std::shared_ptr<SpriteSheet>t,float width,float height,float layer,bool play_animation,bool loop_animation,float animation_delay,int animation_index,uint32_t uid):
+    m_AnimatedTexture(t),m_Width(width),m_Height(height),m_Layer(layer),m_PlayAnimation(play_animation),
+    m_LoopAnimation(loop_animation),m_AnimationDelay(animation_delay),m_AnimationIndex(animation_index),m_LastAnimationTime(0),m_UID(uid){}
 
 TextureComponent::TextureComponent(TextureComponent &other){
     m_Texture=other.m_Texture;
@@ -89,6 +91,11 @@ AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &oth
     m_AnimatedTexture=other.m_AnimatedTexture;
     m_Width=other.m_Width;
     m_Height=other.m_Height;
+    m_PlayAnimation=other.m_PlayAnimation;
+    m_LoopAnimation=other.m_LoopAnimation;
+    m_AnimationDelay=other.m_AnimationDelay;
+    m_AnimationIndex=other.m_AnimationIndex;
+    m_LastAnimationTime=other.m_LastAnimationTime;
     m_UID=other.m_UID;
 }
 
@@ -96,11 +103,19 @@ AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &&ot
     m_AnimatedTexture=other.m_AnimatedTexture;
     m_Width=other.m_Width;
     m_Height=other.m_Height;
+    m_PlayAnimation=other.m_PlayAnimation;
+    m_LoopAnimation=other.m_LoopAnimation;
+    m_AnimationDelay=other.m_AnimationDelay;
+    m_AnimationIndex=other.m_AnimationIndex;
+    m_LastAnimationTime=other.m_LastAnimationTime;
     m_UID=other.m_UID;
 }
 
 void AnimatedTextureComponent::PlayAnimation(bool loop,float delay){
-    m_AnimatedTexture->PlayAnimation(loop,delay);
+    m_LoopAnimation=loop;
+    m_AnimationDelay=delay;
+    m_PlayAnimation=true;
+    m_LastAnimationTime=0.0f;
 }
 
 LightComponent::LightComponent(): m_XOffset(0.0f),m_YOffset(0.0f),m_Radius(0.0f),m_Blur(0.0f),m_Color(0.0f,0.0f,0.0f),m_Type(LIGHT_AROUND_POS),m_UID(std::numeric_limits<uint32_t>::max()){}
@@ -161,7 +176,8 @@ void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
         entity=scene->GetEntity(m_Components[i].m_UID);
-        RENDERER->DrawAnimatedTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,*m_Components[i].m_AnimatedTexture);  
+        RENDERER->DrawAnimatedTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,*m_Components[i].m_AnimatedTexture,
+            m_Components[i].m_PlayAnimation,m_Components[i].m_LoopAnimation,m_Components[i].m_AnimationDelay,m_Components[i].m_LastAnimationTime,m_Components[i].m_AnimationIndex);  
     }
 }
 

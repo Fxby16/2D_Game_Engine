@@ -138,6 +138,14 @@ void Editor::EntitiesMenu(ImVec2 pos){
         ImGui::PopID();
         k++;
     }
+
+    if(ImGui::BeginPopupContextWindow()){
+        if(ImGui::MenuItem("Create Entity")){
+            m_Scene->AddEntity();
+        }
+        ImGui::EndPopup();
+    }
+
     ImGui::End();
 }
 
@@ -148,7 +156,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
 
     Entity *e=m_Scene->GetEntity(m_SelectedEntity);
     if(e){
-        ImGui::Text("Entity: %s",m_Scene->GetComponent<TagComponent>(m_SelectedEntity)->m_Tag.c_str());
+        ImGui::Text("Entity: %s",(m_Scene->GetComponent<TagComponent>(m_SelectedEntity))?m_Scene->GetComponent<TagComponent>(m_SelectedEntity)->m_Tag.c_str():"");
         ImGui::SliderFloat("X",&e->m_X,-30.0f,30.0f);
         ImGui::SliderFloat("Y",&e->m_Y,-30.0f,30.0f);
         e->m_PreviousX=e->m_X;
@@ -170,7 +178,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
         if(StartNode("TextureComponent")){
             ImGui::SliderFloat("Width",&texture_component->m_Width,0.0f,30.0f);
             ImGui::SliderFloat("Height",&texture_component->m_Height,0.0f,30.0f);
-            ImGui::SliderFloat("Layer",&texture_component->m_Layer,0,100,"%.0f");
+            ImGui::SliderFloat("Layer",&texture_component->m_Layer,0,100,"%.3f");
             ImGui::TreePop();
         }
         texture_component->m_Layer=glm::floor(texture_component->m_Layer+0.5f);
@@ -183,11 +191,11 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Height",&animated_texture_component->m_Height,0.0f,30.0f);
             ImGui::SliderFloat("Layer",&animated_texture_component->m_Layer,0,100,"%.3f");
 
-            AnimatedTexture *at=animated_texture_component->m_AnimatedTexture.get();
-            ImGui::Checkbox("Play Animation",&at->m_PlayAnimation);
-            ImGui::Checkbox("Loop Animation",&at->m_LoopAnimation);
-            ImGui::SliderFloat("Animation Delay",&at->m_AnimationDelay,0.0f,10.0f);
-            ImGui::SliderInt("Animation Index",&at->m_AnimationIndex,0,ceil((float)at->m_Height/(float)at->m_TileHeight)-1);
+            SpriteSheet *s=animated_texture_component->m_AnimatedTexture.get();
+            ImGui::Checkbox("Play Animation",&animated_texture_component->m_PlayAnimation);
+            ImGui::Checkbox("Loop Animation",&animated_texture_component->m_LoopAnimation);
+            ImGui::SliderFloat("Animation Delay",&animated_texture_component->m_AnimationDelay,0.0f,10.0f);
+            ImGui::SliderInt("Animation Index",&animated_texture_component->m_AnimationIndex,0,ceil(((float)s->m_Width)/((float)s->m_TileWidth))-1);
             ImGui::TreePop();
         }
         animated_texture_component->m_Layer=glm::floor(animated_texture_component->m_Layer+0.5f);
@@ -301,6 +309,20 @@ void Editor::ComponentsMenu(ImVec2 pos){
         }
     }
     ImGui::PopItemWidth();
+
+    if(ImGui::BeginPopupContextWindow()){
+        if(ImGui::MenuItem("Add Component")){
+            ImGui::OpenPopup("AddComponentPopup");
+        }
+        ImGui::EndPopup(); 
+    }
+
+    if(ImGui::BeginPopup("AddComponentPopup")){
+        if(ImGui::MenuItem("TagComponent")){
+            m_Scene->AddComponent<TagComponent>(m_SelectedEntity,"");
+        }
+        ImGui::EndPopup();
+    }
 
     ImGui::End();
 }

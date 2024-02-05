@@ -4,3 +4,6 @@
 - tilemap editor
 - project export
 - camera
+- reloading textures when changing textures path or other variables
+- native script component integration
+- run the application through the editor

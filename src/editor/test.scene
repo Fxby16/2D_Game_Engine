@@ -20,6 +20,7 @@ Entities:
       PlayAnimation: false
       LoopAnimation: false
       AnimationDelay: 0
+      AnimationIndex: 0
       Width: 3
       Height: 3
       Layer: 0
@@ -97,6 +98,7 @@ Entities:
       PlayAnimation: false
       LoopAnimation: false
       AnimationDelay: 0
+      AnimationIndex: 0
       Width: 3
       Height: 3
       Layer: 0

@@ -45,6 +45,7 @@ public:
         return *this;
     }
 protected:
+    friend class Renderer;
     #ifdef EDITOR
         friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
     #endif
@@ -96,70 +97,13 @@ public:
 
     std::array<Vertex,4> CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,float texID);
     
-protected:
-    #ifdef EDITOR
-        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
-    #endif
-
-    int m_TileWidth;
-    int m_TileHeight;
-};
-
-class AnimatedTexture : public SpriteSheet{
-public:
-    AnimatedTexture(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,bool playanimation,bool loopanimation,float animationdelay):
-    SpriteSheet(path,tile_width,tile_height,mag_filter,min_filter),m_PlayAnimation(playanimation),m_LoopAnimation(loopanimation),m_AnimationDelay(animationdelay),m_LastAnimationTime(0.0f),m_AnimationIndex(0){}
-    AnimatedTexture(): SpriteSheet(),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0.0f),m_LastAnimationTime(0.0f),m_AnimationIndex(0){}
-    AnimatedTexture(AnimatedTexture &other);
-
-    AnimatedTexture &operator=(AnimatedTexture &other){
-        m_ID=other.m_ID;
-        other.m_ID=std::numeric_limits<unsigned int>::max();
-        m_FilePath=other.m_FilePath;
-        m_LocalBuffer=other.m_LocalBuffer;
-        m_Width=other.m_Width;
-        m_Height=other.m_Height;
-        m_BPP=other.m_BPP;
-        m_TileWidth=other.m_TileWidth;
-        m_TileHeight=other.m_TileHeight;
-        m_PlayAnimation=other.m_PlayAnimation;
-        m_LoopAnimation=other.m_LoopAnimation;
-        m_AnimationDelay=other.m_AnimationDelay;
-        m_LastAnimationTime=other.m_LastAnimationTime;
-        m_AnimationIndex=other.m_AnimationIndex;
-        return *this;
-    }
-
-    AnimatedTexture &operator=(AnimatedTexture &&other){
-        if(this!=&other){
-            m_ID=other.m_ID;
-            other.m_ID=std::numeric_limits<unsigned int>::max();
-            m_FilePath=other.m_FilePath;
-            m_LocalBuffer=other.m_LocalBuffer;
-            m_Width=other.m_Width;
-            m_Height=other.m_Height;
-            m_BPP=other.m_BPP;
-            m_TileWidth=other.m_TileWidth;
-            m_TileHeight=other.m_TileHeight;
-            m_LoopAnimation=other.m_LoopAnimation;
-            m_AnimationDelay=other.m_AnimationDelay;
-            m_LastAnimationTime=other.m_LastAnimationTime;
-            m_AnimationIndex=other.m_AnimationIndex;
-        }
-        return *this;
-    }
-
-    void PlayAnimation(bool loop=false,float delay=0.0f);
-
+private:
     friend class Renderer;
     #ifdef EDITOR
         friend class Editor;
         friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
     #endif
-private:
-    bool m_PlayAnimation;
-    bool m_LoopAnimation;
-    float m_AnimationDelay;
-    float m_LastAnimationTime;
-    int m_AnimationIndex;
+
+    int m_TileWidth;
+    int m_TileHeight;
 };

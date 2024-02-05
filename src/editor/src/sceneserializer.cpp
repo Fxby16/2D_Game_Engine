@@ -122,7 +122,7 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene){
 
         out<<YAML::Key<<"Width"<<YAML::Value<<texturecomponent->m_Width;
         out<<YAML::Key<<"Height"<<YAML::Value<<texturecomponent->m_Height;
-        out<<YAML::Key<<"Layer"<<YAML::Value<<texturecomponent->m_Layer;
+        out<<YAML::Key<<"Layer"<<YAML::Value<<(int)texturecomponent->m_Layer;
 
         out<<YAML::EndMap; //texture component
     }
@@ -140,13 +140,14 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene){
         out<<YAML::Key<<"TileWidth"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_TileWidth;
         out<<YAML::Key<<"TileHeight"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_TileHeight;
 
-        out<<YAML::Key<<"PlayAnimation"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_PlayAnimation;
-        out<<YAML::Key<<"LoopAnimation"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoopAnimation;
-        out<<YAML::Key<<"AnimationDelay"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_AnimationDelay;
+        out<<YAML::Key<<"PlayAnimation"<<YAML::Value<<animatedtexturecomponent->m_PlayAnimation;
+        out<<YAML::Key<<"LoopAnimation"<<YAML::Value<<animatedtexturecomponent->m_LoopAnimation;
+        out<<YAML::Key<<"AnimationDelay"<<YAML::Value<<animatedtexturecomponent->m_AnimationDelay;
+        out<<YAML::Key<<"AnimationIndex"<<YAML::Value<<animatedtexturecomponent->m_AnimationIndex;
 
         out<<YAML::Key<<"Width"<<YAML::Value<<animatedtexturecomponent->m_Width;
         out<<YAML::Key<<"Height"<<YAML::Value<<animatedtexturecomponent->m_Height;
-        out<<YAML::Key<<"Layer"<<YAML::Value<<animatedtexturecomponent->m_Layer;
+        out<<YAML::Key<<"Layer"<<YAML::Value<<(int)animatedtexturecomponent->m_Layer;
 
         out<<YAML::EndMap; //animated texture component
     }
@@ -245,7 +246,7 @@ void SceneSerializer::Serialize(const std::string &path){
     printf("Serialization of scene file %s completed\n",path.c_str());
 }
 
-std::string EncodeTexture(bool animated,const std::string &path,unsigned int *tile_width,unsigned int *tile_height,int mag_filter,int min_filter,bool *playanimation,bool *loopanimation,float *animationdelay){
+std::string EncodeTexture(bool animated,const std::string &path,unsigned int *tile_width,unsigned int *tile_height,int mag_filter,int min_filter){
     std::string encoded;
     encoded+=std::to_string(animated)+";";
     encoded+=path+";";
@@ -255,15 +256,9 @@ std::string EncodeTexture(bool animated,const std::string &path,unsigned int *ti
         #ifdef DEBUG
             assert(tile_width!=nullptr);
             assert(tile_height!=nullptr);
-            assert(playanimation!=nullptr);
-            assert(loopanimation!=nullptr);
-            assert(animationdelay!=nullptr);
 
             encoded+=std::to_string(*tile_width)+";";
             encoded+=std::to_string(*tile_height)+";";
-            encoded+=std::to_string(*playanimation)+";";
-            encoded+=std::to_string(*loopanimation)+";";
-            encoded+=std::to_string(*animationdelay)+";";
         #endif
     }
     return encoded;
@@ -277,7 +272,7 @@ bool GetTextureType(const std::string &encoded){
     return std::stoi(token);
 }
 
-void DecodeTexture(const std::string &encoded,std::string &path,unsigned int &tile_width,unsigned int &tile_height,int &mag_filter,int &min_filter,bool &playanimation,bool &loopanimation,float &animationdelay){
+void DecodeTexture(const std::string &encoded,std::string &path,unsigned int &tile_width,unsigned int &tile_height,int &mag_filter,int &min_filter){
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream tokenstream(encoded);
@@ -289,9 +284,6 @@ void DecodeTexture(const std::string &encoded,std::string &path,unsigned int &ti
     min_filter=std::stoi(tokens[3]);
     tile_width=std::stoi(tokens[4]);
     tile_height=std::stoi(tokens[5]);
-    playanimation=std::stoi(tokens[6]);
-    loopanimation=std::stoi(tokens[7]);
-    animationdelay=std::stof(tokens[8]);
 }
 
 void DecodeTexture(const std::string &encoded,std::string &path,int &mag_filter,int &min_filter){
@@ -356,7 +348,7 @@ bool SceneSerializer::Deserialize(const std::string &path){
                 int height=texturecomponent["Height"].as<int>();
                 int layer=texturecomponent["Layer"].as<int>();
 
-                textures[EncodeTexture(false,filepath,nullptr,nullptr,magfilter,minfilter,nullptr,nullptr,nullptr)].push_back(TextureData(uid,width,height,layer));
+                textures[EncodeTexture(false,filepath,nullptr,nullptr,magfilter,minfilter)].push_back(TextureData(uid,width,height,layer));
                 //m_Scene->AddComponent<TextureComponent>(uid,filepath,magfilter,minfilter,width,height,layer);
             }
 
@@ -370,11 +362,12 @@ bool SceneSerializer::Deserialize(const std::string &path){
                 bool playanimation=animatedtexturecomponent["PlayAnimation"].as<bool>();
                 bool loopanimation=animatedtexturecomponent["LoopAnimation"].as<bool>();
                 float animationdelay=animatedtexturecomponent["AnimationDelay"].as<float>();
+                int animationindex=animatedtexturecomponent["AnimationIndex"].as<int>();
                 int width=animatedtexturecomponent["Width"].as<float>();
                 int height=animatedtexturecomponent["Height"].as<float>();
                 int layer=animatedtexturecomponent["Layer"].as<float>();
 
-                textures[EncodeTexture(true,filepath,&tilewidth,&tileheight,magfilter,minfilter,&playanimation,&loopanimation,&animationdelay)].push_back(TextureData(uid,width,height,layer));
+                textures[EncodeTexture(true,filepath,&tilewidth,&tileheight,magfilter,minfilter)].push_back(TextureData(uid,width,height,layer,playanimation,loopanimation,animationdelay,animationindex));
                 //m_Scene->AddComponent<AnimatedTextureComponent>(uid,filepath,tilewidth,tileheight,magfilter,minfilter,width,height,layer,playanimation,loopanimation,animationdelay);
             }
 
@@ -435,10 +428,10 @@ bool SceneSerializer::Deserialize(const std::string &path){
             int magfilter,minfilter;
             bool playanimation,loopanimation;
             float animationdelay;
-            DecodeTexture(key,path,tilewidth,tileheight,magfilter,minfilter,playanimation,loopanimation,animationdelay);
-            std::shared_ptr<AnimatedTexture>texture=std::make_shared<AnimatedTexture>(path,tilewidth,tileheight,magfilter,minfilter,playanimation,loopanimation,animationdelay);
+            DecodeTexture(key,path,tilewidth,tileheight,magfilter,minfilter);
+            std::shared_ptr<SpriteSheet>texture=std::make_shared<SpriteSheet>(path,tilewidth,tileheight,magfilter,minfilter);
             for(auto &data:val){
-                m_Scene->AddComponent<AnimatedTextureComponent>(data.uid,texture,data.width,data.height,data.layer);
+                m_Scene->AddComponent<AnimatedTextureComponent>(data.uid,texture,data.width,data.height,data.layer,data.playanimation,data.loopanimation,data.animationdelay,data.animationindex);
             }
         }else{
             std::string path;
