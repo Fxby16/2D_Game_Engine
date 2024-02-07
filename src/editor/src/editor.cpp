@@ -35,7 +35,7 @@ void Editor::Run(){
 
         RENDERER->StartEditorScene(this);
         OnSceneRender();
-        RENDERER->DrawEditorScene();
+        RENDERER->DrawEditorScene(m_SceneFramebuffer);
         
         RENDERER->StartScene();
         Renderer::ImGui_Start_Frame();
@@ -311,17 +311,35 @@ void Editor::ComponentsMenu(ImVec2 pos){
     ImGui::PopItemWidth();
 
     if(ImGui::BeginPopupContextWindow()){
-        if(ImGui::MenuItem("Add Component")){
-            ImGui::OpenPopup("AddComponentPopup");
+        if(ImGui::BeginMenu("Add Component")){
+            if(ImGui::MenuItem("Tag Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<TagComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<TagComponent>(m_SelectedEntity,"Entity "+std::to_string(m_SelectedEntity));
+                }
+            }
+            if(ImGui::MenuItem("Rigidbody Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<RigidbodyComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<RigidbodyComponent>(m_SelectedEntity);
+                }
+            }
+            if(ImGui::MenuItem("Box Collider Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<BoxColliderComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<BoxColliderComponent>(m_SelectedEntity);
+                }
+            }
+            if(ImGui::MenuItem("Circle Collider Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<CircleColliderComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<CircleColliderComponent>(m_SelectedEntity);
+                }
+            }
+            if(ImGui::MenuItem("Light Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<LightComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<LightComponent>(m_SelectedEntity);
+                }
+            }
+            ImGui::EndMenu();
         }
         ImGui::EndPopup(); 
-    }
-
-    if(ImGui::BeginPopup("AddComponentPopup")){
-        if(ImGui::MenuItem("TagComponent")){
-            m_Scene->AddComponent<TagComponent>(m_SelectedEntity,"");
-        }
-        ImGui::EndPopup();
     }
 
     ImGui::End();

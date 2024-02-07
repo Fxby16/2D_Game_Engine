@@ -73,6 +73,8 @@ Renderer::Renderer():
 
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_PROGRAM_POINT_SIZE);
+
+    m_Zoom=1.0f;
     SetPointSize(1.0f);
     SetLineWidth(0.1f);
 
@@ -238,11 +240,11 @@ void Renderer::DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer){
 
 void Renderer::SetLineWidth(float new_size){
     m_LineWidth=new_size;
-    glLineWidth((new_size*m_Zoom)/Window::MAX_WIDTH*Window::Width);
+    glLineWidth(glm::max((new_size*m_Zoom)/Window::MAX_WIDTH*Window::Width,1.0f));
 }
 
 void Renderer::UpdateLineWidth(){
-    glLineWidth((m_LineWidth*m_Zoom)/Window::MAX_WIDTH*Window::Width);
+    glLineWidth(glm::max((m_LineWidth*m_Zoom)/Window::MAX_WIDTH*Window::Width,1.0f));
 }
 
 /**
@@ -359,11 +361,11 @@ void Renderer::StartEditorScene(Editor *editor){
     RENDERER->Clear();
 }
 
-void Renderer::DrawEditorScene(){
+void Renderer::DrawEditorScene(Framebuffer *framebuffer){
     PROFILE_FUNCTION();
     
     Render();
-    ApplyLight();
+    ApplyLight(framebuffer);
 }
 #endif
 
@@ -703,16 +705,20 @@ void Renderer::KeepCircle(Vec2 pos,float radius,float blurAmount){
 }
 
 void Renderer::ApplyLight(){
+    ApplyLight(m_Framebuffer);
+}
+
+void Renderer::ApplyLight(Framebuffer *framebuffer){
     PROFILE_FUNCTION();
     
     m_Lights.VBO.Bind();
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
+    glBindTexture(GL_TEXTURE_2D,framebuffer->GetColorbufferID());
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
     
-    m_Framebuffer->Bind();
+    framebuffer->Bind();
     m_Lights.VAO.Bind();
     m_Lights.S.Bind();
 

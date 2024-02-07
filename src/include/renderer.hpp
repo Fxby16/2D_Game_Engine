@@ -32,7 +32,7 @@ public:
     void DrawScene();
     #ifdef EDITOR
         void StartEditorScene(Editor *editor); 
-        void DrawEditorScene();
+        void DrawEditorScene(Framebuffer *framebuffer);
     #endif
 
     void Clear(bool ambient_light=false) const;
@@ -79,6 +79,7 @@ public:
     void ClearSegments();
     std::vector<std::pair<Vec2,Vec2>> &GetSegments();
     void ApplyLight();
+    void ApplyLight(Framebuffer *framebuffer);
     void KeepCircle(Vec2 pos,float radius,float blurAmount);
     std::pair<Vec2,float> GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg);
 

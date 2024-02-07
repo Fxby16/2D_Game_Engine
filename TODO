@@ -1,9 +1,29 @@
+Engine:
 - add text component
-- write documentation
 - collision callbacks
 - rotated quads (and triangles)
 - directional light
 - particle system
+- shaders reloading
+--------------------------------------------------------------------------------------------------------------------
+Editor:
+- file browser
+- project serializer (settings etc.)
+- thumbnails
+- tilemap editor
+- project export
+- camera
+- adding texture and animated texture component from the editor
+- removing components and entities from the editor
+- reloading textures when changing textures path or other variables
 
+- edit other variables, like ambient light etc.
+
+- native script component integration
+- run the application through the editor
+- undo/redo system
+
+- shaders reloading (todo first in the engine)
+--------------------------------------------------------------------------------------------------------------------
 Others:
 - windows porting

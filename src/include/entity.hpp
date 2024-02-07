@@ -242,6 +242,7 @@ class LightComponent{
 public:
     LightComponent();
     LightComponent(float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type,uint32_t uid);
+    LightComponent(uint32_t uid);
 
     void SetOffset(float x_offset,float y_offset);
     void SetCentered(float width,float height);

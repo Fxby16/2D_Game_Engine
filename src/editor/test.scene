@@ -9,8 +9,6 @@ Entities:
       Y: 0
       PreviousX: 5
       PreviousY: 0
-    TagComponent:
-      Tag: prova
     AnimatedTextureComponent:
       Filepath: ../resources/textures/Run.png
       MagFilter: 9728
