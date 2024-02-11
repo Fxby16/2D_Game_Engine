@@ -1,1 +1,0 @@
-int DRAW_CALLS=0;

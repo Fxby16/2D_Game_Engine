@@ -12,11 +12,12 @@ extern std::vector<TextRenderer*> TEXT_RENDERERS;
 extern Input *INPUT;
 
 namespace Window{
-    extern int InitGlfwWindow(const char *window_name);
+    extern int InitGlfwWindow(const char *window_name,bool resizable);
     extern void DeinitGlfwWindow();
 
     extern void ToggleFullScreen();
     extern void ToggleVSync();
+    extern void SetResizable(bool resizable);
 
     extern bool GetKeyState(int key,int state);
     extern bool GetMouseButtonState(int button,int state);
@@ -52,6 +53,9 @@ namespace Window{
     extern bool TextProjUpdate;
     #ifdef EDITOR
         extern bool SceneFramebufferUpdate;
+
+        extern int DrawCalls;
+        extern int VertexCount;
     #endif
 
     extern const float MAX_WIDTH;

@@ -8,7 +8,7 @@ class SceneSerializer;
 
 class Editor{
 public:
-    Editor(unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height);
+    Editor(unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable=false);
     ~Editor();
 
     void Run();
@@ -20,6 +20,8 @@ private:
 
     void EntitiesMenu(ImVec2 pos);
     void ComponentsMenu(ImVec2 pos);
+    void DataMenu(ImVec2 pos);
+    void VariablesMenu(ImVec2 pos);
 
     Camera m_Camera;
     Scene *m_Scene=nullptr;

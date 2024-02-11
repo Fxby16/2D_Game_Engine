@@ -40,6 +40,18 @@ LightType LightTypeFromString(std::string lighttype){
 }
 
 namespace YAML{
+    Emitter& operator<<(Emitter &out,const Vec3 &rhs){
+        out<<Flow;
+        out<<BeginSeq<<rhs.r<<rhs.g<<rhs.b<<EndSeq;
+        return out;
+    }
+
+    Emitter& operator<<(Emitter &out,const Vec2 &rhs){
+        out<<Flow;
+        out<<BeginSeq<<rhs.x<<rhs.y<<EndSeq;
+        return out;
+    }
+
     template<>
     struct convert<Vec3>{
         static Node encode(const Vec3 &rhs){
@@ -209,7 +221,7 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene){
         out<<YAML::Key<<"YOffset"<<YAML::Value<<lightcomponent->m_YOffset;
         out<<YAML::Key<<"Radius"<<YAML::Value<<lightcomponent->m_Radius;
         out<<YAML::Key<<"Blur"<<YAML::Value<<lightcomponent->m_Blur;
-        out<<YAML::Key<<"Color"<<YAML::Value<<YAML::Flow<<YAML::BeginSeq<<lightcomponent->m_Color.r<<lightcomponent->m_Color.g<<lightcomponent->m_Color.b<<YAML::EndSeq;
+        out<<YAML::Key<<"Color"<<YAML::Value<<lightcomponent->m_Color;
         out<<YAML::Key<<"LightType"<<YAML::Value<<LightTypeToString(lightcomponent->m_Type);
 
         out<<YAML::EndMap; //light component
@@ -224,8 +236,10 @@ void SceneSerializer::Serialize(const std::string &path){
     out<<YAML::BeginMap;
     out<<YAML::Key<<"Scene"<<YAML::Value<<m_Scene->m_Name;
     out<<YAML::Key<<"ScalingFactor"<<YAML::Value<<m_Scene->m_ScalingFactor;
-    out<<YAML::Key<<"Gravity"<<YAML::Value<<YAML::Flow<<YAML::BeginSeq<<m_Scene->m_Gravity.x<<m_Scene->m_Gravity.y<<YAML::EndSeq;
+    out<<YAML::Key<<"Gravity"<<YAML::Value<<m_Scene->m_Gravity;
     out<<YAML::Key<<"NextUID"<<YAML::Value<<NEXT_UID;
+    out<<YAML::Key<<"AmbientLight"<<YAML::Value<<RENDERER->m_AmbientLight;
+    out<<YAML::Key<<"ClearColor"<<YAML::Value<<RENDERER->m_ClearColor;
     out<<YAML::Key<<"Entities"<<YAML::Value<<YAML::BeginSeq;
 
     std::vector<Entity>& entities=m_Scene->GetEntities();
@@ -320,6 +334,8 @@ bool SceneSerializer::Deserialize(const std::string &path){
     m_Scene->m_ScalingFactor=data["ScalingFactor"].as<float>();
     m_Scene->m_Gravity=data["Gravity"].as<Vec2>();
     NEXT_UID=data["NextUID"].as<uint32_t>();
+    RENDERER->m_AmbientLight=data["AmbientLight"].as<Vec3>();
+    RENDERER->m_ClearColor=data["ClearColor"].as<Vec3>();
 
     auto entities=data["Entities"];
     if(entities){

@@ -2,7 +2,7 @@
 #include <application.hpp>
 #include <buttons.hpp>
 
-Application::Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui){
+Application::Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable,bool imgui){
     m_WindowName=window_name;
     Window::BaseWidth=Window::Width=width;
     Window::BaseHeight=Window::Height=height;
@@ -12,7 +12,7 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
 
     m_ImGui=imgui;
 
-    Window::InitGlfwWindow(window_name);
+    Window::InitGlfwWindow(window_name,resizable);
     m_Camera.InitializeProj();
     m_Scene=new Scene;
 

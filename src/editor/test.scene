@@ -2,6 +2,8 @@ Scene: ""
 ScalingFactor: 0.5
 Gravity: [0, 0]
 NextUID: 4
+AmbientLight: [0.371769369, 0.339248776, 0.339248776]
+ClearColor: [0.280318081, 0.19338046, 0.19338046]
 Entities:
   - Entity:
       UID: 0
@@ -103,3 +105,10 @@ Entities:
     RigidbodyComponent:
       BodyType: Static
       FixedRotation: true
+    LightComponent:
+      XOffset: 1.64400005
+      YOffset: 0.82099998
+      Radius: 2.05500007
+      Blur: 0
+      Color: [1, 1, 1]
+      LightType: LightAroundPos

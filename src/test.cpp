@@ -7,7 +7,7 @@ using namespace Window;
 
 class Test : public Application{
 public:
-    Test(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui=false): Application(window_name,width,height,fullscreen_width,fullscreen_height,imgui){
+    Test(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable=false,bool imgui=false): Application(window_name,width,height,fullscreen_width,fullscreen_height,resizable,imgui){
         m_Scene->SetGravity(0.0f,0.0f);
 
         m_Texture=std::make_shared<Texture>("/home/fabio/Scaricati/Red.png",GL_LINEAR,GL_LINEAR);
@@ -26,7 +26,7 @@ public:
         nsc->OnUpdate=Entity1Update;
 
         m_Entities.push_back(m_Scene->AddEntity());
-        m_Scene->AddComponent<AnimatedTextureComponent>(m_Entities[1],"resources/textures/Run.png",128,128,GL_NEAREST,GL_NEAREST,3.0f,3.0f,0.0f,false,false,0.0f);
+        m_Scene->AddComponent<AnimatedTextureComponent>(m_Entities[1],"resources/textures/Run.png",128,128,GL_NEAREST,GL_NEAREST,3.0f,3.0f,0.0f,false,false,0.0f,0);
         m_Scene->AddComponent<RigidbodyComponent>(m_Entities[1],RigidbodyComponent::BodyType::Static,true);
         //m_Scene->AddComponent<BoxColliderComponent>(m_Entities[1],1.5f,1.5f,3.0f,3.0f,1.0f,0.0f,0.0f,0.5f);
         m_Scene->AddComponent<CircleColliderComponent>(m_Entities[1],1.5f,1.5f,1.0f,1.0f,0.0f,0.0f,0.5f);
@@ -91,5 +91,5 @@ private:
 };
 
 Application* Window::CreateApplication(){
-    return new Test("Test",1600,900,1920,1080);
+    return new Test("Test",1600,900,1920,1080,false);
 }

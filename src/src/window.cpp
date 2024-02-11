@@ -62,7 +62,7 @@ namespace Window{
                            0.5f).second,0.5f,Vec3(1.0f,1.0f,1.0f));
     }
 
-    int InitGlfwWindow(const char *window_name){
+    int InitGlfwWindow(const char *window_name,bool resizable){
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,6);
@@ -70,7 +70,7 @@ namespace Window{
         #ifdef __APPLE__
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,GL_TRUE);
         #endif
-        glfwWindowHint(GLFW_RESIZABLE,false);
+        glfwWindowHint(GLFW_RESIZABLE,resizable);
 
         Window=glfwCreateWindow(Width,Height,window_name,nullptr,nullptr);
         if(Window==NULL){
@@ -132,6 +132,10 @@ namespace Window{
     void ToggleVSync(){
         IsVSync=!IsVSync;
         glfwSwapInterval(IsVSync);
+    }
+
+    void SetResizable(bool resizable){
+        glfwWindowHint(GLFW_RESIZABLE,resizable);
     }
 
     int parseLine(char *line){
@@ -227,6 +231,9 @@ namespace Window{
     bool TextProjUpdate=false;
     #ifdef EDITOR
         bool SceneFramebufferUpdate=false;
+
+        int DrawCalls=0;
+        int VertexCount=0;
     #endif
 
     const float MAX_WIDTH=10.0f;

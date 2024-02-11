@@ -10,7 +10,7 @@
 
 class Application{
 public:
-    Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool imgui=true);
+    Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable=false,bool imgui=true);
     ~Application();
 
     void Run();

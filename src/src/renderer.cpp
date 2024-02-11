@@ -114,6 +114,10 @@ void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int 
 void Renderer::DrawTexture(Vec2 pos,Vec2 size,float layer,float texID){
     PROFILE_FUNCTION();
 
+    #ifdef EDITOR
+        Window::VertexCount+=4;
+    #endif
+
     auto [a,b,c,d]=VertexBuffer::CreateQuad(pos.x,pos.y,size.w,size.h,layer,texID);
     m_BufferT[m_Textures.NumVertices]=a;
     m_BufferT[m_Textures.NumVertices+1]=b;
@@ -127,6 +131,10 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,float layer,float texID){
 
 void Renderer::DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,float layer,float texID){
     PROFILE_FUNCTION();
+
+    #ifdef EDITOR
+        Window::VertexCount+=4;
+    #endif
     
     auto [a,b,c,d]=VertexBuffer::CreateQuad(pos.x,pos.y,size.w,size.h,texture_pos.x,texture_pos.y,texture_size.w,texture_size.h,texture_total_size.w,texture_total_size.h,layer,texID);
     m_BufferT[m_Textures.NumVertices]=a;
@@ -154,6 +162,10 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,floa
 
 void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s){
     PROFILE_FUNCTION();
+
+    #ifdef EDITOR
+        Window::VertexCount+=4;
+    #endif
     
     std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(pos.x,pos.y,size.w,size.h,row,col,layer,s.GetTexID());
     m_BufferT[m_Textures.NumVertices]=quad[0];
@@ -187,6 +199,10 @@ void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,SpriteSheet &s
 
 void Renderer::DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer){
     PROFILE_FUNCTION();
+
+    #ifdef EDITOR
+        Window::VertexCount+=3;
+    #endif
     
     m_BufferTR[m_Triangles.NumVertices]=TriangleVertex(pos1,color,layer);
     m_BufferTR[m_Triangles.NumVertices+1]=TriangleVertex(pos2,color,layer);
@@ -194,19 +210,6 @@ void Renderer::DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer
     m_Triangles.NumVertices+=3;
 
     if(m_Triangles.NumVertices==MAX_VERTICES)
-        Render();
-}
-
-void Renderer::DrawQuad(Vertex a,Vertex b,Vertex c,Vertex d){
-    PROFILE_FUNCTION();
-    
-    m_BufferT[m_Textures.NumVertices]=a;
-    m_BufferT[m_Textures.NumVertices+1]=b;
-    m_BufferT[m_Textures.NumVertices+2]=c;
-    m_BufferT[m_Textures.NumVertices+3]=d;
-    m_Textures.NumVertices+=4;
-
-    if(m_Textures.NumVertices==MAX_VERTICES)
         Render();
 }
 
@@ -219,6 +222,10 @@ void Renderer::DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer){
 
 void Renderer::DrawPoint(Vec2 pos,Vec4 color,float layer){
     PROFILE_FUNCTION();
+
+    #ifdef EDITOR
+        Window::VertexCount++;
+    #endif
     
     m_BufferP[m_Points.NumVertices]=LinePointVertex(pos,color,layer);
     ++m_Points.NumVertices;
@@ -229,6 +236,10 @@ void Renderer::DrawPoint(Vec2 pos,Vec4 color,float layer){
 
 void Renderer::DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer){
     PROFILE_FUNCTION();
+
+    #ifdef EDITOR
+        Window::VertexCount+=2;
+    #endif
     
     m_BufferL[m_Lines.NumVertices]=LinePointVertex(pos1,color,layer);
     m_BufferL[m_Lines.NumVertices+1]=LinePointVertex(pos2,color,layer);
@@ -320,6 +331,9 @@ void Renderer::DrawScene(){
 #ifdef EDITOR
 void Renderer::StartEditorScene(Editor *editor){
     PROFILE_FUNCTION();
+
+    Window::VertexCount=0;
+    Window::DrawCalls=0;
     
     if(Window::ProjUpdate){
         editor->m_Camera.InitializeProj();
@@ -431,7 +445,9 @@ void Renderer::RenderTextures(bool post_processing,float max_layer){
             }else{ //no slots available
                 m_Textures.VBO.SetData(0,(float *)&m_BufferT[lastIndex],i-lastIndex,sizeof(Vertex)); //send the data to the vertex buffer
                 glDrawElements(GL_TRIANGLES,(i-lastIndex)/4*6,GL_UNSIGNED_INT,nullptr); //draw
-                DRAW_CALLS++;
+                #ifdef EDITOR
+                    Window::DrawCalls++;
+                #endif
                 m_TextureIndex=i; //update starting point for the next batch
                 lastChecked=m_BufferT[i].texID;
                 slot=0;
@@ -444,7 +460,9 @@ void Renderer::RenderTextures(bool post_processing,float max_layer){
     if(i-m_TextureIndex>0){ //if there are some vertices remaining, render them
         m_Textures.VBO.SetData(0,(float *)&m_BufferT[m_TextureIndex],i-m_TextureIndex,sizeof(Vertex));
         glDrawElements(GL_TRIANGLES,(i-m_TextureIndex)/4*6,GL_UNSIGNED_INT,nullptr);
-        DRAW_CALLS++;
+        #ifdef EDITOR
+            Window::DrawCalls++;
+        #endif
     }
 
     if(m_Textures.NumVertices-i==0){
@@ -467,7 +485,9 @@ void Renderer::RenderTriangles(float max_layer){
     if(i-m_TriangleIndex>0){
         m_Triangles.VBO.SetData(0,(float *)&m_BufferTR[m_TriangleIndex],i-m_TriangleIndex,sizeof(TriangleVertex));
         glDrawArrays(GL_TRIANGLES,0,i-m_TriangleIndex);
-        DRAW_CALLS++;
+        #ifdef EDITOR
+            Window::DrawCalls++;
+        #endif
     }
 
     if(m_Triangles.NumVertices-i==0){
@@ -490,7 +510,9 @@ void Renderer::RenderPoints(float max_layer){
     if(i-m_PointIndex>0){
         m_Points.VBO.SetData(0,(float *)&m_BufferP[m_PointIndex],i-m_PointIndex,sizeof(LinePointVertex));
         glDrawArrays(GL_POINTS,0,i-m_PointIndex);
-        DRAW_CALLS++;
+        #ifdef EDITOR
+            Window::DrawCalls++;
+        #endif
     }
 
     if(m_Points.NumVertices-i==0){
@@ -513,7 +535,9 @@ void Renderer::RenderLines(float max_layer){
     if(i-m_LineIndex>0){
         m_Lines.VBO.SetData(0,(float *)&m_BufferL[m_LineIndex],i-m_LineIndex,sizeof(LinePointVertex));
         glDrawArrays(GL_LINES,0,i-m_LineIndex);
-        DRAW_CALLS++;
+        #ifdef EDITOR
+            Window::DrawCalls++;
+        #endif
     }
 
     if(m_Lines.NumVertices-i==0){
@@ -524,12 +548,15 @@ void Renderer::RenderLines(float max_layer){
 }
 
 void Renderer::Clear(bool ambient_light) const{
-    DRAW_CALLS=0;
-
     if(ambient_light)
         glClearColor(m_AmbientLight.r,m_AmbientLight.g,m_AmbientLight.b,1.0f);
     else    
         glClearColor(m_ClearColor.r,m_ClearColor.g,m_ClearColor.b,1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Renderer::Clear(Vec4 color) const{
+    glClearColor(color.r,color.g,color.b,color.a);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 

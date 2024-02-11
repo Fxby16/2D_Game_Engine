@@ -5,14 +5,15 @@
 #include <scene.hpp>
 #include <sceneserializer.hpp>
 
-Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height){
+Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable){
     Window::BaseWidth=Window::Width=width;
     Window::BaseHeight=Window::Height=height;
     Window::FullscreenWidth=fullscreen_width;
     Window::FullscreenHeight=fullscreen_height;
     Window::MAX_HEIGHT=Window::MAX_WIDTH/(Window::Width/Window::Height);
 
-    Window::InitGlfwWindow("Editor");
+    Window::InitGlfwWindow("Editor",resizable);
+
     m_Camera.InitializeProj();
     m_SceneFramebuffer=new Framebuffer;
     m_Scene=new Scene;
@@ -38,6 +39,7 @@ void Editor::Run(){
         RENDERER->DrawEditorScene(m_SceneFramebuffer);
         
         RENDERER->StartScene();
+        RENDERER->Clear({0.0,0.0,0.0,1.0});
         Renderer::ImGui_Start_Frame();
         Renderer::ImGui_Theme();
         
@@ -101,12 +103,14 @@ void Editor::OnImGuiUpdate(){
 
     EntitiesMenu({0,tempvec.y});
     ComponentsMenu({0,(Window::Height-tempvec.y)/2.0f+tempvec.y});
+    DataMenu({GetWidthPercentageInPx(80),tempvec.y});
+    VariablesMenu({GetWidthPercentageInPx(80),(Window::Height-tempvec.y)/2.0f+tempvec.y});
 
     ImGui::Begin("Viewport",nullptr,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoTitleBar);
     ImGui::SetWindowPos(ImVec2(GetWidthPercentageInPx(20),tempvec.y));
-    ImGui::SetWindowSize(ImVec2(0,0));
     tempf=GetWidthPercentageInPx(60);
-    ImGui::Image((void*)m_SceneFramebuffer->GetColorbufferID(),ImVec2(tempf,tempf*9.0f/16.0f),ImVec2(0,1),ImVec2(1,0));
+    ImGui::SetWindowSize(ImVec2(tempf,tempf*9.0f/16.0f));
+    ImGui::Image((void*)m_SceneFramebuffer->GetColorbufferID(),ImGui::GetContentRegionAvail(),ImVec2(0,1),ImVec2(1,0));
     ImGui::End();
 }
 
@@ -171,6 +175,13 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::InputText("Tag",&tag_component->m_Tag[0],tag_component->m_Tag.size());
             ImGui::TreePop();
         }
+        ImGui::OpenPopupOnItemClick("TagComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("TagComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<TagComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
+        }
     }
 
     TextureComponent *texture_component=m_Scene->GetComponent<TextureComponent>(m_SelectedEntity);
@@ -180,6 +191,13 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Height",&texture_component->m_Height,0.0f,30.0f);
             ImGui::SliderFloat("Layer",&texture_component->m_Layer,0,100,"%.3f");
             ImGui::TreePop();
+        }
+        ImGui::OpenPopupOnItemClick("TextureComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("TextureComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<TextureComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
         }
         texture_component->m_Layer=glm::floor(texture_component->m_Layer+0.5f);
     }
@@ -197,6 +215,13 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Animation Delay",&animated_texture_component->m_AnimationDelay,0.0f,10.0f);
             ImGui::SliderInt("Animation Index",&animated_texture_component->m_AnimationIndex,0,ceil(((float)s->m_Width)/((float)s->m_TileWidth))-1);
             ImGui::TreePop();
+        }
+        ImGui::OpenPopupOnItemClick("AnimatedTextureComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("AnimatedTextureComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<AnimatedTextureComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
         }
         animated_texture_component->m_Layer=glm::floor(animated_texture_component->m_Layer+0.5f);
     }
@@ -237,6 +262,13 @@ void Editor::ComponentsMenu(ImVec2 pos){
         
             ImGui::TreePop();
         }
+        ImGui::OpenPopupOnItemClick("RigidbodyComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("RigidbodyComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<RigidbodyComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
+        }
     }
 
     BoxColliderComponent *box_collider_component=m_Scene->GetComponent<BoxColliderComponent>(m_SelectedEntity);
@@ -252,6 +284,13 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Restitution Threshold",&box_collider_component->m_RestitutionThreshold,0.0f,10.0f);
             ImGui::TreePop();
         }
+        ImGui::OpenPopupOnItemClick("BoxColliderComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("BoxColliderComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<BoxColliderComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
+        }
     }
 
     CircleColliderComponent *circle_collider_component=m_Scene->GetComponent<CircleColliderComponent>(m_SelectedEntity);
@@ -266,6 +305,13 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Restitution Threshold",&circle_collider_component->m_RestitutionThreshold,0.0f,10.0f);
             ImGui::TreePop();
         }
+        ImGui::OpenPopupOnItemClick("CircleColliderComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("CircleColliderComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<CircleColliderComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
+        }
     }
 
     LightComponent *light_component=m_Scene->GetComponent<LightComponent>(m_SelectedEntity);
@@ -275,7 +321,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Y Offset",&light_component->m_YOffset,-30.0f,30.0f);
             ImGui::SliderFloat("Radius",&light_component->m_Radius,0.0f,30.0f);
             ImGui::SliderFloat("Blur",&light_component->m_Blur,0.0f,1.0f);
-            ImGui::ColorPicker3("Color",&light_component->m_Color.r);
+            ImGui::ColorEdit3("Color",&light_component->m_Color.r);
 
             const char *lightTypes[]={"All Light","Spot Light","Spot Light (Collisions on)"};
             int currentLightType;
@@ -305,12 +351,34 @@ void Editor::ComponentsMenu(ImVec2 pos){
                     break;
             }
 
+            if(ImGui::Button("Center Light")){
+                TextureComponent *texture_component=m_Scene->GetComponent<TextureComponent>(m_SelectedEntity);
+                if(texture_component){
+                    light_component->SetCentered(texture_component->m_Width,texture_component->m_Height);
+                }else{
+                    AnimatedTextureComponent *animated_texture_component=m_Scene->GetComponent<AnimatedTextureComponent>(m_SelectedEntity);
+                    if(animated_texture_component){
+                        light_component->SetCentered(animated_texture_component->m_Width,animated_texture_component->m_Height);
+                    }
+                }
+            }
+
             ImGui::TreePop();
+        }
+        ImGui::OpenPopupOnItemClick("LightComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("LightComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<LightComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
         }
     }
     ImGui::PopItemWidth();
 
-    if(ImGui::BeginPopupContextWindow()){
+    if(ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)){
+        ImGui::OpenPopup("AddComponentPopup");
+    }
+    if(ImGui::BeginPopup("AddComponentPopup")){
         if(ImGui::BeginMenu("Add Component")){
             if(ImGui::MenuItem("Tag Component")){
                 if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<TagComponent>(m_SelectedEntity)==nullptr){
@@ -342,6 +410,26 @@ void Editor::ComponentsMenu(ImVec2 pos){
         ImGui::EndPopup(); 
     }
 
+    ImGui::End();
+}
+
+void Editor::DataMenu(ImVec2 pos){
+    ImGui::Begin("Data",nullptr,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoTitleBar);
+    ImGui::SetWindowPos(pos);
+    ImGui::SetWindowSize(ImVec2(GetWidthPercentageInPx(20),(Window::Height-pos.y)/2.0f));
+
+    ImGui::Text("Vertices Count: %d",Window::VertexCount);   
+    ImGui::Text("Draw Calls: %d",Window::DrawCalls);
+
+    ImGui::End();
+}
+
+void Editor::VariablesMenu(ImVec2 pos){
+    ImGui::Begin("Variables",nullptr,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoTitleBar);
+    ImGui::SetWindowPos(pos);
+    ImGui::SetWindowSize(ImVec2(GetWidthPercentageInPx(20),Window::Height-pos.y));
+    ImGui::ColorEdit3("Clear Color",(float*)&RENDERER->m_ClearColor);
+    ImGui::ColorEdit3("Ambient Light",(float*)&RENDERER->m_AmbientLight);
     ImGui::End();
 }
 

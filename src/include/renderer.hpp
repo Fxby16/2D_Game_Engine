@@ -31,11 +31,15 @@ public:
     void StartScene();
     void DrawScene();
     #ifdef EDITOR
+        friend class Editor;
+        friend class SceneSerializer;
+
         void StartEditorScene(Editor *editor); 
         void DrawEditorScene(Framebuffer *framebuffer);
     #endif
 
     void Clear(bool ambient_light=false) const;
+    void Clear(Vec4 color) const;
     void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
 
     void DrawTexture(Vec2 pos,Vec2 size,float layer,float texID);
@@ -52,7 +56,6 @@ public:
     void DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s);
     void DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index);
     void DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer);
-    void DrawQuad(Vertex v1,Vertex v2,Vertex v3,Vertex v4);
     void DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer);
     void DrawPoint(Vec2 pos,Vec4 color,float layer);
     void DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer);
