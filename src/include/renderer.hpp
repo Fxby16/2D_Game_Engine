@@ -38,10 +38,24 @@ public:
         void DrawEditorScene(Framebuffer *framebuffer);
     #endif
 
+    /**
+     * Clear the screen
+     * \param ambient_light if true, the ambient light will be applied, else the clear color will be applied
+    */
     void Clear(bool ambient_light=false) const;
+    /**
+     * Clear the screen
+     * \param color the color to clear the screen
+    */
     void Clear(Vec4 color) const;
-    void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized);
 
+    /**
+     * Draw a texture
+     * \param pos Position of the texture
+     * \param size Size of the texture
+     * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
+     * \param texID ID of the texture
+    */
     void DrawTexture(Vec2 pos,Vec2 size,float layer,float texID);
     /**
      * Render a portion of a texture
@@ -50,23 +64,111 @@ public:
      * \param texture_pos Position of the portion of the texture
      * \param texture_size Size of the portion of the texture
      * \param texture_total_size Size of the whole texture
+     * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
     */
     void DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,float layer,float texID);
+    /**
+     * Draw a texture
+     * \param pos Position of the texture
+     * \param size Size of the texture
+     * \param reverse_x if true, the texture will be reversed on the x axis
+     * \param reverse_y if true, the texture will be reversed on the y axis
+     * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
+     * \param texture the texture to draw
+    */
     void DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,float layer,Texture &texture);
+    /**
+     * Draw a part of a sprite sheet
+     * \param pos Position of the texture
+     * \param size Size of the texture
+     * \param row row in the sprite sheet
+     * \param col column in the sprite sheet
+     * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
+     * \param s the sprite sheet to use
+    */
     void DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s);
+    /**
+     * Draw an animated texture
+     * \param pos Position of the texture
+     * \param size Size of the texture
+     * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
+     * \param s the sprite sheet to use
+     * \param play_animation if true, the animation will be played
+     * \param loop_animation if true, the animation will be looped
+     * \param animation_delay the delay between two frames
+     * \param last_animation_time the last time the animation was updated
+     * \param animation_index the current animation index
+    */
     void DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index);
+    /**
+     * Draw a triangle
+     * \param pos1 Position of the first vertex
+     * \param pos2 Position of the second vertex
+     * \param pos3 Position of the third vertex
+     * \param color Color of the triangle
+     * \param layer Layer of the triangle (higher layers are drawn on top of lower layers)
+    */
     void DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer);
+    /**
+     * Draw a solid quad
+     * \param pos Position of the quad
+     * \param size Size of the quad
+     * \param color Color of the quad
+     * \param layer Layer of the quad (higher layers are drawn on top of lower layers)
+    */
     void DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer);
+    /**
+     * Draw a round point. Use SetPointSize to change the size of the point
+     * \param pos Position of the point
+     * \param color Color of the point
+     * \param layer Layer of the point (higher layers are drawn on top of lower layers)
+    */
     void DrawPoint(Vec2 pos,Vec4 color,float layer);
+    /**
+     * Draw a line. Use SetLineWidth to change the size of the line
+     * \param pos1 Position of the first vertex
+     * \param pos2 Position of the second vertex
+     * \param color Color of the line
+     * \param layer Layer of the line (higher layers are drawn on top of lower layers)
+    */
     void DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer);
+    /**
+     * Draw a light
+     * \param pos Position of the light
+     * \param color Color of the light
+     * \param light_type Type of the light
+     * \param radius Radius of the light
+     * \param blurAmount Amount of blur starting from the edge of the light
+    */
     void DrawLight(Vec2 pos,Vec4 color,LightType light_type,float radius=0.0f,float blurAmount=0.0f);
 
+    /**
+     * Render all the elements stored in buffers
+    */
     void Render(bool post_processing=false);
+    /**
+     * Render all the textures stored in the buffer
+    */
     void RenderTextures(bool post_processing,float max_layer);
+    /**
+     * Render all the triangles stored in the buffer
+    */
     void RenderTriangles(float max_layer);
+    /**
+     * Render all the lines stored in the buffer
+    */
     void RenderLines(float max_layer);
+    /**
+     * Render all the points stored in the buffer
+    */
     void RenderPoints(float max_layer);
+    /**
+     * Set the post processing function name in the shader
+    */
     void SetPostProcessing(const char *uniform_name);
+    /**
+     * Apply the post processing function
+    */
     void PostProcessing();
 
     void SetLineWidth(float new_size);
@@ -81,9 +183,28 @@ public:
     void UpdateScreenSegments();
     void ClearSegments();
     std::vector<std::pair<Vec2,Vec2>> &GetSegments();
+    /**
+     * Apply the lighting framebuffer to the main framebuffer
+    */
     void ApplyLight();
+    /**
+     * Merge the lighting framebuffer with the framebuffer
+     * \param framebuffer the framebuffer to merge with
+    */
     void ApplyLight(Framebuffer *framebuffer);
+    /**
+     * Keep a circle of light. Used for point lights with walls collisions
+     * \param pos Position of the light
+     * \param radius Radius of the light
+     * \param blurAmount Amount of blur starting from the edge of the light
+    */
     void KeepCircle(Vec2 pos,float radius,float blurAmount);
+    /**
+     * Get the intersection between a ray and a segment
+     * \param ray the ray
+     * \param seg the segment
+     * \return the intersection point and the time of intersection if an intersection occurs, else return {(-1,-1),-1}
+    */
     std::pair<Vec2,float> GetIntersection(const std::pair<Vec2,Vec2>&ray,const std::pair<Vec2,Vec2>&seg);
 
     inline RendererData* GetLightsData(){ return &m_Lights; }
@@ -151,4 +272,8 @@ private:
     inline float GetPointsMinLayer(){ return m_Points.NumVertices>0?m_BufferP[m_PointIndex].layer:std::numeric_limits<float>::max(); }
     inline float GetLinesMinLayer(){ return m_Lines.NumVertices>0?m_BufferL[m_LineIndex].layer:std::numeric_limits<float>::max(); }
     inline float GetTrianglesMinLayer(){ return m_Triangles.NumVertices>0?m_BufferTR[m_TriangleIndex].layer:std::numeric_limits<float>::max(); }
+
+    inline void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized){
+        VBL.Push(type,count,normalized);
+    }
 };

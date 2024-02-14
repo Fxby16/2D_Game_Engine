@@ -6,6 +6,7 @@ var searchData=
   ['updatelinewidth_3',['UpdateLineWidth',['../d1/d52/classRenderer.html#a491fa10f0dcb5350219d6ddab67ec8a9',1,'Renderer']]],
   ['updateprojmat_4',['UpdateProjMat',['../d6/db3/classTextRenderer.html#adcf44c3a426ca9f3b4a859f6ce02d9a7',1,'TextRenderer']]],
   ['updatescreensegments_5',['UpdateScreenSegments',['../d1/d52/classRenderer.html#a60e61d13fa06067f926c3da225ea7a58',1,'Renderer']]],
-  ['utilities_2ecpp_6',['utilities.cpp',['../de/da5/utilities_8cpp.html',1,'']]],
-  ['utilities_2ehpp_7',['utilities.hpp',['../dc/d5f/utilities_8hpp.html',1,'']]]
+  ['updatestates_6',['UpdateStates',['../d5/d5b/classInput.html#a057dbcc1fed0ac8695114a98e07328de',1,'Input']]],
+  ['utilities_2ecpp_7',['utilities.cpp',['../de/da5/utilities_8cpp.html',1,'']]],
+  ['utilities_2ehpp_8',['utilities.hpp',['../dc/d5f/utilities_8hpp.html',1,'']]]
 ];

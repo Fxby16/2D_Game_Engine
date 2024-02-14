@@ -88,7 +88,7 @@ TextRenderer::~TextRenderer(){
     glDeleteTextures(1,&m_TextureArrayID);
 }
 
-void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 color){
+void TextRenderer::DrawText(std::string &text,float x,float y,float scale,Vec3 color){
     PROFILE_FUNCTION();
 
     float copyX=x;

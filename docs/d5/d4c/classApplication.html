@@ -92,8 +92,8 @@ Inheritance diagram for Application:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a23e8b894faf5caaa59713e68cab69d7f" id="r_a23e8b894faf5caaa59713e68cab69d7f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23e8b894faf5caaa59713e68cab69d7f">Application</a> (const char *window_name, unsigned int width, unsigned int height, float fullscreen_width, float fullscreen_height, bool imgui=true)</td></tr>
-<tr class="separator:a23e8b894faf5caaa59713e68cab69d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9bc9c77624acdc52ac7b2eae27b5c60" id="r_aa9bc9c77624acdc52ac7b2eae27b5c60"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9bc9c77624acdc52ac7b2eae27b5c60">Application</a> (const char *window_name, unsigned int width, unsigned int height, float fullscreen_width, float fullscreen_height, bool resizable=false, bool imgui=true)</td></tr>
+<tr class="separator:aa9bc9c77624acdc52ac7b2eae27b5c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a748bca84fefb9c12661cfaa2f623748d" id="r_a748bca84fefb9c12661cfaa2f623748d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a748bca84fefb9c12661cfaa2f623748d">~Application</a> ()</td></tr>
 <tr class="separator:a748bca84fefb9c12661cfaa2f623748d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf09cd6cb412086dc039e28cdb059f0d" id="r_aaf09cd6cb412086dc039e28cdb059f0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf09cd6cb412086dc039e28cdb059f0d">Run</a> ()</td></tr>
@@ -112,10 +112,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a3b3d1c5023b40c815e4eb1dc1066839c" id="r_a3b3d1c5023b40c815e4eb1dc1066839c"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b3d1c5023b40c815e4eb1dc1066839c">m_WindowName</a></td></tr>
 <tr class="separator:a3b3d1c5023b40c815e4eb1dc1066839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d0d1abd924a9c680c453728083f8d4a" id="r_a4d0d1abd924a9c680c453728083f8d4a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d0d1abd924a9c680c453728083f8d4a">m_FixedTimeStep</a> =1.0f/60.0f</td></tr>
+<tr class="memdesc:a4d0d1abd924a9c680c453728083f8d4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Physics update time.  <br /></td></tr>
 <tr class="separator:a4d0d1abd924a9c680c453728083f8d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a221d669e16598cc12791a1c41ebe67b6" id="r_a221d669e16598cc12791a1c41ebe67b6"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a221d669e16598cc12791a1c41ebe67b6">m_Accumulator</a> =0.0f</td></tr>
 <tr class="separator:a221d669e16598cc12791a1c41ebe67b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02c1619056211e3db407a65e8d87f2ba" id="r_a02c1619056211e3db407a65e8d87f2ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02c1619056211e3db407a65e8d87f2ba">m_ImGui</a></td></tr>
+<tr class="memdesc:a02c1619056211e3db407a65e8d87f2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable imgui.  <br /></td></tr>
 <tr class="separator:a02c1619056211e3db407a65e8d87f2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b7ebd7f8eed9e198d1685635c4f1a11" id="r_a8b7ebd7f8eed9e198d1685635c4f1a11"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d5/d9c/classScene.html">Scene</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b7ebd7f8eed9e198d1685635c4f1a11">m_Scene</a></td></tr>
 <tr class="separator:a8b7ebd7f8eed9e198d1685635c4f1a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,8 +128,8 @@ Protected Attributes</h2></td></tr>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00011">11</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a23e8b894faf5caaa59713e68cab69d7f" name="a23e8b894faf5caaa59713e68cab69d7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23e8b894faf5caaa59713e68cab69d7f">&#9670;&#160;</a></span>Application()</h2>
+<a id="aa9bc9c77624acdc52ac7b2eae27b5c60" name="aa9bc9c77624acdc52ac7b2eae27b5c60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9bc9c77624acdc52ac7b2eae27b5c60">&#9670;&#160;</a></span>Application()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,12 +162,17 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>resizable</em><span class="paramdefsep"> = </span><span class="paramdefval">false</span>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>imgui</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00004">4</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00005">5</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -184,7 +191,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00031">31</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00032">32</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -212,7 +219,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00116">116</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00138">138</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -239,7 +246,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00110">110</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00132">132</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -265,10 +272,11 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Called every frame. It's the main rendering function. </p>
 
 <p>Reimplemented in <a class="el" href="../../df/da6/classTest.html#a9f2ba727c2d79e89732165454353d2b9">Test</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00102">102</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00124">124</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -294,11 +302,16 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function is called every m_FixedTimeStep seconds. It's independent from the framerate. Edit m_FixedTimeStep to change the time between two calls. </p>
+<p>This function is called every m_FixedTimeStep seconds. It's independent from the framerate. Edit m_FixedTimeStep to change the time between two calls. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame_time</td><td>the current frame time, should be m_FixedTimeStep </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Reimplemented in <a class="el" href="../../df/da6/classTest.html#a8f69d3c514830e9e421042409d12acd0">Test</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00096">96</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00118">118</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -317,7 +330,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00040">40</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d7b/application_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../df/d7b/application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,7 +355,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00030">30</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00034">34</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
 
 </div>
 </div>
@@ -366,7 +379,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00033">33</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00037">37</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
 
 </div>
 </div>
@@ -390,7 +403,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00029">29</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
+<p>Physics update time. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00033">33</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
 
 </div>
 </div>
@@ -414,7 +429,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00031">31</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
+<p>Enable or disable imgui. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00035">35</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
 
 </div>
 </div>
@@ -438,7 +455,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00032">32</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00036">36</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
 
 </div>
 </div>
@@ -462,7 +479,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00028">28</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d01/application_8hpp_source.html#l00032">32</a> of file <a class="el" href="../../d4/d01/application_8hpp_source.html">application.hpp</a>.</p>
 
 </div>
 </div>

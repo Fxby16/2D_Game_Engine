@@ -1,141 +1,142 @@
 #pragma once
 
+#include <GLFW/glfw3.h>
+
 /* Printable keys */
-#define KEY_SPACE              32
-#define KEY_APOSTROPHE         39  /* ' */
-#define KEY_COMMA              44  /* , */
-#define KEY_MINUS              45  /* - */
-#define KEY_PERIOD             46  /* . */
-#define KEY_SLASH              47  /* / */
-#define KEY_0                  48
-#define KEY_1                  49
-#define KEY_2                  50
-#define KEY_3                  51
-#define KEY_4                  52
-#define KEY_5                  53
-#define KEY_6                  54
-#define KEY_7                  55
-#define KEY_8                  56
-#define KEY_9                  57
-#define KEY_SEMICOLON          59  /* ; */
-#define KEY_EQUAL              61  /* = */
-#define KEY_A                  65
-#define KEY_B                  66
-#define KEY_C                  67
-#define KEY_D                  68
-#define KEY_E                  69
-#define KEY_F                  70
-#define KEY_G                  71
-#define KEY_H                  72
-#define KEY_I                  73
-#define KEY_J                  74
-#define KEY_K                  75
-#define KEY_L                  76
-#define KEY_M                  77
-#define KEY_N                  78
-#define KEY_O                  79
-#define KEY_P                  80
-#define KEY_Q                  81
-#define KEY_R                  82
-#define KEY_S                  83
-#define KEY_T                  84
-#define KEY_U                  85
-#define KEY_V                  86
-#define KEY_W                  87
-#define KEY_X                  88
-#define KEY_Y                  89
-#define KEY_Z                  90
-#define KEY_LEFT_BRACKET       91  /* [ */
-#define KEY_BACKSLASH          92  /* \ */
-#define KEY_RIGHT_BRACKET      93  /* ] */
-#define KEY_GRAVE_ACCENT       96  /* ` */
-#define KEY_WORLD_1            161 /* non-US #1 */
-#define KEY_WORLD_2            162 /* non-US #2 */
-
+#define KEY_SPACE              GLFW_KEY_SPACE
+#define KEY_APOSTROPHE         GLFW_KEY_APOSTROPHE  /* ' */
+#define KEY_COMMA              GLFW_KEY_COMMA  /* , */
+#define KEY_MINUS              GLFW_KEY_MINUS  /* - */
+#define KEY_PERIOD             GLFW_KEY_PERIOD  /* . */
+#define KEY_SLASH              GLFW_KEY_SLASH  /* / */
+#define KEY_0                  GLFW_KEY_0
+#define KEY_1                  GLFW_KEY_1
+#define KEY_2                  GLFW_KEY_2
+#define KEY_3                  GLFW_KEY_3
+#define KEY_4                  GLFW_KEY_4
+#define KEY_5                  GLFW_KEY_5
+#define KEY_6                  GLFW_KEY_6
+#define KEY_7                  GLFW_KEY_7
+#define KEY_8                  GLFW_KEY_8
+#define KEY_9                  GLFW_KEY_9
+#define KEY_SEMICOLON          GLFW_KEY_SEMICOLON  /* ; */
+#define KEY_EQUAL              GLFW_KEY_EQUAL  /* = */
+#define KEY_A                  GLFW_KEY_A
+#define KEY_B                  GLFW_KEY_B
+#define KEY_C                  GLFW_KEY_C
+#define KEY_D                  GLFW_KEY_D
+#define KEY_E                  GLFW_KEY_E
+#define KEY_F                  GLFW_KEY_F
+#define KEY_G                  GLFW_KEY_G
+#define KEY_H                  GLFW_KEY_H
+#define KEY_I                  GLFW_KEY_I
+#define KEY_J                  GLFW_KEY_J
+#define KEY_K                  GLFW_KEY_K
+#define KEY_L                  GLFW_KEY_L
+#define KEY_M                  GLFW_KEY_M
+#define KEY_N                  GLFW_KEY_N
+#define KEY_O                  GLFW_KEY_O
+#define KEY_P                  GLFW_KEY_P
+#define KEY_Q                  GLFW_KEY_Q
+#define KEY_R                  GLFW_KEY_R
+#define KEY_S                  GLFW_KEY_S
+#define KEY_T                  GLFW_KEY_T
+#define KEY_U                  GLFW_KEY_U
+#define KEY_V                  GLFW_KEY_V
+#define KEY_W                  GLFW_KEY_W
+#define KEY_X                  GLFW_KEY_X
+#define KEY_Y                  GLFW_KEY_Y
+#define KEY_Z                  GLFW_KEY_Z
+#define KEY_LEFT_BRACKET       GLFW_KEY_LEFT_BRACKET  /* [ */
+#define KEY_BACKSLASH          GLFW_KEY_BACKSLASH  /* \ */
+#define KEY_RIGHT_BRACKET      GLFW_KEY_RIGHT_BRACKET  /* ] */
+#define KEY_GRAVE_ACCENT       GLFW_KEY_GRAVE_ACCENT  /* ` */
+#define KEY_WORLD_1            GLFW_KEY_WORLD_1 /* non-US #1 */
+#define KEY_WORLD_2            GLFW_KEY_WORLD_2 /* non-US #2 */
 /* Function keys */
-#define KEY_ESCAPE             256
-#define KEY_ENTER              257
-#define KEY_TAB                258
-#define KEY_BACKSPACE          259
-#define KEY_INSERT             260
-#define KEY_DELETE             261
-#define KEY_RIGHT              262
-#define KEY_LEFT               263
-#define KEY_DOWN               264
-#define KEY_UP                 265
-#define KEY_PAGE_UP            266
-#define KEY_PAGE_DOWN          267
-#define KEY_HOME               268
-#define KEY_END                269
-#define KEY_CAPS_LOCK          280
-#define KEY_SCROLL_LOCK        281
-#define KEY_NUM_LOCK           282
-#define KEY_PRINT_SCREEN       283
-#define KEY_PAUSE              284
-#define KEY_F1                 290
-#define KEY_F2                 291
-#define KEY_F3                 292
-#define KEY_F4                 293
-#define KEY_F5                 294
-#define KEY_F6                 295
-#define KEY_F7                 296
-#define KEY_F8                 297
-#define KEY_F9                 298
-#define KEY_F10                299
-#define KEY_F11                300
-#define KEY_F12                301
-#define KEY_F13                302
-#define KEY_F14                303
-#define KEY_F15                304
-#define KEY_F16                305
-#define KEY_F17                306
-#define KEY_F18                307
-#define KEY_F19                308
-#define KEY_F20                309
-#define KEY_F21                310
-#define KEY_F22                311
-#define KEY_F23                312
-#define KEY_F24                313
-#define KEY_F25                314
-#define KEY_KP_0               320
-#define KEY_KP_1               321
-#define KEY_KP_2               322
-#define KEY_KP_3               323
-#define KEY_KP_4               324
-#define KEY_KP_5               325
-#define KEY_KP_6               326
-#define KEY_KP_7               327
-#define KEY_KP_8               328
-#define KEY_KP_9               329
-#define KEY_KP_DECIMAL         330
-#define KEY_KP_DIVIDE          331
-#define KEY_KP_MULTIPLY        332
-#define KEY_KP_SUBTRACT        333
-#define KEY_KP_ADD             334
-#define KEY_KP_ENTER           335
-#define KEY_KP_EQUAL           336
-#define KEY_LEFT_SHIFT         340
-#define KEY_LEFT_CONTROL       341
-#define KEY_LEFT_ALT           342
-#define KEY_LEFT_SUPER         343
-#define KEY_RIGHT_SHIFT        344
-#define KEY_RIGHT_CONTROL      345
-#define KEY_RIGHT_ALT          346
-#define KEY_RIGHT_SUPER        347
-#define KEY_MENU               348
+#define KEY_ESCAPE             GLFW_KEY_ESCAPE
+#define KEY_ENTER              GLFW_KEY_ENTER
+#define KEY_TAB                GLFW_KEY_TAB
+#define KEY_BACKSPACE          GLFW_KEY_BACKSPACE
+#define KEY_INSERT             GLFW_KEY_INSERT
+#define KEY_DELETE             GLFW_KEY_DELETE
+#define KEY_RIGHT              GLFW_KEY_RIGHT
+#define KEY_LEFT               GLFW_KEY_LEFT
+#define KEY_DOWN               GLFW_KEY_DOWN
+#define KEY_UP                 GLFW_KEY_UP
+#define KEY_PAGE_UP            GLFW_KEY_PAGE_UP
+#define KEY_PAGE_DOWN          GLFW_KEY_PAGE_DOWN
+#define KEY_HOME               GLFW_KEY_HOME
+#define KEY_END                GLFW_KEY_END
+#define KEY_CAPS_LOCK          GLFW_KEY_CAPS_LOCK
+#define KEY_SCROLL_LOCK        GLFW_KEY_SCROLL_LOCK
+#define KEY_NUM_LOCK           GLFW_KEY_NUM_LOCK
+#define KEY_PRINT_SCREEN       GLFW_KEY_PRINT_SCREEN
+#define KEY_PAUSE              GLFW_KEY_PAUSE
+#define KEY_F1                 GLFW_KEY_F1
+#define KEY_F2                 GLFW_KEY_F2
+#define KEY_F3                 GLFW_KEY_F3
+#define KEY_F4                 GLFW_KEY_F4
+#define KEY_F5                 GLFW_KEY_F5
+#define KEY_F6                 GLFW_KEY_F6
+#define KEY_F7                 GLFW_KEY_F7
+#define KEY_F8                 GLFW_KEY_F8
+#define KEY_F9                 GLFW_KEY_F9
+#define KEY_F10                GLFW_KEY_F10
+#define KEY_F11                GLFW_KEY_F11
+#define KEY_F12                GLFW_KEY_F12
+#define KEY_F13                GLFW_KEY_F13
+#define KEY_F14                GLFW_KEY_F14
+#define KEY_F15                GLFW_KEY_F15
+#define KEY_F16                GLFW_KEY_F16
+#define KEY_F17                GLFW_KEY_F17
+#define KEY_F18                GLFW_KEY_F18
+#define KEY_F19                GLFW_KEY_F19
+#define KEY_F20                GLFW_KEY_F20
+#define KEY_F21                GLFW_KEY_F21
+#define KEY_F22                GLFW_KEY_F22
+#define KEY_F23                GLFW_KEY_F23
+#define KEY_F24                GLFW_KEY_F24
+#define KEY_F25                GLFW_KEY_F25
+#define KEY_KP_0               GLFW_KEY_KP_0
+#define KEY_KP_1               GLFW_KEY_KP_1
+#define KEY_KP_2               GLFW_KEY_KP_2
+#define KEY_KP_3               GLFW_KEY_KP_3
+#define KEY_KP_4               GLFW_KEY_KP_4
+#define KEY_KP_5               GLFW_KEY_KP_5
+#define KEY_KP_6               GLFW_KEY_KP_6
+#define KEY_KP_7               GLFW_KEY_KP_7
+#define KEY_KP_8               GLFW_KEY_KP_8
+#define KEY_KP_9               GLFW_KEY_KP_9
+#define KEY_KP_DECIMAL         GLFW_KEY_KP_DECIMAL
+#define KEY_KP_DIVIDE          GLFW_KEY_KP_DIVIDE
+#define KEY_KP_MULTIPLY        GLFW_KEY_KP_MULTIPLY
+#define KEY_KP_SUBTRACT        GLFW_KEY_KP_SUBTRACT
+#define KEY_KP_ADD             GLFW_KEY_KP_ADD
+#define KEY_KP_ENTER           GLFW_KEY_KP_ENTER
+#define KEY_KP_EQUAL           GLFW_KEY_KP_EQUAL
+#define KEY_LEFT_SHIFT         GLFW_KEY_LEFT_SHIFT
+#define KEY_LEFT_CONTROL       GLFW_KEY_LEFT_CONTROL
+#define KEY_LEFT_ALT           GLFW_KEY_LEFT_ALT
+#define KEY_LEFT_SUPER         GLFW_KEY_LEFT_SUPER
+#define KEY_RIGHT_SHIFT        GLFW_KEY_RIGHT_SHIFT
+#define KEY_RIGHT_CONTROL      GLFW_KEY_RIGHT_CONTROL
+#define KEY_RIGHT_ALT          GLFW_KEY_RIGHT_ALT
+#define KEY_RIGHT_SUPER        GLFW_KEY_RIGHT_SUPER
+#define KEY_MENU               GLFW_KEY_MENU
 
-#define MOUSE_BUTTON_1         0
-#define MOUSE_BUTTON_2         1
-#define MOUSE_BUTTON_3         2
-#define MOUSE_BUTTON_4         3
-#define MOUSE_BUTTON_5         4
-#define MOUSE_BUTTON_6         5
-#define MOUSE_BUTTON_7         6
-#define MOUSE_BUTTON_8         7
-#define MOUSE_BUTTON_LAST      MOUSE_BUTTON_8
-#define MOUSE_BUTTON_LEFT      MOUSE_BUTTON_1
-#define MOUSE_BUTTON_RIGHT     MOUSE_BUTTON_2
-#define MOUSE_BUTTON_MIDDLE    MOUSE_BUTTON_3
+#define MOUSE_BUTTON_1         GLFW_MOUSE_BUTTON_1
+#define MOUSE_BUTTON_2         GLFW_MOUSE_BUTTON_2
+#define MOUSE_BUTTON_3         GLFW_MOUSE_BUTTON_3
+#define MOUSE_BUTTON_4         GLFW_MOUSE_BUTTON_4
+#define MOUSE_BUTTON_5         GLFW_MOUSE_BUTTON_5
+#define MOUSE_BUTTON_6         GLFW_MOUSE_BUTTON_6
+#define MOUSE_BUTTON_7         GLFW_MOUSE_BUTTON_7
+#define MOUSE_BUTTON_8         GLFW_MOUSE_BUTTON_8
+#define MOUSE_BUTTON_LAST      GLFW_MOUSE_BUTTON_8
+#define MOUSE_BUTTON_LEFT      GLFW_MOUSE_BUTTON_1
+#define MOUSE_BUTTON_RIGHT     GLFW_MOUSE_BUTTON_2
+#define MOUSE_BUTTON_MIDDLE    GLFW_MOUSE_BUTTON_3
 
 #define BUTTON_UP              0
 #define BUTTON_DOWN            1

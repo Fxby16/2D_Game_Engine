@@ -7,9 +7,9 @@
 class Application;
 
 extern bool ISFULLSCREEN;
-extern Renderer *RENDERER;
-extern std::vector<TextRenderer*> TEXT_RENDERERS;
-extern Input *INPUT;
+extern Renderer *RENDERER; ///< The main renderer
+extern std::vector<TextRenderer*> TEXT_RENDERERS; ///< The text renderers
+extern Input *INPUT; ///< The input manager
 
 namespace Window{
     extern int InitGlfwWindow(const char *window_name,bool resizable);

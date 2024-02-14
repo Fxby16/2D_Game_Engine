@@ -107,10 +107,6 @@ Renderer::~Renderer(){
     delete m_TempFramebuffer;
 }
 
-void Renderer::AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized){
-    VBL.Push(type,count,normalized);
-}
-
 void Renderer::DrawTexture(Vec2 pos,Vec2 size,float layer,float texID){
     PROFILE_FUNCTION();
 

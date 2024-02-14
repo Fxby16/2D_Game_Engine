@@ -19,7 +19,21 @@ public:
     TextRenderer(const char *font_path,float glyph_size,bool fixed);
     ~TextRenderer();
 
-    void DrawText(std::string text,float x,float y,float scale,Vec3 color);
+    /**
+     * Draw the text.
+     * Coordinates are expected in engine units (screen width = 10 units)
+     * \param text a string containing the text
+     * \param x the x position of the text
+     * \param y the y position of the text
+     * \param scale the scale of the text
+     * \param color the color of the text
+    */
+    void DrawText(std::string &text,float x,float y,float scale,Vec3 color);
+    /**
+     * Get the size of the text.
+     * \param text a string containing the text
+     * \param scale the scale of the text
+    */
     std::pair<float,float> GetTextSize(std::string text,float scale); 
 
     inline void UpdateProjMat(glm::mat4 &proj){

@@ -4,63 +4,74 @@
 
 class Scene{
 public:
+    /**
+     * Calls OnPhysicsStart and sets the scene name to ""
+    */
     Scene(){
         OnPhysicsStart();
     }
+    /**
+     * Calls OnPhysicsStart
+     * \param name the scene name
+    */
     Scene(const std::string &name);
 
     std::string &GetName();
     /**
-     * Set the scaling factor for the scene.
+     * Set the scaling factor for the scene. 
      * Default value is 0.5 (1 meter = 0.5 units)
     */
     void SetScalingFactor(float scaling_factor);
     /**
-     * Set the gravity for the scene (m/s^2)
-     * Should be called after OnPhysicsStart()
-     * Default value is (0,-0.3)
-     * Adjust the gravity according to the scaling factor
+     * Set the gravity for the scene (m/s^2). 
+     * Should be called after OnPhysicsStart(). 
+     * Default value is (0,-0.3). 
+     * Adjust the gravity according to the scaling factor. 
     */
     void SetGravity(float x,float y);
 
     /**
-     * Set the gravity for the scene (m/s^2)
-     * Should be called after OnPhysicsStart()
-     * Default value is (0,-0.3)
-     * Adjust the gravity according to the scaling factor
+     * Set the gravity for the scene (m/s^2). 
+     * Should be called after OnPhysicsStart(). 
+     * Default value is (0,-0.3). 
+     * Adjust the gravity according to the scaling factor. 
     */
     void SetGravity(Vec2 gravity);
 
+    /**
+     * Add an entity to the scene
+     * \return the entity uid
+    */
     [[nodiscard]] uint32_t AddEntity();
+    /**
+     * Add an entity to the scene. 
+     * Used when deserializing a scene. 
+     * \param uid the entity uid
+    */
     void AddEntity(uint32_t uid);
+    /**
+     * Get an entity from the scene
+     * \param uid the entity uid
+     * \return a pointer to the entity or nullptr if the entity does not exist
+    */
     Entity* GetEntity(uint32_t uid);
+    /**
+     * Remove an entity from the scene
+     * \param uid the entity uid
+    */
     void RemoveEntity(uint32_t uid);
 
+    /**
+     * Move the entity. 
+     * The coordinates are expected in engine units (screen width = 10 units)
+    */
     void MoveEntity(uint32_t uid,float x_offset,float y_offset);
     void SetEntityPosition(uint32_t uid,float x,float y);
 
-    /* Texture Component
-    * const std::string &path,int mag_filter,int min_filter,float width,float height,float layer
-    * std::shared_ptr<Texture>texture,float width,float height,float layer 
-    */
-    /* Animated Texture Component
-    * const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer
-    * std::shared_ptr<AnimatedTexture>animated_texture,float width,float height,float layer
-    */
-    /* Light Component
-    * float x_offset,float y_offset,float radius,float blur,Vec3 color,LightType type
-    */
-    /* Rigidbody Component
-    * RigidbodyComponent::BodyType body_type,bool fixed_rotation
-    */
-    /* Box Collider Component
-    * float x_offset,float y_offset,float width,float height,float density,float friction,float restitution,float restitution_threshold
-    */
-    /* Circle Collider Component
-    * float x_offset,float y_offset,float radius,float density,float friction,float restitution,float restitution_threshold
-    */
-    /* Native Script Component
-    * no args
+    /**
+     * Add a component to an entity
+     * \param uid the entity uid
+     * \param args the component constructor arguments
     */
     template<typename T,typename ...Args>
     void AddComponent(uint32_t uid,Args...args){
@@ -118,20 +129,54 @@ public:
         AddComponentToContainer<T>(temp,uid);
     }
 
+    /**
+     * Remove a component from an entity
+     * \param uid the entity uid
+    */
     template<typename T>
     void RemoveComponent(uint32_t uid);
 
+    /**
+     * Get a component from an entity
+     * \param uid the entity uid
+     * \return a pointer to the component or nullptr if the component does not exist
+    */
     template<typename T>
     T* GetComponent(uint32_t uid);
 
+    /**
+     * Starts the physics simulation
+    */
     void OnPhysicsStart();
+    /**
+     * Update the physics simulation
+     * \param frame_time the frame time
+    */
     void OnPhysicsUpdate(double frame_time);
+    /**
+     * Stops the physics simulation
+    */
     void OnPhysicsStop();
 
+    /**
+     * Update the scene
+     * \param frame_time the frame time
+    */
     void Update(double frame_time);
+    /**
+     * Render the scene
+    */
     void Render();
 
+    /**
+     * Get the entities vector
+     * \return a reference to the entities vector
+    */
     std::vector<Entity> &GetEntities();
+    /**
+     * Get the components vector
+     * \return a reference to the components vector
+    */
     template<typename T,ComponentType<T> = 0>
     std::vector<T> &GetComponents();
 
@@ -139,6 +184,11 @@ public:
 private:
     friend class SceneSerializer;
 
+    /**
+     * Add a component to the container relative to its type
+     * \param component the component
+     * \param uid the entity uid
+    */
     template<typename T>
     void AddComponentToContainer(T &component,uint32_t uid);
 

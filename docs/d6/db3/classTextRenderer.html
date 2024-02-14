@@ -87,8 +87,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0dda5d97b83af2018a3e30db600d93a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7087505bdc31e41416408c27fe029f20" id="r_a7087505bdc31e41416408c27fe029f20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7087505bdc31e41416408c27fe029f20">~TextRenderer</a> ()</td></tr>
 <tr class="separator:a7087505bdc31e41416408c27fe029f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cd08f7e0f2ded1f1229a7a7cf0f86ac" id="r_a9cd08f7e0f2ded1f1229a7a7cf0f86ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9cd08f7e0f2ded1f1229a7a7cf0f86ac">DrawText</a> (std::string text, float x, float y, float scale, <a class="el" href="../../dc/d2d/structVec3.html">Vec3</a> color)</td></tr>
-<tr class="separator:a9cd08f7e0f2ded1f1229a7a7cf0f86ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae944f083dee96eae65905a3e14f1d932" id="r_ae944f083dee96eae65905a3e14f1d932"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae944f083dee96eae65905a3e14f1d932">DrawText</a> (std::string &amp;text, float x, float y, float scale, <a class="el" href="../../dc/d2d/structVec3.html">Vec3</a> color)</td></tr>
+<tr class="separator:ae944f083dee96eae65905a3e14f1d932"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ceb4d9b2e271efdff8ef31434af8ac1" id="r_a4ceb4d9b2e271efdff8ef31434af8ac1"><td class="memItemLeft" align="right" valign="top">std::pair&lt; float, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ceb4d9b2e271efdff8ef31434af8ac1">GetTextSize</a> (std::string text, float scale)</td></tr>
 <tr class="separator:a4ceb4d9b2e271efdff8ef31434af8ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcf44c3a426ca9f3b4a859f6ce02d9a7" id="r_adcf44c3a426ca9f3b4a859f6ce02d9a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcf44c3a426ca9f3b4a859f6ce02d9a7">UpdateProjMat</a> (glm::mat4 &amp;proj)</td></tr>
@@ -157,8 +157,8 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9cd08f7e0f2ded1f1229a7a7cf0f86ac" name="a9cd08f7e0f2ded1f1229a7a7cf0f86ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cd08f7e0f2ded1f1229a7a7cf0f86ac">&#9670;&#160;</a></span>DrawText()</h2>
+<a id="ae944f083dee96eae65905a3e14f1d932" name="ae944f083dee96eae65905a3e14f1d932"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae944f083dee96eae65905a3e14f1d932">&#9670;&#160;</a></span>DrawText()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,7 +166,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">void TextRenderer::DrawText </td>
           <td>(</td>
-          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>text</em>, </span></td>
+          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>text</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -190,6 +190,16 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw the text. Coordinates are expected in engine units (screen width = 10 units) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>a string containing the text </td></tr>
+    <tr><td class="paramname">x</td><td>the x position of the text </td></tr>
+    <tr><td class="paramname">y</td><td>the y position of the text </td></tr>
+    <tr><td class="paramname">scale</td><td>the scale of the text </td></tr>
+    <tr><td class="paramname">color</td><td>the color of the text </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d7a/textrenderer_8cpp_source.html#l00091">91</a> of file <a class="el" href="../../d6/d7a/textrenderer_8cpp_source.html">textrenderer.cpp</a>.</p>
 
@@ -213,6 +223,13 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get the size of the text. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>a string containing the text </td></tr>
+    <tr><td class="paramname">scale</td><td>the scale of the text </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d7a/textrenderer_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../d6/d7a/textrenderer_8cpp_source.html">textrenderer.cpp</a>.</p>
 
@@ -241,7 +258,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/db6/textrenderer_8hpp_source.html#l00025">25</a> of file <a class="el" href="../../d1/db6/textrenderer_8hpp_source.html">textrenderer.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/db6/textrenderer_8hpp_source.html#l00039">39</a> of file <a class="el" href="../../d1/db6/textrenderer_8hpp_source.html">textrenderer.hpp</a>.</p>
 
 </div>
 </div>
@@ -258,7 +275,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/db6/textrenderer_8hpp_source.html#l00057">57</a> of file <a class="el" href="../../d1/db6/textrenderer_8hpp_source.html">textrenderer.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/db6/textrenderer_8hpp_source.html#l00071">71</a> of file <a class="el" href="../../d1/db6/textrenderer_8hpp_source.html">textrenderer.hpp</a>.</p>
 
 </div>
 </div>

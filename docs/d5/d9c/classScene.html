@@ -234,8 +234,9 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Calls OnPhysicsStart and sets the scene name to "" </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d9b/scene_8hpp_source.html#l00007">7</a> of file <a class="el" href="../../d5/d9b/scene_8hpp_source.html">scene.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d9b/scene_8hpp_source.html#l00010">10</a> of file <a class="el" href="../../d5/d9b/scene_8hpp_source.html">scene.hpp</a>.</p>
 
 </div>
 </div>
@@ -253,6 +254,12 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Calls OnPhysicsStart </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>the scene name </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00019">19</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -287,8 +294,15 @@ template&lt;<a class="el" href="#a4fdf11767e9c07c26234df7f4192b6ad">typename</a>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Add a component to an entity </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uid</td><td>the entity uid </td></tr>
+    <tr><td class="paramname">args</td><td>the component constructor arguments </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d9b/scene_8hpp_source.html#l00066">66</a> of file <a class="el" href="../../d5/d9b/scene_8hpp_source.html">scene.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d9b/scene_8hpp_source.html#l00077">77</a> of file <a class="el" href="../../d5/d9b/scene_8hpp_source.html">scene.hpp</a>.</p>
 
 </div>
 </div>
@@ -306,6 +320,7 @@ template&lt;<a class="el" href="#a4fdf11767e9c07c26234df7f4192b6ad">typename</a>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Add an entity to the scene </p><dl class="section return"><dt>Returns</dt><dd>the entity uid </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00041">41</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -325,6 +340,12 @@ template&lt;<a class="el" href="#a4fdf11767e9c07c26234df7f4192b6ad">typename</a>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Add an entity to the scene. Used when deserializing a scene. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uid</td><td>the entity uid </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00046">46</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -365,6 +386,13 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get a component from an entity </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uid</td><td>the entity uid </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the component or nullptr if the component does not exist </dd></dl>
 
 </div>
 </div>
@@ -552,6 +580,7 @@ template&lt;<a class="el" href="#a4fdf11767e9c07c26234df7f4192b6ad">typename</a>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get the components vector </p><dl class="section return"><dt>Returns</dt><dd>a reference to the components vector </dd></dl>
 
 </div>
 </div>
@@ -716,6 +745,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get the entities vector </p><dl class="section return"><dt>Returns</dt><dd>a reference to the entities vector </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00306">306</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -735,6 +765,13 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get an entity from the scene </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uid</td><td>the entity uid </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the entity or nullptr if the entity does not exist </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00050">50</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -782,6 +819,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Move the entity. The coordinates are expected in engine units (screen width = 10 units) </p>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00263">263</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -801,6 +839,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Starts the physics simulation </p>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00276">276</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -820,6 +859,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Stops the physics simulation </p>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00301">301</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -839,6 +879,12 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Update the physics simulation </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame_time</td><td>the frame time </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00280">280</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -860,6 +906,12 @@ template&lt;<a class="el" href="#a4fdf11767e9c07c26234df7f4192b6ad">typename</a>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Remove a component from an entity </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uid</td><td>the entity uid </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1045,6 +1097,12 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Remove an entity from the scene </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uid</td><td>the entity uid </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -1064,6 +1122,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Render the scene </p>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00255">255</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -1115,7 +1174,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the gravity for the scene (m/s^2) Should be called after <a class="el" href="#a0b70f74cedb7612e54668ac8ffc9b467">OnPhysicsStart()</a> Default value is (0,-0.3) Adjust the gravity according to the scaling factor </p>
+<p>Set the gravity for the scene (m/s^2). Should be called after <a class="el" href="#a0b70f74cedb7612e54668ac8ffc9b467">OnPhysicsStart()</a>. Default value is (0,-0.3). Adjust the gravity according to the scaling factor. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00031">31</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -1135,7 +1194,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the gravity for the scene (m/s^2) Should be called after <a class="el" href="#a0b70f74cedb7612e54668ac8ffc9b467">OnPhysicsStart()</a> Default value is (0,-0.3) Adjust the gravity according to the scaling factor </p>
+<p>Set the gravity for the scene (m/s^2). Should be called after <a class="el" href="#a0b70f74cedb7612e54668ac8ffc9b467">OnPhysicsStart()</a>. Default value is (0,-0.3). Adjust the gravity according to the scaling factor. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00036">36</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -1175,6 +1234,12 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Update the scene </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame_time</td><td>the frame time </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="../../da/d33/scene_8cpp_source.html#l00248">248</a> of file <a class="el" href="../../da/d33/scene_8cpp_source.html">scene.cpp</a>.</p>
 
@@ -1201,7 +1266,7 @@ template&lt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d9b/scene_8hpp_source.html#l00140">140</a> of file <a class="el" href="../../d5/d9b/scene_8hpp_source.html">scene.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d9b/scene_8hpp_source.html#l00185">185</a> of file <a class="el" href="../../d5/d9b/scene_8hpp_source.html">scene.hpp</a>.</p>
 
 </div>
 </div>

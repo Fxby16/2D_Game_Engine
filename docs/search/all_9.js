@@ -121,6 +121,6 @@ var searchData=
   ['key_5fx_118',['KEY_X',['../df/d0a/buttons_8hpp.html#a832280ef5a7afeda19f32939951e8b10',1,'buttons.hpp']]],
   ['key_5fy_119',['KEY_Y',['../df/d0a/buttons_8hpp.html#ad9db04899df9fe71bb221c02721e28ac',1,'buttons.hpp']]],
   ['key_5fz_120',['KEY_Z',['../df/d0a/buttons_8hpp.html#a7c655f9f55336c6db42503e356028f4d',1,'buttons.hpp']]],
-  ['keycallback_121',['KeyCallback',['../d3/df3/namespaceWindow.html#a8d39fcb32c60884b8ff2317718c358a0',1,'Window']]],
+  ['keystate_121',['KeyState',['../db/d7c/structKeyState.html',1,'KeyState'],['../db/d7c/structKeyState.html#a407a9b32a0631fe9b330ddbe2e69f8ff',1,'KeyState::KeyState()']]],
   ['kinematic_122',['Kinematic',['../de/d87/classRigidbodyComponent.html#aea9a870cc0b5ff0b73b041241d2defc1a40c78b58b86002ee38fad2d3c9dd787e',1,'RigidbodyComponent']]]
 ];

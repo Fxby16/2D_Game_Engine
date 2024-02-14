@@ -94,8 +94,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad0d6d6f351edac06f979194c593e9b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e95624fabe063fbc939f1d52cabe9d8" id="r_a0e95624fabe063fbc939f1d52cabe9d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e95624fabe063fbc939f1d52cabe9d8">Clear</a> (bool ambient_light=false) const</td></tr>
 <tr class="separator:a0e95624fabe063fbc939f1d52cabe9d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0aa13a7ed5c6689d213f58bf8b0ead43" id="r_a0aa13a7ed5c6689d213f58bf8b0ead43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0aa13a7ed5c6689d213f58bf8b0ead43">AddLayout</a> (<a class="el" href="../../d2/dd9/classVertexBufferLayout.html">VertexBufferLayout</a> &amp;VBL, unsigned int type, unsigned int count, bool normalized)</td></tr>
-<tr class="separator:a0aa13a7ed5c6689d213f58bf8b0ead43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5067271fe3e914b52377b680cc012166" id="r_a5067271fe3e914b52377b680cc012166"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5067271fe3e914b52377b680cc012166">Clear</a> (<a class="el" href="../../da/dc1/structVec4.html">Vec4</a> color) const</td></tr>
+<tr class="separator:a5067271fe3e914b52377b680cc012166"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e4d3be9c855c8b4cb13965835bd0c17" id="r_a1e4d3be9c855c8b4cb13965835bd0c17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e4d3be9c855c8b4cb13965835bd0c17">DrawTexture</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> size, float layer, float texID)</td></tr>
 <tr class="separator:a1e4d3be9c855c8b4cb13965835bd0c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2516339ef40fc24a38a72a98edaaad0" id="r_aa2516339ef40fc24a38a72a98edaaad0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2516339ef40fc24a38a72a98edaaad0">DrawTexture</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> size, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> texture_pos, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> texture_size, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> texture_total_size, float layer, float texID)</td></tr>
@@ -104,12 +104,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae28d03e796858b18ec80e96679d9f56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba07a6385b3c57eb704fa200453356cb" id="r_aba07a6385b3c57eb704fa200453356cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba07a6385b3c57eb704fa200453356cb">DrawSpriteSheet</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> size, float row, float col, float layer, <a class="el" href="../../db/d0b/classSpriteSheet.html">SpriteSheet</a> &amp;s)</td></tr>
 <tr class="separator:aba07a6385b3c57eb704fa200453356cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a2ff27834c7d26082238867b75185d8" id="r_a0a2ff27834c7d26082238867b75185d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a2ff27834c7d26082238867b75185d8">DrawAnimatedTexture</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> size, float layer, <a class="el" href="../../d0/d9a/classAnimatedTexture.html">AnimatedTexture</a> &amp;at)</td></tr>
-<tr class="separator:a0a2ff27834c7d26082238867b75185d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a415f95114bb9666814cd530f11652390" id="r_a415f95114bb9666814cd530f11652390"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a415f95114bb9666814cd530f11652390">DrawAnimatedTexture</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> size, float layer, <a class="el" href="../../db/d0b/classSpriteSheet.html">SpriteSheet</a> &amp;s, bool &amp;play_animation, bool loop_animation, float animation_delay, float &amp;last_animation_time, int &amp;animation_index)</td></tr>
+<tr class="separator:a415f95114bb9666814cd530f11652390"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dd8b741a49adcf393471220b2eb6aa9" id="r_a9dd8b741a49adcf393471220b2eb6aa9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9dd8b741a49adcf393471220b2eb6aa9">DrawTriangle</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos1, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos2, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos3, <a class="el" href="../../da/dc1/structVec4.html">Vec4</a> color, float layer)</td></tr>
 <tr class="separator:a9dd8b741a49adcf393471220b2eb6aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46c94dc656a4890687d37579561a107b" id="r_a46c94dc656a4890687d37579561a107b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46c94dc656a4890687d37579561a107b">DrawQuad</a> (<a class="el" href="../../df/dd0/structVertex.html">Vertex</a> v1, <a class="el" href="../../df/dd0/structVertex.html">Vertex</a> v2, <a class="el" href="../../df/dd0/structVertex.html">Vertex</a> v3, <a class="el" href="../../df/dd0/structVertex.html">Vertex</a> v4)</td></tr>
-<tr class="separator:a46c94dc656a4890687d37579561a107b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2d88bc138bd01e9ca031f55d65d580e" id="r_ad2d88bc138bd01e9ca031f55d65d580e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2d88bc138bd01e9ca031f55d65d580e">DrawSolidQuad</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> size, <a class="el" href="../../da/dc1/structVec4.html">Vec4</a> color, float layer)</td></tr>
 <tr class="separator:ad2d88bc138bd01e9ca031f55d65d580e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73b559b2f8e84a0c49199a6dd50b4362" id="r_a73b559b2f8e84a0c49199a6dd50b4362"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73b559b2f8e84a0c49199a6dd50b4362">DrawPoint</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos, <a class="el" href="../../da/dc1/structVec4.html">Vec4</a> color, float layer)</td></tr>
@@ -156,6 +154,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a504fde396da71e3ac4ec69ca98cfdb5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcfc678c30f086aa11e95b498707d541" id="r_adcfc678c30f086aa11e95b498707d541"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcfc678c30f086aa11e95b498707d541">ApplyLight</a> ()</td></tr>
 <tr class="separator:adcfc678c30f086aa11e95b498707d541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab201a06f734bd82053470cb221b12673" id="r_ab201a06f734bd82053470cb221b12673"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab201a06f734bd82053470cb221b12673">ApplyLight</a> (<a class="el" href="../../dc/d58/classFramebuffer.html">Framebuffer</a> *framebuffer)</td></tr>
+<tr class="separator:ab201a06f734bd82053470cb221b12673"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79f6fed1bd265625b2ced97c5ca24da0" id="r_a79f6fed1bd265625b2ced97c5ca24da0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79f6fed1bd265625b2ced97c5ca24da0">KeepCircle</a> (<a class="el" href="../../dc/d15/structVec2.html">Vec2</a> pos, float radius, float blurAmount)</td></tr>
 <tr class="separator:a79f6fed1bd265625b2ced97c5ca24da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cd597ab29233a5a14b666df13209c0a" id="r_a3cd597ab29233a5a14b666df13209c0a"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="../../dc/d15/structVec2.html">Vec2</a>, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3cd597ab29233a5a14b666df13209c0a">GetIntersection</a> (const std::pair&lt; <a class="el" href="../../dc/d15/structVec2.html">Vec2</a>, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> &gt; &amp;ray, const std::pair&lt; <a class="el" href="../../dc/d15/structVec2.html">Vec2</a>, <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> &gt; &amp;seg)</td></tr>
@@ -223,44 +223,11 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00097">97</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00099">99</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0aa13a7ed5c6689d213f58bf8b0ead43" name="a0aa13a7ed5c6689d213f58bf8b0ead43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0aa13a7ed5c6689d213f58bf8b0ead43">&#9670;&#160;</a></span>AddLayout()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Renderer::AddLayout </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd9/classVertexBufferLayout.html">VertexBufferLayout</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>VBL</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>type</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>count</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>normalized</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00108">108</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
-
-</div>
-</div>
 <a id="aa3f822f822b19645e2ad4c9202aac3a8" name="aa3f822f822b19645e2ad4c9202aac3a8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa3f822f822b19645e2ad4c9202aac3a8">&#9670;&#160;</a></span>AddSegment()</h2>
 
@@ -280,12 +247,12 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00543">543</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00568">568</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
 <a id="adcfc678c30f086aa11e95b498707d541" name="adcfc678c30f086aa11e95b498707d541"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcfc678c30f086aa11e95b498707d541">&#9670;&#160;</a></span>ApplyLight()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adcfc678c30f086aa11e95b498707d541">&#9670;&#160;</a></span>ApplyLight() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -298,13 +265,39 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Apply the lighting framebuffer to the main framebuffer </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00705">705</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00730">730</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab201a06f734bd82053470cb221b12673" name="ab201a06f734bd82053470cb221b12673"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab201a06f734bd82053470cb221b12673">&#9670;&#160;</a></span>ApplyLight() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Renderer::ApplyLight </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dc/d58/classFramebuffer.html">Framebuffer</a> *</td>          <td class="paramname"><span class="paramname"><em>framebuffer</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Merge the lighting framebuffer with the framebuffer </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">framebuffer</td><td>the framebuffer to merge with </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00734">734</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
 <a id="a0e95624fabe063fbc939f1d52cabe9d8" name="a0e95624fabe063fbc939f1d52cabe9d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e95624fabe063fbc939f1d52cabe9d8">&#9670;&#160;</a></span>Clear()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e95624fabe063fbc939f1d52cabe9d8">&#9670;&#160;</a></span>Clear() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -317,8 +310,39 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Clear the screen </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ambient_light</td><td>if true, the ambient light will be applied, else the clear color will be applied </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00524">524</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00546">546</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5067271fe3e914b52377b680cc012166" name="a5067271fe3e914b52377b680cc012166"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5067271fe3e914b52377b680cc012166">&#9670;&#160;</a></span>Clear() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Renderer::Clear </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/dc1/structVec4.html">Vec4</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clear the screen </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">color</td><td>the color to clear the screen </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00554">554</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -337,12 +361,12 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00554">554</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00579">579</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a0a2ff27834c7d26082238867b75185d8" name="a0a2ff27834c7d26082238867b75185d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a2ff27834c7d26082238867b75185d8">&#9670;&#160;</a></span>DrawAnimatedTexture()</h2>
+<a id="a415f95114bb9666814cd530f11652390" name="a415f95114bb9666814cd530f11652390"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a415f95114bb9666814cd530f11652390">&#9670;&#160;</a></span>DrawAnimatedTexture()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -365,12 +389,51 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d9a/classAnimatedTexture.html">AnimatedTexture</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>at</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="../../db/d0b/classSpriteSheet.html">SpriteSheet</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>s</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;</td>          <td class="paramname"><span class="paramname"><em>play_animation</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>loop_animation</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>animation_delay</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;</td>          <td class="paramname"><span class="paramname"><em>last_animation_time</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>animation_index</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw an animated texture </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position of the texture </td></tr>
+    <tr><td class="paramname">size</td><td>Size of the texture </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the texture (higher layers are drawn on top of lower layers) </td></tr>
+    <tr><td class="paramname">s</td><td>the sprite sheet to use </td></tr>
+    <tr><td class="paramname">play_animation</td><td>if true, the animation will be played </td></tr>
+    <tr><td class="paramname">loop_animation</td><td>if true, the animation will be looped </td></tr>
+    <tr><td class="paramname">animation_delay</td><td>the delay between two frames </td></tr>
+    <tr><td class="paramname">last_animation_time</td><td>the last time the animation was updated </td></tr>
+    <tr><td class="paramname">animation_index</td><td>the current animation index </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00167">167</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00177">177</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -407,8 +470,18 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw a light </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position of the light </td></tr>
+    <tr><td class="paramname">color</td><td>Color of the light </td></tr>
+    <tr><td class="paramname">light_type</td><td>Type of the light </td></tr>
+    <tr><td class="paramname">radius</td><td>Radius of the light </td></tr>
+    <tr><td class="paramname">blurAmount</td><td>Amount of blur starting from the edge of the light </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00591">591</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00616">616</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -440,8 +513,17 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw a line. Use SetLineWidth to change the size of the line </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos1</td><td>Position of the first vertex </td></tr>
+    <tr><td class="paramname">pos2</td><td>Position of the second vertex </td></tr>
+    <tr><td class="paramname">color</td><td>Color of the line </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the line (higher layers are drawn on top of lower layers) </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00228">228</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00233">233</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -468,41 +550,16 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw a round point. Use SetPointSize to change the size of the point </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position of the point </td></tr>
+    <tr><td class="paramname">color</td><td>Color of the point </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the point (higher layers are drawn on top of lower layers) </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00218">218</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a46c94dc656a4890687d37579561a107b" name="a46c94dc656a4890687d37579561a107b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46c94dc656a4890687d37579561a107b">&#9670;&#160;</a></span>DrawQuad()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Renderer::DrawQuad </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../df/dd0/structVertex.html">Vertex</a></td>          <td class="paramname"><span class="paramname"><em>v1</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/dd0/structVertex.html">Vertex</a></td>          <td class="paramname"><span class="paramname"><em>v2</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/dd0/structVertex.html">Vertex</a></td>          <td class="paramname"><span class="paramname"><em>v3</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/dd0/structVertex.html">Vertex</a></td>          <td class="paramname"><span class="paramname"><em>v4</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00198">198</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00219">219</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -521,7 +578,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00309">309</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00318">318</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -553,8 +610,17 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw a solid quad </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position of the quad </td></tr>
+    <tr><td class="paramname">size</td><td>Size of the quad </td></tr>
+    <tr><td class="paramname">color</td><td>Color of the quad </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the quad (higher layers are drawn on top of lower layers) </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00211">211</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00212">212</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -596,8 +662,19 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw a part of a sprite sheet </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position of the texture </td></tr>
+    <tr><td class="paramname">size</td><td>Size of the texture </td></tr>
+    <tr><td class="paramname">row</td><td>row in the sprite sheet </td></tr>
+    <tr><td class="paramname">col</td><td>column in the sprite sheet </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the texture (higher layers are drawn on top of lower layers) </td></tr>
+    <tr><td class="paramname">s</td><td>the sprite sheet to use </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00153">153</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00159">159</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -639,8 +716,19 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw a texture </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position of the texture </td></tr>
+    <tr><td class="paramname">size</td><td>Size of the texture </td></tr>
+    <tr><td class="paramname">reverse_x</td><td>if true, the texture will be reversed on the x axis </td></tr>
+    <tr><td class="paramname">reverse_y</td><td>if true, the texture will be reversed on the y axis </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the texture (higher layers are drawn on top of lower layers) </td></tr>
+    <tr><td class="paramname">texture</td><td>the texture to draw </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00140">140</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00146">146</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -672,8 +760,17 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw a texture </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position of the texture </td></tr>
+    <tr><td class="paramname">size</td><td>Size of the texture </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the texture (higher layers are drawn on top of lower layers) </td></tr>
+    <tr><td class="paramname">texID</td><td>ID of the texture </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00112">112</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00110">110</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -727,11 +824,12 @@ Friends</h2></td></tr>
     <tr><td class="paramname">texture_pos</td><td>Position of the portion of the texture </td></tr>
     <tr><td class="paramname">texture_size</td><td>Size of the portion of the texture </td></tr>
     <tr><td class="paramname">texture_total_size</td><td>Size of the whole texture </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the texture (higher layers are drawn on top of lower layers) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00126">126</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00128">128</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -768,8 +866,18 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draw a triangle </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos1</td><td>Position of the first vertex </td></tr>
+    <tr><td class="paramname">pos2</td><td>Position of the second vertex </td></tr>
+    <tr><td class="paramname">pos3</td><td>Position of the third vertex </td></tr>
+    <tr><td class="paramname">color</td><td>Color of the triangle </td></tr>
+    <tr><td class="paramname">layer</td><td>Layer of the triangle (higher layers are drawn on top of lower layers) </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00186">186</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00196">196</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -796,7 +904,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/dae/renderer_8hpp_source.html#l00086">86</a> of file <a class="el" href="../../d1/dae/renderer_8hpp_source.html">renderer.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/dae/renderer_8hpp_source.html#l00211">211</a> of file <a class="el" href="../../d1/dae/renderer_8hpp_source.html">renderer.hpp</a>.</p>
 
 </div>
 </div>
@@ -818,8 +926,16 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get the intersection between a ray and a segment </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ray</td><td>the ray </td></tr>
+    <tr><td class="paramname">seg</td><td>the segment </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the intersection point and the time of intersection if an intersection occurs, else return {(-1,-1),-1} </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00563">563</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00588">588</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -846,7 +962,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/dae/renderer_8hpp_source.html#l00085">85</a> of file <a class="el" href="../../d1/dae/renderer_8hpp_source.html">renderer.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/dae/renderer_8hpp_source.html#l00210">210</a> of file <a class="el" href="../../d1/dae/renderer_8hpp_source.html">renderer.hpp</a>.</p>
 
 </div>
 </div>
@@ -865,7 +981,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00262">262</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00271">271</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -884,7 +1000,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00258">258</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00267">267</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -903,7 +1019,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00559">559</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00584">584</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -930,7 +1046,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00835">835</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00864">864</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -957,7 +1073,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00812">812</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00841">841</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -984,7 +1100,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00829">829</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00858">858</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1011,7 +1127,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00724">724</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00753">753</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1038,7 +1154,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00806">806</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00835">835</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1065,7 +1181,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00733">733</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00762">762</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1092,8 +1208,16 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Keep a circle of light. Used for point lights with walls collisions </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position of the light </td></tr>
+    <tr><td class="paramname">radius</td><td>Radius of the light </td></tr>
+    <tr><td class="paramname">blurAmount</td><td>Amount of blur starting from the edge of the light </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00682">682</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00707">707</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1111,8 +1235,9 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Apply the post processing function </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00538">538</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00563">563</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1130,8 +1255,9 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Render all the elements stored in buffers </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00370">370</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00382">382</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1149,8 +1275,9 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Render all the lines stored in the buffer </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00501">501</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00521">521</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1168,8 +1295,9 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Render all the points stored in the buffer </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00478">478</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00496">496</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1191,8 +1319,9 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Render all the textures stored in the buffer </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00404">404</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00416">416</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1210,8 +1339,9 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Render all the triangles stored in the buffer </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00455">455</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00471">471</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1230,7 +1360,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00266">266</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00275">275</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1249,7 +1379,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00270">270</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00279">279</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1268,7 +1398,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00239">239</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00248">248</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +1423,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00251">251</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00260">260</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1311,8 +1441,9 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set the post processing function name in the shader </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00534">534</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00559">559</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1331,7 +1462,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00274">274</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00283">283</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1350,7 +1481,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00244">244</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00253">253</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1369,7 +1500,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00547">547</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00572">572</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1394,7 +1525,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/dae/renderer_8hpp_source.html#l00096">96</a> of file <a class="el" href="../../d1/dae/renderer_8hpp_source.html">renderer.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/dae/renderer_8hpp_source.html#l00221">221</a> of file <a class="el" href="../../d1/dae/renderer_8hpp_source.html">renderer.hpp</a>.</p>
 
 </div>
 </div>

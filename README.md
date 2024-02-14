@@ -24,4 +24,4 @@ To run the editor run `bin/Debug/2DGameEngineEditor` or `bin/Release/2DGameEngin
 
 ## Documentation
 You can find the documentation [here](https://fxby16.github.io/2D_Game_Engine/).  
-**Note:** the documentation is not complete and will be updated in the future
+**Note:** the documentation might not be updated

@@ -7,6 +7,9 @@ public:
     IndexBuffer();
     ~IndexBuffer();
 
+    /**
+     * Set num_elem indices
+    */
     void Set(unsigned int num_elem);
 
     void Bind() const;

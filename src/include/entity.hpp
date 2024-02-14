@@ -4,7 +4,7 @@
 #include <texture.hpp>
 #include <window.hpp>
 
-extern uint32_t NEXT_UID;
+extern uint32_t NEXT_UID; //the next uid to be assigned
 
 class Entity;
 class TagComponent;
@@ -29,6 +29,10 @@ using ComponentType=typename std::enable_if<
     std::is_same<T,NativeScriptComponent>::value,
     int>::type;
 
+/**
+ * Search for the component with the given uid.
+ * \return the index of the component with the given uid, or -1 if not found
+*/
 template<typename T,ComponentType<T> = 0>
 inline int BinarySearch(std::vector<T> &v,uint32_t uid){
     int l=0,r=v.size()-1;
@@ -44,6 +48,9 @@ inline int BinarySearch(std::vector<T> &v,uint32_t uid){
     return -1;
 }
 
+/**
+ * Search for the first component with uid greater than the given uid.
+*/
 template<typename T,ComponentType<T> = 0>
 inline int FirstGreaterThan(std::vector<T> &v,uint32_t uid){
     int l=0,r=v.size()-1;
@@ -57,12 +64,19 @@ inline int FirstGreaterThan(std::vector<T> &v,uint32_t uid){
     return l;
 }
 
+/**
+ * Shift the elements of the vector to the right starting from the given index.
+ * \param idx the index from which to start shifting
+*/
 template<typename T,ComponentType<T> = 0>
 inline void RightShift(std::vector<T> &v,size_t idx){
     for(size_t i=v.size()-1;i>idx;i--)
         v[i]=v[i-1];
 }
 
+/**
+ * Interpolate between the current and previous value using Window::Alpha
+*/
 inline float Interpolate(float current,float previous){
     return current*Window::Alpha+previous*(1.0f-Window::Alpha);
 }
@@ -282,6 +296,10 @@ public:
     float m_PreviousX,m_PreviousY;
 };
 
+/**
+ * Search for the entity with the given uid.
+ * \return a pointer to the entity with the given uid, or nullptr if not found
+*/
 inline Entity* BinarySearch(std::vector<Entity> &v,uint32_t uid){
     int l=0,r=v.size()-1;
     while(l<=r){
@@ -301,6 +319,9 @@ class ComponentManager{
 public:
     std::vector<T> m_Components;
 
+    /**
+     * Add a component to the entity with the given uid.
+    */
     void AddComponent(T &component,uint32_t uid){
         int idx=FirstGreaterThan(m_Components,uid);
         m_Components.resize(m_Components.size()+1);
@@ -308,6 +329,9 @@ public:
         m_Components[idx]=component;
     }
 
+    /**
+     * Remove the component with the given uid.
+    */
     void RemoveComponent(uint32_t uid){
         int idx;
         if((idx=BinarySearch(m_Components,uid))!=-1){
@@ -332,10 +356,16 @@ public:
             return nullptr;
     }
 
+    /**
+     * \return a reference to the components vector
+    */
     std::vector<T> &GetComponents(){
         return m_Components;
     }
 
+    /**
+     * \return a pointer to the component found at the given index, converted to a Rect
+    */
     Rect* GetComponentAsRect(int index){
         Rect *r=new Rect;
         r->pos.x=m_Components[index].m_XOffset; //entity position is added later
@@ -347,10 +377,19 @@ public:
         return r;
     }
 
+    /**
+     * Updates all the components in the vector. Some components type don't need to be updated.
+    */
     void Update(Scene *scene,float frame_time);
+    /**
+     * Renders all the components in the vector. Some components type don't need to be rendered.
+    */
     void Render(Scene *scene);
 };
 
+/**
+ * \return the body type converted to a b2BodyType
+*/
 inline b2BodyType RigidbodyTypeToBox2DBody(RigidbodyComponent::BodyType bodyType){
     switch (bodyType){
         case RigidbodyComponent::BodyType::Static:    
@@ -363,6 +402,9 @@ inline b2BodyType RigidbodyTypeToBox2DBody(RigidbodyComponent::BodyType bodyType
     return b2_staticBody;
 }
 
+/**
+ * \return the b2BodyType converted to a BodyType
+*/
 inline RigidbodyComponent::BodyType RigidbodyTypeFromBox2DBody(b2BodyType bodyType){
     switch (bodyType){
         case b2_staticBody:    
