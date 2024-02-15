@@ -10,7 +10,7 @@ project "2DGameEngineEditor"
     files { "**.hpp", "**.cpp", "**.h", "**.c",
             "../include/**.hpp", "../src/**.cpp", "../include/**.h", "../src/**.c",
             "../vendor/glad/src/glad.c" }
-    removefiles { "vendor/**", "../src/entrypoint.cpp", "../src/application.cpp" }
+    removefiles { "vendor/**", "../src/entrypoint.cpp", "../src/application.cpp", "src/application_template.cpp" }
 
     pchheader "pch.hpp"
 

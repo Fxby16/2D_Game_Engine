@@ -13,8 +13,8 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
     m_ImGui=imgui;
 
     Window::InitGlfwWindow(window_name,resizable);
-    m_Camera.InitializeProj();
     m_Scene=new Scene;
+    m_Scene->m_Camera.InitializeProj();
 
     if(imgui)
         Renderer::ImGui_Init();
@@ -66,7 +66,7 @@ void Application::Run(){
         HandleInputs();
 
         if(Window::ProjUpdate){
-            m_Camera.InitializeProj();
+            m_Scene->m_Camera.InitializeProj();
             Window::ProjUpdate=false;
         }
 

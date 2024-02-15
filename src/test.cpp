@@ -60,29 +60,29 @@ public:
         #ifdef DEBUG
             m_Scene->DebugDraw();
         #endif
-        m_Camera.DrawSceneProj();
+        m_Scene->GetCamera().DrawSceneProj();
         RENDERER->DrawScene();
-        m_Camera.ResetSceneProj();
+        m_Scene->GetCamera().ResetSceneProj();
     }
 
     void HandleButtons(){
         if(GetKeyState(KEY_O,BUTTON_DOWN)){
-            m_Camera.Zoom(0.1f);
+            m_Scene->GetCamera().Zoom(0.1f);
         }
         if(GetKeyState(KEY_P,BUTTON_DOWN)){
-            m_Camera.Zoom(-0.1f);
+            m_Scene->GetCamera().Zoom(-0.1f);
         }
         if(GetKeyState(KEY_U,BUTTON_DOWN)){
-            m_Camera.Move(0.5f,0.0f);
+            m_Scene->GetCamera().Move(0.5f,0.0f);
         }
         if(GetKeyState(KEY_I,BUTTON_DOWN)){
-            m_Camera.Move(-0.5f,0.0f);
+            m_Scene->GetCamera().Move(-0.5f,0.0f);
         }
         if(GetKeyState(KEY_T,BUTTON_DOWN)){
-            m_Camera.Rotate(1.0f);
+            m_Scene->GetCamera().Rotate(1.0f);
         }
         if(GetKeyState(KEY_Y,BUTTON_DOWN)){
-            m_Camera.Rotate(-1.0f);
+            m_Scene->GetCamera().Rotate(-1.0f);
         }
     }
 private:

@@ -34,7 +34,6 @@ protected:
     float m_Accumulator=0.0f;
     bool m_ImGui; ///<Enable or disable imgui
     Scene *m_Scene;
-    Camera m_Camera;
 
     #ifdef DEBUG
         double last_time;

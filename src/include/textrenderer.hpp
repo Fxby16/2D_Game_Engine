@@ -28,7 +28,7 @@ public:
      * \param scale the scale of the text
      * \param color the color of the text
     */
-    void DrawText(std::string &text,float x,float y,float scale,Vec3 color);
+    void DrawText(std::string text,float x,float y,float scale,Vec3 color);
     /**
      * Get the size of the text.
      * \param text a string containing the text

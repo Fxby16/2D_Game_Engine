@@ -260,6 +260,44 @@ void SceneSerializer::Serialize(const std::string &path){
     printf("Serialization of scene file %s completed\n",path.c_str());
 }
 
+void SceneSerializer::SerializeEncrypted(const std::string &path){
+    printf("Starting binary serialization of scene file %s\n",path.c_str());
+
+    Serialize(path);
+    FILE *fin=fopen(path.c_str(),"r+");
+    if(fin==NULL){
+        printf("Failed to open scene file %s: %s\n",path.c_str(),strerror(errno));
+        return;
+    }
+
+    char ch;
+    int i=0;
+
+    srand(time(NULL));
+    std::string key;
+    for(int i=0;i<rand()%100+1;i++){
+        key+=rand()%128;
+    }
+
+    FILE *fkey=fopen("key.bin","wb");
+    if(fkey==NULL){
+        printf("Failed to open key file: %s\n",strerror(errno));
+        return;
+    }
+    fwrite(key.c_str(),1,key.size(),fkey);
+    fclose(fkey);
+
+    while((ch=fgetc(fin))!=EOF){
+        ch^=key[i];
+        i=(i+1)%key.size();
+        fseek(fin,-1,SEEK_CUR);
+        fputc(ch,fin);
+        fseek(fin,0,SEEK_CUR);
+    }
+
+    fclose(fin);
+}
+
 std::string EncodeTexture(bool animated,const std::string &path,unsigned int *tile_width,unsigned int *tile_height,int mag_filter,int min_filter){
     std::string encoded;
     encoded+=std::to_string(animated)+";";
@@ -313,20 +351,58 @@ void DecodeTexture(const std::string &encoded,std::string &path,int &mag_filter,
 }
 
 bool SceneSerializer::Deserialize(const std::string &path){
+    YAML::Node data=YAML::LoadFile(path);
 
-    std::map<std::string,std::vector<TextureData>> textures;
+    //missing error handling
+    
+    return DeserializeNode(data);
+}
 
-    printf("Starting deserialization of scene file %s\n",path.c_str());
-    YAML::Node data;
-    try{
-        data=YAML::LoadFile(path);
-    }catch(YAML::ParserException e){
-        printf("Failed to load scene file %s\n",path.c_str());
+bool SceneSerializer::DeserializeEncrypted(const std::string &path){
+    std::string file_content;
+    std::string key;
+
+    FILE *fkey=fopen("key.bin","rb");
+    if(fkey==NULL){
+        printf("Failed to open key file: %s\n",strerror(errno));
         return false;
     }
 
+    char ch;
+    while(fread(&ch,1,1,fkey)){
+        key+=ch;
+    }
+
+    fclose(fkey);
+
+    FILE *fin=fopen(path.c_str(),"r");
+    if(fin==NULL){
+        printf("Failed to open scene file %s: %s\n",path.c_str(),strerror(errno));
+        return false;
+    }
+
+    int i=0;
+    while((ch=fgetc(fin))!=EOF){
+        ch^=key[i];
+        i=(i+1)%key.size();
+        file_content+=ch;
+    }
+
+    fclose(fin);
+
+    YAML::Node data=YAML::Load(file_content);
+
+    //missing error handling
+
+    return DeserializeNode(data);
+}
+
+bool SceneSerializer::DeserializeNode(const YAML::Node &data){
+
+    std::map<std::string,std::vector<TextureData>> textures;
+
     if(!data["Scene"]){
-        printf("Scene file %s is invalid\n",path.c_str());
+        printf("Scene node is invalid\n");
         return false;
     }
 
@@ -459,7 +535,5 @@ bool SceneSerializer::Deserialize(const std::string &path){
             }
         }
     }
-
-    printf("Deserialization of scene file %s completed\n",path.c_str());
     return true;
 }

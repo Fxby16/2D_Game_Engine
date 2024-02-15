@@ -1,6 +1,7 @@
 #pragma once
 
 #include <entity.hpp>
+#include <camera.hpp>
 
 class Scene{
 public:
@@ -180,9 +181,12 @@ public:
     template<typename T,ComponentType<T> = 0>
     std::vector<T> &GetComponents();
 
+    inline Camera &GetCamera(){ return m_Camera; }
+
     void DebugDraw();
 private:
     friend class SceneSerializer;
+    friend class Application;
 
     /**
      * Add a component to the container relative to its type
@@ -195,6 +199,8 @@ private:
     b2World *m_PhysicsWorld=nullptr;
     float m_ScalingFactor=0.5f;
     Vec2 m_Gravity;
+
+    Camera m_Camera;
 
     std::vector<Entity> m_Entities;
     ComponentManager<TagComponent> m_TagComponents;

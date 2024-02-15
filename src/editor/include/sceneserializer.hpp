@@ -9,7 +9,10 @@ public:
     void SetScene(Scene *scene);
 
     void Serialize(const std::string &path);
+    void SerializeEncrypted(const std::string &path);
     bool Deserialize(const std::string &path);
+    bool DeserializeEncrypted(const std::string &path);
+    bool DeserializeNode(const YAML::Node &data);
 
 private:
     Scene *m_Scene=nullptr;
