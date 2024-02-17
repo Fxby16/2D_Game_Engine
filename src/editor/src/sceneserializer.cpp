@@ -284,7 +284,13 @@ void SceneSerializer::SerializeEncrypted(const std::string &path){
         printf("Failed to open key file: %s\n",strerror(errno));
         return;
     }
-    fwrite(key.c_str(),1,key.size(),fkey);
+    for(int i=0;i<key.size();i++){
+        for(int j=0;j<8;j++){
+            char bit=(key[i]>>j)&1;
+            fputc(bit,fkey);
+        }
+    }
+    
     fclose(fkey);
 
     while((ch=fgetc(fin))!=EOF){
@@ -368,9 +374,17 @@ bool SceneSerializer::DeserializeEncrypted(const std::string &path){
         return false;
     }
 
-    char ch;
-    while(fread(&ch,1,1,fkey)){
-        key+=ch;
+    char ch=0;
+    int bit_count=0;
+    char bit;
+    while((bit=fgetc(fkey))!=EOF){
+        ch|=(bit<<bit_count);
+        bit_count++;
+        if(bit_count==8){
+            bit_count=0;
+            key+=ch;
+            ch=0;
+        }
     }
 
     fclose(fkey);

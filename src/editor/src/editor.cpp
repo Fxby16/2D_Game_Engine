@@ -22,7 +22,7 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     RENDERER->ImGui_Init();
 
     m_SceneSerializer->Deserialize("test.scene");
-    //m_SceneSerializer->SerializeEncrypted("test_encrypted.scene");
+    m_SceneSerializer->SerializeEncrypted("test_encrypted.scene");
     //m_SceneSerializer->DeserializeEncrypted("test_encrypted.scene");
 }
 
