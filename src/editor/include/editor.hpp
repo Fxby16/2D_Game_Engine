@@ -25,6 +25,7 @@ private:
 
     Camera m_Camera;
     Scene *m_Scene=nullptr;
+    std::vector<std::pair<std::string,uint32_t>> m_ScriptComponents; ///< Function name and entity id. will be substituted by real script components when executing
     Framebuffer *m_SceneFramebuffer=nullptr;
     SceneSerializer *m_SceneSerializer;
     std::string m_ScenePath;

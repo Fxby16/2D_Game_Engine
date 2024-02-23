@@ -4,6 +4,10 @@
 #include <utilities.hpp>
 #include <scene.hpp>
 #include <sceneserializer.hpp>
+#include <IconsFontAwesome6.h>
+#include <scene_buttons.hpp>
+
+#define baseFontSize 24.0f
 
 Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable){
     Window::BaseWidth=Window::Width=width;
@@ -22,8 +26,21 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     RENDERER->ImGui_Init();
 
     m_SceneSerializer->Deserialize("test.scene");
-    m_SceneSerializer->SerializeEncrypted("test_encrypted.scene");
+    //m_SceneSerializer->SerializeEncrypted("test_encrypted.scene");
     //m_SceneSerializer->DeserializeEncrypted("test_encrypted.scene");
+
+    ImGuiIO &io=ImGui::GetIO();
+    io.Fonts->AddFontDefault();
+    float iconFontSize=baseFontSize*2.0f/3.0f;
+
+    static const ImWchar icons_ranges[]={ICON_MIN_FA,ICON_MAX_FA,0};
+    ImFontConfig icons_config;
+    icons_config.MergeMode=true;
+    icons_config.PixelSnapH=true;
+    icons_config.GlyphMinAdvanceX=iconFontSize;
+    if(io.Fonts->AddFontFromFileTTF("vendor/FontAwesome/fa-solid-900.ttf",iconFontSize,&icons_config,icons_ranges)==NULL){
+        printf("Failed to load FontAwesome font\n");
+    }
 }
 
 Editor::~Editor(){
@@ -113,6 +130,14 @@ void Editor::OnImGuiUpdate(){
     tempf=GetWidthPercentageInPx(60);
     ImGui::SetWindowSize(ImVec2(tempf,tempf*9.0f/16.0f));
     ImGui::Image((void*)m_SceneFramebuffer->GetColorbufferID(),ImGui::GetContentRegionAvail(),ImVec2(0,1),ImVec2(1,0));
+    
+    ImGui::SameLine();
+    ImVec2 pos=ImGui::GetCursorPos();
+    ImGui::SetCursorPos(ImVec2(pos.x-GetWidthPercentageInPx(60)/2.0f,pos.y+baseFontSize/2.0f));
+    if(ImGui::Button(ICON_FA_PLAY,ImVec2(baseFontSize*1.5f,baseFontSize*1.5f))){
+        SceneButtons::PlayButton();
+    }
+    
     ImGui::End();
 }
 
@@ -375,6 +400,24 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::EndPopup();
         }
     }
+
+    for(int i=0;i<m_ScriptComponents.size();i++){
+        auto &[name,id]=m_ScriptComponents[i];
+        if(id==m_SelectedEntity){
+            if(StartNode("ScriptComponent")){
+                ImGui::InputText("Function Name",&name[0],name.size());
+                ImGui::TreePop();
+            }
+            ImGui::OpenPopupOnItemClick("ScriptComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+            if(ImGui::BeginPopupContextItem("ScriptComponentPopup")){
+                if(ImGui::MenuItem("Remove Component")){
+                    m_ScriptComponents.erase(m_ScriptComponents.begin()+i);
+                }
+                ImGui::EndPopup();
+            }
+        }
+    }
+
     ImGui::PopItemWidth();
 
     if(ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)){
@@ -405,6 +448,12 @@ void Editor::ComponentsMenu(ImVec2 pos){
             if(ImGui::MenuItem("Light Component")){
                 if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<LightComponent>(m_SelectedEntity)==nullptr){
                     m_Scene->AddComponent<LightComponent>(m_SelectedEntity);
+                }
+            }
+            if(ImGui::MenuItem("Script Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max()){
+                    std::string name(100,'\0');
+                    m_ScriptComponents.push_back({name,m_SelectedEntity});
                 }
             }
             ImGui::EndMenu();

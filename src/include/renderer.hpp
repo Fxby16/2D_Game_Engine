@@ -38,6 +38,10 @@ public:
         void DrawEditorScene(Framebuffer *framebuffer);
     #endif
 
+    #ifdef APPLICATION
+        friend class SceneSerializer;
+    #endif
+
     /**
      * Clear the screen
      * \param ambient_light if true, the ambient light will be applied, else the clear color will be applied

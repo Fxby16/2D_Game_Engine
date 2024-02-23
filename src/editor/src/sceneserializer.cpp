@@ -314,10 +314,9 @@ std::string EncodeTexture(bool animated,const std::string &path,unsigned int *ti
         #ifdef DEBUG
             assert(tile_width!=nullptr);
             assert(tile_height!=nullptr);
-
-            encoded+=std::to_string(*tile_width)+";";
-            encoded+=std::to_string(*tile_height)+";";
         #endif
+        encoded+=std::to_string(*tile_width)+";";
+        encoded+=std::to_string(*tile_height)+";";
     }
     return encoded;
 }
@@ -337,6 +336,11 @@ void DecodeTexture(const std::string &encoded,std::string &path,unsigned int &ti
     while(std::getline(tokenstream,token,';')){
         tokens.push_back(token);
     }
+    if(tokens.size()<6){
+        printf("Invalid encoded animated texture\n");
+        printf("%s\n",encoded.c_str());
+        return;
+    }
     path=tokens[1];
     mag_filter=std::stoi(tokens[2]);
     min_filter=std::stoi(tokens[3]);
@@ -350,6 +354,11 @@ void DecodeTexture(const std::string &encoded,std::string &path,int &mag_filter,
     std::istringstream tokenstream(encoded);
     while(std::getline(tokenstream,token,';')){
         tokens.push_back(token);
+    }
+    if(tokens.size()<4){
+        printf("Invalid encoded texture\n");
+        printf("%s\n",encoded.c_str());
+        return;
     }
     path=tokens[1];
     mag_filter=std::stoi(tokens[2]);

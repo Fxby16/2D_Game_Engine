@@ -38,6 +38,8 @@
 #include <array>
 #include <limits>
 #include <fstream>
+#include <thread>
+#include <atomic>
 
 #include <memory.hpp>
 
@@ -49,7 +51,9 @@
 #ifdef EDITOR
     //nfd
     #include <nfd.h>
+#endif
 
-    //yaml
+#if defined(EDITOR) || defined(APPLICATION)
+    //yaml-cpp
     #include <yaml-cpp/yaml.h>
 #endif

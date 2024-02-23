@@ -6,6 +6,7 @@ src/obj
 
 src/editor/bin
 src/editor/obj
+src/editor/temp
 
 # Files
 src/2DGameEngine.make

@@ -46,7 +46,7 @@ public:
     }
 protected:
     friend class Renderer;
-    #ifdef EDITOR
+    #if defined(EDITOR) || defined(APPLICATION) 
         friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
     #endif
 
@@ -99,7 +99,7 @@ public:
     
 private:
     friend class Renderer;
-    #ifdef EDITOR
+    #if defined(EDITOR) || defined(APPLICATION)
         friend class Editor;
         friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
     #endif

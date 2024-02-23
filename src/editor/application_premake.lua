@@ -1,16 +1,18 @@
-workspace "2DGameEngineEditor"
+workspace "Application"
     configurations { "Debug", "Release" }
 
-project "2DGameEngineEditor"
+project "Application"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++20"
     targetdir "bin/%{cfg.buildcfg}"
+    location "temp"
 
-    files { "include/**.hpp", "src/**.cpp", "include/**.h", "src/**.c",
+    files { "**.hpp", "**.cpp", "**.h", "**.c",
             "../include/**.hpp", "../src/**.cpp", "../include/**.h", "../src/**.c",
             "../vendor/glad/src/glad.c" }
-    removefiles { "vendor/**", "../src/entrypoint.cpp", "../src/application.cpp", "src/application_template.cpp" }
+    removefiles { "vendor/**", "src/entrypoint.cpp", "src/application_template.cpp", "src/editor.cpp" }
+    files { "temp/finalapplication.cpp" }
 
     pchheader "pch.hpp"
 
@@ -21,9 +23,6 @@ project "2DGameEngineEditor"
                   "../vendor/ImGui",
                   "../vendor/ImGui/backends",
                   "../vendor/glad/include",
-                  "vendor/NativeFileDialog/src/include",
-                  "vendor/NativeFileDialog/src/",
-                  "vendor/FontAwesome",
                   "../include/vendor", 
                   "../vendor/instrumentor",
                   "../vendor/glad/include",
@@ -35,7 +34,6 @@ project "2DGameEngineEditor"
 
     libdirs { "../vendor/glfw/build/src",
               "../vendor/ImGui",
-              "vendor/NativeFileDialog/build/lib/Release/x64/",
               "../vendor/FreeType/objs",
               "../vendor/soloud/lib",
               "../vendor/box2d/build/bin",
@@ -47,7 +45,6 @@ project "2DGameEngineEditor"
             "pthread",
             "dl",
             "z",
-            "nfd",
             "freetype", 
             "soloud_static",
             "asound",
@@ -56,10 +53,11 @@ project "2DGameEngineEditor"
 
     filter "configurations:Debug"
         optimize "Debug"
-        defines { "DEBUG","EDITOR" }
+        defines { "DEBUG", "APPLICATION" }
         symbols "On"
 
     filter "configurations:Release"
         optimize "Full"
-        defines { "EDITOR" }
+        defines { "RELEASE", "APPLICATION" }
+        symbols "Off"
         

@@ -20,10 +20,14 @@ Editor:
 - edit other variables, like ambient light etc.
 
 - native script component integration
-- run the application through the editor
 - undo/redo system
 
 - shaders reloading (todo first in the engine)
+
+- save option (save in loaded scene path)
+
+- fix EDITOR definition when playing the project from the editor
+- precompile the engine so playing the project is much faster
 --------------------------------------------------------------------------------------------------------------------
 Others:
 - windows porting
