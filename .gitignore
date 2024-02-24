@@ -1,11 +1,10 @@
 # Directories
 
 .vscode
-src/bin
-src/obj
 
-src/editor/bin
-src/editor/obj
+**/bin
+**/obj
+
 src/editor/temp
 
 # Files

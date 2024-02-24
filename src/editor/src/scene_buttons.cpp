@@ -46,6 +46,7 @@ void SceneButtons::PlayButton(){
         ExecuteCommand("mkdir -p temp");
         GenerateApplication("Test",800,600,1920,1080,scene_path,true);
         printf("%s\n",ExecuteCommand("premake5 gmake2 --file=application_premake.lua").c_str());
+        printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str());
         printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str());
 
         system("bin/Release/Application");
