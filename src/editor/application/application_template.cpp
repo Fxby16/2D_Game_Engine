@@ -1,5 +1,14 @@
+#include <pch.hpp>
 #include <sceneserializer.hpp>
 #include <application.hpp>
+
+extern const char *WINDOW_NAME;
+extern unsigned int WINDOW_WIDTH;
+extern unsigned int WINDOW_HEIGHT;
+extern float FULLSCREEN_WIDTH;
+extern float FULLSCREEN_HEIGHT;
+extern std::string SCENE_PATH;
+extern bool RESIZABLE;
 
 static SceneSerializer sceneserializer;
 

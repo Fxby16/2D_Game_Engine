@@ -65,11 +65,11 @@ GENERATED :=
 OBJECTS :=
 
 GENERATED += $(OBJDIR)/application.o
+GENERATED += $(OBJDIR)/application_template.o
 GENERATED += $(OBJDIR)/audio.o
 GENERATED += $(OBJDIR)/camera.o
 GENERATED += $(OBJDIR)/entity.o
 GENERATED += $(OBJDIR)/entrypoint.o
-GENERATED += $(OBJDIR)/finalapplication.o
 GENERATED += $(OBJDIR)/framebuffer.o
 GENERATED += $(OBJDIR)/glad.o
 GENERATED += $(OBJDIR)/glfw.o
@@ -91,11 +91,11 @@ GENERATED += $(OBJDIR)/vertexbuffer.o
 GENERATED += $(OBJDIR)/vertexbufferlayout.o
 GENERATED += $(OBJDIR)/window.o
 OBJECTS += $(OBJDIR)/application.o
+OBJECTS += $(OBJDIR)/application_template.o
 OBJECTS += $(OBJDIR)/audio.o
 OBJECTS += $(OBJDIR)/camera.o
 OBJECTS += $(OBJDIR)/entity.o
 OBJECTS += $(OBJDIR)/entrypoint.o
-OBJECTS += $(OBJDIR)/finalapplication.o
 OBJECTS += $(OBJDIR)/framebuffer.o
 OBJECTS += $(OBJDIR)/glad.o
 OBJECTS += $(OBJDIR)/glfw.o
@@ -242,6 +242,9 @@ $(OBJDIR)/window.o: ../../src/window.cpp
 $(OBJDIR)/glad.o: ../../vendor/glad/src/glad.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) -include $(PCH_PLACEHOLDER) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/application_template.o: ../application/application_template.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/glfw.o: ../src/glfw.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
@@ -252,9 +255,6 @@ $(OBJDIR)/sceneserializer.o: ../src/sceneserializer.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/utilities.o: ../src/utilities.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/finalapplication.o: ../temp/finalapplication.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
