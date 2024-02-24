@@ -94,7 +94,7 @@ namespace YAML{
         }
     };
 }
-void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene){
+void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<std::pair<std::string,uint32_t>>&script_components){
     out<<YAML::BeginMap; //entity and components
     
     out<<YAML::Key<<"Entity";
@@ -227,10 +227,20 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene){
         out<<YAML::EndMap; //light component
     }
 
+    for(auto &[fn_name,id]:script_components){
+        if(id==entity.m_UID){
+            if(!fn_name.empty()){
+                out<<YAML::Key<<"NativeScriptComponent";
+                out<<YAML::BeginMap; //native script component
+                out<<YAML::Key<<"FunctionName"<<YAML::Value<<fn_name;
+                out<<YAML::EndMap; //native script component
+            }
+        }
+    }
     out<<YAML::EndMap; //entity and components
 }
 
-void SceneSerializer::Serialize(const std::string &path){
+void SceneSerializer::Serialize(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components){
     printf("Starting serialization of scene file %s\n",path.c_str());
     YAML::Emitter out;
     out<<YAML::BeginMap;
@@ -244,7 +254,7 @@ void SceneSerializer::Serialize(const std::string &path){
 
     std::vector<Entity>& entities=m_Scene->GetEntities();
     for(int i=0;i<entities.size();i++){
-        SerializeEntity(out,entities[i],m_Scene);
+        SerializeEntity(out,entities[i],m_Scene,script_components);
     }
 
     out<<YAML::EndSeq;
@@ -260,10 +270,10 @@ void SceneSerializer::Serialize(const std::string &path){
     printf("Serialization of scene file %s completed\n",path.c_str());
 }
 
-void SceneSerializer::SerializeEncrypted(const std::string &path){
+void SceneSerializer::SerializeEncrypted(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components){
     printf("Starting binary serialization of scene file %s\n",path.c_str());
 
-    Serialize(path);
+    Serialize(path,script_components);
     FILE *fin=fopen(path.c_str(),"r+");
     if(fin==NULL){
         printf("Failed to open scene file %s: %s\n",path.c_str(),strerror(errno));
@@ -365,15 +375,27 @@ void DecodeTexture(const std::string &encoded,std::string &path,int &mag_filter,
     min_filter=std::stoi(tokens[3]);
 }
 
+#ifdef EDITOR
+bool SceneSerializer::Deserialize(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components){
+#elif defined(APPLICATION)
 bool SceneSerializer::Deserialize(const std::string &path){
+#endif
     YAML::Node data=YAML::LoadFile(path);
 
     //missing error handling
     
-    return DeserializeNode(data);
+    #ifdef EDITOR
+        return DeserializeNode(data,script_components);
+    #elif defined(APPLICATION)
+        return DeserializeNode(data);
+    #endif
 }
 
+#ifdef EDITOR
+bool SceneSerializer::DeserializeEncrypted(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components){
+#elif defined(APPLICATION)
 bool SceneSerializer::DeserializeEncrypted(const std::string &path){
+#endif
     std::string file_content;
     std::string key;
 
@@ -417,11 +439,18 @@ bool SceneSerializer::DeserializeEncrypted(const std::string &path){
 
     //missing error handling
 
-    return DeserializeNode(data);
+    #ifdef EDITOR
+        return DeserializeNode(data,script_components);
+    #elif defined(APPLICATION)
+        return DeserializeNode(data);
+    #endif
 }
 
+#ifdef EDITOR
+bool SceneSerializer::DeserializeNode(const YAML::Node &data,std::vector<std::pair<std::string,uint32_t>>&script_components){
+#elif defined(APPLICATION)
 bool SceneSerializer::DeserializeNode(const YAML::Node &data){
-
+#endif
     std::map<std::string,std::vector<TextureData>> textures;
 
     if(!data["Scene"]){
@@ -532,6 +561,14 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
 
                 m_Scene->AddComponent<LightComponent>(uid,xoffset,yoffset,radius,blur,color,lighttype);
             }
+
+            #ifdef EDITOR
+            auto nativescriptcomponent=e["NativeScriptComponent"];
+            if(nativescriptcomponent){
+                std::string functionname=nativescriptcomponent["FunctionName"].as<std::string>();
+                script_components.push_back(std::make_pair(functionname,uid));
+            }
+            #endif
         }
     }
 

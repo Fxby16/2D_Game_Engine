@@ -25,7 +25,7 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     m_SceneSerializer->SetScene(m_Scene);
     RENDERER->ImGui_Init();
 
-    m_SceneSerializer->Deserialize("test.scene");
+    m_SceneSerializer->Deserialize("test.scene",m_ScriptComponents);
     //m_SceneSerializer->SerializeEncrypted("test_encrypted.scene");
     //m_SceneSerializer->DeserializeEncrypted("test_encrypted.scene");
 
@@ -94,7 +94,7 @@ void Editor::OnImGuiUpdate(){
                     delete m_Scene;
                     m_Scene=new Scene;
                     m_SceneSerializer->SetScene(m_Scene);
-                    m_SceneSerializer->Deserialize(outPath);
+                    m_SceneSerializer->Deserialize((char*)outPath,m_ScriptComponents);
                 }else if(result==NFD_ERROR){
                     printf("Error: %s\n",NFD_GetError());
                 }
@@ -104,7 +104,7 @@ void Editor::OnImGuiUpdate(){
                 nfdresult_t result=NFD_SaveDialog("scene",NULL,&outPath);
                     
                 if(result==NFD_OKAY){
-                    m_SceneSerializer->Serialize(outPath);
+                    m_SceneSerializer->Serialize((char*)outPath,m_ScriptComponents);
                 }else if(result==NFD_ERROR){
                     printf("Error: %s\n",NFD_GetError());
                 }
@@ -135,7 +135,7 @@ void Editor::OnImGuiUpdate(){
     ImVec2 pos=ImGui::GetCursorPos();
     ImGui::SetCursorPos(ImVec2(pos.x-GetWidthPercentageInPx(60)/2.0f,pos.y+baseFontSize/2.0f));
     if(ImGui::Button(ICON_FA_PLAY,ImVec2(baseFontSize*1.5f,baseFontSize*1.5f))){
-        SceneButtons::PlayButton();
+        SceneButtons::PlayButton(m_ScriptComponents);
     }
     
     ImGui::End();

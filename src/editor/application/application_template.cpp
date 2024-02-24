@@ -10,6 +10,8 @@ extern float FULLSCREEN_HEIGHT;
 extern std::string SCENE_PATH;
 extern bool RESIZABLE;
 
+extern void LoadScripts(Scene *scene);
+
 static SceneSerializer sceneserializer;
 
 class ApplicationTemplate : public Application{
@@ -17,6 +19,8 @@ public:
     ApplicationTemplate(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,std::string &scene_path,bool resizable=false,bool imgui=false): Application(window_name,width,height,fullscreen_width,fullscreen_height,resizable,imgui){
         sceneserializer.SetScene(m_Scene);
         sceneserializer.Deserialize(scene_path);
+
+        LoadScripts(m_Scene);
     }
 
     void OnUpdate(double frame_time) override{

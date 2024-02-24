@@ -47,7 +47,7 @@ public:
 protected:
     friend class Renderer;
     #if defined(EDITOR) || defined(APPLICATION) 
-        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
+        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*, std::vector<std::pair<std::string,uint32_t>>&);
     #endif
 
     unsigned int m_ID;
@@ -101,7 +101,7 @@ private:
     friend class Renderer;
     #if defined(EDITOR) || defined(APPLICATION)
         friend class Editor;
-        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*);
+        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*, std::vector<std::pair<std::string,uint32_t>>&);
     #endif
 
     int m_TileWidth;
