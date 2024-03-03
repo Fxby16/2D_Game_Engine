@@ -107,6 +107,14 @@ Entities:
     RigidbodyComponent:
       BodyType: Static
       FixedRotation: true
+    CircleColliderComponent:
+      XOffset: 1
+      YOffset: 1
+      Radius: 2
+      Density: 1
+      Friction: 0
+      Restitution: 0
+      RestitutionThreshold: 0.5
     LightComponent:
       XOffset: 1.64400005
       YOffset: 0.82099998

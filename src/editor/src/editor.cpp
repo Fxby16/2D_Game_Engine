@@ -72,6 +72,15 @@ void Editor::Run(){
 
 void Editor::OnSceneRender(){
     m_Scene->Render();
+    // auto e=m_Scene->GetEntity(m_SelectedEntity);
+
+    // if(!e)
+    //     return;
+
+    // auto texture_component=m_Scene->GetComponent<TextureComponent>(m_SelectedEntity);
+    // if(texture_component){
+        
+    // }
 }
 
 void Editor::OnImGuiUpdate(){

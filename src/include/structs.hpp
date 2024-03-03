@@ -35,13 +35,23 @@ struct Vertex{
     Vertex(Vec2 pos,Vec2 texcoords,float layer,float texID);
 };
 
-struct LinePointVertex{
+struct LineVertex{
     Vec2 pos;
     Vec4 color;
     float layer;
 
-    LinePointVertex();
-    LinePointVertex(Vec2 pos,Vec4 color,float layer);
+    LineVertex();
+    LineVertex(Vec2 pos,Vec4 color,float layer);
+};
+
+struct PointVertex{
+    Vec2 pos;
+    Vec4 color;
+    float border;
+    float layer;
+
+    PointVertex();
+    PointVertex(Vec2 pos,Vec4 color,float border,float layer);
 };
 
 struct TriangleVertex{

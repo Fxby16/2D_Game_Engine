@@ -7,8 +7,8 @@ RendererData::RendererData(const char *vertex_path,const char *fragment_path,uns
 
 Renderer::Renderer(): 
     m_Textures("resources/shaders/textures/vertex.glsl","resources/shaders/textures/fragment.glsl",sizeof(Vertex)),
-    m_Points("resources/shaders/points/vertex.glsl","resources/shaders/points/fragment.glsl",sizeof(LinePointVertex)),
-    m_Lines("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl",sizeof(LinePointVertex)),
+    m_Points("resources/shaders/points/vertex.glsl","resources/shaders/points/fragment.glsl",sizeof(PointVertex)),
+    m_Lines("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl",sizeof(LineVertex)),
     m_Triangles("resources/shaders/triangles/vertex.glsl","resources/shaders/triangles/fragment.glsl",sizeof(TriangleVertex)),
     m_Lights("resources/shaders/lights/vertex.glsl","resources/shaders/lights/fragment.glsl",4*sizeof(float)),
     m_SPostProcessing("resources/shaders/textures/vertex.glsl","resources/shaders/post_processing/fragment.glsl"),
@@ -20,8 +20,8 @@ Renderer::Renderer():
                     Window::MAX_WIDTH,0.0f,1.0f,0.0f};
 
     m_BufferT=(Vertex *)AllocateMemory(MAX_VERTICES*sizeof(Vertex));
-    m_BufferP=(LinePointVertex *)AllocateMemory(MAX_VERTICES*sizeof(LinePointVertex));
-    m_BufferL=(LinePointVertex *)AllocateMemory(MAX_VERTICES*sizeof(LinePointVertex));
+    m_BufferP=(PointVertex *)AllocateMemory(MAX_VERTICES*sizeof(PointVertex));
+    m_BufferL=(LineVertex *)AllocateMemory(MAX_VERTICES*sizeof(LineVertex));
     m_BufferTR=(TriangleVertex *)AllocateMemory(MAX_VERTICES*sizeof(TriangleVertex));
 
     m_Framebuffer=new Framebuffer;
@@ -40,6 +40,7 @@ Renderer::Renderer():
 
     AddLayout(m_Points.VBL,GL_FLOAT,2,false);
     AddLayout(m_Points.VBL,GL_FLOAT,4,false);
+    AddLayout(m_Points.VBL,GL_FLOAT,1,false);
     AddLayout(m_Points.VBL,GL_FLOAT,1,false);
     m_Points.VAO.AddBuffer(m_Points.VBO,m_Points.VBL);
     
@@ -223,7 +224,21 @@ void Renderer::DrawPoint(Vec2 pos,Vec4 color,float layer){
         Window::VertexCount++;
     #endif
     
-    m_BufferP[m_Points.NumVertices]=LinePointVertex(pos,color,layer);
+    m_BufferP[m_Points.NumVertices]=PointVertex(pos,color,0,layer);
+    ++m_Points.NumVertices;
+
+    if(m_Points.NumVertices==MAX_VERTICES)
+        Render();
+}
+
+void Renderer::DrawCircle(Vec2 pos,Vec4 color,float border,float layer){
+    PROFILE_FUNCTION();
+
+    #ifdef EDITOR
+        Window::VertexCount++;
+    #endif
+    
+    m_BufferP[m_Points.NumVertices]=PointVertex(pos,color,border,layer);
     ++m_Points.NumVertices;
 
     if(m_Points.NumVertices==MAX_VERTICES)
@@ -237,8 +252,8 @@ void Renderer::DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer){
         Window::VertexCount+=2;
     #endif
     
-    m_BufferL[m_Lines.NumVertices]=LinePointVertex(pos1,color,layer);
-    m_BufferL[m_Lines.NumVertices+1]=LinePointVertex(pos2,color,layer);
+    m_BufferL[m_Lines.NumVertices]=LineVertex(pos1,color,layer);
+    m_BufferL[m_Lines.NumVertices+1]=LineVertex(pos2,color,layer);
     m_Lines.NumVertices+=2;
 
     if(m_Lines.NumVertices==MAX_VERTICES)
@@ -385,11 +400,11 @@ void Renderer::Render(bool post_processing){ //if this function gets called beca
     if(m_Textures.NumVertices>0)
         std::stable_sort(m_BufferT,m_BufferT+m_Textures.NumVertices,cmp1);
     if(m_Points.NumVertices>0)
-        std::stable_sort(m_BufferP,m_BufferP+m_Points.NumVertices,cmp2);
+        std::stable_sort(m_BufferP,m_BufferP+m_Points.NumVertices,cmpgeneral<PointVertex>);
     if(m_Lines.NumVertices>0)
-        std::stable_sort(m_BufferL,m_BufferL+m_Lines.NumVertices,cmp2);
+        std::stable_sort(m_BufferL,m_BufferL+m_Lines.NumVertices,cmpgeneral<LineVertex>);
     if(m_Triangles.NumVertices>0)
-        std::stable_sort(m_BufferTR,m_BufferTR+m_Triangles.NumVertices,cmp3);
+        std::stable_sort(m_BufferTR,m_BufferTR+m_Triangles.NumVertices,cmpgeneral<TriangleVertex>);
 
     float min_texture_layer,min_point_layer,min_line_layer,min_triangle_layer;
     
@@ -504,7 +519,7 @@ void Renderer::RenderPoints(float max_layer){
     for(i=m_PointIndex;i<m_Points.NumVertices && m_BufferP[i].layer<=max_layer;i++);
 
     if(i-m_PointIndex>0){
-        m_Points.VBO.SetData(0,(float *)&m_BufferP[m_PointIndex],i-m_PointIndex,sizeof(LinePointVertex));
+        m_Points.VBO.SetData(0,(float *)&m_BufferP[m_PointIndex],i-m_PointIndex,sizeof(PointVertex));
         glDrawArrays(GL_POINTS,0,i-m_PointIndex);
         #ifdef EDITOR
             Window::DrawCalls++;
@@ -529,7 +544,7 @@ void Renderer::RenderLines(float max_layer){
     for(i=m_LineIndex;i<m_Lines.NumVertices && m_BufferL[i].layer<=max_layer;i++);
 
     if(i-m_LineIndex>0){
-        m_Lines.VBO.SetData(0,(float *)&m_BufferL[m_LineIndex],i-m_LineIndex,sizeof(LinePointVertex));
+        m_Lines.VBO.SetData(0,(float *)&m_BufferL[m_LineIndex],i-m_LineIndex,sizeof(LineVertex));
         glDrawArrays(GL_LINES,0,i-m_LineIndex);
         #ifdef EDITOR
             Window::DrawCalls++;

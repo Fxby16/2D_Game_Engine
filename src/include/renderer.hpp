@@ -129,6 +129,14 @@ public:
     */
     void DrawPoint(Vec2 pos,Vec4 color,float layer);
     /**
+     * Draw an empty point. Use SetPointSize to change the size of the point
+     * \param pos Position of the point
+     * \param color Color of the point
+     * \param border Border of the point (in range [0,1])
+     * \param layer Layer of the point (higher layers are drawn on top of lower layers)
+    */
+    void DrawCircle(Vec2 pos,Vec4 color,float border,float layer);
+    /**
      * Draw a line. Use SetLineWidth to change the size of the line
      * \param pos1 Position of the first vertex
      * \param pos2 Position of the second vertex
@@ -235,8 +243,8 @@ private:
     IndexBuffer IB;
 
     Vertex *m_BufferT;
-    LinePointVertex *m_BufferP;
-    LinePointVertex *m_BufferL;
+    PointVertex *m_BufferP;
+    LineVertex *m_BufferL;
     TriangleVertex *m_BufferTR;
     
     Framebuffer *m_Framebuffer;
@@ -264,11 +272,8 @@ private:
         return v1.layer<v2.layer; 
     }
 
-    static bool cmp2(const LinePointVertex &v1,const LinePointVertex &v2){
-        return v1.layer<v2.layer; 
-    }
-
-    static bool cmp3(const TriangleVertex &v1,const TriangleVertex &v2){
+    template<typename T>
+    static bool cmpgeneral(const T &v1,const T &v2){
         return v1.layer<v2.layer; 
     }
 

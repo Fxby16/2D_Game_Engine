@@ -270,7 +270,10 @@ void Scene::MoveEntity(uint32_t uid,float x_offset,float y_offset){
     }
     Entity *entity=GetEntity(uid);
 
-    rigidbody->m_RuntimeBody->SetLinearVelocity(b2Vec2(x_offset*m_ScalingFactor,y_offset*m_ScalingFactor));
+    const b2Vec2 &vel=rigidbody->m_RuntimeBody->GetLinearVelocity();
+    float mass=rigidbody->m_RuntimeBody->GetMass();
+
+    rigidbody->m_RuntimeBody->ApplyLinearImpulse(b2Vec2(mass*((x_offset*m_ScalingFactor)-vel.x),((y_offset!=0)?(mass*((y_offset*m_ScalingFactor)-vel.y)):0)),rigidbody->m_RuntimeBody->GetWorldCenter(),true);
 }
 
 void Scene::OnPhysicsStart(){
@@ -358,7 +361,7 @@ void Scene::DebugDraw(){
         if(circle_collider!=nullptr){
             float current_point_size=RENDERER->GetPointSize();
             RENDERER->SetPointSize(circle_collider->m_Radius*2);
-            RENDERER->DrawPoint({Interpolate(entity.m_X,entity.m_PreviousX)+circle_collider->m_XOffset,Interpolate(entity.m_Y,entity.m_PreviousY)+circle_collider->m_YOffset},{0,1,0.75f,0.5f},5);
+            RENDERER->DrawCircle({Interpolate(entity.m_X,entity.m_PreviousX)+circle_collider->m_XOffset,Interpolate(entity.m_Y,entity.m_PreviousY)+circle_collider->m_YOffset},{0,1,0.75f,0.5f},0.2f,5);
             RENDERER->Render();
             RENDERER->SetPointSize(current_point_size);
         }
