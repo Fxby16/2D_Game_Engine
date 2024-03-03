@@ -56,6 +56,7 @@ void Editor::Run(){
         RENDERER->StartEditorScene(this);
         OnSceneRender();
         RENDERER->DrawEditorScene(m_SceneFramebuffer);
+        HighlightEntity(m_SelectedEntity);
         
         RENDERER->StartScene();
         RENDERER->Clear({0.0,0.0,0.0,1.0});
@@ -72,15 +73,55 @@ void Editor::Run(){
 
 void Editor::OnSceneRender(){
     m_Scene->Render();
-    // auto e=m_Scene->GetEntity(m_SelectedEntity);
+}
 
-    // if(!e)
-    //     return;
+void Editor::HighlightEntity(uint32_t uid){
+auto e=m_Scene->GetEntity(uid);
 
-    // auto texture_component=m_Scene->GetComponent<TextureComponent>(m_SelectedEntity);
-    // if(texture_component){
-        
-    // }
+    if(!e)
+        return;
+
+    RENDERER->SetLineWidth(0.05f);
+
+    auto tc=m_Scene->GetComponent<TextureComponent>(uid);
+    if(tc){
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+tc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{0,0,1,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+tc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+tc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+tc->m_Height},{0,0,1,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+tc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+tc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+tc->m_Height},{0,0,1,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+tc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{0,0,1,1},5);
+    }
+
+    auto atc=m_Scene->GetComponent<AnimatedTextureComponent>(uid);
+    if(atc){
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+atc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{1,0.5f,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+atc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+atc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+atc->m_Height},{1,0.5f,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+atc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+atc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+atc->m_Height},{1,0.5f,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+atc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{1,0.5f,0,1},5);
+    
+        Window::VertexCount-=8;
+    }
+
+    auto bc=m_Scene->GetComponent<BoxColliderComponent>(uid);
+    if(bc){
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{0,1,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height},{0,1,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height},{0,1,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{0,1,0,1},5);
+    
+        Window::VertexCount-=8;
+    }
+    auto cc=m_Scene->GetComponent<CircleColliderComponent>(uid);
+    if(cc){
+        float current_point_size=RENDERER->GetPointSize();
+        RENDERER->SetPointSize(cc->m_Radius*2);
+        RENDERER->DrawCircle({Interpolate(e->m_X,e->m_PreviousX)+cc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+cc->m_YOffset},{1,0,0,1.0f},0.02f,5);
+        RENDERER->Render();
+        RENDERER->SetPointSize(current_point_size);
+
+        Window::VertexCount-=1;
+    }
+
+    RENDERER->Render();
 }
 
 void Editor::OnImGuiUpdate(){

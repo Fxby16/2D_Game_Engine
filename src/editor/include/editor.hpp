@@ -15,6 +15,7 @@ public:
     void OnImGuiUpdate();
     void OnImGuiRender();   
     void OnSceneRender();
+    void HighlightEntity(uint32_t uid);
 private:   
     friend class Renderer;
 
