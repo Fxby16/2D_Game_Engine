@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['next_5fuid_0',['NEXT_UID',['../db/de2/entity_8hpp.html#a93c23238a6fb697425d7a300e55a1a12',1,'NEXT_UID:&#160;entity.cpp'],['../d9/ddd/entity_8cpp.html#a93c23238a6fb697425d7a300e55a1a12',1,'NEXT_UID:&#160;entity.cpp']]],
-  ['normalized_1',['normalized',['../dc/dab/structVertexBufferElement.html#a151af302fae3b5edd75b0288ce79a9f0',1,'VertexBufferElement']]],
-  ['numvertices_2',['NumVertices',['../de/d70/structRendererData.html#a48c20d247e6a73f72f1bea8598728f39',1,'RendererData']]]
+  ['lastframetime_0',['LastFrameTime',['../d3/df3/namespaceWindow.html#ad28bca39e6036bfb1014bbfc3c696354',1,'Window']]],
+  ['layer_1',['layer',['../dd/d0e/structTextureData.html#a869cece46969f4c01de73e02fb2bd5fa',1,'TextureData::layer'],['../df/dd0/structVertex.html#a2a787538687df58d384592b2a527f6f7',1,'Vertex::layer'],['../df/df9/structLineVertex.html#af21ed3f69c3df0980cfa6ff727625dc6',1,'LineVertex::layer'],['../d8/d4a/structPointVertex.html#a7dbf793f1e46221178036e8bc0da6165',1,'PointVertex::layer'],['../d5/d3d/structTriangleVertex.html#a0e4f15a5305ff63520ac975e396ee55d',1,'TriangleVertex::layer']]],
+  ['loopanimation_2',['loopanimation',['../dd/d0e/structTextureData.html#a087a122bde6055e080de1d0ec8b8a341',1,'TextureData']]]
 ];

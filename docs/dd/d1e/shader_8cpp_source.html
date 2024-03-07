@@ -83,7 +83,7 @@ $(function() { codefold.init(1); });
   <div class="headertitle"><div class="title">shader.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="../../dd/d1e/shader_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d5b/pch_8hpp.html">pch.hpp</a>&gt;</span></div>
+<a href="../../dd/d1e/shader_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;pch.hpp&gt;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="../../d9/d52/shader_8hpp.html">shader.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="foldopen" id="foldopen00004" data-start="{" data-end="}">
@@ -105,16 +105,16 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    }</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">char</span> ch;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">while</span>((ch=fgetc(vertexFile))!=EOF){</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        vertexCode+=ch;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">char</span> <a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#af53f92900705f7de3c139a05b2f9ef16">ch</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">while</span>((<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#af53f92900705f7de3c139a05b2f9ef16">ch</a>=fgetc(vertexFile))!=EOF){</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        vertexCode+=<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#af53f92900705f7de3c139a05b2f9ef16">ch</a>;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    }</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordflow">while</span>((ch=fgetc(fragmentFile))!=EOF){</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        fragmentCode+=ch;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordflow">while</span>((<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#af53f92900705f7de3c139a05b2f9ef16">ch</a>=fgetc(fragmentFile))!=EOF){</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        fragmentCode+=<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#af53f92900705f7de3c139a05b2f9ef16">ch</a>;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    }</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    fclose(vertexFile);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    fclose(fragmentFile);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_function" href="../../d4/dac/sceneserializer_8cpp.html#a3137654aaed403386314fbae3fcb416d">fclose</a>(vertexFile);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_function" href="../../d4/dac/sceneserializer_8cpp.html#a3137654aaed403386314fbae3fcb416d">fclose</a>(fragmentFile);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">const</span> <span class="keywordtype">char</span> *vertexSourceCode=vertexCode.c_str();</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">const</span> <span class="keywordtype">char</span> *fragmentSourceCode=fragmentCode.c_str();</div>
@@ -264,7 +264,8 @@ $(function() { codefold.init(1); });
 <div class="ttc" id="aclassShader_html_aff01df87e8a102f270b5b135a295e59d"><div class="ttname"><a href="../../d9/d69/classShader.html#aff01df87e8a102f270b5b135a295e59d">Shader::~Shader</a></div><div class="ttdeci">~Shader()</div><div class="ttdef"><b>Definition</b> <a href="#l00039">shader.cpp:39</a></div></div>
 <div class="ttc" id="amemory_8hpp_html_a15a233349664e563b7a3b6f6a5a6f2fe"><div class="ttname"><a href="../../da/d3e/memory_8hpp.html#a15a233349664e563b7a3b6f6a5a6f2fe">FreeMemory</a></div><div class="ttdeci">void FreeMemory(void *ptr, std::source_location src=std::source_location::current())</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d71/memory_8cpp_source.html#l00011">memory.cpp:11</a></div></div>
 <div class="ttc" id="amemory_8hpp_html_a17cf1f910cff8e01405420e13b03cc2d"><div class="ttname"><a href="../../da/d3e/memory_8hpp.html#a17cf1f910cff8e01405420e13b03cc2d">AllocateMemory</a></div><div class="ttdeci">void * AllocateMemory(size_t size, std::source_location src=std::source_location::current())</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d71/memory_8cpp_source.html#l00003">memory.cpp:3</a></div></div>
-<div class="ttc" id="apch_8hpp_html"><div class="ttname"><a href="../../dc/d5b/pch_8hpp.html">pch.hpp</a></div></div>
+<div class="ttc" id="asceneserializer_8cpp_html_a3137654aaed403386314fbae3fcb416d"><div class="ttname"><a href="../../d4/dac/sceneserializer_8cpp.html#a3137654aaed403386314fbae3fcb416d">fclose</a></div><div class="ttdeci">fclose(fkey)</div></div>
+<div class="ttc" id="asceneserializer_8cpp_html_af53f92900705f7de3c139a05b2f9ef16"><div class="ttname"><a href="../../d4/dac/sceneserializer_8cpp.html#af53f92900705f7de3c139a05b2f9ef16">ch</a></div><div class="ttdeci">char ch</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dac/sceneserializer_8cpp_source.html#l00408">sceneserializer.cpp:408</a></div></div>
 <div class="ttc" id="ashader_8hpp_html"><div class="ttname"><a href="../../d9/d52/shader_8hpp.html">shader.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

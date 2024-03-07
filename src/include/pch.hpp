@@ -40,6 +40,7 @@
 #include <fstream>
 #include <thread>
 #include <atomic>
+#include <filesystem>
 
 #include <memory.hpp>
 

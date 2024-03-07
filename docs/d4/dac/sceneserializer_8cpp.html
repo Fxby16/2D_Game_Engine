@@ -78,11 +78,12 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">sceneserializer.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="../../dc/d5b/pch_8hpp_source.html">pch.hpp</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;pch.hpp&gt;</code><br />
 <code>#include &lt;<a class="el" href="../../d6/d74/sceneserializer_8hpp_source.html">sceneserializer.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="../../d9/d3a/global_8hpp_source.html">global.hpp</a>&gt;</code><br />
@@ -115,8 +116,8 @@ Functions</h2></td></tr>
 <tr class="separator:a47e9e3520301cca8d3bdd5cfe7823eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac448ad5b2c9e3f035d11d7dfcb30622" id="r_aac448ad5b2c9e3f035d11d7dfcb30622"><td class="memItemLeft" align="right" valign="top">Emitter &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d2f/namespaceYAML.html#aac448ad5b2c9e3f035d11d7dfcb30622">YAML::operator&lt;&lt;</a> (Emitter &amp;out, const <a class="el" href="../../dc/d15/structVec2.html">Vec2</a> &amp;rhs)</td></tr>
 <tr class="separator:aac448ad5b2c9e3f035d11d7dfcb30622"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afafb983baad6911eb94f718c75f1e516" id="r_afafb983baad6911eb94f718c75f1e516"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afafb983baad6911eb94f718c75f1e516">SerializeEntity</a> (YAML::Emitter &amp;out, <a class="el" href="../../da/d61/classEntity.html">Entity</a> &amp;entity, <a class="el" href="../../d5/d9c/classScene.html">Scene</a> *scene)</td></tr>
-<tr class="separator:afafb983baad6911eb94f718c75f1e516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cfdea3837647f0980a1d50d5a7f4109" id="r_a8cfdea3837647f0980a1d50d5a7f4109"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cfdea3837647f0980a1d50d5a7f4109">SerializeEntity</a> (YAML::Emitter &amp;out, <a class="el" href="../../da/d61/classEntity.html">Entity</a> &amp;entity, <a class="el" href="../../d5/d9c/classScene.html">Scene</a> *scene, std::vector&lt; std::pair&lt; std::string, uint32_t &gt; &gt; &amp;script_components)</td></tr>
+<tr class="separator:a8cfdea3837647f0980a1d50d5a7f4109"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace6dc5ad86b89a2dfa92605b127a5908" id="r_ace6dc5ad86b89a2dfa92605b127a5908"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace6dc5ad86b89a2dfa92605b127a5908">EncodeTexture</a> (bool animated, const std::string &amp;path, unsigned int *tile_width, unsigned int *tile_height, int mag_filter, int min_filter)</td></tr>
 <tr class="separator:ace6dc5ad86b89a2dfa92605b127a5908"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a238fce384ca8f42a6d40bd7b7a3934e5" id="r_a238fce384ca8f42a6d40bd7b7a3934e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a238fce384ca8f42a6d40bd7b7a3934e5">GetTextureType</a> (const std::string &amp;encoded)</td></tr>
@@ -125,6 +126,63 @@ Functions</h2></td></tr>
 <tr class="separator:a3046b6f72426c613fd3ec97427a4d48a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b430993d22cdd11ccb0a41aeef52cfb" id="r_a5b430993d22cdd11ccb0a41aeef52cfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b430993d22cdd11ccb0a41aeef52cfb">DecodeTexture</a> (const std::string &amp;encoded, std::string &amp;path, int &amp;mag_filter, int &amp;min_filter)</td></tr>
 <tr class="separator:a5b430993d22cdd11ccb0a41aeef52cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93deb2f0f6a4c44e22bd49a7eed1590e" id="r_a93deb2f0f6a4c44e22bd49a7eed1590e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a93deb2f0f6a4c44e22bd49a7eed1590e">if</a> (<a class="el" href="#a646c2ac83e9fa6778d8180da979d69a0">fkey</a>==NULL)</td></tr>
+<tr class="separator:a93deb2f0f6a4c44e22bd49a7eed1590e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57eb6d1b7cab64aeed3b517841fc2da4" id="r_a57eb6d1b7cab64aeed3b517841fc2da4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57eb6d1b7cab64aeed3b517841fc2da4">while</a> ((<a class="el" href="#a578aa8352714756d249f257d05de9b0b">bit</a>=fgetc(<a class="el" href="#a646c2ac83e9fa6778d8180da979d69a0">fkey</a>))!=EOF)</td></tr>
+<tr class="separator:a57eb6d1b7cab64aeed3b517841fc2da4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3137654aaed403386314fbae3fcb416d" id="r_a3137654aaed403386314fbae3fcb416d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3137654aaed403386314fbae3fcb416d">fclose</a> (<a class="el" href="#a646c2ac83e9fa6778d8180da979d69a0">fkey</a>)</td></tr>
+<tr class="separator:a3137654aaed403386314fbae3fcb416d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8796c18c8e7c0c830cb3561b82dc53f6" id="r_a8796c18c8e7c0c830cb3561b82dc53f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8796c18c8e7c0c830cb3561b82dc53f6">if</a> (<a class="el" href="#ab3a82f55e648b0b12d1415a5a6c37c6a">fin</a>==NULL)</td></tr>
+<tr class="separator:a8796c18c8e7c0c830cb3561b82dc53f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad488d7d2da54db6dcc4147214b32081a" id="r_ad488d7d2da54db6dcc4147214b32081a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad488d7d2da54db6dcc4147214b32081a">while</a> ((<a class="el" href="#af53f92900705f7de3c139a05b2f9ef16">ch</a>=fgetc(<a class="el" href="#ab3a82f55e648b0b12d1415a5a6c37c6a">fin</a>))!=EOF)</td></tr>
+<tr class="separator:ad488d7d2da54db6dcc4147214b32081a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5cac4e05f2563cde2e26075789c5ad5" id="r_ad5cac4e05f2563cde2e26075789c5ad5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5cac4e05f2563cde2e26075789c5ad5">fclose</a> (<a class="el" href="#ab3a82f55e648b0b12d1415a5a6c37c6a">fin</a>)</td></tr>
+<tr class="separator:ad5cac4e05f2563cde2e26075789c5ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0af3988e0af425397bdb150975130cb" id="r_ac0af3988e0af425397bdb150975130cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0af3988e0af425397bdb150975130cb">if</a> (!<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;Scene&quot;])</td></tr>
+<tr class="separator:ac0af3988e0af425397bdb150975130cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30856d68013cc764b1b39acc7bc9c1a2" id="r_a30856d68013cc764b1b39acc7bc9c1a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30856d68013cc764b1b39acc7bc9c1a2">if</a> (<a class="el" href="#a8c74d86803a63dff91808b684c2a7384">entities</a>)</td></tr>
+<tr class="separator:a30856d68013cc764b1b39acc7bc9c1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21fd37096859c27d7c6f09485ea973a8" id="r_a21fd37096859c27d7c6f09485ea973a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21fd37096859c27d7c6f09485ea973a8">for</a> (auto &amp;[<a class="el" href="#aa4cdb693ee7f3d1d131bb328468184b7">key</a>, val]:<a class="el" href="#a61fcbb0c51617b09aa1e5c58f309d069">textures</a>)</td></tr>
+<tr class="separator:a21fd37096859c27d7c6f09485ea973a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ab4f5c7eb8b38a5f4b2adecc5fafb975e" id="r_ab4f5c7eb8b38a5f4b2adecc5fafb975e"><td class="memItemLeft" align="right" valign="top">YAML::Node&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a> =YAML::LoadFile(path)</td></tr>
+<tr class="separator:ab4f5c7eb8b38a5f4b2adecc5fafb975e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11dce214da571544853c90aefd5d3298" id="r_a11dce214da571544853c90aefd5d3298"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11dce214da571544853c90aefd5d3298">file_content</a></td></tr>
+<tr class="separator:a11dce214da571544853c90aefd5d3298"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4cdb693ee7f3d1d131bb328468184b7" id="r_aa4cdb693ee7f3d1d131bb328468184b7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4cdb693ee7f3d1d131bb328468184b7">key</a></td></tr>
+<tr class="separator:aa4cdb693ee7f3d1d131bb328468184b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a646c2ac83e9fa6778d8180da979d69a0" id="r_a646c2ac83e9fa6778d8180da979d69a0"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a646c2ac83e9fa6778d8180da979d69a0">fkey</a> =fopen(&quot;key.bin&quot;,&quot;rb&quot;)</td></tr>
+<tr class="separator:a646c2ac83e9fa6778d8180da979d69a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af53f92900705f7de3c139a05b2f9ef16" id="r_af53f92900705f7de3c139a05b2f9ef16"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af53f92900705f7de3c139a05b2f9ef16">ch</a> =0</td></tr>
+<tr class="separator:af53f92900705f7de3c139a05b2f9ef16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2cca94318ba2ead4dd98e808dfa5e44" id="r_ae2cca94318ba2ead4dd98e808dfa5e44"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2cca94318ba2ead4dd98e808dfa5e44">bit_count</a> =0</td></tr>
+<tr class="separator:ae2cca94318ba2ead4dd98e808dfa5e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a578aa8352714756d249f257d05de9b0b" id="r_a578aa8352714756d249f257d05de9b0b"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a578aa8352714756d249f257d05de9b0b">bit</a></td></tr>
+<tr class="separator:a578aa8352714756d249f257d05de9b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3a82f55e648b0b12d1415a5a6c37c6a" id="r_ab3a82f55e648b0b12d1415a5a6c37c6a"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3a82f55e648b0b12d1415a5a6c37c6a">fin</a> =fopen(path.c_str(),&quot;r&quot;)</td></tr>
+<tr class="separator:ab3a82f55e648b0b12d1415a5a6c37c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb559820d9ca11295b4500f179ef6392" id="r_acb559820d9ca11295b4500f179ef6392"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb559820d9ca11295b4500f179ef6392">i</a> =0</td></tr>
+<tr class="separator:acb559820d9ca11295b4500f179ef6392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61fcbb0c51617b09aa1e5c58f309d069" id="r_a61fcbb0c51617b09aa1e5c58f309d069"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::vector&lt; <a class="el" href="../../dd/d0e/structTextureData.html">TextureData</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61fcbb0c51617b09aa1e5c58f309d069">textures</a></td></tr>
+<tr class="separator:a61fcbb0c51617b09aa1e5c58f309d069"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0603c8365212a20e9701c4627df17d3c" id="r_a0603c8365212a20e9701c4627df17d3c"><td class="memItemLeft" align="right" valign="top">m_Scene&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0603c8365212a20e9701c4627df17d3c">m_Name</a> =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;Scene&quot;].as&lt;std::string&gt;()</td></tr>
+<tr class="separator:a0603c8365212a20e9701c4627df17d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6123efaddba919b3bb4f607e0ee7656" id="r_ae6123efaddba919b3bb4f607e0ee7656"><td class="memItemLeft" align="right" valign="top">m_Scene&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6123efaddba919b3bb4f607e0ee7656">m_ScalingFactor</a> =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;ScalingFactor&quot;].as&lt;float&gt;()</td></tr>
+<tr class="separator:ae6123efaddba919b3bb4f607e0ee7656"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7ec802a7b4bfe642985a66d26447bc4" id="r_af7ec802a7b4bfe642985a66d26447bc4"><td class="memItemLeft" align="right" valign="top">m_Scene&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7ec802a7b4bfe642985a66d26447bc4">m_Gravity</a> =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;Gravity&quot;].as&lt;<a class="el" href="../../dc/d15/structVec2.html">Vec2</a>&gt;()</td></tr>
+<tr class="separator:af7ec802a7b4bfe642985a66d26447bc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7366f05b49b64ebd8d88b6cd7434bca5" id="r_a7366f05b49b64ebd8d88b6cd7434bca5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7366f05b49b64ebd8d88b6cd7434bca5">NEXT_UID</a> =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;NextUID&quot;].as&lt;uint32_t&gt;()</td></tr>
+<tr class="separator:a7366f05b49b64ebd8d88b6cd7434bca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22f4a7b1abdee8b8bcf72ed4d77761d9" id="r_a22f4a7b1abdee8b8bcf72ed4d77761d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/d5a/window_8hpp.html#a2c876fdbc79628a796247811f2940cf0">RENDERER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22f4a7b1abdee8b8bcf72ed4d77761d9">m_AmbientLight</a> =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;AmbientLight&quot;].as&lt;<a class="el" href="../../dc/d2d/structVec3.html">Vec3</a>&gt;()</td></tr>
+<tr class="separator:a22f4a7b1abdee8b8bcf72ed4d77761d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe31dacc457099250b67e0a1afe8f53b" id="r_afe31dacc457099250b67e0a1afe8f53b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/d5a/window_8hpp.html#a2c876fdbc79628a796247811f2940cf0">RENDERER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe31dacc457099250b67e0a1afe8f53b">m_ClearColor</a> =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;ClearColor&quot;].as&lt;<a class="el" href="../../dc/d2d/structVec3.html">Vec3</a>&gt;()</td></tr>
+<tr class="separator:afe31dacc457099250b67e0a1afe8f53b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c74d86803a63dff91808b684c2a7384" id="r_a8c74d86803a63dff91808b684c2a7384"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c74d86803a63dff91808b684c2a7384">entities</a> =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;Entities&quot;]</td></tr>
+<tr class="separator:a8c74d86803a63dff91808b684c2a7384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a930920b2bc42824a5c03be681830f4b2" id="r_a930920b2bc42824a5c03be681830f4b2"><td class="memItemLeft" align="right" valign="top">return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a930920b2bc42824a5c03be681830f4b2">true</a></td></tr>
+<tr class="separator:a930920b2bc42824a5c03be681830f4b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ad0d49f7258b52640e83382af8242b4ab" name="ad0d49f7258b52640e83382af8242b4ab"></a>
@@ -194,7 +252,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00303">303</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00361">361</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
 
 </div>
 </div>
@@ -237,7 +295,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00289">289</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00342">342</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
 
 </div>
 </div>
@@ -280,7 +338,60 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00263">263</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00317">317</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad5cac4e05f2563cde2e26075789c5ad5" name="ad5cac4e05f2563cde2e26075789c5ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5cac4e05f2563cde2e26075789c5ad5">&#9670;&#160;</a></span>fclose() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">fclose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ab3a82f55e648b0b12d1415a5a6c37c6a">fin</a></td>          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3137654aaed403386314fbae3fcb416d" name="a3137654aaed403386314fbae3fcb416d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3137654aaed403386314fbae3fcb416d">&#9670;&#160;</a></span>fclose() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">fclose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a646c2ac83e9fa6778d8180da979d69a0">fkey</a></td>          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a21fd37096859c27d7c6f09485ea973a8" name="a21fd37096859c27d7c6f09485ea973a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21fd37096859c27d7c6f09485ea973a8">&#9670;&#160;</a></span>for()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">for </td>
+          <td>(</td>
+          <td class="paramtype">auto &amp;:<a class="el" href="#a61fcbb0c51617b09aa1e5c58f309d069">textures</a></td>          <td class="paramname"><span class="paramname">[key, val]</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00575">575</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
 
 </div>
 </div>
@@ -299,7 +410,83 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00281">281</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00334">334</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac0af3988e0af425397bdb150975130cb" name="ac0af3988e0af425397bdb150975130cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0af3988e0af425397bdb150975130cb">&#9670;&#160;</a></span>if() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if </td>
+          <td>(</td>
+          <td class="paramtype">!</td>          <td class="paramname"><span class="paramname"><em>data</em>[&quot;Scene&quot;]</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00456">456</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a30856d68013cc764b1b39acc7bc9c1a2" name="a30856d68013cc764b1b39acc7bc9c1a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30856d68013cc764b1b39acc7bc9c1a2">&#9670;&#160;</a></span>if() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a8c74d86803a63dff91808b684c2a7384">entities</a></td>          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00469">469</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8796c18c8e7c0c830cb3561b82dc53f6" name="a8796c18c8e7c0c830cb3561b82dc53f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8796c18c8e7c0c830cb3561b82dc53f6">&#9670;&#160;</a></span>if() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ab3a82f55e648b0b12d1415a5a6c37c6a">fin</a></td>          <td class="paramname"><span class="paramname"><span class="paramdefsep"> = </span><span class="paramdefval">=NULL</span></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00424">424</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a93deb2f0f6a4c44e22bd49a7eed1590e" name="a93deb2f0f6a4c44e22bd49a7eed1590e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93deb2f0f6a4c44e22bd49a7eed1590e">&#9670;&#160;</a></span>if() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a646c2ac83e9fa6778d8180da979d69a0">fkey</a></td>          <td class="paramname"><span class="paramname"><span class="paramdefsep"> = </span><span class="paramdefval">=NULL</span></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00403">403</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
 
 </div>
 </div>
@@ -341,8 +528,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afafb983baad6911eb94f718c75f1e516" name="afafb983baad6911eb94f718c75f1e516"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afafb983baad6911eb94f718c75f1e516">&#9670;&#160;</a></span>SerializeEntity()</h2>
+<a id="a8cfdea3837647f0980a1d50d5a7f4109" name="a8cfdea3837647f0980a1d50d5a7f4109"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cfdea3837647f0980a1d50d5a7f4109">&#9670;&#160;</a></span>SerializeEntity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -360,12 +547,344 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/d9c/classScene.html">Scene</a> *</td>          <td class="paramname"><span class="paramname"><em>scene</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="../../d5/d9c/classScene.html">Scene</a> *</td>          <td class="paramname"><span class="paramname"><em>scene</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::pair&lt; std::string, uint32_t &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>script_components</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00097">97</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a57eb6d1b7cab64aeed3b517841fc2da4" name="a57eb6d1b7cab64aeed3b517841fc2da4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57eb6d1b7cab64aeed3b517841fc2da4">&#9670;&#160;</a></span>while() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">while </td>
+          <td>(</td>
+          <td class="paramtype">(<a class="el" href="#a578aa8352714756d249f257d05de9b0b">bit</a>=fgetc(<a class="el" href="#a646c2ac83e9fa6778d8180da979d69a0">fkey</a>))!</td>          <td class="paramname"><span class="paramname"><span class="paramdefsep"> = </span><span class="paramdefval">EOF</span></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00411">411</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad488d7d2da54db6dcc4147214b32081a" name="ad488d7d2da54db6dcc4147214b32081a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad488d7d2da54db6dcc4147214b32081a">&#9670;&#160;</a></span>while() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">while </td>
+          <td>(</td>
+          <td class="paramtype">(<a class="el" href="#af53f92900705f7de3c139a05b2f9ef16">ch</a>=fgetc(<a class="el" href="#ab3a82f55e648b0b12d1415a5a6c37c6a">fin</a>))!</td>          <td class="paramname"><span class="paramname"><span class="paramdefsep"> = </span><span class="paramdefval">EOF</span></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00430">430</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a578aa8352714756d249f257d05de9b0b" name="a578aa8352714756d249f257d05de9b0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a578aa8352714756d249f257d05de9b0b">&#9670;&#160;</a></span>bit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char bit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00410">410</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae2cca94318ba2ead4dd98e808dfa5e44" name="ae2cca94318ba2ead4dd98e808dfa5e44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2cca94318ba2ead4dd98e808dfa5e44">&#9670;&#160;</a></span>bit_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int bit_count =0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00409">409</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af53f92900705f7de3c139a05b2f9ef16" name="af53f92900705f7de3c139a05b2f9ef16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af53f92900705f7de3c139a05b2f9ef16">&#9670;&#160;</a></span>ch</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char ch =0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00408">408</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab4f5c7eb8b38a5f4b2adecc5fafb975e" name="ab4f5c7eb8b38a5f4b2adecc5fafb975e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">&#9670;&#160;</a></span>data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">YAML::Node data =YAML::LoadFile(path)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00383">383</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8c74d86803a63dff91808b684c2a7384" name="a8c74d86803a63dff91808b684c2a7384"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c74d86803a63dff91808b684c2a7384">&#9670;&#160;</a></span>entities</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto entities =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;Entities&quot;]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00468">468</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a11dce214da571544853c90aefd5d3298" name="a11dce214da571544853c90aefd5d3298"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11dce214da571544853c90aefd5d3298">&#9670;&#160;</a></span>file_content</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string file_content</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00399">399</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab3a82f55e648b0b12d1415a5a6c37c6a" name="ab3a82f55e648b0b12d1415a5a6c37c6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3a82f55e648b0b12d1415a5a6c37c6a">&#9670;&#160;</a></span>fin</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FILE* fin =fopen(path.c_str(),&quot;r&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00423">423</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a646c2ac83e9fa6778d8180da979d69a0" name="a646c2ac83e9fa6778d8180da979d69a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a646c2ac83e9fa6778d8180da979d69a0">&#9670;&#160;</a></span>fkey</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FILE* fkey =fopen(&quot;key.bin&quot;,&quot;rb&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00402">402</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acb559820d9ca11295b4500f179ef6392" name="acb559820d9ca11295b4500f179ef6392"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb559820d9ca11295b4500f179ef6392">&#9670;&#160;</a></span>i</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int i =0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00429">429</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa4cdb693ee7f3d1d131bb328468184b7" name="aa4cdb693ee7f3d1d131bb328468184b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4cdb693ee7f3d1d131bb328468184b7">&#9670;&#160;</a></span>key</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00400">400</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a22f4a7b1abdee8b8bcf72ed4d77761d9" name="a22f4a7b1abdee8b8bcf72ed4d77761d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22f4a7b1abdee8b8bcf72ed4d77761d9">&#9670;&#160;</a></span>m_AmbientLight</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d2/d5a/window_8hpp.html#a2c876fdbc79628a796247811f2940cf0">RENDERER</a> m_AmbientLight =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;AmbientLight&quot;].as&lt;<a class="el" href="../../dc/d2d/structVec3.html">Vec3</a>&gt;()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00465">465</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="afe31dacc457099250b67e0a1afe8f53b" name="afe31dacc457099250b67e0a1afe8f53b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe31dacc457099250b67e0a1afe8f53b">&#9670;&#160;</a></span>m_ClearColor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d2/d5a/window_8hpp.html#a2c876fdbc79628a796247811f2940cf0">RENDERER</a> m_ClearColor =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;ClearColor&quot;].as&lt;<a class="el" href="../../dc/d2d/structVec3.html">Vec3</a>&gt;()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00466">466</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af7ec802a7b4bfe642985a66d26447bc4" name="af7ec802a7b4bfe642985a66d26447bc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7ec802a7b4bfe642985a66d26447bc4">&#9670;&#160;</a></span>m_Gravity</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">m_Scene m_Gravity =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;Gravity&quot;].as&lt;<a class="el" href="../../dc/d15/structVec2.html">Vec2</a>&gt;()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00463">463</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0603c8365212a20e9701c4627df17d3c" name="a0603c8365212a20e9701c4627df17d3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0603c8365212a20e9701c4627df17d3c">&#9670;&#160;</a></span>m_Name</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">m_Scene m_Name =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;Scene&quot;].as&lt;std::string&gt;()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00461">461</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae6123efaddba919b3bb4f607e0ee7656" name="ae6123efaddba919b3bb4f607e0ee7656"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6123efaddba919b3bb4f607e0ee7656">&#9670;&#160;</a></span>m_ScalingFactor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">m_Scene m_ScalingFactor =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;ScalingFactor&quot;].as&lt;float&gt;()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00462">462</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7366f05b49b64ebd8d88b6cd7434bca5" name="a7366f05b49b64ebd8d88b6cd7434bca5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7366f05b49b64ebd8d88b6cd7434bca5">&#9670;&#160;</a></span>NEXT_UID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">NEXT_UID =<a class="el" href="#ab4f5c7eb8b38a5f4b2adecc5fafb975e">data</a>[&quot;NextUID&quot;].as&lt;uint32_t&gt;()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00464">464</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a61fcbb0c51617b09aa1e5c58f309d069" name="a61fcbb0c51617b09aa1e5c58f309d069"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61fcbb0c51617b09aa1e5c58f309d069">&#9670;&#160;</a></span>textures</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;std::string,std::vector&lt;<a class="el" href="../../dd/d0e/structTextureData.html">TextureData</a>&gt; &gt; textures</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00454">454</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a930920b2bc42824a5c03be681830f4b2" name="a930920b2bc42824a5c03be681830f4b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a930920b2bc42824a5c03be681830f4b2">&#9670;&#160;</a></span>true</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">return true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00598">598</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
 
 </div>
 </div>

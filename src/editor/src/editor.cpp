@@ -8,6 +8,15 @@
 #include <scene_buttons.hpp>
 
 #define baseFontSize 24.0f
+#define STRLEN 100
+
+std::string WINDOW_NAME;
+unsigned int WINDOW_WIDTH;
+unsigned int WINDOW_HEIGHT;
+unsigned int FULLSCREEN_WIDTH;
+unsigned int FULLSCREEN_HEIGHT;
+std::string SCENE_PATH;
+bool RESIZABLE;
 
 Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable){
     Window::BaseWidth=Window::Width=width;
@@ -41,6 +50,18 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     if(io.Fonts->AddFontFromFileTTF("vendor/FontAwesome/fa-solid-900.ttf",iconFontSize,&icons_config,icons_ranges)==NULL){
         printf("Failed to load FontAwesome font\n");
     }
+
+    //init window variables
+
+    WINDOW_NAME.resize(STRLEN,'\0');
+    strcpy(&WINDOW_NAME[0],"Untitled");
+    WINDOW_WIDTH=800;
+    WINDOW_HEIGHT=600;
+    FULLSCREEN_WIDTH=1920;
+    FULLSCREEN_HEIGHT=1080;
+    SCENE_PATH.resize(STRLEN,'\0');
+    strcpy(&SCENE_PATH[0],"test.scene");
+    RESIZABLE=true;
 }
 
 Editor::~Editor(){
@@ -189,6 +210,8 @@ void Editor::OnImGuiUpdate(){
     }
     
     ImGui::End();
+
+    FileBrowserMenu({GetWidthPercentageInPx(20),tempvec.y+tempf*9.0f/16.0f});
 }
 
 void Editor::EntitiesMenu(ImVec2 pos){
@@ -531,6 +554,91 @@ void Editor::VariablesMenu(ImVec2 pos){
     ImGui::SetWindowSize(ImVec2(GetWidthPercentageInPx(20),Window::Height-pos.y));
     ImGui::ColorEdit3("Clear Color",(float*)&RENDERER->m_ClearColor);
     ImGui::ColorEdit3("Ambient Light",(float*)&RENDERER->m_AmbientLight);
+
+    ImGui::Text("Window variables:");
+    ImGui::InputText("Window Name",&WINDOW_NAME[0],WINDOW_NAME.size());
+    ImGui::InputInt("Window Width",(int*)&WINDOW_WIDTH);
+    ImGui::InputInt("Window Height",(int*)&WINDOW_HEIGHT);
+    ImGui::InputInt("Fullscreen Width",(int*)&FULLSCREEN_WIDTH);
+    ImGui::InputInt("Fullscreen Height",(int*)&FULLSCREEN_HEIGHT);
+    ImGui::InputText("Scene Path",&SCENE_PATH[0],SCENE_PATH.size());
+    ImGui::Checkbox("Resizable",&RESIZABLE);
+
+    ImGui::End();
+}
+
+void Editor::FileBrowserMenu(ImVec2 pos){
+    ImGui::Begin("FileBrowser",nullptr,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoTitleBar);
+    ImGui::SetWindowPos(pos);
+    ImGui::SetWindowSize(ImVec2(GetWidthPercentageInPx(60),Window::Height-pos.y));
+
+    if(ImGui::Button(ICON_FA_ARROW_LEFT,ImVec2(baseFontSize*1.5f,baseFontSize*1.5f))){
+        for(int i=m_CurrentPath.size()-1;i>=0;i--){
+            if(m_CurrentPath[i]=='/'){
+                m_CurrentPath=m_CurrentPath.substr(0,i);
+                m_CurrentEntries.clear();
+                break;
+            }
+        }
+    }
+
+    if(m_CurrentEntries.empty()){
+        for(auto &entry:std::filesystem::directory_iterator(m_CurrentPath)){
+            m_CurrentEntries.push_back(entry);
+        }
+
+        std::sort(m_CurrentEntries.begin(),m_CurrentEntries.end(), 
+            [](const std::filesystem::directory_entry &a,const std::filesystem::directory_entry &b){
+                if(a.is_directory()&&!b.is_directory()){
+                    return true;
+                }
+                if(!a.is_directory() && b.is_directory()){
+                    return false;
+                }
+                return a.path()<b.path();
+            }
+        );
+    }
+    
+
+    ImGui::SameLine();
+    ImGui::Text("Current Path: %s",m_CurrentPath.c_str());
+
+    static bool isFileContentOpen=false;
+
+    for(auto &entry:m_CurrentEntries){
+        if(entry.is_directory()){ 
+            if(ImGui::Selectable((ICON_FA_FOLDER+entry.path().filename().string()).c_str())){
+                m_CurrentPath=entry.path().string();
+                m_CurrentEntries.clear();
+                break;
+            }
+        }else if(entry.is_regular_file()){
+            if(ImGui::Selectable((ICON_FA_FILE+entry.path().filename().string()).c_str())){
+                FILE *file=fopen(entry.path().string().c_str(),"r");
+
+                if(file){
+                    char ch;
+                    m_SelectedFileContent.clear();
+                    while((ch=fgetc(file))!=EOF){
+                        m_SelectedFileContent+=ch;
+                    }
+                    fclose(file);
+
+                    isFileContentOpen=true;
+                }
+            }   
+        }
+    }
+
+    if(isFileContentOpen && !m_SelectedFileContent.empty()){
+        ImGui::Begin("File Content",&isFileContentOpen);
+        ImGui::Text("%s",m_SelectedFileContent.c_str());
+        ImGui::End();
+    }else if(!m_SelectedFileContent.empty()){
+        m_SelectedFileContent.clear();
+    }
+
     ImGui::End();
 }
 

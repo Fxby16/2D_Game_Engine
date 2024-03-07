@@ -59,23 +59,21 @@ make
 cd ../../../..
 
 # Setup NativeFileDialog
-if ! [ -z "$1" ] && [ $1==1 ]; then
-    cd editor/vendor/NativeFileDialog/build/gmake_linux_zenity
-    make 
-    cd ../../..
+cd editor/vendor/NativeFileDialog/build/gmake_linux_zenity
+make 
+cd ../../..
 
-    if ! [ -e yaml-cpp/build/libyaml-cpp.a ]; then
-        cd yaml-cpp
-        mkdir build
-        cd build
-        cmake ..
-        make
-
-        cd ../..
-    fi
+if ! [ -e yaml-cpp/build/libyaml-cpp.a ]; then
+    cd yaml-cpp
+    mkdir build
+    cd build
+    cmake ..
+    make
 
     cd ../..
 fi
+
+cd ../..
 
 #setup box2d
 if ! [ -e vendor/box2d/build/bin/libbox2d.a ]; then

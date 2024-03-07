@@ -83,7 +83,7 @@ $(function() { codefold.init(1); });
   <div class="headertitle"><div class="title">indexbuffer.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="../../da/d70/indexbuffer_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d5b/pch_8hpp.html">pch.hpp</a>&gt;</span></div>
+<a href="../../da/d70/indexbuffer_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;pch.hpp&gt;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="../../d5/dc9/indexbuffer_8hpp.html">indexbuffer.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="foldopen" id="foldopen00004" data-start="{" data-end="}">
@@ -109,14 +109,14 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_function" href="../../dd/df7/classIndexBuffer.html#ac8bdd0495f718173fb46691ad1b7e4af">Bind</a>();</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    m_NumElem=num_elem/4*6;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> offset=0;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordflow">for</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i=0;i&lt;m_NumElem;i+=6){</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        m_Indices[i+0]=offset;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        m_Indices[i+1]=1+offset;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        m_Indices[i+2]=2+offset;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordflow">for</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>=0;<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>&lt;m_NumElem;<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>+=6){</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        m_Indices[<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>+0]=offset;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        m_Indices[<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>+1]=1+offset;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        m_Indices[<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>+2]=2+offset;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        m_Indices[i+3]=2+offset;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        m_Indices[i+4]=3+offset;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        m_Indices[i+5]=offset;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        m_Indices[<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>+3]=2+offset;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        m_Indices[<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>+4]=3+offset;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        m_Indices[<a class="code hl_variable" href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a>+5]=offset;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        offset+=4;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    }</div>
@@ -144,7 +144,7 @@ $(function() { codefold.init(1); });
 <div class="ttc" id="aindexbuffer_8hpp_html"><div class="ttname"><a href="../../d5/dc9/indexbuffer_8hpp.html">indexbuffer.hpp</a></div></div>
 <div class="ttc" id="amemory_8hpp_html_a15a233349664e563b7a3b6f6a5a6f2fe"><div class="ttname"><a href="../../da/d3e/memory_8hpp.html#a15a233349664e563b7a3b6f6a5a6f2fe">FreeMemory</a></div><div class="ttdeci">void FreeMemory(void *ptr, std::source_location src=std::source_location::current())</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d71/memory_8cpp_source.html#l00011">memory.cpp:11</a></div></div>
 <div class="ttc" id="amemory_8hpp_html_a17cf1f910cff8e01405420e13b03cc2d"><div class="ttname"><a href="../../da/d3e/memory_8hpp.html#a17cf1f910cff8e01405420e13b03cc2d">AllocateMemory</a></div><div class="ttdeci">void * AllocateMemory(size_t size, std::source_location src=std::source_location::current())</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d71/memory_8cpp_source.html#l00003">memory.cpp:3</a></div></div>
-<div class="ttc" id="apch_8hpp_html"><div class="ttname"><a href="../../dc/d5b/pch_8hpp.html">pch.hpp</a></div></div>
+<div class="ttc" id="asceneserializer_8cpp_html_acb559820d9ca11295b4500f179ef6392"><div class="ttname"><a href="../../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a></div><div class="ttdeci">int i</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dac/sceneserializer_8cpp_source.html#l00429">sceneserializer.cpp:429</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

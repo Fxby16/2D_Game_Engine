@@ -509,7 +509,7 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
                 int animationindex=animatedtexturecomponent["AnimationIndex"].as<int>();
                 int width=animatedtexturecomponent["Width"].as<float>();
                 int height=animatedtexturecomponent["Height"].as<float>();
-                int layer=animatedtexturecomponent["Layer"].as<float>();
+                int layer=animatedtexturecomponent["Layer"].as<int>();
 
                 textures[EncodeTexture(true,filepath,&tilewidth,&tileheight,magfilter,minfilter)].push_back(TextureData(uid,width,height,layer,playanimation,loopanimation,animationdelay,animationindex));
                 //m_Scene->AddComponent<AnimatedTextureComponent>(uid,filepath,tilewidth,tileheight,magfilter,minfilter,width,height,layer,playanimation,loopanimation,animationdelay);

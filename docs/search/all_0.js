@@ -12,11 +12,16 @@ var searchData=
   ['animatedtexturecomponent_9',['AnimatedTextureComponent',['../d6/d86/classAnimatedTextureComponent.html',1,'AnimatedTextureComponent'],['../d6/d86/classAnimatedTextureComponent.html#adcd40781b11a756f3c2cffc84790c329',1,'AnimatedTextureComponent::AnimatedTextureComponent(const std::string &amp;path, unsigned int tile_width, unsigned int tile_height, int mag_filter, int min_filter, float width, float height, float layer, bool play_animation, bool loop_animation, float animation_delay, int animation_index, uint32_t uid)'],['../d6/d86/classAnimatedTextureComponent.html#af72a8860600d5a8f1b16dfa964e22d45',1,'AnimatedTextureComponent::AnimatedTextureComponent(std::shared_ptr&lt; SpriteSheet &gt;t, float width, float height, float layer, bool play_animation, bool loop_animation, float animation_delay, int animation_index, uint32_t uid)'],['../d6/d86/classAnimatedTextureComponent.html#a3793c8cd76720b192f0e52dbb01c3f0a',1,'AnimatedTextureComponent::AnimatedTextureComponent()'],['../d6/d86/classAnimatedTextureComponent.html#a07f7d75ec522a97bde05608e345fbc51',1,'AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &amp;other)'],['../d6/d86/classAnimatedTextureComponent.html#a9bde02b41ea9e57fc0f00096a6c6cce9',1,'AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &amp;&amp;other)']]],
   ['animationdelay_10',['animationdelay',['../dd/d0e/structTextureData.html#afbc7b7e419cf0474667f0f0208b6d97f',1,'TextureData']]],
   ['animationindex_11',['animationindex',['../dd/d0e/structTextureData.html#a155934dbeb67753b872924eb8d8f05ef',1,'TextureData']]],
-  ['application_12',['Application',['../d5/d4c/classApplication.html',1,'Application'],['../d5/d4c/classApplication.html#aa9bc9c77624acdc52ac7b2eae27b5c60',1,'Application::Application()']]],
+  ['application_12',['Application',['../d5/d4c/classApplication.html',1,'Application'],['../d5/d9c/classScene.html#a23f25bcc02a0e94c2f5a4188496b04d0',1,'Scene::Application'],['../d5/d4c/classApplication.html#aa9bc9c77624acdc52ac7b2eae27b5c60',1,'Application::Application()']]],
   ['application_2ecpp_13',['application.cpp',['../df/d7b/application_8cpp.html',1,'']]],
-  ['application_2ehpp_14',['application.hpp',['../d4/d01/application_8hpp.html',1,'']]],
-  ['applylight_15',['ApplyLight',['../d1/d52/classRenderer.html#adcfc678c30f086aa11e95b498707d541',1,'Renderer::ApplyLight()'],['../d1/d52/classRenderer.html#ab201a06f734bd82053470cb221b12673',1,'Renderer::ApplyLight(Framebuffer *framebuffer)']]],
-  ['audio_2ecpp_16',['audio.cpp',['../d1/ddc/audio_8cpp.html',1,'']]],
-  ['audio_2ehpp_17',['audio.hpp',['../d1/d71/audio_8hpp.html',1,'']]],
-  ['audioplayer_18',['AudioPlayer',['../d2/d75/classAudioPlayer.html',1,'AudioPlayer'],['../d2/d75/classAudioPlayer.html#aa0545193648596a6e541fe964f16f902',1,'AudioPlayer::AudioPlayer()']]]
+  ['application_2ed_14',['application.d',['../df/d70/application_8d.html',1,'']]],
+  ['application_2ehpp_15',['application.hpp',['../d4/d01/application_8hpp.html',1,'']]],
+  ['application_5ftemplate_2ecpp_16',['application_template.cpp',['../d2/d17/application__template_8cpp.html',1,'']]],
+  ['application_5ftemplate_2ed_17',['application_template.d',['../d1/d30/lib_2obj_2Release_2application__template_8d.html',1,'(Global Namespace)'],['../d2/d04/temp_2obj_2Debug_2application__template_8d.html',1,'(Global Namespace)'],['../de/d90/temp_2obj_2Release_2application__template_8d.html',1,'(Global Namespace)']]],
+  ['applicationtemplate_18',['ApplicationTemplate',['../d7/d2f/classApplicationTemplate.html',1,'ApplicationTemplate'],['../d7/d2f/classApplicationTemplate.html#a8a99f94568a42e43153d2b4357ccb345',1,'ApplicationTemplate::ApplicationTemplate()']]],
+  ['applylight_19',['ApplyLight',['../d1/d52/classRenderer.html#adcfc678c30f086aa11e95b498707d541',1,'Renderer::ApplyLight()'],['../d1/d52/classRenderer.html#ab201a06f734bd82053470cb221b12673',1,'Renderer::ApplyLight(Framebuffer *framebuffer)']]],
+  ['audio_2ecpp_20',['audio.cpp',['../d1/ddc/audio_8cpp.html',1,'']]],
+  ['audio_2ed_21',['audio.d',['../dc/de8/audio_8d.html',1,'']]],
+  ['audio_2ehpp_22',['audio.hpp',['../d1/d71/audio_8hpp.html',1,'']]],
+  ['audioplayer_23',['AudioPlayer',['../d2/d75/classAudioPlayer.html',1,'AudioPlayer'],['../d2/d75/classAudioPlayer.html#aa0545193648596a6e541fe964f16f902',1,'AudioPlayer::AudioPlayer()']]]
 ];

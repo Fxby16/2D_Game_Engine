@@ -6,6 +6,14 @@ class Scene;
 class Framebuffer;
 class SceneSerializer;
 
+extern std::string WINDOW_NAME;
+extern unsigned int WINDOW_WIDTH;
+extern unsigned int WINDOW_HEIGHT;
+extern unsigned int FULLSCREEN_WIDTH;
+extern unsigned int FULLSCREEN_HEIGHT;
+extern std::string SCENE_PATH;
+extern bool RESIZABLE;
+
 class Editor{
 public:
     Editor(unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable=false);
@@ -23,6 +31,7 @@ private:
     void ComponentsMenu(ImVec2 pos);
     void DataMenu(ImVec2 pos);
     void VariablesMenu(ImVec2 pos);
+    void FileBrowserMenu(ImVec2 pos);
 
     Camera m_Camera;
     Scene *m_Scene=nullptr;
@@ -31,4 +40,8 @@ private:
     SceneSerializer *m_SceneSerializer;
     std::string m_ScenePath;
     uint32_t m_SelectedEntity=std::numeric_limits<uint32_t>::max();
+
+    std::string m_CurrentPath=std::filesystem::current_path().string();
+    std::vector<std::filesystem::directory_entry> m_CurrentEntries;
+    std::string m_SelectedFileContent;
 };

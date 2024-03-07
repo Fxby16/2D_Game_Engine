@@ -7,27 +7,22 @@ Engine:
 - shaders reloading
 --------------------------------------------------------------------------------------------------------------------
 Editor:
-- file browser
+- projects
 - project serializer (settings etc.)
+- project export
+- file browser (adding textrues to project)
 - thumbnails
 - tilemap editor
-- project export
 - camera
 - adding texture and animated texture component from the editor
 - removing components and entities from the editor
 - reloading textures when changing textures path or other variables
 
-- edit other variables, like ambient light etc.
-
-- native script component integration
 - undo/redo system
 
 - shaders reloading (todo first in the engine)
 
 - save option (save in loaded scene path)
-
-- fix EDITOR definition when playing the project from the editor
-- precompile the engine so playing the project is much faster
 --------------------------------------------------------------------------------------------------------------------
 Others:
 - windows porting

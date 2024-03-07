@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['texcoords_0',['texcoords',['../df/dd0/structVertex.html#aa6603386a7cfa15efe8a556b6ff8654e',1,'Vertex']]],
-  ['texid_1',['texID',['../df/dd0/structVertex.html#a13885357f4d92492786cd672a3b5b0ed',1,'Vertex']]],
-  ['text_5frenderers_2',['TEXT_RENDERERS',['../d2/d5a/window_8hpp.html#a09d462f1af34dedd95b9754af5468693',1,'TEXT_RENDERERS:&#160;window.cpp'],['../d8/d8e/window_8cpp.html#a09d462f1af34dedd95b9754af5468693',1,'TEXT_RENDERERS:&#160;window.cpp']]],
-  ['textprojupdate_3',['TextProjUpdate',['../d3/df3/namespaceWindow.html#a862078aec57a28f40e506500b6e45c54',1,'Window']]],
-  ['type_4',['type',['../dc/dab/structVertexBufferElement.html#aebaf924b86871f57f006846ba7443676',1,'VertexBufferElement']]]
+  ['r_0',['r',['../dc/d2d/structVec3.html#a88b99c08343ebb9782ced649f141bdfa',1,'Vec3::r'],['../da/dc1/structVec4.html#ae39a587e0599f96d96bc0bbf356e10a9',1,'Vec4::r']]],
+  ['renderer_1',['RENDERER',['../d2/d5a/window_8hpp.html#a2c876fdbc79628a796247811f2940cf0',1,'RENDERER:&#160;window.cpp'],['../d8/d8e/window_8cpp.html#a2c876fdbc79628a796247811f2940cf0',1,'RENDERER:&#160;window.cpp']]],
+  ['resizable_2',['RESIZABLE',['../d2/d17/application__template_8cpp.html#a8fbe5098630396d9b071c9d1bb2cdfee',1,'RESIZABLE:&#160;editor.cpp'],['../d8/de2/editor_8hpp.html#a8fbe5098630396d9b071c9d1bb2cdfee',1,'RESIZABLE:&#160;editor.cpp'],['../d1/d1f/editor_8cpp.html#a8fbe5098630396d9b071c9d1bb2cdfee',1,'RESIZABLE:&#160;editor.cpp'],['../da/dc9/data_8cpp.html#a8fbe5098630396d9b071c9d1bb2cdfee',1,'RESIZABLE:&#160;data.cpp']]]
 ];
