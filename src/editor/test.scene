@@ -23,16 +23,16 @@ Entities:
       AnimationIndex: 0
       Width: 3
       Height: 3
-      Layer: 0
+      Layer: -2147483648
     RigidbodyComponent:
       BodyType: Static
       FixedRotation: true
   - Entity:
       UID: 1
       X: 2.5
-      Y: 0
+      Y: 3.09299994
       PreviousX: 2.5
-      PreviousY: 0
+      PreviousY: 3.09299994
     TagComponent:
       Tag: prova
     TextureComponent:
@@ -58,10 +58,10 @@ Entities:
       FunctionName: "Entity1Update\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
   - Entity:
       UID: 2
-      X: 4.5
-      Y: 0
-      PreviousX: 4.5
-      PreviousY: 0
+      X: 7.73199987
+      Y: 4.02099991
+      PreviousX: 7.73199987
+      PreviousY: 4.02099991
     TagComponent:
       Tag: prova2
     TextureComponent:

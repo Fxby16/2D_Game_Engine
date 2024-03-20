@@ -35,6 +35,7 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     RENDERER->ImGui_Init();
 
     m_SceneSerializer->Deserialize("test.scene",m_ScriptComponents);
+    DeserializeProject();
     //m_SceneSerializer->SerializeEncrypted("test_encrypted.scene");
     //m_SceneSerializer->DeserializeEncrypted("test_encrypted.scene");
 
@@ -50,18 +51,6 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     if(io.Fonts->AddFontFromFileTTF("vendor/FontAwesome/fa-solid-900.ttf",iconFontSize,&icons_config,icons_ranges)==NULL){
         printf("Failed to load FontAwesome font\n");
     }
-
-    //init window variables
-
-    WINDOW_NAME.resize(STRLEN,'\0');
-    strcpy(&WINDOW_NAME[0],"Untitled");
-    WINDOW_WIDTH=800;
-    WINDOW_HEIGHT=600;
-    FULLSCREEN_WIDTH=1920;
-    FULLSCREEN_HEIGHT=1080;
-    SCENE_PATH.resize(STRLEN,'\0');
-    strcpy(&SCENE_PATH[0],"test.scene");
-    RESIZABLE=true;
 }
 
 Editor::~Editor(){
@@ -171,17 +160,22 @@ void Editor::OnImGuiUpdate(){
                 }
             }
             if(ImGui::MenuItem("Save")){
+                m_SceneSerializer->Serialize(m_ScenePath,m_ScriptComponents);
+                SerializeProject();
+            }
+            if(ImGui::MenuItem("Save As")){
                 nfdchar_t *outPath=NULL;
                 nfdresult_t result=NFD_SaveDialog("scene",NULL,&outPath);
                     
                 if(result==NFD_OKAY){
                     m_SceneSerializer->Serialize((char*)outPath,m_ScriptComponents);
+                    m_ScenePath=(char*)outPath;
                 }else if(result==NFD_ERROR){
                     printf("Error: %s\n",NFD_GetError());
                 }
             }
             if(ImGui::MenuItem("Exit")){
-                glfwSetWindowShouldClose(Window::Window, true);
+                glfwSetWindowShouldClose(Window::Window,true);
             }
             ImGui::EndMenu();
         }
@@ -644,4 +638,42 @@ void Editor::FileBrowserMenu(ImVec2 pos){
 
 void Editor::OnImGuiRender(){
     Renderer::ImGui_End_Frame();
+}
+
+void Editor::SerializeProject(){
+    printf("Starting serialization of project in file %s\n",m_ProjectPath.c_str());
+
+    YAML::Emitter out;
+    out<<YAML::BeginMap;
+    out<<YAML::Key<<"WindowName"<<YAML::Value<<WINDOW_NAME;
+    out<<YAML::Key<<"WindowWidth"<<YAML::Value<<WINDOW_WIDTH;
+    out<<YAML::Key<<"WindowHeight"<<YAML::Value<<WINDOW_HEIGHT;
+    out<<YAML::Key<<"FullscreenWidth"<<YAML::Value<<FULLSCREEN_WIDTH;
+    out<<YAML::Key<<"FullscreenHeight"<<YAML::Value<<FULLSCREEN_HEIGHT;
+    out<<YAML::Key<<"ScenePath"<<YAML::Value<<SCENE_PATH;
+    out<<YAML::Key<<"Resizable"<<YAML::Value<<RESIZABLE;
+    out<<YAML::EndMap;
+
+    FILE *fout=fopen(m_ProjectPath.c_str(),"w");
+    if(fout==NULL){
+        printf("Failed to open scene file %s: %s\n",m_ProjectPath.c_str(),strerror(errno));
+        return;
+    }
+    fprintf(fout,"%s",out.c_str());
+    fclose(fout);
+    printf("Serialization of scene file %s completed\n",m_ProjectPath.c_str());
+}
+
+void Editor::DeserializeProject(){
+    YAML::Node data=YAML::LoadFile(m_ProjectPath);
+
+    //to add: error handling
+
+    WINDOW_NAME=data["WindowName"].as<std::string>();
+    WINDOW_WIDTH=data["WindowWidth"].as<unsigned int>();
+    WINDOW_HEIGHT=data["WindowHeight"].as<unsigned int>();
+    FULLSCREEN_WIDTH=data["FullscreenWidth"].as<unsigned int>();
+    FULLSCREEN_HEIGHT=data["FullscreenHeight"].as<unsigned int>();
+    SCENE_PATH=data["ScenePath"].as<std::string>();
+    RESIZABLE=data["Resizable"].as<bool>();
 }

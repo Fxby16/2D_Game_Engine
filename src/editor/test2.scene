@@ -2,15 +2,15 @@ Scene: ""
 ScalingFactor: 0.5
 Gravity: [0, 0]
 NextUID: 4
+AmbientLight: [0.371769369, 0.339248776, 0.339248776]
+ClearColor: [0.280318081, 0.19338046, 0.19338046]
 Entities:
   - Entity:
       UID: 0
       X: 5
-      Y: 0
+      Y: 2.16499996
       PreviousX: 5
-      PreviousY: 0
-    TagComponent:
-      Tag: prova
+      PreviousY: 2.16499996
     AnimatedTextureComponent:
       Filepath: ../resources/textures/Run.png
       MagFilter: 9728
@@ -23,16 +23,16 @@ Entities:
       AnimationIndex: 0
       Width: 3
       Height: 3
-      Layer: 0
+      Layer: -2147483648
     RigidbodyComponent:
       BodyType: Static
       FixedRotation: true
   - Entity:
       UID: 1
       X: 2.5
-      Y: 0
+      Y: 3.09299994
       PreviousX: 2.5
-      PreviousY: 0
+      PreviousY: 3.09299994
     TagComponent:
       Tag: prova
     TextureComponent:
@@ -41,7 +41,7 @@ Entities:
       MinFilter: 9729
       Width: 1
       Height: 1
-      Layer: 0
+      Layer: -2147483648
     RigidbodyComponent:
       BodyType: Dynamic
       FixedRotation: true
@@ -54,12 +54,14 @@ Entities:
       Friction: 0
       Restitution: 0
       RestitutionThreshold: 0.5
+    NativeScriptComponent:
+      FunctionName: "Entity1Update\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
   - Entity:
       UID: 2
-      X: 4.5
-      Y: 0
-      PreviousX: 4.5
-      PreviousY: 0
+      X: 7.73199987
+      Y: 4.02099991
+      PreviousX: 7.73199987
+      PreviousY: 4.02099991
     TagComponent:
       Tag: prova2
     TextureComponent:
@@ -88,7 +90,7 @@ Entities:
       PreviousX: 0
       PreviousY: 3
     TagComponent:
-      Tag: provaindex
+      Tag: prova
     AnimatedTextureComponent:
       Filepath: ../resources/textures/Run.png
       MagFilter: 9728
@@ -98,10 +100,25 @@ Entities:
       PlayAnimation: false
       LoopAnimation: false
       AnimationDelay: 0
-      AnimationIndex: 3
+      AnimationIndex: 0
       Width: 3
       Height: 3
       Layer: 0
     RigidbodyComponent:
       BodyType: Static
       FixedRotation: true
+    CircleColliderComponent:
+      XOffset: 1
+      YOffset: 1
+      Radius: 2
+      Density: 1
+      Friction: 0
+      Restitution: 0
+      RestitutionThreshold: 0.5
+    LightComponent:
+      XOffset: 1.64400005
+      YOffset: 0.82099998
+      Radius: 2.05500007
+      Blur: 0
+      Color: [1, 1, 1]
+      LightType: LightAroundPos

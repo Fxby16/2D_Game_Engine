@@ -33,12 +33,16 @@ private:
     void VariablesMenu(ImVec2 pos);
     void FileBrowserMenu(ImVec2 pos);
 
+    void SerializeProject();
+    void DeserializeProject();
+
     Camera m_Camera;
     Scene *m_Scene=nullptr;
     std::vector<std::pair<std::string,uint32_t>> m_ScriptComponents; ///< Function name and entity id. will be substituted by real script components when executing
     Framebuffer *m_SceneFramebuffer=nullptr;
     SceneSerializer *m_SceneSerializer;
-    std::string m_ScenePath;
+    std::string m_ScenePath="test.scene"; //cambialo fabio
+    std::string m_ProjectPath="test.proj"; //cambialo fabio
     uint32_t m_SelectedEntity=std::numeric_limits<uint32_t>::max();
 
     std::string m_CurrentPath=std::filesystem::current_path().string();
