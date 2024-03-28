@@ -5,5 +5,7 @@ var searchData=
   ['updatelinewidth_2',['UpdateLineWidth',['../d1/d52/classRenderer.html#a491fa10f0dcb5350219d6ddab67ec8a9',1,'Renderer']]],
   ['updateprojmat_3',['UpdateProjMat',['../d6/db3/classTextRenderer.html#adcf44c3a426ca9f3b4a859f6ce02d9a7',1,'TextRenderer']]],
   ['updatescreensegments_4',['UpdateScreenSegments',['../d1/d52/classRenderer.html#a60e61d13fa06067f926c3da225ea7a58',1,'Renderer']]],
-  ['updatestates_5',['UpdateStates',['../d5/d5b/classInput.html#a057dbcc1fed0ac8695114a98e07328de',1,'Input']]]
+  ['updatespritesheet_5',['UpdateSpriteSheet',['../d4/d27/classTexturesManager.html#ac84c1634458aecfc9cf2e20e0ecfb56b',1,'TexturesManager']]],
+  ['updatestates_6',['UpdateStates',['../d5/d5b/classInput.html#a057dbcc1fed0ac8695114a98e07328de',1,'Input']]],
+  ['updatetexture_7',['UpdateTexture',['../d4/d27/classTexturesManager.html#a18d8d8e3c15e6a89aaefc4a99b959ca7',1,'TexturesManager']]]
 ];

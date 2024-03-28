@@ -7,5 +7,7 @@ var searchData=
   ['textrenderer_2ehpp_4',['textrenderer.hpp',['../d1/db6/textrenderer_8hpp.html',1,'']]],
   ['texture_2ecpp_5',['texture.cpp',['../d2/d20/texture_8cpp.html',1,'']]],
   ['texture_2ed_6',['texture.d',['../db/d8f/texture_8d.html',1,'']]],
-  ['texture_2ehpp_7',['texture.hpp',['../d1/de0/texture_8hpp.html',1,'']]]
+  ['texture_2ehpp_7',['texture.hpp',['../d1/de0/texture_8hpp.html',1,'']]],
+  ['texturesmanager_2ecpp_8',['texturesmanager.cpp',['../d7/d42/texturesmanager_8cpp.html',1,'']]],
+  ['texturesmanager_2ehpp_9',['texturesmanager.hpp',['../d8/db5/texturesmanager_8hpp.html',1,'']]]
 ];

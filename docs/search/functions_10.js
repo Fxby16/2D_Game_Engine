@@ -32,9 +32,10 @@ var searchData=
   ['setzoom_29',['SetZoom',['../d1/df0/classCamera.html#a4137b9f6f3ed1098328f40bc70b4b7e8',1,'Camera']]],
   ['shader_30',['Shader',['../d9/d69/classShader.html#a399bb2d0c75ad2ab849eb5c8a4d7575f',1,'Shader']]],
   ['showmetrics_31',['ShowMetrics',['../d3/df3/namespaceWindow.html#a62d46e8fa33ba0df9d8e812f9cf59002',1,'Window']]],
-  ['spritesheet_32',['SpriteSheet',['../db/d0b/classSpriteSheet.html#ad72eabbfccf11d05657e4fdbf246a8af',1,'SpriteSheet::SpriteSheet(const std::string &amp;path, unsigned int tile_width, unsigned int tile_height, int mag_filter, int min_filter)'],['../db/d0b/classSpriteSheet.html#a668a486e11f46fc46b31f5b1eaf17242',1,'SpriteSheet::SpriteSheet()'],['../db/d0b/classSpriteSheet.html#a6d9d71cb13648b20b7cd24f963023b40',1,'SpriteSheet::SpriteSheet(SpriteSheet &amp;other)']]],
-  ['startnode_33',['StartNode',['../dc/d5f/utilities_8hpp.html#ac7b00819d59902913fb5cb076f5a271f',1,'StartNode(const std::string &amp;name, enum ImGuiTreeNodeFlags_ flags=ImGuiTreeNodeFlags_None):&#160;utilities.cpp'],['../de/da5/utilities_8cpp.html#a021b1277b14e98ceaabe8e6b9d396bfd',1,'StartNode(const std::string &amp;name, enum ImGuiTreeNodeFlags_ flags):&#160;utilities.cpp']]],
-  ['startscene_34',['StartScene',['../d1/d52/classRenderer.html#aae7529edbcbe2ed67356bda5ac584717',1,'Renderer']]],
-  ['stopaudio_35',['StopAudio',['../d2/d75/classAudioPlayer.html#a504fddf8a2b1475f8257b3e0bea5ff09',1,'AudioPlayer']]],
-  ['stopaudiolong_36',['StopAudioLong',['../d2/d75/classAudioPlayer.html#ad6d45fddebb7106751b6feb805daa9e8',1,'AudioPlayer']]]
+  ['spritesheet_32',['SpriteSheet',['../db/d0b/classSpriteSheet.html#a996458d6664790d2d25fb573013380ce',1,'SpriteSheet::SpriteSheet(const std::string &amp;path, unsigned int tile_width, unsigned int tile_height, int mag_filter, int min_filter, uint32_t tex_id)'],['../db/d0b/classSpriteSheet.html#a668a486e11f46fc46b31f5b1eaf17242',1,'SpriteSheet::SpriteSheet()'],['../db/d0b/classSpriteSheet.html#a6d9d71cb13648b20b7cd24f963023b40',1,'SpriteSheet::SpriteSheet(SpriteSheet &amp;other)']]],
+  ['spritesheetinfo_33',['SpriteSheetInfo',['../df/d8c/structSpriteSheetInfo.html#a78bd4b6bea662f88e3a335dab89e911e',1,'SpriteSheetInfo::SpriteSheetInfo()'],['../df/d8c/structSpriteSheetInfo.html#a061bbecc771fc6c4c2f0b5b275f6e151',1,'SpriteSheetInfo::SpriteSheetInfo(std::shared_ptr&lt; SpriteSheet &gt; tex)']]],
+  ['startnode_34',['StartNode',['../dc/d5f/utilities_8hpp.html#ac7b00819d59902913fb5cb076f5a271f',1,'StartNode(const std::string &amp;name, enum ImGuiTreeNodeFlags_ flags=ImGuiTreeNodeFlags_None):&#160;utilities.cpp'],['../de/da5/utilities_8cpp.html#a021b1277b14e98ceaabe8e6b9d396bfd',1,'StartNode(const std::string &amp;name, enum ImGuiTreeNodeFlags_ flags):&#160;utilities.cpp']]],
+  ['startscene_35',['StartScene',['../d1/d52/classRenderer.html#aae7529edbcbe2ed67356bda5ac584717',1,'Renderer']]],
+  ['stopaudio_36',['StopAudio',['../d2/d75/classAudioPlayer.html#a504fddf8a2b1475f8257b3e0bea5ff09',1,'AudioPlayer']]],
+  ['stopaudiolong_37',['StopAudioLong',['../d2/d75/classAudioPlayer.html#ad6d45fddebb7106751b6feb805daa9e8',1,'AudioPlayer']]]
 ];

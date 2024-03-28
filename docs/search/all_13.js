@@ -7,7 +7,7 @@ var searchData=
   ['vec3_4',['Vec3',['../dc/d2d/structVec3.html',1,'Vec3'],['../dc/d2d/structVec3.html#aae7a1ffaa1108a30c281da216d1cd312',1,'Vec3::Vec3()'],['../dc/d2d/structVec3.html#ae578bddce315277cfb327913f910512f',1,'Vec3::Vec3(float r, float g, float b)']]],
   ['vec4_5',['Vec4',['../da/dc1/structVec4.html',1,'Vec4'],['../da/dc1/structVec4.html#a55a46de1fc067fd2d696ea5be485ce3c',1,'Vec4::Vec4()'],['../da/dc1/structVec4.html#ab890e270a5def2a9b48604da414ec4b8',1,'Vec4::Vec4(float r, float g, float b, float a)']]],
   ['vel_6',['vel',['../db/d14/structRect.html#af98fcd5dbf036900ef48c910d8f3d878',1,'Rect']]],
-  ['vertex_7',['Vertex',['../df/dd0/structVertex.html',1,'Vertex'],['../df/dd0/structVertex.html#a97488994a2482d70da74e1b91d40e169',1,'Vertex::Vertex()'],['../df/dd0/structVertex.html#ac6a4eb7b737cdbaec68f04261b000901',1,'Vertex::Vertex(Vec2 pos, Vec2 texcoords, float layer, float texID)']]],
+  ['vertex_7',['Vertex',['../df/dd0/structVertex.html',1,'Vertex'],['../df/dd0/structVertex.html#a97488994a2482d70da74e1b91d40e169',1,'Vertex::Vertex()'],['../df/dd0/structVertex.html#aa12e2890b9a0c82ad1e1e463bbc64b72',1,'Vertex::Vertex(Vec2 pos, Vec2 texcoords, int layer, float texID)']]],
   ['vertexarray_8',['VertexArray',['../da/dd7/classVertexArray.html',1,'VertexArray'],['../da/dd7/classVertexArray.html#ab8a2dcce9698f96dac5f9a19c6979d03',1,'VertexArray::VertexArray()']]],
   ['vertexarray_2ecpp_9',['vertexarray.cpp',['../da/dc0/vertexarray_8cpp.html',1,'']]],
   ['vertexarray_2ed_10',['vertexarray.d',['../dd/d82/vertexarray_8d.html',1,'']]],

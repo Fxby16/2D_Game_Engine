@@ -7,6 +7,6 @@ var searchData=
   ['clearaudiolong_4',['ClearAudioLong',['../d2/d75/classAudioPlayer.html#a0781d029760855e4725253103881daf5',1,'AudioPlayer']]],
   ['clearsegments_5',['ClearSegments',['../d1/d52/classRenderer.html#a6ee8a5770e4a4c2f02699a45f2a83c2d',1,'Renderer']]],
   ['createapplication_6',['CreateApplication',['../d3/df3/namespaceWindow.html#a68ce75fa65c781a578a5d27d47023c62',1,'Window']]],
-  ['createquad_7',['CreateQuad',['../d7/d72/classVertexBuffer.html#a83dc26446b83d6caf8ec87dee7a6689b',1,'VertexBuffer::CreateQuad(float x, float y, float w, float h, float layer, float texID)'],['../d7/d72/classVertexBuffer.html#a004e2ad975028a0d1eabad8320131adf',1,'VertexBuffer::CreateQuad(float x, float y, float w, float h, float tx, float ty, float tw, float th, float ttw, float tth, float layer, float texID)']]],
-  ['createquadspritesheet_8',['CreateQuadSpriteSheet',['../db/d0b/classSpriteSheet.html#a2516769e6543a233ae1e85e2179c4bc7',1,'SpriteSheet']]]
+  ['createquad_7',['CreateQuad',['../d7/d72/classVertexBuffer.html#a17d3028a95b09260614fe4551d430d03',1,'VertexBuffer::CreateQuad(float x, float y, float w, float h, int layer, float texID)'],['../d7/d72/classVertexBuffer.html#a90712edbcbe0b4f1788d6b02b1983a43',1,'VertexBuffer::CreateQuad(float x, float y, float w, float h, float tx, float ty, float tw, float th, float ttw, float tth, int layer, float texID)']]],
+  ['createquadspritesheet_8',['CreateQuadSpriteSheet',['../db/d0b/classSpriteSheet.html#a3c615f900ad1e31f5939085d70112087',1,'SpriteSheet']]]
 ];

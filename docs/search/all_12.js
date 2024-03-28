@@ -6,8 +6,10 @@ var searchData=
   ['updatelinewidth_3',['UpdateLineWidth',['../d1/d52/classRenderer.html#a491fa10f0dcb5350219d6ddab67ec8a9',1,'Renderer']]],
   ['updateprojmat_4',['UpdateProjMat',['../d6/db3/classTextRenderer.html#adcf44c3a426ca9f3b4a859f6ce02d9a7',1,'TextRenderer']]],
   ['updatescreensegments_5',['UpdateScreenSegments',['../d1/d52/classRenderer.html#a60e61d13fa06067f926c3da225ea7a58',1,'Renderer']]],
-  ['updatestates_6',['UpdateStates',['../d5/d5b/classInput.html#a057dbcc1fed0ac8695114a98e07328de',1,'Input']]],
-  ['utilities_2ecpp_7',['utilities.cpp',['../de/da5/utilities_8cpp.html',1,'']]],
-  ['utilities_2ed_8',['utilities.d',['../d3/d07/utilities_8d.html',1,'']]],
-  ['utilities_2ehpp_9',['utilities.hpp',['../dc/d5f/utilities_8hpp.html',1,'']]]
+  ['updatespritesheet_6',['UpdateSpriteSheet',['../d4/d27/classTexturesManager.html#ac84c1634458aecfc9cf2e20e0ecfb56b',1,'TexturesManager']]],
+  ['updatestates_7',['UpdateStates',['../d5/d5b/classInput.html#a057dbcc1fed0ac8695114a98e07328de',1,'Input']]],
+  ['updatetexture_8',['UpdateTexture',['../d4/d27/classTexturesManager.html#a18d8d8e3c15e6a89aaefc4a99b959ca7',1,'TexturesManager']]],
+  ['utilities_2ecpp_9',['utilities.cpp',['../de/da5/utilities_8cpp.html',1,'']]],
+  ['utilities_2ed_10',['utilities.d',['../d3/d07/utilities_8d.html',1,'']]],
+  ['utilities_2ehpp_11',['utilities.hpp',['../dc/d5f/utilities_8hpp.html',1,'']]]
 ];

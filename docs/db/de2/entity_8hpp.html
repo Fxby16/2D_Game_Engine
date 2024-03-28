@@ -131,6 +131,8 @@ Functions</h2></td></tr>
 <tr class="separator:a5b419da2f9cee47cdfa0fda3067efdaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a350b7821fd1aae9ecb31fe7906257e40" id="r_a350b7821fd1aae9ecb31fe7906257e40"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a350b7821fd1aae9ecb31fe7906257e40">Interpolate</a> (float current, float previous)</td></tr>
 <tr class="separator:a350b7821fd1aae9ecb31fe7906257e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7986a29dece2b6c628707387af1faa1" id="r_ad7986a29dece2b6c628707387af1faa1"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7986a29dece2b6c628707387af1faa1">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="../../de/d87/classRigidbodyComponent.html#aea9a870cc0b5ff0b73b041241d2defc1">RigidbodyComponent::BodyType</a> &amp;type)</td></tr>
+<tr class="separator:ad7986a29dece2b6c628707387af1faa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8c9f3ee3ae1d940972a9b29ac2b1ca9" id="r_ae8c9f3ee3ae1d940972a9b29ac2b1ca9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d61/classEntity.html">Entity</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8c9f3ee3ae1d940972a9b29ac2b1ca9">BinarySearch</a> (std::vector&lt; <a class="el" href="../../da/d61/classEntity.html">Entity</a> &gt; &amp;v, uint32_t uid)</td></tr>
 <tr class="separator:ae8c9f3ee3ae1d940972a9b29ac2b1ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdaee259b4cd16709ff0825c039e32e5" id="r_abdaee259b4cd16709ff0825c039e32e5"><td class="memItemLeft" align="right" valign="top">b2BodyType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdaee259b4cd16709ff0825c039e32e5">RigidbodyTypeToBox2DBody</a> (<a class="el" href="../../de/d87/classRigidbodyComponent.html#aea9a870cc0b5ff0b73b041241d2defc1">RigidbodyComponent::BodyType</a> bodyType)</td></tr>
@@ -201,7 +203,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Search for the entity with the given uid. </p><dl class="section return"><dt>Returns</dt><dd>a pointer to the entity with the given uid, or nullptr if not found </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00303">303</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00307">307</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -305,6 +307,29 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 
 </div>
 </div>
+<a id="ad7986a29dece2b6c628707387af1faa1" name="ad7986a29dece2b6c628707387af1faa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7986a29dece2b6c628707387af1faa1">&#9670;&#160;</a></span>operator&lt;&lt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>os</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../de/d87/classRigidbodyComponent.html#aea9a870cc0b5ff0b73b041241d2defc1">RigidbodyComponent::BodyType</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d9/ddd/entity_8cpp_source.html#l00145">145</a> of file <a class="el" href="../../d9/ddd/entity_8cpp_source.html">entity.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a5b419da2f9cee47cdfa0fda3067efdaf" name="a5b419da2f9cee47cdfa0fda3067efdaf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5b419da2f9cee47cdfa0fda3067efdaf">&#9670;&#160;</a></span>RightShift()</h2>
 
@@ -368,7 +393,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>the b2BodyType converted to a BodyType </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00408">408</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00412">412</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -396,7 +421,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>the body type converted to a b2BodyType </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00393">393</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00397">397</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -421,7 +446,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00464">464</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00472">472</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
 
 </div>
 </div>

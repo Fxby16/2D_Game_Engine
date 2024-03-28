@@ -25,10 +25,11 @@ var searchData=
   ['componenttype_22',['ComponentType',['../db/de2/entity_8hpp.html#a8c263fb75c207f7bb05d74fc5b1a9d78',1,'entity.hpp']]],
   ['convert_3c_20vec2_20_3e_23',['convert&lt; Vec2 &gt;',['../d5/df9/structYAML_1_1convert_3_01Vec2_01_4.html',1,'YAML']]],
   ['convert_3c_20vec3_20_3e_24',['convert&lt; Vec3 &gt;',['../dd/d4b/structYAML_1_1convert_3_01Vec3_01_4.html',1,'YAML']]],
-  ['count_25',['count',['../dc/dab/structVertexBufferElement.html#af2d13355b799b11b6ffbc0a34fb03f8a',1,'VertexBufferElement']]],
-  ['createapplication_26',['CreateApplication',['../d3/df3/namespaceWindow.html#a68ce75fa65c781a578a5d27d47023c62',1,'Window']]],
-  ['createquad_27',['CreateQuad',['../d7/d72/classVertexBuffer.html#a83dc26446b83d6caf8ec87dee7a6689b',1,'VertexBuffer::CreateQuad(float x, float y, float w, float h, float layer, float texID)'],['../d7/d72/classVertexBuffer.html#a004e2ad975028a0d1eabad8320131adf',1,'VertexBuffer::CreateQuad(float x, float y, float w, float h, float tx, float ty, float tw, float th, float ttw, float tth, float layer, float texID)']]],
-  ['createquadspritesheet_28',['CreateQuadSpriteSheet',['../db/d0b/classSpriteSheet.html#a2516769e6543a233ae1e85e2179c4bc7',1,'SpriteSheet']]],
-  ['current_29',['current',['../db/d7c/structKeyState.html#acc422cc40f6d391ff01de0f458c7e53f',1,'KeyState']]],
-  ['currentframetime_30',['CurrentFrameTime',['../d3/df3/namespaceWindow.html#ac89ec1ecf8ce3440f32485d1376c1da4',1,'Window']]]
+  ['copies_25',['copies',['../db/d49/structTextureInfo.html#a11f3929aa4f9da7545b211e52db88678',1,'TextureInfo::copies'],['../df/d8c/structSpriteSheetInfo.html#af1d05d98a3b513f14eec25ad55cb524d',1,'SpriteSheetInfo::copies']]],
+  ['count_26',['count',['../dc/dab/structVertexBufferElement.html#af2d13355b799b11b6ffbc0a34fb03f8a',1,'VertexBufferElement']]],
+  ['createapplication_27',['CreateApplication',['../d3/df3/namespaceWindow.html#a68ce75fa65c781a578a5d27d47023c62',1,'Window']]],
+  ['createquad_28',['CreateQuad',['../d7/d72/classVertexBuffer.html#a17d3028a95b09260614fe4551d430d03',1,'VertexBuffer::CreateQuad(float x, float y, float w, float h, int layer, float texID)'],['../d7/d72/classVertexBuffer.html#a90712edbcbe0b4f1788d6b02b1983a43',1,'VertexBuffer::CreateQuad(float x, float y, float w, float h, float tx, float ty, float tw, float th, float ttw, float tth, int layer, float texID)']]],
+  ['createquadspritesheet_29',['CreateQuadSpriteSheet',['../db/d0b/classSpriteSheet.html#a3c615f900ad1e31f5939085d70112087',1,'SpriteSheet']]],
+  ['current_30',['current',['../db/d7c/structKeyState.html#acc422cc40f6d391ff01de0f458c7e53f',1,'KeyState']]],
+  ['currentframetime_31',['CurrentFrameTime',['../d3/df3/namespaceWindow.html#ac89ec1ecf8ce3440f32485d1376c1da4',1,'Window']]]
 ];

@@ -17,10 +17,6 @@ Editor:
 - undo/redo system
 
 - shaders reloading (todo first in the engine)
-
-- save option (save in loaded scene path)
-
-- fix file browser
 --------------------------------------------------------------------------------------------------------------------
 Others:
 - windows porting
