@@ -2,7 +2,10 @@
 
 #include <stb_image.h>
 
-Texture::Texture(const std::string &path,int mag_filter,int min_filter): m_ID(0),m_FilePath(path),m_MagFilter(mag_filter),m_MinFilter(min_filter),m_LocalBuffer(nullptr),m_Width(0),m_Height(0),m_BPP(0){
+Texture::Texture(const std::string &path,int mag_filter,int min_filter,uint32_t tex_id): m_ID(0),m_TexID(tex_id),m_MagFilter(mag_filter),m_MinFilter(min_filter),m_LocalBuffer(nullptr),m_Width(0),m_Height(0),m_BPP(0){
+    m_FilePath=path;
+    m_FilePath.resize(100);
+    
     stbi_set_flip_vertically_on_load(1);
     m_LocalBuffer=stbi_load(path.c_str(),&m_Width,&m_Height,&m_BPP,4);
     if(!m_LocalBuffer){
@@ -26,6 +29,9 @@ Texture::Texture(const std::string &path,int mag_filter,int min_filter): m_ID(0)
 
 Texture::Texture(Texture &other){
     m_ID=other.m_ID;
+    other.m_ID=std::numeric_limits<unsigned int>::max();
+    m_MagFilter=other.m_MagFilter;
+    m_MinFilter=other.m_MinFilter;
     m_FilePath=other.m_FilePath;
     m_LocalBuffer=other.m_LocalBuffer;
     m_Width=other.m_Width;
@@ -54,6 +60,10 @@ void Texture::Unbind() const{
 
 SpriteSheet::SpriteSheet(SpriteSheet &other){
     m_ID=other.m_ID;
+    other.m_ID=std::numeric_limits<unsigned int>::max();
+    m_TexID=other.m_TexID;
+    m_MagFilter=other.m_MagFilter;
+    m_MinFilter=other.m_MinFilter;
     m_FilePath=other.m_FilePath;
     m_LocalBuffer=other.m_LocalBuffer;
     m_Width=other.m_Width;
@@ -63,7 +73,7 @@ SpriteSheet::SpriteSheet(SpriteSheet &other){
     m_TileHeight=other.m_TileHeight;
 }
 
-std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,float layer,float texID){
+std::array<Vertex,4> SpriteSheet::CreateQuadSpriteSheet(float x,float y,float width,float height,float row,float col,int layer,float texID){
     Vertex v1;
     v1.position={x,y};
     v1.texcoords={(col*m_TileWidth)/m_Width,(row*m_TileHeight)/m_Height};

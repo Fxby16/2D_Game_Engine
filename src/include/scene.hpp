@@ -79,6 +79,11 @@ public:
         PROFILE_FUNCTION();
         
         T temp(std::forward<Args>(args)...,uid);
+
+        // auto printArg=[](const auto &arg){ std::cout<<arg<<' '; };
+        // (printArg(args),...);
+
+        // std::cout<<std::endl;
         
         if constexpr(std::is_same<T,RigidbodyComponent>::value){
             Entity *entity=GetEntity(uid);
@@ -211,6 +216,9 @@ private:
     ComponentManager<CircleColliderComponent> m_CircleColliderComponents;
     ComponentManager<LightComponent> m_LightComponents;
     ComponentManager<NativeScriptComponent> m_NativeScriptComponents;
+
+    std::vector<std::vector<uint32_t>> m_TexturesEntities; ///< entities with the same texture are grouped together
+    std::vector<std::vector<uint32_t>> m_AnimatedTexturesEntities; ///< entities with the same animated texture are grouped together
 
     std::string m_Name;
 };

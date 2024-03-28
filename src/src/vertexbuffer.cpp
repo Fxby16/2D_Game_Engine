@@ -19,7 +19,7 @@ void VertexBuffer::Unbind() const{
     glBindBuffer(GL_ARRAY_BUFFER,0);
 }
 
-std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,float layer,float texID){
+std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,int layer,float texID){
     Vertex v1;
     v1.position={x,y};
     v1.texcoords={0.0f,0.0f};
@@ -47,7 +47,7 @@ std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,fl
     return {v1,v2,v3,v4};
 }
 
-std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,float layer,float texID){
+std::array<Vertex,4> VertexBuffer::CreateQuad(float x,float y,float w,float h,float tx,float ty,float tw,float th,float ttw,float tth,int layer,float texID){
     Vertex v1;
     v1.position={x,y};
     v1.texcoords={tx/ttw,ty/tth};

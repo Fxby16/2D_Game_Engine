@@ -17,3 +17,5 @@ src/editor/Makefile
 **/imgui.ini
 
 **/Doxyfile
+
+core.**

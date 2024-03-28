@@ -60,7 +60,7 @@ public:
      * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
      * \param texID ID of the texture
     */
-    void DrawTexture(Vec2 pos,Vec2 size,float layer,float texID);
+    void DrawTexture(Vec2 pos,Vec2 size,int layer,float texID);
     /**
      * Render a portion of a texture
      * \param pos Position of the texture
@@ -70,7 +70,7 @@ public:
      * \param texture_total_size Size of the whole texture
      * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
     */
-    void DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,float layer,float texID);
+    void DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,int layer,float texID);
     /**
      * Draw a texture
      * \param pos Position of the texture
@@ -80,7 +80,7 @@ public:
      * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
      * \param texture the texture to draw
     */
-    void DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,float layer,Texture &texture);
+    void DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,int layer,Texture &texture);
     /**
      * Draw a part of a sprite sheet
      * \param pos Position of the texture
@@ -90,7 +90,7 @@ public:
      * \param layer Layer of the texture (higher layers are drawn on top of lower layers)
      * \param s the sprite sheet to use
     */
-    void DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s);
+    void DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,int layer,SpriteSheet &s);
     /**
      * Draw an animated texture
      * \param pos Position of the texture
@@ -103,7 +103,7 @@ public:
      * \param last_animation_time the last time the animation was updated
      * \param animation_index the current animation index
     */
-    void DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index);
+    void DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index);
     /**
      * Draw a triangle
      * \param pos1 Position of the first vertex
@@ -112,7 +112,7 @@ public:
      * \param color Color of the triangle
      * \param layer Layer of the triangle (higher layers are drawn on top of lower layers)
     */
-    void DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer);
+    void DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,int layer);
     /**
      * Draw a solid quad
      * \param pos Position of the quad
@@ -120,14 +120,14 @@ public:
      * \param color Color of the quad
      * \param layer Layer of the quad (higher layers are drawn on top of lower layers)
     */
-    void DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer);
+    void DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,int layer);
     /**
      * Draw a round point. Use SetPointSize to change the size of the point
      * \param pos Position of the point
      * \param color Color of the point
      * \param layer Layer of the point (higher layers are drawn on top of lower layers)
     */
-    void DrawPoint(Vec2 pos,Vec4 color,float layer);
+    void DrawPoint(Vec2 pos,Vec4 color,int layer);
     /**
      * Draw an empty point. Use SetPointSize to change the size of the point
      * \param pos Position of the point
@@ -135,7 +135,7 @@ public:
      * \param border Border of the point (in range [0,1])
      * \param layer Layer of the point (higher layers are drawn on top of lower layers)
     */
-    void DrawCircle(Vec2 pos,Vec4 color,float border,float layer);
+    void DrawCircle(Vec2 pos,Vec4 color,float border,int layer);
     /**
      * Draw a line. Use SetLineWidth to change the size of the line
      * \param pos1 Position of the first vertex
@@ -143,7 +143,7 @@ public:
      * \param color Color of the line
      * \param layer Layer of the line (higher layers are drawn on top of lower layers)
     */
-    void DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer);
+    void DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,int layer);
     /**
      * Draw a light
      * \param pos Position of the light

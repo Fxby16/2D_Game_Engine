@@ -10,19 +10,17 @@ Editor:
 - projects
 - project serializer (settings etc.)
 - project export
-- file browser (adding textrues to project)
-- thumbnails
+- file browser (textures preview)
 - tilemap editor
 - camera
-- adding texture and animated texture component from the editor
-- removing components and entities from the editor
-- reloading textures when changing textures path or other variables
 
 - undo/redo system
 
 - shaders reloading (todo first in the engine)
 
 - save option (save in loaded scene path)
+
+- fix file browser
 --------------------------------------------------------------------------------------------------------------------
 Others:
 - windows porting

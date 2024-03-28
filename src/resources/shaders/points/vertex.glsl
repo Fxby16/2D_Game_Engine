@@ -3,7 +3,7 @@
 layout(location=0) in vec4 position;
 layout(location=1) in vec4 color;
 layout(location=2) in float border;
-layout(location=3) in float layer;
+layout(location=3) in int layer;
 
 out vec4 out_color;
 out float circle_border;

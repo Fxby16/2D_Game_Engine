@@ -51,6 +51,8 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     if(io.Fonts->AddFontFromFileTTF("vendor/FontAwesome/fa-solid-900.ttf",iconFontSize,&icons_config,icons_ranges)==NULL){
         printf("Failed to load FontAwesome font\n");
     }
+
+    m_UpdateFiles=false;
 }
 
 Editor::~Editor(){
@@ -193,7 +195,7 @@ void Editor::OnImGuiUpdate(){
     ImGui::Begin("Viewport",nullptr,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoTitleBar);
     ImGui::SetWindowPos(ImVec2(GetWidthPercentageInPx(20),tempvec.y));
     tempf=GetWidthPercentageInPx(60);
-    ImGui::SetWindowSize(ImVec2(tempf,tempf*9.0f/16.0f));
+    ImGui::SetWindowSize(ImVec2(tempf,tempf*(Window::Height/Window::Width)));
     ImGui::Image((void*)m_SceneFramebuffer->GetColorbufferID(),ImGui::GetContentRegionAvail(),ImVec2(0,1),ImVec2(1,0));
     
     ImGui::SameLine();
@@ -205,7 +207,7 @@ void Editor::OnImGuiUpdate(){
     
     ImGui::End();
 
-    FileBrowserMenu({GetWidthPercentageInPx(20),tempvec.y+tempf*9.0f/16.0f});
+    FileBrowserMenu({GetWidthPercentageInPx(20),tempvec.y+tempf*(Window::Height/Window::Width)});
 }
 
 void Editor::EntitiesMenu(ImVec2 pos){
@@ -232,12 +234,23 @@ void Editor::EntitiesMenu(ImVec2 pos){
                 m_SelectedEntity=std::numeric_limits<uint32_t>::max();
             }
         }
+        ImGui::OpenPopupOnItemClick("EntityPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("EntityPopup")){
+            if(ImGui::MenuItem("Remove Entity")){
+                m_Scene->RemoveEntity(e.m_UID);
+            }
+            ImGui::EndPopup();
+        }
 
         ImGui::PopID();
         k++;
     }
 
-    if(ImGui::BeginPopupContextWindow()){
+    if(ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)){
+        ImGui::OpenPopup("CreateEntityPopup");
+    }
+
+    if(ImGui::BeginPopup("CreateEntityPopup")){
         if(ImGui::MenuItem("Create Entity")){
             m_Scene->AddEntity();
         }
@@ -281,9 +294,46 @@ void Editor::ComponentsMenu(ImVec2 pos){
     TextureComponent *texture_component=m_Scene->GetComponent<TextureComponent>(m_SelectedEntity);
     if(texture_component){
         if(StartNode("TextureComponent")){
+            if(ImGui::Button("Reload Texture")){
+                Texture *t=texture_component->m_Texture.get();
+
+                texture_component->m_Texture=TEXTURES_MANAGER->UpdateTexture(t->m_TexID,t->m_FilePath,t->m_MagFilter,t->m_MinFilter).second;   
+            }
+
+            ImGui::InputText("Path",&texture_component->m_Texture.get()->m_FilePath[0],STRLEN);
+
+            int selectedMagFilter,selectedMinFilter;
+
+            if(texture_component->m_Texture.get()->m_MagFilter==GL_LINEAR){
+                selectedMagFilter=0;
+            }else{
+                selectedMagFilter=1;
+            }
+
+            if(texture_component->m_Texture.get()->m_MinFilter==GL_LINEAR){
+                selectedMinFilter=0;
+            }else{
+                selectedMinFilter=1;
+            }
+
+            ImGui::Combo("Mag Filter",&selectedMagFilter,"Linear\0Nearest\0");
+            ImGui::Combo("Min Filter",&selectedMinFilter,"Linear\0Nearest\0");
+
+            if(selectedMagFilter==0){
+                texture_component->m_Texture.get()->m_MagFilter=GL_LINEAR;
+            }else{
+                texture_component->m_Texture.get()->m_MagFilter=GL_NEAREST;
+            }
+
+            if(selectedMinFilter==0){
+                texture_component->m_Texture.get()->m_MinFilter=GL_LINEAR;
+            }else{
+                texture_component->m_Texture.get()->m_MinFilter=GL_NEAREST;
+            }
+
             ImGui::SliderFloat("Width",&texture_component->m_Width,0.0f,30.0f);
             ImGui::SliderFloat("Height",&texture_component->m_Height,0.0f,30.0f);
-            ImGui::SliderFloat("Layer",&texture_component->m_Layer,0,100,"%.3f");
+            ImGui::SliderInt("Layer",&texture_component->m_Layer,-100,100);
             ImGui::TreePop();
         }
         ImGui::OpenPopupOnItemClick("TextureComponentPopup",ImGuiPopupFlags_MouseButtonRight);
@@ -293,15 +343,54 @@ void Editor::ComponentsMenu(ImVec2 pos){
             }
             ImGui::EndPopup();
         }
-        texture_component->m_Layer=glm::floor(texture_component->m_Layer+0.5f);
     }
 
     AnimatedTextureComponent *animated_texture_component=m_Scene->GetComponent<AnimatedTextureComponent>(m_SelectedEntity);
     if(animated_texture_component){
         if(StartNode("AnimatedTextureComponent")){
+            if(ImGui::Button("Reload Texture")){
+                SpriteSheet *s=animated_texture_component->m_AnimatedTexture.get();
+
+                animated_texture_component->m_AnimatedTexture=TEXTURES_MANAGER->UpdateSpriteSheet(s->m_TexID,s->m_FilePath,s->m_TileWidth,s->m_TileHeight,s->m_MagFilter,s->m_MinFilter).second;   
+            }
+
+            ImGui::InputText("Path",&animated_texture_component->m_AnimatedTexture.get()->m_FilePath[0],STRLEN);
+            
+            int selectedMagFilter,selectedMinFilter;
+
+            if(animated_texture_component->m_AnimatedTexture.get()->m_MagFilter==GL_LINEAR){
+                selectedMagFilter=0;
+            }else{
+                selectedMagFilter=1;
+            }
+
+            if(animated_texture_component->m_AnimatedTexture.get()->m_MinFilter==GL_LINEAR){
+                selectedMinFilter=0;
+            }else{
+                selectedMinFilter=1;
+            }
+            
+            ImGui::Combo("Mag Filter",&selectedMagFilter,"Linear\0Nearest\0");
+            ImGui::Combo("Min Filter",&selectedMinFilter,"Linear\0Nearest\0");
+
+            if(selectedMagFilter==0){
+                animated_texture_component->m_AnimatedTexture.get()->m_MagFilter=GL_LINEAR;
+            }else{
+                animated_texture_component->m_AnimatedTexture.get()->m_MagFilter=GL_NEAREST;
+            }
+
+            if(selectedMinFilter==0){
+                animated_texture_component->m_AnimatedTexture.get()->m_MinFilter=GL_LINEAR;
+            }else{
+                animated_texture_component->m_AnimatedTexture.get()->m_MinFilter=GL_NEAREST;
+            }
+
+            ImGui::SliderInt("Tile Width",(int*)&animated_texture_component->m_AnimatedTexture.get()->m_TileWidth,0,500);
+            ImGui::SliderInt("Tile Height",(int*)&animated_texture_component->m_AnimatedTexture.get()->m_TileHeight,0,500);
+
             ImGui::SliderFloat("Width",&animated_texture_component->m_Width,0.0f,30.0f);
             ImGui::SliderFloat("Height",&animated_texture_component->m_Height,0.0f,30.0f);
-            ImGui::SliderFloat("Layer",&animated_texture_component->m_Layer,0,100,"%.3f");
+            ImGui::SliderInt("Layer",&animated_texture_component->m_Layer,-100,100);
 
             SpriteSheet *s=animated_texture_component->m_AnimatedTexture.get();
             ImGui::Checkbox("Play Animation",&animated_texture_component->m_PlayAnimation);
@@ -317,7 +406,6 @@ void Editor::ComponentsMenu(ImVec2 pos){
             }
             ImGui::EndPopup();
         }
-        animated_texture_component->m_Layer=glm::floor(animated_texture_component->m_Layer+0.5f);
     }
 
     RigidbodyComponent *rigidbody_component=m_Scene->GetComponent<RigidbodyComponent>(m_SelectedEntity);
@@ -497,6 +585,16 @@ void Editor::ComponentsMenu(ImVec2 pos){
                     m_Scene->AddComponent<TagComponent>(m_SelectedEntity,"Entity "+std::to_string(m_SelectedEntity));
                 }
             }
+            if(ImGui::MenuItem("Texture Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<TextureComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<TextureComponent>(m_SelectedEntity);
+                }
+            }
+            if(ImGui::MenuItem("Animated Texture Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<AnimatedTextureComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<AnimatedTextureComponent>(m_SelectedEntity);
+                }
+            }
             if(ImGui::MenuItem("Rigidbody Component")){
                 if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<RigidbodyComponent>(m_SelectedEntity)==nullptr){
                     m_Scene->AddComponent<RigidbodyComponent>(m_SelectedEntity);
@@ -576,7 +674,17 @@ void Editor::FileBrowserMenu(ImVec2 pos){
         }
     }
 
-    if(m_CurrentEntries.empty()){
+    ImGui::SameLine();
+    if(ImGui::Button(ICON_FA_ROTATE,ImVec2(baseFontSize*1.5f,baseFontSize*1.5f))){
+        m_UpdateFiles=true;
+    }
+
+    if(m_CurrentEntries.empty() || m_UpdateFiles){
+        if(m_UpdateFiles){
+            m_UpdateFiles=false;
+            m_CurrentEntries.clear();
+        }
+
         for(auto &entry:std::filesystem::directory_iterator(m_CurrentPath)){
             m_CurrentEntries.push_back(entry);
         }
@@ -598,40 +706,44 @@ void Editor::FileBrowserMenu(ImVec2 pos){
     ImGui::SameLine();
     ImGui::Text("Current Path: %s",m_CurrentPath.c_str());
 
-    static bool isFileContentOpen=false;
-
-    for(auto &entry:m_CurrentEntries){
-        if(entry.is_directory()){ 
-            if(ImGui::Selectable((ICON_FA_FOLDER+entry.path().filename().string()).c_str())){
-                m_CurrentPath=entry.path().string();
-                m_CurrentEntries.clear();
-                break;
-            }
-        }else if(entry.is_regular_file()){
-            if(ImGui::Selectable((ICON_FA_FILE+entry.path().filename().string()).c_str())){
-                FILE *file=fopen(entry.path().string().c_str(),"r");
-
-                if(file){
-                    char ch;
-                    m_SelectedFileContent.clear();
-                    while((ch=fgetc(file))!=EOF){
-                        m_SelectedFileContent+=ch;
-                    }
-                    fclose(file);
-
-                    isFileContentOpen=true;
+    ImGui::PushStyleColor(ImGuiCol_Border,IM_COL32(0,0,0,0));
+    ImGui::BeginChild("FileBrowserChild",ImVec2(0,0),true);
+        static bool isFileContentOpen=false;
+        for(auto &entry:m_CurrentEntries){
+            if(entry.is_directory()){ 
+                if(ImGui::Selectable((ICON_FA_FOLDER+entry.path().filename().string()).c_str())){
+                    m_CurrentPath=entry.path().string();
+                    m_CurrentEntries.clear();
+                    break;
                 }
-            }   
-        }
-    }
+            }else{
+                if(ImGui::Selectable((ICON_FA_FILE+entry.path().filename().string()).c_str())){
+                    FILE *file=fopen(entry.path().string().c_str(),"r");
 
-    if(isFileContentOpen && !m_SelectedFileContent.empty()){
-        ImGui::Begin("File Content",&isFileContentOpen);
-        ImGui::Text("%s",m_SelectedFileContent.c_str());
-        ImGui::End();
-    }else if(!m_SelectedFileContent.empty()){
-        m_SelectedFileContent.clear();
-    }
+                    if(file){
+                        char ch;
+                        m_SelectedFileContent.clear();
+                        while((ch=fgetc(file))!=EOF){
+                            m_SelectedFileContent+=ch;
+                        }
+                        fclose(file);
+
+                        isFileContentOpen=true;
+                    }
+                }   
+            }
+        }
+
+        if(isFileContentOpen && !m_SelectedFileContent.empty()){
+            ImGui::Begin("File Content",&isFileContentOpen);
+            ImGui::Text("%s",m_SelectedFileContent.c_str());
+            ImGui::End();
+        }else if(!m_SelectedFileContent.empty()){
+            m_SelectedFileContent.clear();
+        }
+    ImGui::EndChild();
+
+    ImGui::PopStyleColor();
 
     ImGui::End();
 }

@@ -111,9 +111,10 @@ public:
 
 class TextureComponent{
 public:
-    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,float layer,uint32_t uid);
-    TextureComponent(std::shared_ptr<Texture>t,float width,float height,float layer,uint32_t uid);
-    TextureComponent(): m_Texture(nullptr),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint32_t>::max()){}
+    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,uint32_t uid);
+    TextureComponent(std::shared_ptr<Texture>t,float width,float height,int layer,uint32_t uid);
+    TextureComponent(): m_Texture(std::make_shared<Texture>()),m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint32_t>::max()){}
+    TextureComponent(uint32_t uid): m_Texture(std::make_shared<Texture>()),m_Width(0),m_Height(0),m_Layer(0),m_UID(uid){}
     TextureComponent(TextureComponent &other);
     TextureComponent(TextureComponent &&other);
     
@@ -138,15 +139,16 @@ public:
 
     std::shared_ptr<Texture> m_Texture;
     float m_Width,m_Height;
-    float m_Layer;
+    int m_Layer;
     uint32_t m_UID;
 };
 
 class AnimatedTextureComponent{
 public:
-    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,float layer,bool play_animation,bool loop_animation,float animation_delay,int animation_index,uint32_t uid);
-    AnimatedTextureComponent(std::shared_ptr<SpriteSheet>t,float width,float height,float layer,bool play_animation,bool loop_animation,float animation_delay,int animation_index,uint32_t uid);
-    AnimatedTextureComponent(): m_Width(0),m_Height(0),m_Layer(0),m_UID(std::numeric_limits<uint32_t>::max()){}
+    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer,bool play_animation,bool loop_animation,float animation_delay,int animation_index,uint32_t uid);
+    AnimatedTextureComponent(std::shared_ptr<SpriteSheet>t,float width,float height,int layer,bool play_animation,bool loop_animation,float animation_delay,int animation_index,uint32_t uid);
+    AnimatedTextureComponent(): m_AnimatedTexture(std::make_shared<SpriteSheet>()),m_Width(0),m_Height(0),m_Layer(0),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0),m_AnimationIndex(0),m_LastAnimationTime(0),m_UID(std::numeric_limits<uint32_t>::max()){}
+    AnimatedTextureComponent(uint32_t uid): m_AnimatedTexture(std::make_shared<SpriteSheet>()),m_Width(0),m_Height(0),m_Layer(0),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0),m_AnimationIndex(0),m_LastAnimationTime(0),m_UID(uid){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
     AnimatedTextureComponent(AnimatedTextureComponent &&other);
 
@@ -183,7 +185,7 @@ public:
 
     std::shared_ptr<SpriteSheet> m_AnimatedTexture;
     float m_Width,m_Height;
-    float m_Layer;
+    int m_Layer;
     bool m_PlayAnimation,m_LoopAnimation;
     float m_AnimationDelay;
     int m_AnimationIndex;
@@ -209,6 +211,8 @@ public:
 
     uint32_t m_UID;
 };
+
+std::ostream &operator<<(std::ostream &os,const RigidbodyComponent::BodyType &type);
 
 class BoxColliderComponent{
 public:

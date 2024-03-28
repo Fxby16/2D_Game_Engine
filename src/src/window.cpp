@@ -1,6 +1,7 @@
 #include <pch.hpp>
 #include <window.hpp>
 #include <buttons.hpp>
+#include <texturesmanager.hpp>
 #ifdef EDITOR
     #include <editor.hpp>
 #endif
@@ -9,6 +10,7 @@ bool ISFULLSCREEN=false;
 Renderer *RENDERER;
 std::vector<TextRenderer*> TEXT_RENDERERS;
 Input *INPUT;
+TexturesManager *TEXTURES_MANAGER;
 
 namespace Window{
     void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam){
@@ -102,6 +104,7 @@ namespace Window{
         RENDERER=new Renderer;
         TEXT_RENDERERS.push_back(new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",64,true));
         INPUT=new Input;
+        TEXTURES_MANAGER=new TexturesManager;
 
         return 0;
     }
@@ -110,6 +113,8 @@ namespace Window{
         delete RENDERER;
         for(int i=0;i<TEXT_RENDERERS.size();i++)
             delete TEXT_RENDERERS[i];
+        delete INPUT;
+        delete TEXTURES_MANAGER;
         glfwTerminate();
     }
 

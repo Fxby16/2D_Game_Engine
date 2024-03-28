@@ -108,7 +108,7 @@ Renderer::~Renderer(){
     delete m_TempFramebuffer;
 }
 
-void Renderer::DrawTexture(Vec2 pos,Vec2 size,float layer,float texID){
+void Renderer::DrawTexture(Vec2 pos,Vec2 size,int layer,float texID){
     PROFILE_FUNCTION();
 
     #ifdef EDITOR
@@ -126,7 +126,7 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,float layer,float texID){
         Render();
 }
 
-void Renderer::DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,float layer,float texID){
+void Renderer::DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size,Vec2 texture_total_size,int layer,float texID){
     PROFILE_FUNCTION();
 
     #ifdef EDITOR
@@ -144,7 +144,7 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,Vec2 texture_pos,Vec2 texture_size
         Render();
 }
 
-void Renderer::DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,float layer,Texture &texture){
+void Renderer::DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,int layer,Texture &texture){
     PROFILE_FUNCTION();
     
     if(reverse_x && reverse_y)
@@ -157,7 +157,7 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,floa
         DrawTexture(pos,size,layer,texture.GetTexID());
 }
 
-void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float layer,SpriteSheet &s){
+void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,int layer,SpriteSheet &s){
     PROFILE_FUNCTION();
 
     #ifdef EDITOR
@@ -175,9 +175,9 @@ void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,float laye
         Render();
 }
 
-void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index){
+void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index){
     PROFILE_FUNCTION();
-    
+
     if(play_animation){
         if(glfwGetTime()-last_animation_time>=animation_delay){
             last_animation_time=glfwGetTime();
@@ -190,11 +190,12 @@ void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,float layer,SpriteSheet &s
             }
         }
     }
+
     DrawSpriteSheet(pos,size,ceil((float)s.m_Height/(float)s.m_TileHeight)-1,animation_index,layer,s);
 }
 
 
-void Renderer::DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer){
+void Renderer::DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,int layer){
     PROFILE_FUNCTION();
 
     #ifdef EDITOR
@@ -210,14 +211,14 @@ void Renderer::DrawTriangle(Vec2 pos1,Vec2 pos2,Vec2 pos3,Vec4 color,float layer
         Render();
 }
 
-void Renderer::DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,float layer){
+void Renderer::DrawSolidQuad(Vec2 pos,Vec2 size,Vec4 color,int layer){
     PROFILE_FUNCTION();
     
     DrawTriangle(pos,{pos.x+size.w,pos.y},{pos.x,pos.y+size.h},color,layer);
     DrawTriangle({pos.x,pos.y+size.h},{pos.x+size.w,pos.y+size.h},{pos.x+size.w,pos.y},color,layer);
 }
 
-void Renderer::DrawPoint(Vec2 pos,Vec4 color,float layer){
+void Renderer::DrawPoint(Vec2 pos,Vec4 color,int layer){
     PROFILE_FUNCTION();
 
     #ifdef EDITOR
@@ -231,7 +232,7 @@ void Renderer::DrawPoint(Vec2 pos,Vec4 color,float layer){
         Render();
 }
 
-void Renderer::DrawCircle(Vec2 pos,Vec4 color,float border,float layer){
+void Renderer::DrawCircle(Vec2 pos,Vec4 color,float border,int layer){
     PROFILE_FUNCTION();
 
     #ifdef EDITOR
@@ -245,7 +246,7 @@ void Renderer::DrawCircle(Vec2 pos,Vec4 color,float border,float layer){
         Render();
 }
 
-void Renderer::DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,float layer){
+void Renderer::DrawLine(Vec2 pos1,Vec2 pos2,Vec4 color,int layer){
     PROFILE_FUNCTION();
 
     #ifdef EDITOR

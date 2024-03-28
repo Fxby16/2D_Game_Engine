@@ -48,4 +48,5 @@ private:
     std::string m_CurrentPath=std::filesystem::current_path().string();
     std::vector<std::filesystem::directory_entry> m_CurrentEntries;
     std::string m_SelectedFileContent;
+    bool m_UpdateFiles;
 };

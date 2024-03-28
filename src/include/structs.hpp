@@ -28,38 +28,38 @@ struct Vec4{
 struct Vertex{
     Vec2 position;
     Vec2 texcoords;
-    float layer;
+    int layer;
     float texID;
 
     Vertex();
-    Vertex(Vec2 pos,Vec2 texcoords,float layer,float texID);
+    Vertex(Vec2 pos,Vec2 texcoords,int layer,float texID);
 };
 
 struct LineVertex{
     Vec2 pos;
     Vec4 color;
-    float layer;
+    int layer;
 
     LineVertex();
-    LineVertex(Vec2 pos,Vec4 color,float layer);
+    LineVertex(Vec2 pos,Vec4 color,int layer);
 };
 
 struct PointVertex{
     Vec2 pos;
     Vec4 color;
     float border;
-    float layer;
+    int layer;
 
     PointVertex();
-    PointVertex(Vec2 pos,Vec4 color,float border,float layer);
+    PointVertex(Vec2 pos,Vec4 color,float border,int layer);
 };
 
 struct TriangleVertex{
     Vec2 position;
     Vec4 color;
-    float layer;
+    int layer;
     TriangleVertex();
-    TriangleVertex(Vec2 pos,Vec4 color,float layer);
+    TriangleVertex(Vec2 pos,Vec4 color,int layer);
 };
 
 Vec2 operator+(Vec2 a,Vec2 b);
@@ -79,3 +79,12 @@ struct Rect{
     Rect();
     Rect(Vec2 pos,Vec2 size,Vec2 vel);
 };
+
+std::ostream &operator<<(std::ostream &os,const Vec2 &v);
+std::ostream &operator<<(std::ostream &os,const Vec3 &v);
+std::ostream &operator<<(std::ostream &os,const Vec4 &v);
+std::ostream &operator<<(std::ostream &os,const Vertex &v);
+std::ostream &operator<<(std::ostream &os,const LineVertex &v);
+std::ostream &operator<<(std::ostream &os,const PointVertex &v);
+std::ostream &operator<<(std::ostream &os,const TriangleVertex &v);
+std::ostream &operator<<(std::ostream &os,const Rect &v);

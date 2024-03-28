@@ -25,16 +25,16 @@ private:
 };
 
 struct TextureData{
-    TextureData(uint32_t uid,float width,float height,float layer):
+    TextureData(uint32_t uid,float width,float height,int layer):
         uid(uid),width(width),height(height),layer(layer),animated(false){}
-    TextureData(uint32_t uid,float width,float height,float layer,bool playanimation,
+    TextureData(uint32_t uid,float width,float height,int layer,bool playanimation,
         bool loopanimation,float animationdelay,int animationindex): uid(uid),width(width),height(height),layer(layer),
         animated(true),playanimation(playanimation),loopanimation(loopanimation),animationdelay(animationdelay),animationindex(animationindex){}
 
     uint32_t uid;
 
     float width,height;
-    float layer;
+    int layer;
 
     bool animated;
 

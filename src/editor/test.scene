@@ -12,18 +12,18 @@ Entities:
       PreviousX: 5
       PreviousY: 0
     AnimatedTextureComponent:
-      Filepath: ../resources/textures/Run.png
+      Filepath: "/home/fabio/Scrivania/Run1.png\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
       MagFilter: 9728
       MinFilter: 9728
       TileWidth: 128
       TileHeight: 128
       PlayAnimation: false
-      LoopAnimation: false
-      AnimationDelay: 0
+      LoopAnimation: true
+      AnimationDelay: 0.100000001
       AnimationIndex: 0
       Width: 3
       Height: 3
-      Layer: -2147483648
+      Layer: 0
     RigidbodyComponent:
       BodyType: Static
       FixedRotation: true
@@ -36,12 +36,12 @@ Entities:
     TagComponent:
       Tag: prova
     TextureComponent:
-      Filepath: /home/fabio/Scaricati/Red.png
+      Filepath: "/home/fabio/Scaricati/Red.png\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
       MagFilter: 9729
       MinFilter: 9729
       Width: 1
       Height: 1
-      Layer: 0
+      Layer: 25
     RigidbodyComponent:
       BodyType: Dynamic
       FixedRotation: true
@@ -65,12 +65,12 @@ Entities:
     TagComponent:
       Tag: prova2
     TextureComponent:
-      Filepath: /home/fabio/Scaricati/Red.png
+      Filepath: "/home/fabio/Scaricati/Red.png\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
       MagFilter: 9729
       MinFilter: 9729
       Width: 1
       Height: 1
-      Layer: 0
+      Layer: -44
     RigidbodyComponent:
       BodyType: Dynamic
       FixedRotation: true
@@ -92,7 +92,7 @@ Entities:
     TagComponent:
       Tag: prova
     AnimatedTextureComponent:
-      Filepath: ../resources/textures/Run.png
+      Filepath: "../resources/textures/Run.png\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
       MagFilter: 9728
       MinFilter: 9728
       TileWidth: 128
@@ -103,7 +103,7 @@ Entities:
       AnimationIndex: 0
       Width: 3
       Height: 3
-      Layer: 0
+      Layer: 48
     RigidbodyComponent:
       BodyType: Static
       FixedRotation: true
