@@ -7,3 +7,9 @@ inline constexpr unsigned int MAX_INDICES=6*MAX_QUADS; ///<Max number of indices
 enum LightType{
     ALL_LIGHT,LIGHT_AROUND_POS,LIGHT_AROUND_POS_COLL
 };
+
+#ifdef EDITOR
+
+extern bool ANIMATIONS_PREVIEW;
+
+#endif

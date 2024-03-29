@@ -6,6 +6,8 @@
 #include <sceneserializer.hpp>
 #include <IconsFontAwesome6.h>
 #include <scene_buttons.hpp>
+#include <buttons.hpp>
+#include <global.hpp>
 
 #define baseFontSize 24.0f
 #define STRLEN 100
@@ -65,8 +67,13 @@ void Editor::Run(){
     while(!glfwWindowShouldClose(Window::Window)){
         glfwPollEvents();
 
+        INPUT->UpdateStates();
+        HandleInputs();
+
         RENDERER->StartEditorScene(this);
+        m_Camera.ResetSceneProj();
         OnSceneRender();
+        m_Camera.DrawSceneProj();
         RENDERER->DrawEditorScene(m_SceneFramebuffer);
         HighlightEntity(m_SelectedEntity);
         
@@ -196,6 +203,10 @@ void Editor::OnImGuiUpdate(){
     ImGui::SetWindowPos(ImVec2(GetWidthPercentageInPx(20),tempvec.y));
     tempf=GetWidthPercentageInPx(60);
     ImGui::SetWindowSize(ImVec2(tempf,tempf*(Window::Height/Window::Width)));
+
+    m_ScenePos={GetWidthPercentageInPx(20)/Window::Width*Window::MAX_WIDTH,Window::MAX_HEIGHT-(tempvec.y/Window::Height*Window::MAX_HEIGHT)};
+    m_SceneSize={tempf/Window::Width*Window::MAX_WIDTH,tempf*(Window::Height/Window::Width)/Window::Height*Window::MAX_HEIGHT};
+    
     ImGui::Image((void*)m_SceneFramebuffer->GetColorbufferID(),ImGui::GetContentRegionAvail(),ImVec2(0,1),ImVec2(1,0));
     
     ImGui::SameLine();
@@ -203,6 +214,15 @@ void Editor::OnImGuiUpdate(){
     ImGui::SetCursorPos(ImVec2(pos.x-GetWidthPercentageInPx(60)/2.0f,pos.y+baseFontSize/2.0f));
     if(ImGui::Button(ICON_FA_PLAY,ImVec2(baseFontSize*1.5f,baseFontSize*1.5f))){
         SceneButtons::PlayButton(m_ScriptComponents);
+    }
+
+    Vec2 cameraPos=m_Camera.GetPosition();
+
+    ImGui::SetCursorPos({10,10});
+    ImGui::Text("(%.2f, %.2f)",cameraPos.x,cameraPos.y);
+    ImGui::SameLine();
+    if(ImGui::Button("Reset")){
+        m_Camera.SetPosition({0,0});
     }
     
     ImGui::End();
@@ -646,6 +666,9 @@ void Editor::VariablesMenu(ImVec2 pos){
     ImGui::SetWindowSize(ImVec2(GetWidthPercentageInPx(20),Window::Height-pos.y));
     ImGui::ColorEdit3("Clear Color",(float*)&RENDERER->m_ClearColor);
     ImGui::ColorEdit3("Ambient Light",(float*)&RENDERER->m_AmbientLight);
+    ImGui::Checkbox("Animations Preview",&ANIMATIONS_PREVIEW);
+
+    ImGui::Dummy(ImVec2(0.0f,ImGui::GetTextLineHeight()));
 
     ImGui::Text("Window variables:");
     ImGui::InputText("Window Name",&WINDOW_NAME[0],WINDOW_NAME.size());
@@ -788,4 +811,47 @@ void Editor::DeserializeProject(){
     FULLSCREEN_HEIGHT=data["FullscreenHeight"].as<unsigned int>();
     SCENE_PATH=data["ScenePath"].as<std::string>();
     RESIZABLE=data["Resizable"].as<bool>();
+}
+
+void Editor::HandleInputs(){
+    KeyState left_arrow=INPUT->GetKey(KEY_LEFT);
+    if(left_arrow.current==BUTTON_DOWN){
+        m_Camera.Move(-0.1f,0);
+    }
+
+    KeyState right_arrow=INPUT->GetKey(KEY_RIGHT);
+    if(right_arrow.current==BUTTON_DOWN){
+        m_Camera.Move(0.1f,0);
+    }
+
+    KeyState up_arrow=INPUT->GetKey(KEY_UP);
+    if(up_arrow.current==BUTTON_DOWN){
+        m_Camera.Move(0,0.1f);
+    }
+
+    KeyState down_arrow=INPUT->GetKey(KEY_DOWN);
+    if(down_arrow.current==BUTTON_DOWN){
+        m_Camera.Move(0,-0.1f);
+    }
+
+    static Vec2 lastMousePos;
+    static bool wheelPressed=false;
+
+    KeyState wheel=INPUT->GetMouseButton(MOUSE_BUTTON_MIDDLE);
+    if(wheel.current && !wheel.previous){
+        lastMousePos=INPUT->GetMousePosition();
+        if(lastMousePos.x>=m_ScenePos.x && lastMousePos.x<=m_ScenePos.x+m_SceneSize.x && lastMousePos.y<=m_ScenePos.y && lastMousePos.y>=m_ScenePos.y-m_SceneSize.y){
+            wheelPressed=true;
+        }
+    }
+
+    if(wheel.current && wheelPressed){
+        Vec2 currentMousePos=INPUT->GetMousePosition();
+        m_Camera.Move(lastMousePos.x-currentMousePos.x,lastMousePos.y-currentMousePos.y);
+        lastMousePos=currentMousePos;
+    }
+
+    if(!wheel.current && wheel.previous){
+        wheelPressed=false;
+    }
 }

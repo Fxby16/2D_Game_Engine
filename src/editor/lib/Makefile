@@ -86,6 +86,7 @@ GENERATED += $(OBJDIR)/structs.o
 GENERATED += $(OBJDIR)/test.o
 GENERATED += $(OBJDIR)/textrenderer.o
 GENERATED += $(OBJDIR)/texture.o
+GENERATED += $(OBJDIR)/texturesmanager.o
 GENERATED += $(OBJDIR)/utilities.o
 GENERATED += $(OBJDIR)/vertexarray.o
 GENERATED += $(OBJDIR)/vertexbuffer.o
@@ -113,6 +114,7 @@ OBJECTS += $(OBJDIR)/structs.o
 OBJECTS += $(OBJDIR)/test.o
 OBJECTS += $(OBJDIR)/textrenderer.o
 OBJECTS += $(OBJDIR)/texture.o
+OBJECTS += $(OBJDIR)/texturesmanager.o
 OBJECTS += $(OBJDIR)/utilities.o
 OBJECTS += $(OBJDIR)/vertexarray.o
 OBJECTS += $(OBJDIR)/vertexbuffer.o
@@ -227,6 +229,9 @@ $(OBJDIR)/textrenderer.o: ../../src/textrenderer.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/texture.o: ../../src/texture.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/texturesmanager.o: ../../src/texturesmanager.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/vertexarray.o: ../../src/vertexarray.cpp

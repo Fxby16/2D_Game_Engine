@@ -2,6 +2,10 @@
 #include <renderer.hpp>
 #include <window.hpp>
 
+#ifdef EDITOR
+    extern bool ANIMATIONS_PREVIEW;
+#endif
+
 RendererData::RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size): 
                           VBO(MAX_VERTICES,vertex_size,GL_DYNAMIC_DRAW),S(vertex_path,fragment_path),NumVertices(0){}
 
@@ -178,7 +182,11 @@ void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,int layer,
 void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index){
     PROFILE_FUNCTION();
 
+    #ifndef EDITOR
     if(play_animation){
+    #else
+    if(play_animation && ANIMATIONS_PREVIEW){
+    #endif
         if(glfwGetTime()-last_animation_time>=animation_delay){
             last_animation_time=glfwGetTime();
             animation_index++;

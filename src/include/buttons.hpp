@@ -140,4 +140,3 @@
 
 #define BUTTON_UP              0
 #define BUTTON_DOWN            1
-#define BUTTON_PRESSED         2

@@ -17,10 +17,10 @@ Entities:
       MinFilter: 9728
       TileWidth: 128
       TileHeight: 128
-      PlayAnimation: false
+      PlayAnimation: true
       LoopAnimation: true
       AnimationDelay: 0.100000001
-      AnimationIndex: 0
+      AnimationIndex: 6
       Width: 3
       Height: 3
       Layer: 0
@@ -97,10 +97,10 @@ Entities:
       MinFilter: 9728
       TileWidth: 128
       TileHeight: 128
-      PlayAnimation: false
-      LoopAnimation: false
-      AnimationDelay: 0
-      AnimationIndex: 0
+      PlayAnimation: true
+      LoopAnimation: true
+      AnimationDelay: 0.100000001
+      AnimationIndex: 4
       Width: 3
       Height: 3
       Layer: 48

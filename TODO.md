@@ -12,7 +12,7 @@ Editor:
 - project export
 - file browser (textures preview)
 - tilemap editor
-- camera
+- camera (zoom)
 
 - undo/redo system
 

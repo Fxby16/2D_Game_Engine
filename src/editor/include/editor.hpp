@@ -36,6 +36,8 @@ private:
     void SerializeProject();
     void DeserializeProject();
 
+    void HandleInputs();
+
     Camera m_Camera;
     Scene *m_Scene=nullptr;
     std::vector<std::pair<std::string,uint32_t>> m_ScriptComponents; ///< Function name and entity id. will be substituted by real script components when executing
@@ -49,4 +51,7 @@ private:
     std::vector<std::filesystem::directory_entry> m_CurrentEntries;
     std::string m_SelectedFileContent;
     bool m_UpdateFiles;
+
+    Vec2 m_ScenePos;
+    Vec2 m_SceneSize;
 };
