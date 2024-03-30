@@ -61,9 +61,7 @@ public:
 protected:
     friend class Renderer;
     friend class TexturesManager;
-    #if defined(EDITOR) || defined(APPLICATION) 
-        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*, std::vector<std::pair<std::string,uint32_t>>&);
-    #endif
+    friend class SceneSerializer;
 
     #ifdef EDITOR
         friend class Editor;
@@ -126,9 +124,9 @@ public:
 private:
     friend class Renderer;
     friend class TexturesManager;
+    friend class SceneSerializer;
     #if defined(EDITOR) || defined(APPLICATION)
         friend class Editor;
-        friend void SerializeEntity(YAML::Emitter&, Entity&, Scene*, std::vector<std::pair<std::string,uint32_t>>&);
     #endif
 
     #ifdef EDITOR

@@ -10,6 +10,7 @@ public:
 
     void Serialize(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components);
     void SerializeEncrypted(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components);
+    void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<std::pair<std::string,uint32_t>>&script_components);
     #ifdef EDITOR
     bool Deserialize(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components);
     bool DeserializeEncrypted(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components);
@@ -22,24 +23,4 @@ public:
 
 private:
     Scene *m_Scene=nullptr;
-};
-
-struct TextureData{
-    TextureData(uint32_t uid,float width,float height,int layer):
-        uid(uid),width(width),height(height),layer(layer),animated(false){}
-    TextureData(uint32_t uid,float width,float height,int layer,bool playanimation,
-        bool loopanimation,float animationdelay,int animationindex): uid(uid),width(width),height(height),layer(layer),
-        animated(true),playanimation(playanimation),loopanimation(loopanimation),animationdelay(animationdelay),animationindex(animationindex){}
-
-    uint32_t uid;
-
-    float width,height;
-    int layer;
-
-    bool animated;
-
-    bool playanimation;
-    bool loopanimation;
-    float animationdelay;
-    int animationindex;
 };

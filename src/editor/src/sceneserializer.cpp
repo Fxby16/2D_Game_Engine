@@ -95,7 +95,8 @@ namespace YAML{
         }
     };
 }
-void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<std::pair<std::string,uint32_t>>&script_components){
+
+void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<std::pair<std::string,uint32_t>>&script_components){
     out<<YAML::BeginMap; //entity and components
     
     out<<YAML::Key<<"Entity";
@@ -130,8 +131,6 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<
 
         TextureComponent *texturecomponent=scene->GetComponent<TextureComponent>(entity.m_UID);
 
-        //std::cout<<"TextureComponent: "<<entity.m_UID<<" FilePath: "<<texturecomponent->m_Texture.get()->m_FilePath<<" MagFilter: "<<texturecomponent->m_Texture.get()->m_MagFilter<<" MinFilter: "<<texturecomponent->m_Texture.get()->m_MinFilter<<" Width: "<<texturecomponent->m_Width<<" Height: "<<texturecomponent->m_Height<<" Layer: "<<texturecomponent->m_Layer<<"\n";
-        
         out<<YAML::Key<<"Filepath"<<YAML::Value<<texturecomponent->m_Texture.get()->m_FilePath;
         out<<YAML::Key<<"MagFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_MagFilter;
         out<<YAML::Key<<"MinFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_MinFilter;
@@ -139,7 +138,6 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<
         out<<YAML::Key<<"Width"<<YAML::Value<<texturecomponent->m_Width;
         out<<YAML::Key<<"Height"<<YAML::Value<<texturecomponent->m_Height;
         out<<YAML::Key<<"Layer"<<YAML::Value<<texturecomponent->m_Layer;
-        //printf("Written layer: %d\n",(int)texturecomponent->m_Layer);
 
         out<<YAML::EndMap; //texture component
     }
@@ -149,8 +147,6 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<
         out<<YAML::BeginMap; //animated texture component
 
         AnimatedTextureComponent *animatedtexturecomponent=scene->GetComponent<AnimatedTextureComponent>(entity.m_UID);
-
-        //std::cout<<"AnimatedTextureComponent: "<<entity.m_UID<<" FilePath: "<<animatedtexturecomponent->m_AnimatedTexture.get()->m_FilePath<<" MagFilter: "<<animatedtexturecomponent->m_AnimatedTexture.get()->m_MagFilter<<" MinFilter: "<<animatedtexturecomponent->m_AnimatedTexture.get()->m_MinFilter<<" TileWidth: "<<animatedtexturecomponent->m_AnimatedTexture.get()->m_TileWidth<<" TileHeight: "<<animatedtexturecomponent->m_AnimatedTexture.get()->m_TileHeight<<" PlayAnimation: "<<animatedtexturecomponent->m_PlayAnimation<<" LoopAnimation: "<<animatedtexturecomponent->m_LoopAnimation<<" AnimationDelay: "<<animatedtexturecomponent->m_AnimationDelay<<" AnimationIndex: "<<animatedtexturecomponent->m_AnimationIndex<<" Width: "<<animatedtexturecomponent->m_Width<<" Height: "<<animatedtexturecomponent->m_Height<<" Layer: "<<animatedtexturecomponent->m_Layer<<"\n";
 
         out<<YAML::Key<<"Filepath"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_FilePath;
         out<<YAML::Key<<"MagFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_MagFilter;
@@ -167,7 +163,6 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<
         out<<YAML::Key<<"Width"<<YAML::Value<<animatedtexturecomponent->m_Width;
         out<<YAML::Key<<"Height"<<YAML::Value<<animatedtexturecomponent->m_Height;
         out<<YAML::Key<<"Layer"<<YAML::Value<<animatedtexturecomponent->m_Layer;
-        //printf("Written layer: %d\n",(int)animatedtexturecomponent->m_Layer);
 
         out<<YAML::EndMap; //animated texture component
     }
@@ -233,6 +228,23 @@ void SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<
         out<<YAML::Key<<"LightType"<<YAML::Value<<LightTypeToString(lightcomponent->m_Type);
 
         out<<YAML::EndMap; //light component
+    }
+
+    if(scene->GetComponent<TextComponent>(entity.m_UID)!=nullptr){
+        out<<YAML::Key<<"TextComponent";
+        out<<YAML::BeginMap; //text component
+
+        TextComponent *textcomponent=scene->GetComponent<TextComponent>(entity.m_UID);
+
+        out<<YAML::Key<<"FontPath"<<YAML::Value<<textcomponent->m_TextRenderer->m_FontPath;
+        out<<YAML::Key<<"GlyphSize"<<YAML::Value<<textcomponent->m_TextRenderer->m_LoadedGlyphSize;
+        out<<YAML::Key<<"Fixed"<<YAML::Value<<textcomponent->m_TextRenderer->m_Fixed;
+        out<<YAML::Key<<"Text"<<YAML::Value<<textcomponent->m_Text;
+        out<<YAML::Key<<"Offset"<<YAML::Value<<textcomponent->m_Offset;
+        out<<YAML::Key<<"Color"<<YAML::Value<<textcomponent->m_Color;
+        out<<YAML::Key<<"Scale"<<YAML::Value<<textcomponent->m_Scale;
+
+        out<<YAML::EndMap; //text component
     }
 
     for(auto &[fn_name,id]:script_components){
@@ -459,7 +471,6 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data,std::vector<std::pa
 #elif defined(APPLICATION)
 bool SceneSerializer::DeserializeNode(const YAML::Node &data){
 #endif
-    //std::map<std::string,std::vector<TextureData>> textures;
 
     if(!data["Scene"]){
         printf("Scene node is invalid\n");
@@ -499,10 +510,7 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
                 int width=texturecomponent["Width"].as<int>();
                 int height=texturecomponent["Height"].as<int>();
                 int layer=texturecomponent["Layer"].as<int>();
-                //printf("Read layer: %d\n",layer);
-
-                //textures[EncodeTexture(false,filepath,nullptr,nullptr,magfilter,minfilter)].push_back(TextureData(uid,width,height,layer));
-                //m_Scene->AddComponent<TextureComponent>(uid,filepath,magfilter,minfilter,width,height,layer);
+                
                 auto [id,texture]=TEXTURES_MANAGER->GetTexture(filepath,magfilter,minfilter);
                 m_Scene->AddComponent<TextureComponent>(uid,texture,width,height,layer);
             }
@@ -521,10 +529,7 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
                 int width=animatedtexturecomponent["Width"].as<float>();
                 int height=animatedtexturecomponent["Height"].as<float>();
                 int layer=animatedtexturecomponent["Layer"].as<int>();
-                //printf("Read layer: %d\n",layer);
-
-                //textures[EncodeTexture(true,filepath,&tilewidth,&tileheight,magfilter,minfilter)].push_back(TextureData(uid,width,height,layer,playanimation,loopanimation,animationdelay,animationindex));
-                //m_Scene->AddComponent<AnimatedTextureComponent>(uid,filepath,tilewidth,tileheight,magfilter,minfilter,width,height,layer,playanimation,loopanimation,animationdelay);
+                
                 auto [id,texture]=TEXTURES_MANAGER->GetSpriteSheet(filepath,tilewidth,tileheight,magfilter,minfilter);
                 m_Scene->AddComponent<AnimatedTextureComponent>(uid,texture,width,height,layer,playanimation,loopanimation,animationdelay,animationindex);
             }
@@ -576,6 +581,20 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
                 m_Scene->AddComponent<LightComponent>(uid,xoffset,yoffset,radius,blur,color,lighttype);
             }
 
+            auto textcomponent=e["TextComponent"];
+            if(textcomponent){
+                std::string fontpath=textcomponent["FontPath"].as<std::string>();
+                float glyphsize=textcomponent["GlyphSize"].as<float>();
+                bool fixed=textcomponent["Fixed"].as<bool>();
+                std::string text=textcomponent["Text"].as<std::string>();
+                Vec2 offset=textcomponent["Offset"].as<Vec2>();
+                Vec3 color=textcomponent["Color"].as<Vec3>();
+                float scale=textcomponent["Scale"].as<float>();
+
+                m_Scene->AddComponent<TextComponent>(uid,fontpath,glyphsize,fixed,text,offset,color,scale);
+            }
+
+
             #ifdef EDITOR
             auto nativescriptcomponent=e["NativeScriptComponent"];
             if(nativescriptcomponent){
@@ -586,28 +605,5 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
         }
     }
 
-    /*for(auto &[key,val]:textures){
-        //create components
-        if(GetTextureType(key)){
-            std::string path;
-            unsigned int tilewidth,tileheight;
-            int magfilter,minfilter;
-            bool playanimation,loopanimation;
-            float animationdelay;
-            DecodeTexture(key,path,tilewidth,tileheight,magfilter,minfilter);
-            std::shared_ptr<SpriteSheet>texture=std::make_shared<SpriteSheet>(path,tilewidth,tileheight,magfilter,minfilter);
-            for(auto &data:val){
-                m_Scene->AddComponent<AnimatedTextureComponent>(data.uid,texture,data.width,data.height,data.layer,data.playanimation,data.loopanimation,data.animationdelay,data.animationindex);
-            }
-        }else{
-            std::string path;
-            int magfilter,minfilter;
-            DecodeTexture(key,path,magfilter,minfilter);
-            std::shared_ptr<Texture>texture=std::make_shared<Texture>(path,magfilter,minfilter);
-            for(auto &data:val){
-                m_Scene->AddComponent<TextureComponent>(data.uid,texture,data.width,data.height,data.layer);
-            }
-        }
-    }*/
     return true;
 }

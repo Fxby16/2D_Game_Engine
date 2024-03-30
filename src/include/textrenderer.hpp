@@ -42,11 +42,15 @@ public:
     std::pair<float,float> GetTextSize(std::string text,float scale); 
 
     inline void UpdateProjMat(glm::mat4 &proj){
-        m_Shader.Bind();
-        m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(proj),1);
+        if(m_Loaded){
+            m_Shader.Bind();
+            m_Shader.SetUniformMat4fv("u_PM",glm::value_ptr(proj),1);
+        }
     }
 
 private:
+    friend class SceneSerializer;
+
     struct Character{
         unsigned int TexID;     // ID of the glyph texture       
         glm::ivec2 Size;       // Size of glyph

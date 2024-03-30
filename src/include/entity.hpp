@@ -293,8 +293,14 @@ public:
     TextComponent(): m_TextRenderer(std::make_shared<TextRenderer>()),m_Text(100,'\0'),m_Offset(0.0f,0.0f),m_Color(1.0f,1.0f,1.0f),m_Scale(1.0f),m_UID(std::numeric_limits<uint32_t>::max()){}
     TextComponent(uint32_t uid): m_TextRenderer(std::make_shared<TextRenderer>()),m_Text(100,'\0'),m_Offset(0.0f,0.0f),m_Color(1.0f,1.0f,1.0f),m_Scale(1.0f),m_UID(uid){}
     TextComponent(std::shared_ptr<TextRenderer> textRenderer,const std::string &text,Vec2 offset,Vec3 color,float scale,uint32_t uid): 
-        m_TextRenderer(textRenderer),m_Text(text),m_Offset(offset),m_Color(color),m_Scale(scale),m_UID(uid){}
+        m_TextRenderer(textRenderer),m_Text(text),m_Offset(offset),m_Color(color),m_Scale(scale),m_UID(uid){
+            m_Text.resize(100);
+        }
     TextComponent(const std::string &path,float glyph_size,bool fixed,uint32_t uid): m_TextRenderer(FONT_MANAGER->GetFont(path,glyph_size,fixed).second),m_UID(uid){}
+    TextComponent(const std::string &path,float glyph_size,bool fixed,const std::string &text,Vec2 offset,Vec3 color,float scale,uint32_t uid): 
+        m_TextRenderer(FONT_MANAGER->GetFont(path,glyph_size,fixed).second),m_Text(text),m_Offset(offset),m_Color(color),m_Scale(scale),m_UID(uid){
+            m_Text.resize(100);
+        }
 
     TextComponent(const TextComponent &other);
     TextComponent(TextComponent &&other);
