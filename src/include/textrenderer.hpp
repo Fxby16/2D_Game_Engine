@@ -67,6 +67,8 @@ private:
     glm::mat4 *m_Transforms;
     int *m_ToRender;
 
+    float m_LoadedGlyphSize;
+
     bool m_Loaded;
 
     void Init(const std::string &font_path,float glyph_size,bool fixed);

@@ -283,8 +283,8 @@ void Scene::Render(){
 
     m_TextureComponents.Render(this);
     m_AnimatedTextureComponents.Render(this);
-    m_LightComponents.Render(this);
     m_TextComponents.Render(this);
+    m_LightComponents.Render(this);
 }
 
 void Scene::MoveEntity(uint32_t uid,float x_offset,float y_offset){

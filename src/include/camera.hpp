@@ -25,6 +25,7 @@ public:
 
     inline glm::mat4 GetViewMatrix() const{ return m_View; }
     inline glm::mat4 GetProjMatrix() const{ return m_Proj; }
+    inline glm::mat4 GetViewProjMatrix() const{ return m_ViewProj; }
 
     /**
      * Set the camera position. 

@@ -1,5 +1,6 @@
 Engine:
 - add layers for text component
+- add the possibility to render text above lighting
 - text component serialization
 - collision callbacks
 - rotated quads (and triangles)

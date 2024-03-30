@@ -585,7 +585,15 @@ void Editor::ComponentsMenu(ImVec2 pos){
         if(StartNode("TextComponent")){
             ImGui::InputText("Font Path",&text_component->m_TextRenderer->m_FontPath[0],text_component->m_TextRenderer->m_FontPath.size());
             ImGui::SliderFloat("Font Size",&text_component->m_TextRenderer->m_GlyphSize,0,256);
-            ImGui::Checkbox("Fixed Position",&text_component->m_TextRenderer->m_Fixed);
+            if(ImGui::Checkbox("Fixed Position",&text_component->m_TextRenderer->m_Fixed)){
+                glm::mat4 mat;
+                if(text_component->m_TextRenderer->m_Fixed){
+                    mat=m_Camera.GetProjMatrix();
+                }else{
+                    mat=m_Camera.GetViewProjMatrix();
+                }
+                text_component->m_TextRenderer->UpdateProjMat(mat);
+            }
 
             if(ImGui::Button("Reload Font")){
                 TextRenderer *t=text_component->m_TextRenderer.get();
@@ -862,25 +870,25 @@ void Editor::DeserializeProject(){
 }
 
 void Editor::HandleInputs(){
-    KeyState left_arrow=INPUT->GetKey(KEY_LEFT);
-    if(left_arrow.current==BUTTON_DOWN){
-        m_Camera.Move(-0.1f,0);
-    }
+    // KeyState left_arrow=INPUT->GetKey(KEY_LEFT);
+    // if(left_arrow.current==BUTTON_DOWN){
+    //     m_Camera.Move(-0.1f,0);
+    // }
 
-    KeyState right_arrow=INPUT->GetKey(KEY_RIGHT);
-    if(right_arrow.current==BUTTON_DOWN){
-        m_Camera.Move(0.1f,0);
-    }
+    // KeyState right_arrow=INPUT->GetKey(KEY_RIGHT);
+    // if(right_arrow.current==BUTTON_DOWN){
+    //     m_Camera.Move(0.1f,0);
+    // }
 
-    KeyState up_arrow=INPUT->GetKey(KEY_UP);
-    if(up_arrow.current==BUTTON_DOWN){
-        m_Camera.Move(0,0.1f);
-    }
+    // KeyState up_arrow=INPUT->GetKey(KEY_UP);
+    // if(up_arrow.current==BUTTON_DOWN){
+    //     m_Camera.Move(0,0.1f);
+    // }
 
-    KeyState down_arrow=INPUT->GetKey(KEY_DOWN);
-    if(down_arrow.current==BUTTON_DOWN){
-        m_Camera.Move(0,-0.1f);
-    }
+    // KeyState down_arrow=INPUT->GetKey(KEY_DOWN);
+    // if(down_arrow.current==BUTTON_DOWN){
+    //     m_Camera.Move(0,-0.1f);
+    // }
 
     static Vec2 lastMousePos;
     static bool wheelPressed=false;

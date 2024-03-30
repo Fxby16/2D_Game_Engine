@@ -7,6 +7,7 @@ TextRenderer::TextRenderer(const std::string &font_path,float glyph_size,bool fi
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
     m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
     m_Loaded(true),
+    m_LoadedGlyphSize(glyph_size),
     m_ID(std::numeric_limits<uint32_t>::max()),
     m_FontPath(font_path),
     m_GlyphSize(glyph_size),
@@ -21,6 +22,7 @@ TextRenderer::TextRenderer(const std::string &font_path,float glyph_size,bool fi
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
     m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
     m_Loaded(true),
+    m_LoadedGlyphSize(glyph_size),
     m_ID(id),
     m_FontPath(font_path),
     m_GlyphSize(glyph_size),
@@ -67,9 +69,9 @@ void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 co
             x+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH);
         else{
             float xpos=x+(ch.Bearing.x*scale/Window::Width*Window::MAX_WIDTH);
-            float ypos=y-((m_GlyphSize-ch.Bearing.y)*scale/Window::Width*Window::MAX_WIDTH);
+            float ypos=y-((m_LoadedGlyphSize-ch.Bearing.y)*scale/Window::Width*Window::MAX_WIDTH);
 
-            m_Transforms[workingIndex]=glm::translate(glm::mat4(1.0f),glm::vec3(xpos,ypos,0))*glm::scale(glm::mat4(1.0f),glm::vec3(m_GlyphSize*scale/Window::Width*Window::MAX_WIDTH,m_GlyphSize*scale/Window::Width*Window::MAX_WIDTH,0));
+            m_Transforms[workingIndex]=glm::translate(glm::mat4(1.0f),glm::vec3(xpos,ypos,0))*glm::scale(glm::mat4(1.0f),glm::vec3(m_LoadedGlyphSize*scale/Window::Width*Window::MAX_WIDTH,m_LoadedGlyphSize*scale/Window::Width*Window::MAX_WIDTH,0));
             m_ToRender[workingIndex]=ch.TexID;
             x+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
             workingIndex++;
@@ -119,9 +121,11 @@ void TextRenderer::Init(const std::string &font_path,float glyph_size,bool fixed
     if(FT_Init_FreeType(&m_FT))
         perror("FREETYPE ERROR: Couldn't init FreeType Library\n");
 
-    if(FT_New_Face(m_FT,font_path.c_str(),0,&m_Face))
+    if(FT_New_Face(m_FT,font_path.c_str(),0,&m_Face)){
         perror("FREETYPE ERROR: Failed to load font\n");
-    else{
+        m_Loaded=false;
+        return;
+    }else{
         FT_Select_Charmap(m_Face,ft_encoding_unicode);
         FT_Set_Pixel_Sizes(m_Face,glyph_size,glyph_size);
         glPixelStorei(GL_UNPACK_ALIGNMENT,1); //disable byte-alignment restriction
@@ -166,8 +170,8 @@ void TextRenderer::Init(const std::string &font_path,float glyph_size,bool fixed
             };
             m_Characters[ch]=character;
         }
+        FT_Done_Face(m_Face);
     }
-    FT_Done_Face(m_Face);
     FT_Done_FreeType(m_FT);
 
     float vertices[]={
