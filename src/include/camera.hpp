@@ -1,6 +1,7 @@
 #pragma once
 
 #include <structs.hpp>
+#include <fontmanager.hpp>
 
 class Camera{
 public:
@@ -8,7 +9,7 @@ public:
     ~Camera()=default;
 
     /**
-     * Initialize RENDERER and TEXT_RENDERERS projection matrices
+     * Initialize RENDERER and TEXT_RENDERER projection matrices
     */
     void InitializeProj();
 
@@ -23,6 +24,7 @@ public:
     void ResetSceneProj();  
 
     inline glm::mat4 GetViewMatrix() const{ return m_View; }
+    inline glm::mat4 GetProjMatrix() const{ return m_Proj; }
 
     /**
      * Set the camera position. 

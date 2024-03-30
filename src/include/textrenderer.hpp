@@ -13,10 +13,15 @@ inline constexpr unsigned int CH_NUM=128;
 
 class TextRenderer{
 public:
+    TextRenderer(): m_Loaded(false),m_Characters(nullptr),m_Transforms(nullptr),m_ToRender(nullptr),m_FontPath(100,'\0'),m_GlyphSize(0),m_Fixed(false){}
     /**
      * \param fixed false if its position should be relative to the camera
     */
-    TextRenderer(const char *font_path,float glyph_size,bool fixed);
+    TextRenderer(const std::string &font_path,float glyph_size,bool fixed);
+    /**
+     * \param fixed false if its position should be relative to the camera
+    */
+    TextRenderer(const std::string &font_path,float glyph_size,bool fixed,uint32_t id);
     ~TextRenderer();
 
     /**
@@ -42,7 +47,6 @@ public:
     }
 
 private:
-
     struct Character{
         unsigned int TexID;     // ID of the glyph texture       
         glm::ivec2 Size;       // Size of glyph
@@ -63,10 +67,14 @@ private:
     glm::mat4 *m_Transforms;
     int *m_ToRender;
 
-    float m_GlyphSize;
+    bool m_Loaded;
 
+    void Init(const std::string &font_path,float glyph_size,bool fixed);
     void Render(int num_characters);  
 
 public:
+    uint32_t m_ID;
+    std::string m_FontPath;
+    float m_GlyphSize;
     bool m_Fixed;
 };

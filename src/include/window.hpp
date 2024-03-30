@@ -9,9 +9,10 @@ class Application;
 
 extern bool ISFULLSCREEN;
 extern Renderer *RENDERER; ///< The main renderer
-extern std::vector<TextRenderer*> TEXT_RENDERERS; ///< The text renderers
+extern TextRenderer *TEXT_RENDERER; ///< The text renderers
 extern Input *INPUT; ///< The input manager
 extern TexturesManager *TEXTURES_MANAGER; ///< The textures manager
+extern FontManager *FONT_MANAGER; ///< The font manager
 
 namespace Window{
     extern int InitGlfwWindow(const char *window_name,bool resizable);

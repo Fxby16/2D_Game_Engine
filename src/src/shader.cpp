@@ -2,6 +2,7 @@
 #include <shader.hpp>
 
 Shader::Shader(const char *vertex_shader_path,const char *fragment_shader_path){
+    m_Loaded=true;
     m_ID=glCreateProgram();
 
     std::string vertexCode;
@@ -37,7 +38,8 @@ Shader::Shader(const char *vertex_shader_path,const char *fragment_shader_path){
 }
 
 Shader::~Shader(){
-    glDeleteProgram(m_ID);
+    if(m_Loaded)
+        glDeleteProgram(m_ID);
 }
 
 void Shader::Bind() const{

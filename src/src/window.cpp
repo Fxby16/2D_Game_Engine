@@ -2,15 +2,17 @@
 #include <window.hpp>
 #include <buttons.hpp>
 #include <texturesmanager.hpp>
+#include <fontmanager.hpp>
 #ifdef EDITOR
     #include <editor.hpp>
 #endif
 
 bool ISFULLSCREEN=false;
 Renderer *RENDERER;
-std::vector<TextRenderer*> TEXT_RENDERERS;
+TextRenderer *TEXT_RENDERER;
 Input *INPUT;
 TexturesManager *TEXTURES_MANAGER;
+FontManager *FONT_MANAGER;
 
 namespace Window{
     void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam){
@@ -59,8 +61,8 @@ namespace Window{
             last_time=current_time;
             FPS=1.0/DeltaTime;
         }
-        TEXT_RENDERERS[0]->DrawText("FPS: "+std::to_string(FPS)+"\nFrame Time: "+std::to_string(DeltaTime*1000.0f)+" ms",
-                           0.0f,Window::MAX_HEIGHT-TEXT_RENDERERS[0]->GetTextSize("FPS: "+std::to_string(FPS)+"\nFrame Time: "+std::to_string(DeltaTime*1000.0f)+" ms",
+        TEXT_RENDERER->DrawText("FPS: "+std::to_string(FPS)+"\nFrame Time: "+std::to_string(DeltaTime*1000.0f)+" ms",
+                           0.0f,Window::MAX_HEIGHT-TEXT_RENDERER->GetTextSize("FPS: "+std::to_string(FPS)+"\nFrame Time: "+std::to_string(DeltaTime*1000.0f)+" ms",
                            0.5f).second,0.5f,Vec3(1.0f,1.0f,1.0f));
     }
 
@@ -102,19 +104,20 @@ namespace Window{
         glViewport(0,0,Width,Height);
 
         RENDERER=new Renderer;
-        TEXT_RENDERERS.push_back(new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",64,true));
+        TEXT_RENDERER=new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",64,true);
         INPUT=new Input;
         TEXTURES_MANAGER=new TexturesManager;
+        FONT_MANAGER=new FontManager;
 
         return 0;
     }
 
     void DeinitGlfwWindow(){
         delete RENDERER;
-        for(int i=0;i<TEXT_RENDERERS.size();i++)
-            delete TEXT_RENDERERS[i];
+        delete TEXT_RENDERER;
         delete INPUT;
         delete TEXTURES_MANAGER;
+        delete FONT_MANAGER;
         glfwTerminate();
     }
 

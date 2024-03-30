@@ -142,6 +142,51 @@ void LightComponent::SetCentered(float width,float height){
     m_YOffset=height/2;
 }
 
+TextComponent::TextComponent(const TextComponent &other){
+    m_TextRenderer=other.m_TextRenderer;
+    m_Text=other.m_Text;
+    m_Offset=other.m_Offset;
+    m_Color=other.m_Color;
+    m_Scale=other.m_Scale;
+    m_UID=other.m_UID;
+}
+
+TextComponent::TextComponent(TextComponent &&other){
+    m_TextRenderer=other.m_TextRenderer;
+    m_Text=other.m_Text;
+    m_Offset=other.m_Offset;
+    m_Color=other.m_Color;
+    m_Scale=other.m_Scale;
+    m_UID=other.m_UID;
+}
+
+TextComponent &TextComponent::operator=(const TextComponent &other){
+    m_TextRenderer=other.m_TextRenderer;
+    m_Text=other.m_Text;
+    m_Offset=other.m_Offset;
+    m_Color=other.m_Color;
+    m_Scale=other.m_Scale;
+    m_UID=other.m_UID;
+    return *this;
+}
+
+TextComponent &TextComponent::operator=(TextComponent &&other){
+    m_TextRenderer=other.m_TextRenderer;
+    m_Text=other.m_Text;
+    m_Offset=other.m_Offset;
+    m_Color=other.m_Color;
+    m_Scale=other.m_Scale;
+    m_UID=other.m_UID;
+    return *this;
+}
+
+void TextComponent::SetCentered(float width,float height){
+    auto [t_width,t_height]=m_TextRenderer->GetTextSize(m_Text,m_Scale);
+    
+    m_Offset.x=(width-t_width)/2;
+    m_Offset.y=(height-t_height)/2;
+}
+
 std::ostream &operator<<(std::ostream &os,const RigidbodyComponent::BodyType &type){
     switch(type){
         case RigidbodyComponent::BodyType::Static:    
@@ -218,5 +263,17 @@ void ComponentManager<LightComponent>::Render(Scene *scene){
     for(int i=0;i<m_Components.size();i++){
         entity=scene->GetEntity(m_Components[i].m_UID);
         RENDERER->DrawLight({Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_XOffset,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_YOffset},Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
+    }
+}
+
+template<>
+void ComponentManager<TextComponent>::Render(Scene *scene){
+    PROFILE_FUNCTION();
+
+    Entity *entity=nullptr;
+    for(int i=0;i<m_Components.size();i++){
+        entity=scene->GetEntity(m_Components[i].m_UID);
+        if(m_Components[i].m_TextRenderer!=nullptr)
+            m_Components[i].m_TextRenderer->DrawText(m_Components[i].m_Text,Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_Offset.x,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_Offset.y,m_Components[i].m_Scale,m_Components[i].m_Color);
     }
 }

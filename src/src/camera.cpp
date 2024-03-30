@@ -42,12 +42,19 @@ void Camera::InitializeProj(){
 
     RENDERER->m_Zoom=m_Zoom;
 
-    for(int i=0;i<TEXT_RENDERERS.size();i++){
-        if(TEXT_RENDERERS[i]->m_Fixed)    
-            TEXT_RENDERERS[i]->UpdateProjMat(m_Proj);
-        else{
-            TEXT_RENDERERS[i]->UpdateProjMat(m_ViewProj);
-        }
+    if(TEXT_RENDERER->m_Fixed)    
+        TEXT_RENDERER->UpdateProjMat(m_Proj);
+    else{
+        TEXT_RENDERER->UpdateProjMat(m_ViewProj);
+    }
+
+    std::unordered_map<uint32_t,struct FontInfo> &fonts=FONT_MANAGER->GetFonts();
+    for(auto &[id,font]:fonts){
+        TextRenderer &f=*font.font;
+        if(f.m_Fixed)
+            f.UpdateProjMat(m_Proj);
+        else
+            f.UpdateProjMat(m_ViewProj);
     }
 }
 

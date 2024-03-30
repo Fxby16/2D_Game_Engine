@@ -19,6 +19,16 @@ std::pair<uint32_t,std::shared_ptr<Texture>> TexturesManager::GetTexture(const s
     return {id,tex};
 }
 
+std::shared_ptr<Texture> TexturesManager::GetTexture(uint32_t id){
+    auto it=m_Textures.find(id);
+
+    if(it==m_Textures.end()){
+        return nullptr;
+    }
+
+    return it->second.texture;
+}
+
 std::pair<uint32_t,std::shared_ptr<SpriteSheet>> TexturesManager::GetSpriteSheet(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter){
     for(auto &[id,texture]:m_SpriteSheets){
         SpriteSheet &tex=*texture.texture;
@@ -34,6 +44,16 @@ std::pair<uint32_t,std::shared_ptr<SpriteSheet>> TexturesManager::GetSpriteSheet
 
     m_SpriteSheets[id]=SpriteSheetInfo(tex);
     return {id,tex};
+}
+
+std::shared_ptr<SpriteSheet> TexturesManager::GetSpriteSheet(uint32_t id){
+    auto it=m_SpriteSheets.find(id);
+
+    if(it==m_SpriteSheets.end()){
+        return nullptr;
+    }
+
+    return it->second.texture;
 }
 
 void TexturesManager::ReleaseTexture(uint32_t texture_id){

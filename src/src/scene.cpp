@@ -59,9 +59,15 @@ Entity* Scene::GetEntity(uint32_t uid){
 void Scene::RemoveEntity(uint32_t uid){
     PROFILE_FUNCTION();
 
+    m_TagComponents.RemoveComponent(uid);
     m_TextureComponents.RemoveComponent(uid);
     m_AnimatedTextureComponents.RemoveComponent(uid);
     m_LightComponents.RemoveComponent(uid);
+    m_BoxColliderComponents.RemoveComponent(uid);
+    m_CircleColliderComponents.RemoveComponent(uid);
+    m_RigidbodyComponents.RemoveComponent(uid);
+    m_NativeScriptComponents.RemoveComponent(uid);
+    m_TextComponents.RemoveComponent(uid);
 
     int idx=BinarySearchi(m_Entities,uid);
     if(idx==-1)
@@ -123,6 +129,13 @@ NativeScriptComponent* Scene::GetComponent<NativeScriptComponent>(uint32_t uid){
     PROFILE_FUNCTION();
 
     return m_NativeScriptComponents.GetComponent(uid);
+}
+
+template<>
+TextComponent* Scene::GetComponent<TextComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+
+    return m_TextComponents.GetComponent(uid);
 }
 
 void Scene::SetEntityPosition(uint32_t uid,float x,float y){
@@ -190,6 +203,12 @@ void Scene::AddComponentToContainer<NativeScriptComponent>(NativeScriptComponent
 }
 
 template<>
+void Scene::AddComponentToContainer<TextComponent>(TextComponent &component,uint32_t uid){
+    PROFILE_FUNCTION();
+    m_TextComponents.AddComponent(component,uid);
+}
+
+template<>
 void Scene::RemoveComponent<TagComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
@@ -245,6 +264,13 @@ void Scene::RemoveComponent<NativeScriptComponent>(uint32_t uid){
     m_NativeScriptComponents.RemoveComponent(uid);
 }
 
+template<>
+void Scene::RemoveComponent<TextComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+    
+    m_TextComponents.RemoveComponent(uid);
+}
+
 void Scene::Update(double frame_time){
     PROFILE_FUNCTION();
 
@@ -258,6 +284,7 @@ void Scene::Render(){
     m_TextureComponents.Render(this);
     m_AnimatedTextureComponents.Render(this);
     m_LightComponents.Render(this);
+    m_TextComponents.Render(this);
 }
 
 void Scene::MoveEntity(uint32_t uid,float x_offset,float y_offset){
@@ -343,6 +370,11 @@ std::vector<CircleColliderComponent> &Scene::GetComponents<CircleColliderCompone
 template<>
 std::vector<NativeScriptComponent> &Scene::GetComponents<NativeScriptComponent>(){
     return m_NativeScriptComponents.m_Components;
+}
+
+template<>
+std::vector<TextComponent> &Scene::GetComponents<TextComponent>(){
+    return m_TextComponents.m_Components;
 }
 
 void Scene::DebugDraw(){

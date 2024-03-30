@@ -12,5 +12,6 @@ void FreeMemory(void *ptr,std::source_location src){
     #ifdef DEBUG
         printf("Freeing memory from %s:%d\n",src.file_name(),src.line());
     #endif
-    operator delete(ptr);
+    if(ptr!=nullptr)
+        operator delete(ptr);
 }

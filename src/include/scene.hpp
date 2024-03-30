@@ -111,7 +111,7 @@ public:
             fixture_def.friction=temp.m_Friction;
             fixture_def.restitution=temp.m_Restitution;
             fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
-            rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
+            temp.m_RuntimeFixture=rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
         }else if constexpr(std::is_same<T,CircleColliderComponent>::value){
             RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
             if(rigidbody==nullptr){
@@ -129,7 +129,7 @@ public:
             fixture_def.friction=temp.m_Friction;
             fixture_def.restitution=temp.m_Restitution;
             fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
-            rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
+            temp.m_RuntimeFixture=rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
         }
 
         AddComponentToContainer<T>(temp,uid);
@@ -216,6 +216,7 @@ private:
     ComponentManager<CircleColliderComponent> m_CircleColliderComponents;
     ComponentManager<LightComponent> m_LightComponents;
     ComponentManager<NativeScriptComponent> m_NativeScriptComponents;
+    ComponentManager<TextComponent> m_TextComponents;
 
     std::vector<std::vector<uint32_t>> m_TexturesEntities; ///< entities with the same texture are grouped together
     std::vector<std::vector<uint32_t>> m_AnimatedTexturesEntities; ///< entities with the same animated texture are grouped together

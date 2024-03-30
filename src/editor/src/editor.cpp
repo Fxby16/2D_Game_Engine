@@ -28,8 +28,8 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     Window::MAX_HEIGHT=Window::MAX_WIDTH/(Window::Width/Window::Height);
 
     Window::InitGlfwWindow("Editor",resizable);
+    Window::ProjUpdate=true;
 
-    m_Camera.InitializeProj();
     m_SceneFramebuffer=new Framebuffer;
     m_Scene=new Scene;
     m_SceneSerializer=new SceneSerializer;
@@ -66,6 +66,10 @@ Editor::~Editor(){
 void Editor::Run(){
     while(!glfwWindowShouldClose(Window::Window)){
         glfwPollEvents();
+
+        if(Window::ProjUpdate){
+            m_Camera.InitializeProj();
+        }
 
         INPUT->UpdateStates();
         HandleInputs();
@@ -576,6 +580,45 @@ void Editor::ComponentsMenu(ImVec2 pos){
         }
     }
 
+    TextComponent *text_component=m_Scene->GetComponent<TextComponent>(m_SelectedEntity);
+    if(text_component){
+        if(StartNode("TextComponent")){
+            ImGui::InputText("Font Path",&text_component->m_TextRenderer->m_FontPath[0],text_component->m_TextRenderer->m_FontPath.size());
+            ImGui::SliderFloat("Font Size",&text_component->m_TextRenderer->m_GlyphSize,0,256);
+            ImGui::Checkbox("Fixed Position",&text_component->m_TextRenderer->m_Fixed);
+
+            if(ImGui::Button("Reload Font")){
+                TextRenderer *t=text_component->m_TextRenderer.get();
+                text_component->m_TextRenderer=FONT_MANAGER->UpdateFont(t->m_ID,t->m_FontPath,t->m_GlyphSize,t->m_Fixed).second;
+            }
+
+            ImGui::InputText("Text",&text_component->m_Text[0],text_component->m_Text.size());
+            ImGui::SliderFloat("X Offset",&text_component->m_Offset.x,-10.0f,10.0f);
+            ImGui::SliderFloat("Y Offset",&text_component->m_Offset.y,-10.0f,10.0f);
+            if(ImGui::Button("Center Text")){
+                TextureComponent *texture_component=m_Scene->GetComponent<TextureComponent>(m_SelectedEntity);
+                if(texture_component){
+                    text_component->SetCentered(texture_component->m_Width,texture_component->m_Height);
+                }else{
+                    AnimatedTextureComponent *animated_texture_component=m_Scene->GetComponent<AnimatedTextureComponent>(m_SelectedEntity);
+                    if(animated_texture_component){
+                        text_component->SetCentered(animated_texture_component->m_Width,animated_texture_component->m_Height);
+                    }
+                }
+            }
+            ImGui::SliderFloat("Scale",&text_component->m_Scale,0.0f,10.0f);
+            ImGui::ColorEdit3("Color",&text_component->m_Color.r);
+            ImGui::TreePop();
+        }
+        ImGui::OpenPopupOnItemClick("TextComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("TextComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<TextComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
+        }
+    }
+
     for(int i=0;i<m_ScriptComponents.size();i++){
         auto &[name,id]=m_ScriptComponents[i];
         if(id==m_SelectedEntity){
@@ -633,6 +676,11 @@ void Editor::ComponentsMenu(ImVec2 pos){
             if(ImGui::MenuItem("Light Component")){
                 if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<LightComponent>(m_SelectedEntity)==nullptr){
                     m_Scene->AddComponent<LightComponent>(m_SelectedEntity);
+                }
+            }
+            if(ImGui::MenuItem("Text Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<TextComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<TextComponent>(m_SelectedEntity);
                 }
             }
             if(ImGui::MenuItem("Script Component")){

@@ -31,12 +31,23 @@ public:
     std::pair<uint32_t,std::shared_ptr<Texture>> GetTexture(const std::string &path,int mag_filter,int min_filter);
     
     /**
+     * Returns a texture from the id given.
+     * \return the texture
+    */
+    std::shared_ptr<Texture> GetTexture(uint32_t id);
+
+    /**
      * Returns a spritesheet from the parameters given. If the spritesheet is already loaded, it will return the spritesheet and increase the number of copies,
      * otherwise it will load the spritesheet and return it.
      * \return A pair with the texture id and the texture itself.
     */
     std::pair<uint32_t,std::shared_ptr<SpriteSheet>> GetSpriteSheet(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter);
 
+    /**
+     * Returns a spritesheet from the id given.
+     * \return the spritesheet
+    */
+    std::shared_ptr<SpriteSheet> GetSpriteSheet(uint32_t id);
 
     /**
      * Decreases the number of copies of the texture with the id given. If the number of copies reaches 0, the texture will be deleted.

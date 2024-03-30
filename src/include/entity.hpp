@@ -3,6 +3,7 @@
 #include <structs.hpp>
 #include <texture.hpp>
 #include <window.hpp>
+#include <textrenderer.hpp>
 
 extern uint32_t NEXT_UID; //the next uid to be assigned
 
@@ -15,6 +16,7 @@ class BoxColliderComponent;
 class CircleColliderComponent;
 class LightComponent;
 class NativeScriptComponent;
+class TextComponent;
 class Scene;
 
 template<typename T>
@@ -26,7 +28,8 @@ using ComponentType=typename std::enable_if<
     std::is_same<T,BoxColliderComponent>::value ||
     std::is_same<T,CircleColliderComponent>::value ||
     std::is_same<T,LightComponent>::value ||
-    std::is_same<T,NativeScriptComponent>::value,
+    std::is_same<T,NativeScriptComponent>::value ||
+    std::is_same<T,TextComponent>::value,
     int>::type;
 
 /**
@@ -282,6 +285,29 @@ public:
     std::function<void(Scene*,NativeScriptComponent*,float)> OnUpdate;
     std::function<void(Scene*,NativeScriptComponent*)> OnDestroy;
 
+    uint32_t m_UID;
+};
+
+class TextComponent{
+public:
+    TextComponent(): m_TextRenderer(std::make_shared<TextRenderer>()),m_Text(100,'\0'),m_Offset(0.0f,0.0f),m_Color(1.0f,1.0f,1.0f),m_Scale(1.0f),m_UID(std::numeric_limits<uint32_t>::max()){}
+    TextComponent(uint32_t uid): m_TextRenderer(std::make_shared<TextRenderer>()),m_Text(100,'\0'),m_Offset(0.0f,0.0f),m_Color(1.0f,1.0f,1.0f),m_Scale(1.0f),m_UID(uid){}
+    TextComponent(std::shared_ptr<TextRenderer> textRenderer,const std::string &text,Vec2 offset,Vec3 color,float scale,uint32_t uid): 
+        m_TextRenderer(textRenderer),m_Text(text),m_Offset(offset),m_Color(color),m_Scale(scale),m_UID(uid){}
+    TextComponent(const std::string &path,float glyph_size,bool fixed,uint32_t uid): m_TextRenderer(FONT_MANAGER->GetFont(path,glyph_size,fixed).second),m_UID(uid){}
+
+    TextComponent(const TextComponent &other);
+    TextComponent(TextComponent &&other);
+    TextComponent &operator=(const TextComponent &other);
+    TextComponent &operator=(TextComponent &&other);
+
+    void SetCentered(float width,float height);
+
+    std::shared_ptr<TextRenderer> m_TextRenderer;
+    std::string m_Text;
+    Vec2 m_Offset;
+    Vec3 m_Color;
+    float m_Scale;
     uint32_t m_UID;
 };
 

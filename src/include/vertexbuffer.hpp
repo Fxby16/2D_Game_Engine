@@ -6,6 +6,7 @@
 class VertexBuffer{
 public:
     VertexBuffer(unsigned int num_vertices,unsigned int vertex_size,GLenum usage);
+    VertexBuffer()=default;
     ~VertexBuffer();
 
     void SetData(unsigned int vertex_index,float *data,unsigned int num_vertices,unsigned int VertexSize);

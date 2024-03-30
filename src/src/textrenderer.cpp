@@ -3,12 +3,114 @@
 #include <window.hpp>
 #include <global.hpp>
 
-TextRenderer::TextRenderer(const char *font_path,float glyph_size,bool fixed):
+TextRenderer::TextRenderer(const std::string &font_path,float glyph_size,bool fixed):
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
     m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
+    m_Loaded(true),
+    m_ID(std::numeric_limits<uint32_t>::max()),
+    m_FontPath(font_path),
     m_GlyphSize(glyph_size),
     m_Fixed(fixed)
 {
+    m_FontPath.resize(100);
+    Init(font_path,glyph_size,fixed);
+    Window::ProjUpdate=true;
+}
+
+TextRenderer::TextRenderer(const std::string &font_path,float glyph_size,bool fixed,uint32_t id):
+    m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
+    m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
+    m_Loaded(true),
+    m_ID(id),
+    m_FontPath(font_path),
+    m_GlyphSize(glyph_size),
+    m_Fixed(fixed)
+{
+    m_FontPath.resize(100);
+    Init(font_path,glyph_size,fixed);
+    Window::ProjUpdate=true;
+}
+
+TextRenderer::~TextRenderer(){
+    FreeMemory(m_Characters);
+    FreeMemory(m_Transforms);
+    FreeMemory(m_ToRender);
+
+    if(m_Loaded)
+        glDeleteTextures(1,&m_TextureArrayID);
+}
+
+void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 color){
+    PROFILE_FUNCTION();
+
+    if(!m_Loaded){
+        return;
+    }
+
+    float copyX=x;
+    m_Shader.Bind();
+    m_Shader.SetUniform3f("textColor",color.r,color.g,color.b);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D_ARRAY,m_TextureArrayID);
+    m_VAO.Bind();
+    m_VBO.Bind();
+
+    int workingIndex=0;
+    for(auto c:text){
+        if(c=='\0')
+            break;
+        Character ch=m_Characters[c];
+        if(c=='\n'){
+            y-=(ch.Size.y*1.3f*scale/Window::Width*Window::MAX_WIDTH);
+            x=copyX;
+        }else if(c==' ')
+            x+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH);
+        else{
+            float xpos=x+(ch.Bearing.x*scale/Window::Width*Window::MAX_WIDTH);
+            float ypos=y-((m_GlyphSize-ch.Bearing.y)*scale/Window::Width*Window::MAX_WIDTH);
+
+            m_Transforms[workingIndex]=glm::translate(glm::mat4(1.0f),glm::vec3(xpos,ypos,0))*glm::scale(glm::mat4(1.0f),glm::vec3(m_GlyphSize*scale/Window::Width*Window::MAX_WIDTH,m_GlyphSize*scale/Window::Width*Window::MAX_WIDTH,0));
+            m_ToRender[workingIndex]=ch.TexID;
+            x+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+            workingIndex++;
+            if(workingIndex==CH_LIMIT-1){
+                Render(workingIndex);
+                workingIndex=0;
+            }
+        }
+    }
+    Render(workingIndex);
+}
+
+std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
+    PROFILE_FUNCTION();
+
+    if(!m_Loaded){
+        return std::make_pair(0.0f,0.0f);
+    }
+
+    float width_=0.0f;
+    float height_=0.0f;
+    float max_width=0.0f;
+    for(auto c:text){
+        if(c=='\0')
+            break;
+        Character ch=m_Characters[c];
+        if(c=='\n'){
+            height_+=(ch.Size.y*1.3f*scale/Window::Width*Window::MAX_WIDTH);
+            max_width=std::max(max_width,width_);
+            width_=0.0f;
+        }else if(c==' ')
+            width_+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH);
+        else{
+            width_+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+        }
+    }
+    return std::make_pair(std::max(max_width,width_),std::max(height_,m_Characters['\n'].Size.y*1.3f*scale/Window::Width*Window::MAX_WIDTH));
+}
+
+void TextRenderer::Init(const std::string &font_path,float glyph_size,bool fixed){
+    PROFILE_FUNCTION();
 
     m_Characters=(Character*)AllocateMemory(CH_NUM*sizeof(Character));
     m_Transforms=(glm::mat4*)AllocateMemory(CH_LIMIT*sizeof(glm::mat4));
@@ -17,7 +119,7 @@ TextRenderer::TextRenderer(const char *font_path,float glyph_size,bool fixed):
     if(FT_Init_FreeType(&m_FT))
         perror("FREETYPE ERROR: Couldn't init FreeType Library\n");
 
-    if(FT_New_Face(m_FT,font_path,0,&m_Face))
+    if(FT_New_Face(m_FT,font_path.c_str(),0,&m_Face))
         perror("FREETYPE ERROR: Failed to load font\n");
     else{
         FT_Select_Charmap(m_Face,ft_encoding_unicode);
@@ -78,71 +180,6 @@ TextRenderer::TextRenderer(const char *font_path,float glyph_size,bool fixed):
     m_VBO.SetData(0,vertices,4,sizeof(float)*2);
     m_VBL.Push(GL_FLOAT,2,false);
     m_VAO.AddBuffer(m_VBO,m_VBL);
-}
-
-TextRenderer::~TextRenderer(){
-    FreeMemory(m_Characters);
-    FreeMemory(m_Transforms);
-    FreeMemory(m_ToRender);
-
-    glDeleteTextures(1,&m_TextureArrayID);
-}
-
-void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 color){
-    PROFILE_FUNCTION();
-
-    float copyX=x;
-    m_Shader.Bind();
-    m_Shader.SetUniform3f("textColor",color.r,color.g,color.b);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D_ARRAY,m_TextureArrayID);
-    m_VAO.Bind();
-    m_VBO.Bind();
-
-    int workingIndex=0;
-    for(auto c:text){
-        Character ch=m_Characters[c];
-        if(c=='\n'){
-            y-=(ch.Size.y*1.3f*scale/Window::Width*Window::MAX_WIDTH);
-            x=copyX;
-        }else if(c==' ')
-            x+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH);
-        else{
-            float xpos=x+(ch.Bearing.x*scale/Window::Width*Window::MAX_WIDTH);
-            float ypos=y-((m_GlyphSize-ch.Bearing.y)*scale/Window::Width*Window::MAX_WIDTH);
-
-            m_Transforms[workingIndex]=glm::translate(glm::mat4(1.0f),glm::vec3(xpos,ypos,0))*glm::scale(glm::mat4(1.0f),glm::vec3(m_GlyphSize*scale/Window::Width*Window::MAX_WIDTH,m_GlyphSize*scale/Window::Width*Window::MAX_WIDTH,0));
-            m_ToRender[workingIndex]=ch.TexID;
-            x+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
-            workingIndex++;
-            if(workingIndex==CH_LIMIT-1){
-                Render(workingIndex);
-                workingIndex=0;
-            }
-        }
-    }
-    Render(workingIndex);
-}
-
-std::pair<float,float> TextRenderer::GetTextSize(std::string text,float scale){
-    PROFILE_FUNCTION();
-
-    float width_=0.0f;
-    float height_=0.0f;
-    float max_width=0.0f;
-    for(auto c:text){
-        Character ch=m_Characters[c];
-        if(c=='\n'){
-            height_+=(ch.Size.y*1.3f*scale/Window::Width*Window::MAX_WIDTH);
-            max_width=std::max(max_width,width_);
-            width_=0.0f;
-        }else if(c==' ')
-            width_+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH);
-        else{
-            width_+=((ch.Advance>>6)*scale/Window::Width*Window::MAX_WIDTH); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
-        }
-    }
-    return std::make_pair(std::max(max_width,width_),std::max(height_,m_Characters['\n'].Size.y*1.3f*scale/Window::Width*Window::MAX_WIDTH));
 }
 
 void TextRenderer::Render(int num_characters){

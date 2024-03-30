@@ -1,5 +1,6 @@
 Engine:
-- add text component
+- add layers for text component
+- text component serialization
 - collision callbacks
 - rotated quads (and triangles)
 - directional light

@@ -4,6 +4,7 @@ class Shader{
 public:
    
     Shader(const char *vertex_shader_path,const char *fragment_shader_path);
+    Shader()=default;
     ~Shader();
     void Bind() const;
     void Unbind() const;
@@ -22,6 +23,8 @@ public:
 private:
     std::unordered_map<std::string,int>m_UniformsCache;
     unsigned int m_ID;
+
+    bool m_Loaded=false;
 
     void Compile(const char *vertex_src_code,const char *fragment_src_code);
     bool CheckShaderErrors(GLuint shader_ID);
