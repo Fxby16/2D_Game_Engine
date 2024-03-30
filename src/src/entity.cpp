@@ -148,6 +148,8 @@ TextComponent::TextComponent(const TextComponent &other){
     m_Offset=other.m_Offset;
     m_Color=other.m_Color;
     m_Scale=other.m_Scale;
+    m_Layer=other.m_Layer;
+    m_IgnoreLighting=other.m_IgnoreLighting;
     m_UID=other.m_UID;
 }
 
@@ -157,6 +159,8 @@ TextComponent::TextComponent(TextComponent &&other){
     m_Offset=other.m_Offset;
     m_Color=other.m_Color;
     m_Scale=other.m_Scale;
+    m_Layer=other.m_Layer;
+    m_IgnoreLighting=other.m_IgnoreLighting;
     m_UID=other.m_UID;
 }
 
@@ -166,6 +170,8 @@ TextComponent &TextComponent::operator=(const TextComponent &other){
     m_Offset=other.m_Offset;
     m_Color=other.m_Color;
     m_Scale=other.m_Scale;
+    m_Layer=other.m_Layer;
+    m_IgnoreLighting=other.m_IgnoreLighting;
     m_UID=other.m_UID;
     return *this;
 }
@@ -176,6 +182,8 @@ TextComponent &TextComponent::operator=(TextComponent &&other){
     m_Offset=other.m_Offset;
     m_Color=other.m_Color;
     m_Scale=other.m_Scale;
+    m_Layer=other.m_Layer;
+    m_IgnoreLighting=other.m_IgnoreLighting;
     m_UID=other.m_UID;
     return *this;
 }
@@ -274,6 +282,6 @@ void ComponentManager<TextComponent>::Render(Scene *scene){
     for(int i=0;i<m_Components.size();i++){
         entity=scene->GetEntity(m_Components[i].m_UID);
         if(m_Components[i].m_TextRenderer!=nullptr)
-            m_Components[i].m_TextRenderer->DrawText(m_Components[i].m_Text,Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_Offset.x,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_Offset.y,m_Components[i].m_Scale,m_Components[i].m_Color);
+            m_Components[i].m_TextRenderer->DrawText(m_Components[i].m_Text,Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_Offset.x,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_Offset.y,m_Components[i].m_Scale,(m_Components[i].m_IgnoreLighting?std::numeric_limits<int>::max()-1:m_Components[i].m_Layer),m_Components[i].m_Color);
     }
 }

@@ -33,7 +33,18 @@ public:
      * \param scale the scale of the text
      * \param color the color of the text
     */
-    void DrawText(std::string text,float x,float y,float scale,Vec3 color);
+    void DrawText(const std::string &text,float x,float y,float scale,int layer,Vec3 color);
+
+    /**
+     * Istantaneously draw the text.
+     * Coordinates are expected in engine units (screen width = 10 units)
+     * \param text a string containing the text
+     * \param x the x position of the text
+     * \param y the y position of the text
+     * \param scale the scale of the text
+     * \param color the color of the text
+    */
+    void _DrawText(const std::string &text,float x,float y,float scale,Vec3 color);
     /**
      * Get the size of the text.
      * \param text a string containing the text

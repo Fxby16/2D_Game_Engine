@@ -600,7 +600,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
                 text_component->m_TextRenderer=FONT_MANAGER->UpdateFont(t->m_ID,t->m_FontPath,t->m_GlyphSize,t->m_Fixed).second;
             }
 
-            ImGui::InputText("Text",&text_component->m_Text[0],text_component->m_Text.size());
+            ImGui::InputTextMultiline("Text",&text_component->m_Text[0],text_component->m_Text.size());
             ImGui::SliderFloat("X Offset",&text_component->m_Offset.x,-10.0f,10.0f);
             ImGui::SliderFloat("Y Offset",&text_component->m_Offset.y,-10.0f,10.0f);
             if(ImGui::Button("Center Text")){
@@ -616,6 +616,10 @@ void Editor::ComponentsMenu(ImVec2 pos){
             }
             ImGui::SliderFloat("Scale",&text_component->m_Scale,0.0f,10.0f);
             ImGui::ColorEdit3("Color",&text_component->m_Color.r);
+            ImGui::Checkbox("Ignore Lighting",&text_component->m_IgnoreLighting);
+            if(!text_component->m_IgnoreLighting){
+                ImGui::SliderInt("Layer",&text_component->m_Layer,-100,100);
+            }
             ImGui::TreePop();
         }
         ImGui::OpenPopupOnItemClick("TextComponentPopup",ImGuiPopupFlags_MouseButtonRight);

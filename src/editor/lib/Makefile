@@ -70,9 +70,11 @@ GENERATED += $(OBJDIR)/audio.o
 GENERATED += $(OBJDIR)/camera.o
 GENERATED += $(OBJDIR)/entity.o
 GENERATED += $(OBJDIR)/entrypoint.o
+GENERATED += $(OBJDIR)/fontmanager.o
 GENERATED += $(OBJDIR)/framebuffer.o
 GENERATED += $(OBJDIR)/glad.o
 GENERATED += $(OBJDIR)/glfw.o
+GENERATED += $(OBJDIR)/global.o
 GENERATED += $(OBJDIR)/indexbuffer.o
 GENERATED += $(OBJDIR)/input.o
 GENERATED += $(OBJDIR)/memory.o
@@ -84,6 +86,7 @@ GENERATED += $(OBJDIR)/shader.o
 GENERATED += $(OBJDIR)/stb_image.o
 GENERATED += $(OBJDIR)/structs.o
 GENERATED += $(OBJDIR)/test.o
+GENERATED += $(OBJDIR)/textqueue.o
 GENERATED += $(OBJDIR)/textrenderer.o
 GENERATED += $(OBJDIR)/texture.o
 GENERATED += $(OBJDIR)/texturesmanager.o
@@ -98,9 +101,11 @@ OBJECTS += $(OBJDIR)/audio.o
 OBJECTS += $(OBJDIR)/camera.o
 OBJECTS += $(OBJDIR)/entity.o
 OBJECTS += $(OBJDIR)/entrypoint.o
+OBJECTS += $(OBJDIR)/fontmanager.o
 OBJECTS += $(OBJDIR)/framebuffer.o
 OBJECTS += $(OBJDIR)/glad.o
 OBJECTS += $(OBJDIR)/glfw.o
+OBJECTS += $(OBJDIR)/global.o
 OBJECTS += $(OBJDIR)/indexbuffer.o
 OBJECTS += $(OBJDIR)/input.o
 OBJECTS += $(OBJDIR)/memory.o
@@ -112,6 +117,7 @@ OBJECTS += $(OBJDIR)/shader.o
 OBJECTS += $(OBJDIR)/stb_image.o
 OBJECTS += $(OBJDIR)/structs.o
 OBJECTS += $(OBJDIR)/test.o
+OBJECTS += $(OBJDIR)/textqueue.o
 OBJECTS += $(OBJDIR)/textrenderer.o
 OBJECTS += $(OBJDIR)/texture.o
 OBJECTS += $(OBJDIR)/texturesmanager.o
@@ -198,7 +204,13 @@ $(OBJDIR)/entity.o: ../../src/entity.cpp
 $(OBJDIR)/entrypoint.o: ../../src/entrypoint.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/fontmanager.o: ../../src/fontmanager.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/framebuffer.o: ../../src/framebuffer.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/global.o: ../../src/global.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/indexbuffer.o: ../../src/indexbuffer.cpp
@@ -223,6 +235,9 @@ $(OBJDIR)/stb_image.o: ../../src/stb_image.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/structs.o: ../../src/structs.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/textqueue.o: ../../src/textqueue.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/textrenderer.o: ../../src/textrenderer.cpp

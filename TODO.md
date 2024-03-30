@@ -1,7 +1,5 @@
 Engine:
-- add layers for text component
-- add the possibility to render text above lighting
-- text component serialization
+- scale the text appropriately corresponding to the window size
 - collision callbacks
 - rotated quads (and triangles)
 - directional light

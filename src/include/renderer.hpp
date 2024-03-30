@@ -277,10 +277,10 @@ private:
         return v1.layer<v2.layer; 
     }
 
-    inline float GetTexturesMinLayer(){ return m_Textures.NumVertices>0?m_BufferT[m_TextureIndex].layer:std::numeric_limits<float>::max(); }
-    inline float GetPointsMinLayer(){ return m_Points.NumVertices>0?m_BufferP[m_PointIndex].layer:std::numeric_limits<float>::max(); }
-    inline float GetLinesMinLayer(){ return m_Lines.NumVertices>0?m_BufferL[m_LineIndex].layer:std::numeric_limits<float>::max(); }
-    inline float GetTrianglesMinLayer(){ return m_Triangles.NumVertices>0?m_BufferTR[m_TriangleIndex].layer:std::numeric_limits<float>::max(); }
+    inline int GetTexturesMinLayer(){ return m_Textures.NumVertices>0?m_BufferT[m_TextureIndex].layer:std::numeric_limits<float>::max(); }
+    inline int GetPointsMinLayer(){ return m_Points.NumVertices>0?m_BufferP[m_PointIndex].layer:std::numeric_limits<float>::max(); }
+    inline int GetLinesMinLayer(){ return m_Lines.NumVertices>0?m_BufferL[m_LineIndex].layer:std::numeric_limits<float>::max(); }
+    inline int GetTrianglesMinLayer(){ return m_Triangles.NumVertices>0?m_BufferTR[m_TriangleIndex].layer:std::numeric_limits<float>::max(); }
 
     inline void AddLayout(VertexBufferLayout &VBL,unsigned int type,unsigned int count,bool normalized){
         VBL.Push(type,count,normalized);

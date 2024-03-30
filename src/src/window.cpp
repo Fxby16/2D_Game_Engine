@@ -3,6 +3,7 @@
 #include <buttons.hpp>
 #include <texturesmanager.hpp>
 #include <fontmanager.hpp>
+#include <textqueue.hpp>
 #ifdef EDITOR
     #include <editor.hpp>
 #endif
@@ -13,6 +14,7 @@ TextRenderer *TEXT_RENDERER;
 Input *INPUT;
 TexturesManager *TEXTURES_MANAGER;
 FontManager *FONT_MANAGER;
+TextQueue *TEXT_QUEUE;
 
 namespace Window{
     void GLAPIENTRY MessageCallback(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar* message,const void* userParam){
@@ -63,7 +65,7 @@ namespace Window{
         }
         TEXT_RENDERER->DrawText("FPS: "+std::to_string(FPS)+"\nFrame Time: "+std::to_string(DeltaTime*1000.0f)+" ms",
                            0.0f,Window::MAX_HEIGHT-TEXT_RENDERER->GetTextSize("FPS: "+std::to_string(FPS)+"\nFrame Time: "+std::to_string(DeltaTime*1000.0f)+" ms",
-                           0.5f).second,0.5f,Vec3(1.0f,1.0f,1.0f));
+                           0.5f).second,0.5f,1'000'000,Vec3(1.0f,1.0f,1.0f));
     }
 
     int InitGlfwWindow(const char *window_name,bool resizable){
@@ -108,6 +110,7 @@ namespace Window{
         INPUT=new Input;
         TEXTURES_MANAGER=new TexturesManager;
         FONT_MANAGER=new FontManager;
+        TEXT_QUEUE=new TextQueue;
 
         return 0;
     }
@@ -118,6 +121,7 @@ namespace Window{
         delete INPUT;
         delete TEXTURES_MANAGER;
         delete FONT_MANAGER;
+        delete TEXT_QUEUE;
         glfwTerminate();
     }
 

@@ -41,6 +41,7 @@
 #include <thread>
 #include <atomic>
 #include <filesystem>
+#include <queue>
 
 #include <memory.hpp>
 

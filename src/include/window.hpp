@@ -4,6 +4,8 @@
 #include <textrenderer.hpp>
 #include <input.hpp>
 #include <texturesmanager.hpp>
+#include <fontmanager.hpp>
+#include <textqueue.hpp>
 
 class Application;
 
@@ -13,6 +15,7 @@ extern TextRenderer *TEXT_RENDERER; ///< The text renderers
 extern Input *INPUT; ///< The input manager
 extern TexturesManager *TEXTURES_MANAGER; ///< The textures manager
 extern FontManager *FONT_MANAGER; ///< The font manager
+extern TextQueue *TEXT_QUEUE; ///< The text queue
 
 namespace Window{
     extern int InitGlfwWindow(const char *window_name,bool resizable);

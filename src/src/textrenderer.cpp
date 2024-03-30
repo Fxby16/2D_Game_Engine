@@ -42,7 +42,17 @@ TextRenderer::~TextRenderer(){
         glDeleteTextures(1,&m_TextureArrayID);
 }
 
-void TextRenderer::DrawText(std::string text,float x,float y,float scale,Vec3 color){
+void TextRenderer::DrawText(const std::string &text,float x,float y,float scale,int layer,Vec3 color){
+    PROFILE_FUNCTION();
+
+    if(!m_Loaded){
+        return;
+    }
+
+    TEXT_QUEUE->Push(this,text,x,y,scale,color,layer);
+}
+
+void TextRenderer::_DrawText(const std::string &text,float x,float y,float scale,Vec3 color){
     PROFILE_FUNCTION();
 
     if(!m_Loaded){

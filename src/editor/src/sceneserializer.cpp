@@ -243,6 +243,8 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"Offset"<<YAML::Value<<textcomponent->m_Offset;
         out<<YAML::Key<<"Color"<<YAML::Value<<textcomponent->m_Color;
         out<<YAML::Key<<"Scale"<<YAML::Value<<textcomponent->m_Scale;
+        out<<YAML::Key<<"Layer"<<YAML::Value<<textcomponent->m_Layer;
+        out<<YAML::Key<<"IgnoreLighting"<<YAML::Value<<textcomponent->m_IgnoreLighting;
 
         out<<YAML::EndMap; //text component
     }
@@ -590,8 +592,10 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
                 Vec2 offset=textcomponent["Offset"].as<Vec2>();
                 Vec3 color=textcomponent["Color"].as<Vec3>();
                 float scale=textcomponent["Scale"].as<float>();
+                int layer=textcomponent["Layer"].as<int>();
+                bool ignore_lighting=textcomponent["IgnoreLighting"].as<bool>();
 
-                m_Scene->AddComponent<TextComponent>(uid,fontpath,glyphsize,fixed,text,offset,color,scale);
+                m_Scene->AddComponent<TextComponent>(uid,fontpath,glyphsize,fixed,text,offset,color,scale,layer,ignore_lighting);
             }
 
 
