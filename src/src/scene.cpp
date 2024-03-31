@@ -17,6 +17,7 @@ int BinarySearchi(std::vector<Entity> &v,uint32_t uid){
 }
 
 Scene::Scene(const std::string &name): m_Name(name){
+    m_ScalingFactor=0.5f;
     OnPhysicsStart();
 }
 

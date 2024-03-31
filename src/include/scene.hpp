@@ -9,6 +9,7 @@ public:
      * Calls OnPhysicsStart and sets the scene name to ""
     */
     Scene(){
+        m_ScalingFactor=0.5f;
         OnPhysicsStart();
     }
     /**
@@ -103,7 +104,7 @@ public:
             }
 
             b2PolygonShape box_shape;
-            box_shape.SetAsBox(temp.m_Width/2.0f*m_ScalingFactor,temp.m_Height/2.0f*m_ScalingFactor,b2Vec2(temp.m_XOffset*m_ScalingFactor,temp.m_YOffset*m_ScalingFactor),0.0f);
+            box_shape.SetAsBox(temp.m_Width/2.0f*m_ScalingFactor,temp.m_Height/2.0f*m_ScalingFactor,b2Vec2((temp.m_XOffset+temp.m_Width/2.0f)*m_ScalingFactor,(temp.m_YOffset+temp.m_Height/2.0f)*m_ScalingFactor),0.0f);
 
             b2FixtureDef fixture_def;
             fixture_def.shape=&box_shape;
@@ -187,6 +188,8 @@ public:
     std::vector<T> &GetComponents();
 
     inline Camera &GetCamera(){ return m_Camera; }
+
+    inline b2World *GetPhysicsWorld(){ return m_PhysicsWorld; }
 
     void DebugDraw();
 private:

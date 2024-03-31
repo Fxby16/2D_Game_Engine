@@ -126,10 +126,10 @@ auto e=m_Scene->GetEntity(uid);
 
     auto bc=m_Scene->GetComponent<BoxColliderComponent>(uid);
     if(bc){
-        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{0,1,0,1},5);
-        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height},{0,1,0,1},5);
-        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height},{0,1,0,1},5);
-        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{0,1,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+bc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_YOffset},{Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width+bc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_YOffset},{0,1,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width+bc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_YOffset},{Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width+bc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height+bc->m_YOffset},{0,1,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+bc->m_Width+bc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height+bc->m_YOffset},{Interpolate(e->m_X,e->m_PreviousX)+bc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height+bc->m_YOffset},{0,1,0,1},5);
+        RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+bc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_Height+bc->m_YOffset},{Interpolate(e->m_X,e->m_PreviousX)+bc->m_XOffset,Interpolate(e->m_Y,e->m_PreviousY)+bc->m_YOffset},{0,1,0,1},5);
     
         Window::VertexCount-=8;
     }

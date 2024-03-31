@@ -59,12 +59,17 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
         ExecuteCommand("mkdir -p temp");
         GenerateApplication(script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,SCENE_PATH,RESIZABLE);
         printf("%s\n",ExecuteCommand("cd application && premake5 gmake2 --file=application_premake.lua").c_str());
+        // #ifndef DEBUG
         printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str());
         printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str());
-
         system("bin/Release/Application");
+        // #else
+        //     printf("%s\n",ExecuteCommand("cd lib && make config=debug").c_str());
+        //     printf("%s\n",ExecuteCommand("cd temp && make config=debug").c_str());
+        //     system("bin/Debug/Application");
+        // #endif
+
         isApplicationRunning.store(false);
-        printf("%s\n",ExecuteCommand("rm bin/Release/Application").c_str());
     });
     applicationThread.detach(); //detach the thread
 }
