@@ -33,6 +33,8 @@ private:
     void VariablesMenu(ImVec2 pos);
     void FileBrowserMenu(ImVec2 pos);
 
+    void HdrWindow(bool *open);
+
     void SerializeProject();
     void DeserializeProject();
 
@@ -51,6 +53,8 @@ private:
     std::vector<std::filesystem::directory_entry> m_CurrentEntries;
     std::string m_SelectedFileContent;
     bool m_UpdateFiles;
+    
+    bool m_HdrOpen;
 
     Vec2 m_ScenePos;
     Vec2 m_SceneSize;

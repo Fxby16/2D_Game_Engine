@@ -55,6 +55,7 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     }
 
     m_UpdateFiles=false;
+    m_HdrOpen=false;
 }
 
 Editor::~Editor(){
@@ -195,7 +196,22 @@ void Editor::OnImGuiUpdate(){
         if(ImGui::BeginMenu("Edit")){
             ImGui::EndMenu();
         }
+        if(ImGui::BeginMenu("Reload")){
+            if(ImGui::MenuItem("Reload Shaders")){
+                RENDERER->ReloadShaders();
+            }
+            ImGui::EndMenu();
+        }
+        if(ImGui::BeginMenu("Effects")){
+            if(ImGui::MenuItem("HDR")){
+                m_HdrOpen=true;
+            }
+            ImGui::EndMenu();
+        }
         ImGui::EndMainMenuBar();
+        if(m_HdrOpen){
+            HdrWindow(&m_HdrOpen);
+        }
     }
 
     EntitiesMenu({0,tempvec.y});
@@ -833,6 +849,54 @@ void Editor::FileBrowserMenu(ImVec2 pos){
 
 void Editor::OnImGuiRender(){
     Renderer::ImGui_End_Frame();
+}
+
+void Editor::HdrWindow(bool *open){
+    ImGui::Begin("HDR",open,ImGuiWindowFlags_NoCollapse);
+
+    TonemapType tonemap=RENDERER->GetTonemapType();
+    float gamma=RENDERER->GetGamma();
+    float exposure=RENDERER->GetExposure();
+
+    const char *items[]={"Reinhard","Filmic","Uncharted2","ACES","Exponential","Logarithmic","Mantiuk"};
+    static int current_item;
+
+    std::string tonemapName=TonemapTypeToString(tonemap);
+    for(int i=0;i<IM_ARRAYSIZE(items);i++){
+        if(tonemapName==items[i]){
+            current_item=i;
+            break;
+        }
+    }
+
+    static int old_item=current_item;
+
+    ImGui::Combo("Tonemap Type",&current_item,items,IM_ARRAYSIZE(items));    
+
+    bool update=false;
+
+    if(current_item!=old_item){
+        tonemap=StringToTonemapType(items[current_item]);
+        old_item=current_item;
+        RENDERER->SetTonemapType(tonemap);
+        update=true;
+    }
+
+    if(ImGui::SliderFloat("Gamma",&gamma,0.0f,10.0f)){
+        RENDERER->SetGamma(gamma);
+        update=true;
+    }
+
+    if(ImGui::SliderFloat("Exposure",&exposure,0.0f,10.0f)){
+        RENDERER->SetExposure(exposure);
+        update=true;
+    }
+
+    if(update){
+        RENDERER->ReloadShaders();
+    }
+
+    ImGui::End();
 }
 
 void Editor::SerializeProject(){

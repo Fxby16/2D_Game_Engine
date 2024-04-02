@@ -1,7 +1,7 @@
 Scene: ""
 ScalingFactor: 0.5
 Gravity: [0, 0]
-NextUID: 5
+NextUID: 7
 AmbientLight: [0.371769369, 0.339248776, 0.339248776]
 ClearColor: [0.280318081, 0.19338046, 0.19338046]
 Entities:
@@ -39,9 +39,9 @@ Entities:
       IgnoreLighting: false
   - Entity:
       UID: 1
-      X: 2.5
+      X: 4.66499996
       Y: 3.09299994
-      PreviousX: 2.5
+      PreviousX: 4.66499996
       PreviousY: 3.09299994
     TagComponent:
       Tag: prova
@@ -56,21 +56,28 @@ Entities:
       BodyType: Dynamic
       FixedRotation: true
     BoxColliderComponent:
-      XOffset: 0.5
-      YOffset: 0.5
+      XOffset: 0
+      YOffset: 0
       Width: 1
       Height: 1
       Density: 1
       Friction: 0
       Restitution: 0
       RestitutionThreshold: 0.5
+    LightComponent:
+      XOffset: 0
+      YOffset: 0
+      Radius: 1.84899998
+      Blur: 0.294999987
+      Color: [1, 0.912785709, 0.256461203]
+      LightType: LightAroundPos
     NativeScriptComponent:
       FunctionName: "Entity1Update\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
   - Entity:
       UID: 2
-      X: 7.73199987
+      X: 3.40199995
       Y: 4.02099991
-      PreviousX: 7.73199987
+      PreviousX: 3.40199995
       PreviousY: 4.02099991
     TagComponent:
       Tag: prova2
@@ -85,14 +92,21 @@ Entities:
       BodyType: Dynamic
       FixedRotation: true
     BoxColliderComponent:
-      XOffset: 0.5
-      YOffset: 0.5
+      XOffset: 0
+      YOffset: 0
       Width: 1
       Height: 1
       Density: 1
       Friction: 0
       Restitution: 0
       RestitutionThreshold: 0.5
+    LightComponent:
+      XOffset: 0
+      YOffset: 0
+      Radius: 1.64400005
+      Blur: 0.232999995
+      Color: [1, 1, 1]
+      LightType: LightAroundPos
   - Entity:
       UID: 3
       X: 0
@@ -118,8 +132,8 @@ Entities:
       BodyType: Static
       FixedRotation: true
     CircleColliderComponent:
-      XOffset: 1
-      YOffset: 1
+      XOffset: 1.5
+      YOffset: 1.5
       Radius: 2
       Density: 1
       Friction: 0
@@ -129,7 +143,7 @@ Entities:
       XOffset: 1.64400005
       YOffset: 0.82099998
       Radius: 2.05500007
-      Blur: 0.629999995
+      Blur: 0.232999995
       Color: [1, 1, 1]
       LightType: LightAroundPos
   - Entity:
@@ -148,3 +162,34 @@ Entities:
       Scale: 1
       Layer: 0
       IgnoreLighting: true
+  - Entity:
+      UID: 5
+      X: 0
+      Y: 0
+      PreviousX: 0
+      PreviousY: 0
+    RigidbodyComponent:
+      BodyType: Static
+      FixedRotation: true
+    BoxColliderComponent:
+      XOffset: 0
+      YOffset: 0
+      Width: 10
+      Height: 0.100000001
+      Density: 1
+      Friction: 0
+      Restitution: 0
+      RestitutionThreshold: 0.5
+  - Entity:
+      UID: 6
+      X: 3.40199995
+      Y: 3.40199995
+      PreviousX: 3.40199995
+      PreviousY: 3.40199995
+    LightComponent:
+      XOffset: 0
+      YOffset: 0
+      Radius: 3.28800011
+      Blur: 0.164000005
+      Color: [1, 0, 0]
+      LightType: LightAroundPos

@@ -18,6 +18,10 @@ void Camera::InitializeProj(){
 
     m_ViewProj=m_Proj*m_View;
 
+    RENDERER->SetProjMat(m_Proj);
+    RENDERER->SetViewMat(m_View);
+    RENDERER->SetViewProjMat(m_ViewProj);
+
     RENDERER->m_Points.S.Bind();
     RENDERER->m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
     RENDERER->m_Points.S.SetUniform1f("zoom",m_Zoom);
@@ -36,6 +40,9 @@ void Camera::InitializeProj(){
     RENDERER->m_Lights.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
     RENDERER->m_Lights.S.SetUniform1f("window_width",Window::Width);
     RENDERER->m_Lights.S.SetUniform1f("zoom",m_Zoom);
+
+    RENDERER->m_SHdr.Bind();
+    RENDERER->m_SHdr.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
 
     RENDERER->m_SPostProcessing.Bind();
     RENDERER->m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);

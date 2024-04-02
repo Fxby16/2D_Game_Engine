@@ -15,6 +15,7 @@ Renderer::Renderer():
     m_Lines("resources/shaders/lines/vertex.glsl","resources/shaders/lines/fragment.glsl",sizeof(LineVertex)),
     m_Triangles("resources/shaders/triangles/vertex.glsl","resources/shaders/triangles/fragment.glsl",sizeof(TriangleVertex)),
     m_Lights("resources/shaders/lights/vertex.glsl","resources/shaders/lights/fragment.glsl",4*sizeof(float)),
+    m_SHdr("resources/shaders/lights/vertex.glsl","resources/shaders/hdr/fragment.glsl"),
     m_SPostProcessing("resources/shaders/textures/vertex.glsl","resources/shaders/post_processing/fragment.glsl"),
     m_PostProcessingIndex(std::numeric_limits<unsigned int>::max()),m_AmbientLight(0.0f,0.0f,0.0f),m_ClearColor(0.0f,0.0f,0.0f){
 
@@ -63,6 +64,9 @@ Renderer::Renderer():
     m_Lights.VAO.AddBuffer(m_Lights.VBO,m_Lights.VBL);
     m_Lights.VBO.SetData(0,vertices,4,4*sizeof(float));
 
+    CreateShaders();
+    m_SHdr.Reload();
+
     m_Points.S.Bind();
     m_Points.S.SetUniform1f("blurAmount",0.0f);
 
@@ -72,6 +76,14 @@ Renderer::Renderer():
     m_Lights.S.Bind();
     m_Lights.S.SetUniform1i("framebuffer",0);
     m_Lights.S.SetUniform1i("light",1);
+
+    m_SHdr.Bind();
+    m_SHdr.SetUniform1i("tex",0);
+    m_SHdr.SetUniform1f("gamma",2.2f);
+    m_SHdr.SetUniform1f("exposure",1.0f);
+
+    m_Gamma=2.2f;
+    m_Exposure=1.0f;
 
     m_SPostProcessing.Bind();
     m_SPostProcessing.SetUniform1iv("texID",m_Slots,32);
@@ -110,6 +122,133 @@ Renderer::~Renderer(){
     delete m_Framebuffer;
     delete m_LightingFramebuffer;
     delete m_TempFramebuffer;
+}
+
+std::string TonemapTypeToString(TonemapType type){
+    switch(type){
+        case TonemapType::None:
+            return "None";
+        case TonemapType::Reinhard:
+            return "Reinhard";
+        case TonemapType::Filmic:
+            return "Filmic";
+        case TonemapType::Uncharted2:
+            return "Uncharted2";
+        case TonemapType::ACES:
+            return "ACES";
+        case TonemapType::Exponential:
+            return "Exponential";
+        case TonemapType::Logarithmic:
+            return "Logarithmic";
+        case TonemapType::Mantiuk:
+            return "Mantiuk";
+        default:
+            return "None";
+    }
+    
+}
+
+TonemapType StringToTonemapType(const std::string &type){
+    if(type=="None")
+        return TonemapType::None;
+    if(type=="Reinhard")
+        return TonemapType::Reinhard;
+    if(type=="Filmic")
+        return TonemapType::Filmic;
+    if(type=="Uncharted2")
+        return TonemapType::Uncharted2;
+    if(type=="ACES")
+        return TonemapType::ACES;
+    if(type=="Exponential")
+        return TonemapType::Exponential;
+    if(type=="Logarithmic")
+        return TonemapType::Logarithmic;
+    if(type=="Mantiuk")
+        return TonemapType::Mantiuk;
+    return TonemapType::None;
+}
+
+void Renderer::CreateShaders(){
+    std::string content;
+    char ch;
+
+    FILE *file=fopen("resources/shaders/hdr/fragment_template.glsl","r");
+
+    while((ch=fgetc(file))!=EOF)
+        content+=ch;
+
+    fclose(file);
+
+    file=fopen("resources/shaders/hdr/fragment.glsl","w");
+
+    fprintf(file,"%s",content.c_str());
+
+    char main[]=
+    "\nvoid main(){\n"
+    "\tvec3 hdr_color=texture(tex,v_TexCoord).rgb;\n"
+    "\thdr_color *= exposure;\n"
+    "\tvec3 result=";
+
+    fprintf(file,"%s",main);
+
+    switch(m_TonemapType){
+        case TonemapType::None:
+            fprintf(file,"hdr_color;\n");
+            break;
+        case TonemapType::Reinhard:
+            fprintf(file,"reinhardToneMapping(hdr_color);\n");
+            break;
+        case TonemapType::Filmic:
+            fprintf(file,"filmicToneMapping(hdr_color);\n");
+            break;
+        case TonemapType::Uncharted2:
+            fprintf(file,"uncharted2ToneMapping(hdr_color);\n");
+            break;
+        case TonemapType::ACES:
+            fprintf(file,"acesToneMapping(hdr_color,gamma);\n");
+            break;
+        case TonemapType::Exponential:
+            fprintf(file,"exponentialToneMapping(hdr_color);\n");
+            break;
+        case TonemapType::Logarithmic:
+            fprintf(file,"logarithmicToneMapping(hdr_color);\n");
+            break;
+        case TonemapType::Mantiuk:
+            fprintf(file,"mantiukToneMapping(hdr_color);\n");
+            break;
+        default:
+            fprintf(file,"hdr_color;\n");
+            break;
+    }
+
+    fprintf(file,"\tresult = pow(result, vec3(1.0 / gamma));\n");
+    fprintf(file,"\tcolor=vec4(result,1.0f);\n}");
+
+    fclose(file);
+}
+
+void Renderer::SetTonemapType(TonemapType type){
+    m_TonemapType=type;
+}
+
+TonemapType Renderer::GetTonemapType(){
+    return m_TonemapType;
+}
+
+void Renderer::SetGamma(float gamma){
+    m_Gamma=gamma;
+}
+
+float Renderer::GetGamma(){
+    return m_Gamma;
+}
+
+void Renderer::SetExposure(float exposure){
+    m_Exposure=exposure;
+}
+
+float Renderer::GetExposure(){
+    return m_Exposure;
 }
 
 void Renderer::DrawTexture(Vec2 pos,Vec2 size,int layer,float texID){
@@ -342,6 +481,16 @@ void Renderer::StartScene(){
 void Renderer::DrawScene(){
     PROFILE_FUNCTION();
     
+    #ifndef EDITOR
+        m_SHdr.Bind();
+        m_Framebuffer->Bind();
+        m_Lights.VAO.Bind();
+        m_Lights.VBO.Bind();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
+        glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+    #endif
+
     m_Framebuffer->Unbind();
     Clear();
     DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_Framebuffer->GetColorbufferID());
@@ -401,6 +550,14 @@ void Renderer::DrawEditorScene(Framebuffer *framebuffer){
     
     Render();
     ApplyLight(framebuffer);
+    framebuffer->Bind();
+    m_SHdr.Bind();
+    m_Lights.VAO.Bind();
+    m_Lights.VBO.Bind();
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D,framebuffer->GetColorbufferID());
+    glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+
     TEXT_QUEUE->Render(std::numeric_limits<int>::max()-1);
 }
 #endif
@@ -762,8 +919,14 @@ void Renderer::ApplyLight(){
 
 void Renderer::ApplyLight(Framebuffer *framebuffer){
     PROFILE_FUNCTION();
-    
-    m_Lights.VBO.Bind();
+
+    // m_SHdr.Bind();
+    // m_LightingFramebuffer->Bind();
+    // glActiveTexture(GL_TEXTURE0);
+    // glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
+    // m_Lights.VAO.Bind();
+    // m_Lights.VBO.Bind();
+    // glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,framebuffer->GetColorbufferID());
@@ -771,12 +934,74 @@ void Renderer::ApplyLight(Framebuffer *framebuffer){
     glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
     
     framebuffer->Bind();
+
     m_Lights.VAO.Bind();
+    m_Lights.VBO.Bind();
     m_Lights.S.Bind();
 
     int sub_id=Shader::GetSubroutineIndex("Merge",m_Lights.S.getID());
     Shader::SetSubroutineUniform(sub_id);
     glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+}
+
+void Renderer::ReloadShaders(){
+    CreateShaders();
+
+    m_Points.S.Reload();
+    m_Lines.S.Reload();
+    m_Triangles.S.Reload();
+    m_Textures.S.Reload();
+    m_Lights.S.Reload();
+    m_SHdr.Reload();
+    m_SPostProcessing.Reload();
+
+    m_Points.S.Bind();
+    m_Points.S.SetUniform1f("blurAmount",0.0f);
+
+    m_Textures.S.Bind();
+    m_Textures.S.SetUniform1iv("texID",m_Slots,32);
+
+    m_Lights.S.Bind();
+    m_Lights.S.SetUniform1i("framebuffer",0);
+    m_Lights.S.SetUniform1i("light",1);
+
+    m_SHdr.Bind();
+    m_SHdr.SetUniform1i("tex",0);
+    m_SHdr.SetUniform1f("gamma",m_Gamma);
+    m_SHdr.SetUniform1f("exposure",m_Exposure);
+
+    m_SPostProcessing.Bind();
+    m_SPostProcessing.SetUniform1iv("texID",m_Slots,32);
+
+    SetPointSize(m_PointSize);
+    SetLineWidth(m_LineWidth);
+
+    m_Points.S.Bind();
+    m_Points.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
+    m_Points.S.SetUniform1f("zoom",m_Zoom);
+
+    m_Lines.S.Bind();
+    m_Lines.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
+
+    m_Textures.S.Bind();
+    m_Textures.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
+    
+    m_Triangles.S.Bind();
+    m_Triangles.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
+
+    m_Lights.S.Bind();
+    m_Lights.S.SetUniformMat4fv("view_matrix",glm::value_ptr(m_View),1);
+    m_Lights.S.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
+    m_Lights.S.SetUniform1f("window_width",Window::Width);
+    m_Lights.S.SetUniform1f("zoom",m_Zoom);
+
+    m_SHdr.Bind();
+    m_SHdr.SetUniformMat4fv("u_PM",glm::value_ptr(m_Proj),1);
+    m_SHdr.SetUniform1f("gamma",m_Gamma);
+    m_SHdr.SetUniform1f("exposure",m_Exposure);
+
+    m_SPostProcessing.Bind();
+    m_SPostProcessing.SetUniformMat4fv("u_PM",glm::value_ptr(m_ViewProj),1);
 }
 
 void Renderer::ImGui_Init(){

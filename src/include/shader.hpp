@@ -6,6 +6,10 @@ public:
     Shader(const char *vertex_shader_path,const char *fragment_shader_path);
     Shader()=default;
     ~Shader();
+    void Load(const char *vertex_shader_path,const char *fragment_shader_path);
+    void Unload();
+    void Reload();
+
     void Bind() const;
     void Unbind() const;
     inline unsigned int getID(){ return m_ID; }
@@ -25,6 +29,9 @@ private:
     unsigned int m_ID;
 
     bool m_Loaded=false;
+
+    char *m_VertexPath=nullptr;
+    char *m_FragmentPath=nullptr;
 
     void Compile(const char *vertex_src_code,const char *fragment_src_code);
     bool CheckShaderErrors(GLuint shader_ID);

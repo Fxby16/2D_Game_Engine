@@ -19,8 +19,8 @@ subroutine uniform Light light_sub;
 
 subroutine(Light)
 void Merge(){ //merge main framebuffer and lighting framebuffer (colors get multiplied)
-    vec4 color1=texture(framebuffer,v_TexCoord);
-    vec4 color2=texture(light,v_TexCoord);
+    vec4 color1=vec4(texture(framebuffer,v_TexCoord).rgb,1.0);
+    vec4 color2=vec4(texture(light,v_TexCoord).rgb,1.0);
     FragColor=color1*color2;
 }
 

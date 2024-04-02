@@ -23,6 +23,20 @@ struct RendererData{
     RendererData(const char *vertex_path,const char *fragment_path,unsigned int vertex_size);
 };
 
+enum class TonemapType{
+    None=0,
+    Reinhard=1,
+    Filmic=2,
+    Uncharted2=3,
+    ACES=4,
+    Exponential=5,
+    Logarithmic=6,
+    Mantiuk=7
+};
+
+std::string TonemapTypeToString(TonemapType type);
+TonemapType StringToTonemapType(const std::string &type);
+
 class Renderer{
 public:
     Renderer();
@@ -222,6 +236,26 @@ public:
     inline RendererData* GetLightsData(){ return &m_Lights; }
     inline unsigned int GetFramebufferID(){ return m_Framebuffer->GetColorbufferID(); }
 
+    void SetTonemapType(TonemapType type);
+    void SetGamma(float gamma);
+    void SetExposure(float exposure);
+    
+    TonemapType GetTonemapType();
+    float GetGamma();
+    float GetExposure();
+
+    void CreateShaders();
+    void ReloadShaders();
+    inline void SetProjMat(glm::mat4 proj){
+        m_Proj=proj;
+    }
+    inline void SetViewMat(glm::mat4 view){
+        m_View=view;
+    }
+    inline void SetViewProjMat(glm::mat4 view_proj){
+        m_ViewProj=view_proj;
+    }
+
     static void ImGui_Init();
     static void ImGui_Theme();
     static void ImGui_Start_Frame();
@@ -251,6 +285,7 @@ private:
     Framebuffer *m_LightingFramebuffer;
     Framebuffer *m_TempFramebuffer;
 
+    Shader m_SHdr;
     Shader m_SPostProcessing;
     unsigned int m_PostProcessingIndex;
 
@@ -263,6 +298,15 @@ private:
     float m_PointSize;
     float m_LineWidth;
     float m_Zoom;
+
+    float m_Gamma;
+    float m_Exposure;
+    TonemapType m_TonemapType=TonemapType::Reinhard;
+
+    //matrices set in the camera (copied here so reloading the shaders doesn't involve the camera)
+    glm::mat4 m_Proj;
+    glm::mat4 m_View;
+    glm::mat4 m_ViewProj;
 
     std::vector<std::pair<Vec2,Vec2>>segments; //used for lighting
 

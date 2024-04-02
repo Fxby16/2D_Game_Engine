@@ -2,7 +2,23 @@
 #include <shader.hpp>
 
 Shader::Shader(const char *vertex_shader_path,const char *fragment_shader_path){
+    Load(vertex_shader_path,fragment_shader_path);
+}
+
+Shader::~Shader(){
+    Unload();
+    if(m_VertexPath!=nullptr)
+        free(m_VertexPath);
+    if(m_FragmentPath!=nullptr)
+        free(m_FragmentPath);
+}
+
+void Shader::Load(const char *vertex_shader_path,const char *fragment_shader_path){
     m_Loaded=true;
+    m_VertexPath=strdup(vertex_shader_path);
+    m_FragmentPath=strdup(fragment_shader_path);
+    printf("Loading shader %s %s\n",vertex_shader_path,fragment_shader_path);
+    printf("Loaded shader %s %s\n",m_VertexPath,m_FragmentPath);
     m_ID=glCreateProgram();
 
     std::string vertexCode;
@@ -37,9 +53,16 @@ Shader::Shader(const char *vertex_shader_path,const char *fragment_shader_path){
     Compile(vertexSourceCode,fragmentSourceCode);
 }
 
-Shader::~Shader(){
-    if(m_Loaded)
+void Shader::Unload(){
+    if(m_Loaded){
         glDeleteProgram(m_ID);
+        m_Loaded=false;
+    }
+}
+
+void Shader::Reload(){
+    Unload();
+    Load(m_VertexPath,m_FragmentPath);
 }
 
 void Shader::Bind() const{
