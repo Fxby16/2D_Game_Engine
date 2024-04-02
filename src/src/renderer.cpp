@@ -205,7 +205,7 @@ void Renderer::CreateShaders(){
             fprintf(file,"uncharted2ToneMapping(hdr_color);\n");
             break;
         case TonemapType::ACES:
-            fprintf(file,"acesToneMapping(hdr_color,gamma);\n");
+            fprintf(file,"acesToneMapping(hdr_color);\n");
             break;
         case TonemapType::Exponential:
             fprintf(file,"exponentialToneMapping(hdr_color);\n");
