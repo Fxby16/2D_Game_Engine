@@ -60,7 +60,7 @@ vec3 mantiukToneMapping(vec3 hdr_color) {
 void main(){
 	vec3 hdr_color=texture(tex,v_TexCoord).rgb;
 	hdr_color *= exposure;
-	vec3 result=mantiukToneMapping(hdr_color);
+	vec3 result=reinhardToneMapping(hdr_color);
 	result = pow(result, vec3(1.0 / gamma));
 	color=vec4(result,1.0f);
 }
