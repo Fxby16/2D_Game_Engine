@@ -26,6 +26,7 @@
 
 #include <cmath>
 #include <cstdio>
+#include <cstring>
 #include <iostream>
 #include <vector>
 #include <source_location>

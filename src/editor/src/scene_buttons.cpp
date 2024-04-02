@@ -64,6 +64,13 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
         printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str());
         ExecuteCommand("mkdir -p bin/Release/resources");
         ExecuteCommand("cp -r resources/* bin/Release/resources");
+        char command[256];
+        command[0]='\0';
+        strcat(command,"cp ");
+        strcat(command,SCENE_PATH.c_str());
+        strcat(command," bin/Release/");
+        strcat(command,SCENE_PATH.c_str());
+        printf("%s\n",ExecuteCommand(command).c_str());
         RENDERER->CreateShaders();
         system("cd bin/Release && ./Application");
         // #else

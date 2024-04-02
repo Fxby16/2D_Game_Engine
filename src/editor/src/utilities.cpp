@@ -15,6 +15,8 @@ bool StartNode(const std::string &name,enum ImGuiTreeNodeFlags_ flags){
 }
 
 std::string ExecuteCommand(const std::string &command){
+    std::cout<<"Executing "<<command<<std::endl;
+
     char buffer[128];
     std::string result;
 
