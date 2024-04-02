@@ -1,4 +1,5 @@
 Engine:
+- hdr serialization
 - scale the text appropriately corresponding to the window size
 - collision callbacks
 - rotated quads (and triangles)
