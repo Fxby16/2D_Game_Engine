@@ -1,4 +1,5 @@
 Engine:
+- change min Lakers return value from float to int in the renderer
 - hdr serialization
 - scale the text appropriately corresponding to the window size
 - collision callbacks
