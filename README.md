@@ -1,5 +1,5 @@
 # 2D Game Engine
-A work-in-progress 2D game engine made in c++ and opengl.
+A 2D game engine made in c++ and opengl.
 
 ## Clone
 Run `git clone --recursive https://github.com/Fxby16/2D_Game_Engine.git`
