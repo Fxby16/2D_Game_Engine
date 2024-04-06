@@ -28,6 +28,9 @@ public:
         m_MagFilter=other.m_MagFilter;
         m_MinFilter=other.m_MinFilter;
         m_FilePath=other.m_FilePath;
+        m_LoadedFilePath=other.m_LoadedFilePath;
+        m_LoadedMagFilter=other.m_LoadedMagFilter;
+        m_LoadedMinFilter=other.m_LoadedMinFilter;
         m_LocalBuffer=other.m_LocalBuffer;
         m_Width=other.m_Width;
         m_Height=other.m_Height;
@@ -43,6 +46,9 @@ public:
             m_MagFilter=other.m_MagFilter;
             m_MinFilter=other.m_MinFilter;
             m_FilePath=other.m_FilePath;
+            m_LoadedFilePath=other.m_LoadedFilePath;
+            m_LoadedMagFilter=other.m_LoadedMagFilter;
+            m_LoadedMinFilter=other.m_LoadedMinFilter;
             m_LocalBuffer=other.m_LocalBuffer;
             m_Width=other.m_Width;
             m_Height=other.m_Height;
@@ -69,8 +75,8 @@ protected:
 
     unsigned int m_ID;
     uint32_t m_TexID;
-    std::string m_FilePath;
-    int m_MagFilter,m_MinFilter;
+    std::string m_FilePath,m_LoadedFilePath;
+    int m_MagFilter,m_MinFilter,m_LoadedMagFilter,m_LoadedMinFilter;
     unsigned char *m_LocalBuffer;
     int m_Width,m_Height,m_BPP;
 };
@@ -89,6 +95,9 @@ public:
         m_MagFilter=other.m_MagFilter;
         m_MinFilter=other.m_MinFilter;
         m_FilePath=other.m_FilePath;
+        m_LoadedFilePath=other.m_LoadedFilePath;
+        m_LoadedMagFilter=other.m_LoadedMagFilter;
+        m_LoadedMinFilter=other.m_LoadedMinFilter;
         m_LocalBuffer=other.m_LocalBuffer;
         m_Width=other.m_Width;
         m_Height=other.m_Height;
@@ -106,6 +115,9 @@ public:
             m_MagFilter=other.m_MagFilter;
             m_MinFilter=other.m_MinFilter;
             m_FilePath=other.m_FilePath;
+            m_LoadedFilePath=other.m_LoadedFilePath;
+            m_LoadedMagFilter=other.m_LoadedMagFilter;
+            m_LoadedMinFilter=other.m_LoadedMinFilter;
             m_LocalBuffer=other.m_LocalBuffer;
             m_Width=other.m_Width;
             m_Height=other.m_Height;

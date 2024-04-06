@@ -6,7 +6,7 @@ std::pair<uint32_t,std::shared_ptr<Texture>> TexturesManager::GetTexture(const s
     for(auto &[id,texture]:m_Textures){
         Texture &tex=*texture.texture;
 
-        if(tex.m_MagFilter==mag_filter && tex.m_MinFilter==min_filter && tex.m_FilePath==path){
+        if(tex.m_LoadedMagFilter==mag_filter && tex.m_LoadedMinFilter==min_filter && tex.m_LoadedFilePath==path){
             texture.copies++;
             return {id,texture.texture};
         }
@@ -33,7 +33,7 @@ std::pair<uint32_t,std::shared_ptr<SpriteSheet>> TexturesManager::GetSpriteSheet
     for(auto &[id,texture]:m_SpriteSheets){
         SpriteSheet &tex=*texture.texture;
 
-        if(tex.m_MagFilter==mag_filter && tex.m_MinFilter==min_filter && tex.m_TileWidth==tile_width && tex.m_TileHeight==tile_height && tex.m_FilePath==path){
+        if(tex.m_LoadedMagFilter==mag_filter && tex.m_LoadedMinFilter==min_filter && tex.m_TileWidth==tile_width && tex.m_TileHeight==tile_height && tex.m_LoadedFilePath==path){
             texture.copies++;
             return {id,texture.texture};
         }

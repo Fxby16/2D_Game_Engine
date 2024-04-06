@@ -5,7 +5,7 @@ std::pair<uint32_t,std::shared_ptr<TextRenderer>> FontManager::GetFont(const std
     for(auto &[id,font]:m_Fonts){
         TextRenderer &f=*font.font;
 
-        if(f.m_GlyphSize==glyph_size && f.m_Fixed==fixed && f.m_FontPath==path){
+        if(f.m_LoadedGlyphSize==glyph_size && f.m_Fixed==fixed && f.m_LoadedFontPath==path){
             font.copies++;
             return {id,font.font};
         }

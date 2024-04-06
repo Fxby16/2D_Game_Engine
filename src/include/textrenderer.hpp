@@ -61,6 +61,7 @@ public:
 
 private:
     friend class SceneSerializer;
+    friend class FontManager;
 
     struct Character{
         unsigned int TexID;     // ID of the glyph texture       
@@ -82,6 +83,7 @@ private:
     glm::mat4 *m_Transforms;
     int *m_ToRender;
 
+    std::string m_LoadedFontPath;
     float m_LoadedGlyphSize;
 
     bool m_Loaded;

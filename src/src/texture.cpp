@@ -4,8 +4,14 @@
 
 Texture::Texture(const std::string &path,int mag_filter,int min_filter,uint32_t tex_id): m_ID(0),m_TexID(tex_id),m_MagFilter(mag_filter),m_MinFilter(min_filter),m_LocalBuffer(nullptr),m_Width(0),m_Height(0),m_BPP(0){
     m_FilePath=path;
+    m_LoadedFilePath=path;
+
     m_FilePath.resize(100);
+    m_LoadedFilePath.resize(100);
     
+    m_LoadedMagFilter=mag_filter;
+    m_LoadedMinFilter=min_filter;
+
     stbi_set_flip_vertically_on_load(1);
     m_LocalBuffer=stbi_load(path.c_str(),&m_Width,&m_Height,&m_BPP,4);
     if(!m_LocalBuffer){
@@ -33,6 +39,9 @@ Texture::Texture(Texture &other){
     m_MagFilter=other.m_MagFilter;
     m_MinFilter=other.m_MinFilter;
     m_FilePath=other.m_FilePath;
+    m_LoadedFilePath=other.m_LoadedFilePath;
+    m_LoadedMagFilter=other.m_LoadedMagFilter;
+    m_LoadedMinFilter=other.m_LoadedMinFilter;
     m_LocalBuffer=other.m_LocalBuffer;
     m_Width=other.m_Width;
     m_Height=other.m_Height;
@@ -65,6 +74,9 @@ SpriteSheet::SpriteSheet(SpriteSheet &other){
     m_MagFilter=other.m_MagFilter;
     m_MinFilter=other.m_MinFilter;
     m_FilePath=other.m_FilePath;
+    m_LoadedFilePath=other.m_LoadedFilePath;
+    m_LoadedMagFilter=other.m_LoadedMagFilter;
+    m_LoadedMinFilter=other.m_LoadedMinFilter;
     m_LocalBuffer=other.m_LocalBuffer;
     m_Width=other.m_Width;
     m_Height=other.m_Height;

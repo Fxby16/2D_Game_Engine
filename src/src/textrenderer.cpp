@@ -7,6 +7,7 @@ TextRenderer::TextRenderer(const std::string &font_path,float glyph_size,bool fi
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
     m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
     m_Loaded(true),
+    m_LoadedFontPath(font_path),
     m_LoadedGlyphSize(glyph_size),
     m_ID(std::numeric_limits<uint32_t>::max()),
     m_FontPath(font_path),
@@ -14,6 +15,8 @@ TextRenderer::TextRenderer(const std::string &font_path,float glyph_size,bool fi
     m_Fixed(fixed)
 {
     m_FontPath.resize(100);
+    m_LoadedFontPath.resize(100);
+
     Init(font_path,glyph_size,fixed);
     Window::ProjUpdate=true;
 }
@@ -22,6 +25,7 @@ TextRenderer::TextRenderer(const std::string &font_path,float glyph_size,bool fi
     m_VBO(6,sizeof(float)*2,GL_STATIC_DRAW),
     m_Shader("resources/shaders/text/vertex.glsl","resources/shaders/text/fragment.glsl"),
     m_Loaded(true),
+    m_LoadedFontPath(font_path),
     m_LoadedGlyphSize(glyph_size),
     m_ID(id),
     m_FontPath(font_path),
@@ -29,6 +33,8 @@ TextRenderer::TextRenderer(const std::string &font_path,float glyph_size,bool fi
     m_Fixed(fixed)
 {
     m_FontPath.resize(100);
+    m_LoadedFontPath.resize(100);
+
     Init(font_path,glyph_size,fixed);
     Window::ProjUpdate=true;
 }

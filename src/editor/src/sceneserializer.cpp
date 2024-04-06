@@ -131,9 +131,9 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         TextureComponent *texturecomponent=scene->GetComponent<TextureComponent>(entity.m_UID);
 
-        out<<YAML::Key<<"Filepath"<<YAML::Value<<texturecomponent->m_Texture.get()->m_FilePath;
-        out<<YAML::Key<<"MagFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_MagFilter;
-        out<<YAML::Key<<"MinFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_MinFilter;
+        out<<YAML::Key<<"Filepath"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedFilePath;
+        out<<YAML::Key<<"MagFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedMagFilter;
+        out<<YAML::Key<<"MinFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedMinFilter;
 
         out<<YAML::Key<<"Width"<<YAML::Value<<texturecomponent->m_Width;
         out<<YAML::Key<<"Height"<<YAML::Value<<texturecomponent->m_Height;
@@ -148,9 +148,9 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         AnimatedTextureComponent *animatedtexturecomponent=scene->GetComponent<AnimatedTextureComponent>(entity.m_UID);
 
-        out<<YAML::Key<<"Filepath"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_FilePath;
-        out<<YAML::Key<<"MagFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_MagFilter;
-        out<<YAML::Key<<"MinFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_MinFilter;
+        out<<YAML::Key<<"Filepath"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedFilePath;
+        out<<YAML::Key<<"MagFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedMagFilter;
+        out<<YAML::Key<<"MinFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedMinFilter;
         
         out<<YAML::Key<<"TileWidth"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_TileWidth;
         out<<YAML::Key<<"TileHeight"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_TileHeight;
@@ -236,7 +236,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         TextComponent *textcomponent=scene->GetComponent<TextComponent>(entity.m_UID);
 
-        out<<YAML::Key<<"FontPath"<<YAML::Value<<textcomponent->m_TextRenderer->m_FontPath;
+        out<<YAML::Key<<"FontPath"<<YAML::Value<<textcomponent->m_TextRenderer->m_LoadedFontPath;
         out<<YAML::Key<<"GlyphSize"<<YAML::Value<<textcomponent->m_TextRenderer->m_LoadedGlyphSize;
         out<<YAML::Key<<"Fixed"<<YAML::Value<<textcomponent->m_TextRenderer->m_Fixed;
         out<<YAML::Key<<"Text"<<YAML::Value<<textcomponent->m_Text;

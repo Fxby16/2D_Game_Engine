@@ -586,15 +586,15 @@ void Renderer::Render(bool post_processing){ //if this function gets called beca
         min_triangle_layer=GetTrianglesMinLayer();
         min_text_layer=TEXT_QUEUE->GetQueueMinLayer();
         
-        if(min_texture_layer!=std::numeric_limits<float>::max())    
+        if(min_texture_layer!=std::numeric_limits<int>::max())    
             RenderTextures(post_processing,std::min({min_point_layer,min_line_layer,min_triangle_layer,min_text_layer}));
-        if(min_point_layer!=std::numeric_limits<float>::max())
+        if(min_point_layer!=std::numeric_limits<int>::max())
             RenderPoints(std::min({min_texture_layer,min_line_layer,min_triangle_layer,min_text_layer}));
-        if(min_line_layer!=std::numeric_limits<float>::max())
+        if(min_line_layer!=std::numeric_limits<int>::max())
             RenderLines(std::min({min_texture_layer,min_point_layer,min_triangle_layer,min_text_layer}));
-        if(min_triangle_layer!=std::numeric_limits<float>::max())
+        if(min_triangle_layer!=std::numeric_limits<int>::max())
             RenderTriangles(std::min({min_texture_layer,min_point_layer,min_line_layer,min_text_layer}));
-        if(min_text_layer!=std::numeric_limits<float>::max())
+        if(min_text_layer!=std::numeric_limits<int>::max())
             TEXT_QUEUE->Render(std::min({min_texture_layer,min_point_layer,min_line_layer,min_triangle_layer}));
     }
 }
