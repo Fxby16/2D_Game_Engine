@@ -16,6 +16,10 @@ else ifeq ($(config),release)
   Engine_config = release
   Application_config = release
 
+else ifeq ($(config),profile)
+  Engine_config = profile
+  Application_config = profile
+
 else
   $(error "invalid configuration $(config)")
 endif
@@ -48,6 +52,7 @@ help:
 	@echo "CONFIGURATIONS:"
 	@echo "  debug"
 	@echo "  release"
+	@echo "  profile"
 	@echo ""
 	@echo "TARGETS:"
 	@echo "   all (default)"

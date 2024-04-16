@@ -1,5 +1,5 @@
 workspace "Application"
-    configurations { "Debug", "Release" }
+    configurations { "Debug", "Release", "Profile" }
 
 project "Engine"
     kind "StaticLib"
@@ -59,6 +59,11 @@ project "Engine"
         optimize "Full"
         defines { "RELEASE", "APPLICATION" }
         symbols "Off"
+
+    filter "configurations:Profile"
+        optimize "Full"
+        defines { "PROFILE", "APPLICATION", "ENABLE_PROFILING" }
+        symbols "Off"
         
 project "Application"
     kind "ConsoleApp"
@@ -117,4 +122,9 @@ project "Application"
     filter "configurations:Release"
         optimize "Full"
         defines { "RELEASE", "APPLICATION" }
+        symbols "Off"
+
+    filter "configurations:Profile"
+        optimize "Full"
+        defines { "PROFILE", "APPLICATION", "ENABLE_PROFILING" }
         symbols "Off"

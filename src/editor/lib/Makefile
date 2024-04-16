@@ -52,6 +52,13 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O3
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O3 -std=c++20
 ALL_LDFLAGS += $(LDFLAGS) -L../../vendor/glfw/build/src -L../../vendor/ImGui -L../../vendor/FreeType/objs -L../../vendor/soloud/lib -L../../vendor/box2d/build/bin -L../vendor/yaml-cpp/build -s
 
+else ifeq ($(config),profile)
+OBJDIR = obj/Profile
+DEFINES += -DPROFILE -DAPPLICATION -DENABLE_PROFILING
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O3
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O3 -std=c++20
+ALL_LDFLAGS += $(LDFLAGS) -L../../vendor/glfw/build/src -L../../vendor/ImGui -L../../vendor/FreeType/objs -L../../vendor/soloud/lib -L../../vendor/box2d/build/bin -L../vendor/yaml-cpp/build -s
+
 endif
 
 # Per File Configurations

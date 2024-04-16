@@ -1,3 +1,4 @@
+#include <pch.hpp>
 #include <vertexbufferlayout.hpp>
 
 void VertexBufferLayout::Push(unsigned int type,unsigned int count,bool normalized){

@@ -8,6 +8,7 @@
 #include <scene_buttons.hpp>
 #include <buttons.hpp>
 #include <global.hpp>
+#include <Instrumentor.h>
 
 #define baseFontSize 24.0f
 #define STRLEN 100
@@ -65,6 +66,11 @@ Editor::~Editor(){
 }
 
 void Editor::Run(){
+    
+
+    #ifdef ENABLE_PROFILING
+        
+    #endif
     while(!glfwWindowShouldClose(Window::Window)){
         glfwPollEvents();
 
@@ -74,6 +80,12 @@ void Editor::Run(){
 
         INPUT->UpdateStates();
         HandleInputs();
+        #ifdef ENABLE_PROFILING
+            KeyState p=INPUT->GetKey(KEY_P);
+            if(p.current && !p.previous){
+                Instrumentor::Get().BeginSession("Editor","Editor.json");
+            }
+        #endif
 
         RENDERER->StartEditorScene(this);
         m_Camera.ResetSceneProj();
@@ -92,6 +104,12 @@ void Editor::Run(){
         RENDERER->DrawScene();
 
         glfwSwapBuffers(Window::Window);
+
+        #ifdef ENABLE_PROFILING
+            if(p.current && !p.previous){
+                Instrumentor::Get().EndSession();
+            }
+        #endif
     }
 }
 

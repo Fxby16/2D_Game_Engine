@@ -1,3 +1,4 @@
+#include <pch.hpp>
 #include <structs.hpp>
 
 Vec2::Vec2(): x(0),y(0){}

@@ -1,5 +1,5 @@
 workspace "2DGameEngineEditor"
-    configurations { "Debug", "Release" }
+    configurations { "Debug", "Release", "Profile" }
 
 project "2DGameEngineEditor"
     kind "ConsoleApp"
@@ -61,5 +61,9 @@ project "2DGameEngineEditor"
 
     filter "configurations:Release"
         optimize "Full"
+        symbols "Off"
         defines { "EDITOR" }
-        
+    
+    filter "configurations:Profile"
+        optimize "Full"
+        defines { "ENABLE_PROFILING", "EDITOR" }

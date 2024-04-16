@@ -23,19 +23,12 @@ Application::Application(const char *window_name,unsigned int width,unsigned int
         last_time=glfwGetTime();
         Window::PrintDebugInfo();
     #endif
-
-    #ifdef ENABLE_PROFILING
-        Instrumentor::Get().BeginSession("Profile");
-    #endif
 }
 
 Application::~Application(){
     if(m_ImGui)
         Renderer::ImGui_Close();
     delete m_Scene;
-    #ifdef ENABLE_PROFILING
-        Instrumentor::Get().EndSession();
-    #endif
 }
 
 void HandleInputs(){
@@ -64,6 +57,14 @@ void Application::Run(){
 
         INPUT->UpdateStates();
         HandleInputs();
+
+        #ifdef ENABLE_PROFILING
+            KeyState p=INPUT->GetKey(KEY_P);
+            if(p.current && !p.previous){
+                Instrumentor::Get().BeginSession("Application","Application.json");
+                printf("Started profiling\n");
+            }
+        #endif
 
         if(Window::ProjUpdate){
             m_Scene->m_Camera.InitializeProj();
@@ -110,6 +111,13 @@ void Application::Run(){
                 last_time=current_time;
                 printf("FPS: %f\n",1.0/Window::DeltaTime);
                 Window::PrintDebugInfo();
+            }
+        #endif
+
+        #ifdef ENABLE_PROFILING
+            if(p.current && !p.previous){
+                Instrumentor::Get().EndSession();
+                printf("Stopped profiling\n");
             }
         #endif
     }

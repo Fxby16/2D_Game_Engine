@@ -59,25 +59,35 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
         ExecuteCommand("mkdir -p temp");
         GenerateApplication(script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,SCENE_PATH,RESIZABLE);
         printf("%s\n",ExecuteCommand("cd application && premake5 gmake2 --file=application_premake.lua").c_str());
-        // #ifndef DEBUG
-        printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str());
-        printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str());
-        ExecuteCommand("mkdir -p bin/Release/resources");
-        ExecuteCommand("cp -r resources/* bin/Release/resources");
-        char command[256];
-        command[0]='\0';
-        strcat(command,"cp ");
-        strcat(command,SCENE_PATH.c_str());
-        strcat(command," bin/Release/");
-        strcat(command,SCENE_PATH.c_str());
-        printf("%s\n",ExecuteCommand(command).c_str());
-        RENDERER->CreateShaders();
-        system("cd bin/Release && ./Application");
-        // #else
-        //     printf("%s\n",ExecuteCommand("cd lib && make config=debug").c_str());
-        //     printf("%s\n",ExecuteCommand("cd temp && make config=debug").c_str());
-        //     system("bin/Debug/Application");
-        // #endif
+        #ifndef ENABLE_PROFILING
+            printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str());
+            printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str());
+            ExecuteCommand("mkdir -p bin/Release/resources");
+            ExecuteCommand("cp -r resources/* bin/Release/resources");
+            char command[256];
+            command[0]='\0';
+            strcat(command,"cp ");
+            strcat(command,SCENE_PATH.c_str());
+            strcat(command," bin/Release/");
+            strcat(command,SCENE_PATH.c_str());
+            printf("%s\n",ExecuteCommand(command).c_str());
+            RENDERER->CreateShaders();
+            system("cd bin/Release && ./Application");
+        #elif defined(ENABLE_PROFILING)
+            printf("%s\n",ExecuteCommand("cd lib && make config=profile").c_str());
+            printf("%s\n",ExecuteCommand("cd temp && make config=profile").c_str());
+            ExecuteCommand("mkdir -p bin/Profile/resources");
+            ExecuteCommand("cp -r resources/* bin/Profile/resources");
+            char command[256];
+            command[0]='\0';
+            strcat(command,"cp ");
+            strcat(command,SCENE_PATH.c_str());
+            strcat(command," bin/Profile/");
+            strcat(command,SCENE_PATH.c_str());
+            printf("%s\n",ExecuteCommand(command).c_str());
+            RENDERER->CreateShaders();
+            system("cd bin/Profile && ./Application");
+        #endif
 
         isApplicationRunning.store(false);
     });
