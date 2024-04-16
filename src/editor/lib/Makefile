@@ -256,6 +256,9 @@ $(OBJDIR)/texture.o: ../../src/texture.cpp
 $(OBJDIR)/texturesmanager.o: ../../src/texturesmanager.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/utilities.o: ../../src/utilities.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/vertexarray.o: ../../src/vertexarray.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
@@ -284,9 +287,6 @@ $(OBJDIR)/scene_buttons.o: ../src/scene_buttons.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/sceneserializer.o: ../src/sceneserializer.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/utilities.o: ../src/utilities.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

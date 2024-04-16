@@ -1,6 +1,7 @@
 #include <pch.hpp>
 #include <application.hpp>
 #include <buttons.hpp>
+#include <utilities.hpp>
 
 Application::Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable,bool imgui){
     m_WindowName=window_name;

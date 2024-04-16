@@ -59,7 +59,7 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
         ExecuteCommand("mkdir -p temp");
         GenerateApplication(script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,SCENE_PATH,RESIZABLE);
         printf("%s\n",ExecuteCommand("cd application && premake5 gmake2 --file=application_premake.lua").c_str());
-        #ifndef ENABLE_PROFILING
+        #if defined(RELEASE)
             printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str());
             printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str());
             ExecuteCommand("mkdir -p bin/Release/resources");
@@ -73,6 +73,20 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
             printf("%s\n",ExecuteCommand(command).c_str());
             RENDERER->CreateShaders();
             system("cd bin/Release && ./Application");
+        #elif defined(DEBUG)
+            printf("%s\n",ExecuteCommand("cd lib && make config=debug").c_str());
+            printf("%s\n",ExecuteCommand("cd temp && make config=debug").c_str());
+            ExecuteCommand("mkdir -p bin/Debug/resources");
+            ExecuteCommand("cp -r resources/* bin/Debug/resources");
+            char command[256];
+            command[0]='\0';
+            strcat(command,"cp ");
+            strcat(command,SCENE_PATH.c_str());
+            strcat(command," bin/Debug/");
+            strcat(command,SCENE_PATH.c_str());
+            printf("%s\n",ExecuteCommand(command).c_str());
+            RENDERER->CreateShaders();
+            system("cd bin/Debug && ./Application");
         #elif defined(ENABLE_PROFILING)
             printf("%s\n",ExecuteCommand("cd lib && make config=profile").c_str());
             printf("%s\n",ExecuteCommand("cd temp && make config=profile").c_str());
