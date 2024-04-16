@@ -86,6 +86,8 @@ $(function() {
 <code>#include &lt;<a class="el" href="../../d1/db6/textrenderer_8hpp_source.html">textrenderer.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="../../dd/d46/input_8hpp_source.html">input.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="../../d8/db5/texturesmanager_8hpp_source.html">texturesmanager.hpp</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../db/df0/fontmanager_8hpp_source.html">fontmanager.hpp</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../dc/d7f/textqueue_8hpp_source.html">textqueue.hpp</a>&gt;</code><br />
 </div>
 <p><a href="../../d2/d5a/window_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -132,15 +134,21 @@ Variables</h2></td></tr>
 <tr class="memitem:a2c876fdbc79628a796247811f2940cf0" id="r_a2c876fdbc79628a796247811f2940cf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/d52/classRenderer.html">Renderer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c876fdbc79628a796247811f2940cf0">RENDERER</a></td></tr>
 <tr class="memdesc:a2c876fdbc79628a796247811f2940cf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main renderer.  <br /></td></tr>
 <tr class="separator:a2c876fdbc79628a796247811f2940cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09d462f1af34dedd95b9754af5468693" id="r_a09d462f1af34dedd95b9754af5468693"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d6/db3/classTextRenderer.html">TextRenderer</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09d462f1af34dedd95b9754af5468693">TEXT_RENDERERS</a></td></tr>
-<tr class="memdesc:a09d462f1af34dedd95b9754af5468693"><td class="mdescLeft">&#160;</td><td class="mdescRight">The text renderers.  <br /></td></tr>
-<tr class="separator:a09d462f1af34dedd95b9754af5468693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b1839d95d92fb884207ccd98735321b" id="r_a6b1839d95d92fb884207ccd98735321b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d6/db3/classTextRenderer.html">TextRenderer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b1839d95d92fb884207ccd98735321b">TEXT_RENDERER</a></td></tr>
+<tr class="memdesc:a6b1839d95d92fb884207ccd98735321b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The text renderers.  <br /></td></tr>
+<tr class="separator:a6b1839d95d92fb884207ccd98735321b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae59426895df9da73f376aa6d940174a7" id="r_ae59426895df9da73f376aa6d940174a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d5/d5b/classInput.html">Input</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae59426895df9da73f376aa6d940174a7">INPUT</a></td></tr>
 <tr class="memdesc:ae59426895df9da73f376aa6d940174a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The input manager.  <br /></td></tr>
 <tr class="separator:ae59426895df9da73f376aa6d940174a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25b87b9e7fa91d6743774454ca5bff1f" id="r_a25b87b9e7fa91d6743774454ca5bff1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d27/classTexturesManager.html">TexturesManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25b87b9e7fa91d6743774454ca5bff1f">TEXTURES_MANAGER</a></td></tr>
 <tr class="memdesc:a25b87b9e7fa91d6743774454ca5bff1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The textures manager.  <br /></td></tr>
 <tr class="separator:a25b87b9e7fa91d6743774454ca5bff1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2711640898b9ebcdc60a55dd92c9e907" id="r_a2711640898b9ebcdc60a55dd92c9e907"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d16/classFontManager.html">FontManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2711640898b9ebcdc60a55dd92c9e907">FONT_MANAGER</a></td></tr>
+<tr class="memdesc:a2711640898b9ebcdc60a55dd92c9e907"><td class="mdescLeft">&#160;</td><td class="mdescRight">The font manager.  <br /></td></tr>
+<tr class="separator:a2711640898b9ebcdc60a55dd92c9e907"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada1004869ed84751f8cc9d8f93a33020" id="r_ada1004869ed84751f8cc9d8f93a33020"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dd/dfd/classTextQueue.html">TextQueue</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada1004869ed84751f8cc9d8f93a33020">TEXT_QUEUE</a></td></tr>
+<tr class="memdesc:ada1004869ed84751f8cc9d8f93a33020"><td class="mdescLeft">&#160;</td><td class="mdescRight">The text queue.  <br /></td></tr>
+<tr class="separator:ada1004869ed84751f8cc9d8f93a33020"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a027b3c1afd39e1f0e757c91b60c78deb" id="r_a027b3c1afd39e1f0e757c91b60c78deb"><td class="memItemLeft" align="right" valign="top">GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/df3/namespaceWindow.html#a027b3c1afd39e1f0e757c91b60c78deb">Window::Window</a></td></tr>
 <tr class="separator:a027b3c1afd39e1f0e757c91b60c78deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8e76ae23ad376f39a8a8ce12370b639" id="r_aa8e76ae23ad376f39a8a8ce12370b639"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/df3/namespaceWindow.html#aa8e76ae23ad376f39a8a8ce12370b639">Window::Width</a></td></tr>
@@ -183,6 +191,32 @@ Variables</h2></td></tr>
 <tr class="separator:abc0dde62833e07d7de56767029552ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a2711640898b9ebcdc60a55dd92c9e907" name="a2711640898b9ebcdc60a55dd92c9e907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2711640898b9ebcdc60a55dd92c9e907">&#9670;&#160;</a></span>FONT_MANAGER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d0/d16/classFontManager.html">FontManager</a>* FONT_MANAGER</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The font manager. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00016">16</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
+
+</div>
+</div>
 <a id="ae59426895df9da73f376aa6d940174a7" name="ae59426895df9da73f376aa6d940174a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae59426895df9da73f376aa6d940174a7">&#9670;&#160;</a></span>INPUT</h2>
 
@@ -205,7 +239,7 @@ Variables</h2></td></tr>
 
 <p>The input manager. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00012">12</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00014">14</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
 
 </div>
 </div>
@@ -229,7 +263,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00009">9</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00011">11</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
 
 </div>
 </div>
@@ -255,12 +289,12 @@ Variables</h2></td></tr>
 
 <p>The main renderer. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00010">10</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00012">12</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a09d462f1af34dedd95b9754af5468693" name="a09d462f1af34dedd95b9754af5468693"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09d462f1af34dedd95b9754af5468693">&#9670;&#160;</a></span>TEXT_RENDERERS</h2>
+<a id="ada1004869ed84751f8cc9d8f93a33020" name="ada1004869ed84751f8cc9d8f93a33020"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada1004869ed84751f8cc9d8f93a33020">&#9670;&#160;</a></span>TEXT_QUEUE</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,7 +303,33 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="../../d6/db3/classTextRenderer.html">TextRenderer</a>*&gt; TEXT_RENDERERS</td>
+          <td class="memname"><a class="el" href="../../dd/dfd/classTextQueue.html">TextQueue</a>* TEXT_QUEUE</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The text queue. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00017">17</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6b1839d95d92fb884207ccd98735321b" name="a6b1839d95d92fb884207ccd98735321b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b1839d95d92fb884207ccd98735321b">&#9670;&#160;</a></span>TEXT_RENDERER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d6/db3/classTextRenderer.html">TextRenderer</a>* TEXT_RENDERER</td>
         </tr>
       </table>
   </td>
@@ -281,7 +341,7 @@ Variables</h2></td></tr>
 
 <p>The text renderers. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00011">11</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00013">13</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
 
 </div>
 </div>
@@ -307,7 +367,7 @@ Variables</h2></td></tr>
 
 <p>The textures manager. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00013">13</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d8e/window_8cpp_source.html#l00015">15</a> of file <a class="el" href="../../d8/d8e/window_8cpp_source.html">window.cpp</a>.</p>
 
 </div>
 </div>

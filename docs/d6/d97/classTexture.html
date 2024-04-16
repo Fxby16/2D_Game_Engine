@@ -126,10 +126,16 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a4a9db014b73ddc5446f88c0c6cad9cd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d4481cb414758aa1dbfcd3d00f71659" id="r_a9d4481cb414758aa1dbfcd3d00f71659"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d4481cb414758aa1dbfcd3d00f71659">m_FilePath</a></td></tr>
 <tr class="separator:a9d4481cb414758aa1dbfcd3d00f71659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e85c9cdb98ea457cad97b67b289664d" id="r_a5e85c9cdb98ea457cad97b67b289664d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e85c9cdb98ea457cad97b67b289664d">m_LoadedFilePath</a></td></tr>
+<tr class="separator:a5e85c9cdb98ea457cad97b67b289664d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f275c654e1904d7153c2b93620f0b10" id="r_a9f275c654e1904d7153c2b93620f0b10"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f275c654e1904d7153c2b93620f0b10">m_MagFilter</a></td></tr>
 <tr class="separator:a9f275c654e1904d7153c2b93620f0b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b61d1b966dbb4ddbfb8396ff3dec3d2" id="r_a7b61d1b966dbb4ddbfb8396ff3dec3d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b61d1b966dbb4ddbfb8396ff3dec3d2">m_MinFilter</a></td></tr>
 <tr class="separator:a7b61d1b966dbb4ddbfb8396ff3dec3d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69c458c82c6997cbde071298b3207cf0" id="r_a69c458c82c6997cbde071298b3207cf0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69c458c82c6997cbde071298b3207cf0">m_LoadedMagFilter</a></td></tr>
+<tr class="separator:a69c458c82c6997cbde071298b3207cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2391fdae4af3a70efb92add80c5e4dd7" id="r_a2391fdae4af3a70efb92add80c5e4dd7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2391fdae4af3a70efb92add80c5e4dd7">m_LoadedMinFilter</a></td></tr>
+<tr class="separator:a2391fdae4af3a70efb92add80c5e4dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaf199219963518e56d62c5997c0496e" id="r_abaf199219963518e56d62c5997c0496e"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abaf199219963518e56d62c5997c0496e">m_LocalBuffer</a></td></tr>
 <tr class="separator:abaf199219963518e56d62c5997c0496e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5fdfa61997967621f06cea669f1fc45" id="r_ad5fdfa61997967621f06cea669f1fc45"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5fdfa61997967621f06cea669f1fc45">m_Width</a></td></tr>
@@ -145,6 +151,8 @@ Friends</h2></td></tr>
 <tr class="separator:a70538530bc36e033e360880ef311df61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4c70de915efcd23599b66ec608e4603" id="r_af4c70de915efcd23599b66ec608e4603"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4c70de915efcd23599b66ec608e4603">TexturesManager</a></td></tr>
 <tr class="separator:af4c70de915efcd23599b66ec608e4603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fa7cde0ffbc72d80ef032c1ea3e9c85" id="r_a5fa7cde0ffbc72d80ef032c1ea3e9c85"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fa7cde0ffbc72d80ef032c1ea3e9c85">SceneSerializer</a></td></tr>
+<tr class="separator:a5fa7cde0ffbc72d80ef032c1ea3e9c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -206,7 +214,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00005">5</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00006">6</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
 
 </div>
 </div>
@@ -225,7 +233,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00030">30</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00037">37</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
 
 </div>
 </div>
@@ -244,7 +252,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00042">42</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
 
 </div>
 </div>
@@ -264,7 +272,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
 
 </div>
 </div>
@@ -291,7 +299,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00054">54</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00060">60</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -399,7 +407,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00038">38</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00041">41</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -445,7 +453,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00057">57</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d20/texture_8cpp_source.html#l00067">67</a> of file <a class="el" href="../../d2/d20/texture_8cpp_source.html">texture.cpp</a>.</p>
 
 </div>
 </div>
@@ -470,7 +478,31 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00062">62</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00068">68</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a5fa7cde0ffbc72d80ef032c1ea3e9c85" name="a5fa7cde0ffbc72d80ef032c1ea3e9c85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fa7cde0ffbc72d80ef032c1ea3e9c85">&#9670;&#160;</a></span>SceneSerializer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="../../db/dbf/classSceneSerializer.html">SceneSerializer</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00070">70</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -494,7 +526,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00063">63</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00069">69</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -519,7 +551,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00077">77</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00081">81</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -543,7 +575,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00074">74</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00078">78</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -567,7 +599,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00077">77</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00081">81</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -591,7 +623,79 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00072">72</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00076">76</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a5e85c9cdb98ea457cad97b67b289664d" name="a5e85c9cdb98ea457cad97b67b289664d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e85c9cdb98ea457cad97b67b289664d">&#9670;&#160;</a></span>m_LoadedFilePath</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Texture::m_LoadedFilePath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00078">78</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a69c458c82c6997cbde071298b3207cf0" name="a69c458c82c6997cbde071298b3207cf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69c458c82c6997cbde071298b3207cf0">&#9670;&#160;</a></span>m_LoadedMagFilter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Texture::m_LoadedMagFilter</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00079">79</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a2391fdae4af3a70efb92add80c5e4dd7" name="a2391fdae4af3a70efb92add80c5e4dd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2391fdae4af3a70efb92add80c5e4dd7">&#9670;&#160;</a></span>m_LoadedMinFilter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Texture::m_LoadedMinFilter</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00079">79</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -615,7 +719,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00076">76</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00080">80</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -639,7 +743,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00075">75</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00079">79</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -663,7 +767,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00075">75</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00079">79</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -687,7 +791,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00073">73</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00077">77</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>
@@ -711,7 +815,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00077">77</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/de0/texture_8hpp_source.html#l00081">81</a> of file <a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>.</p>
 
 </div>
 </div>

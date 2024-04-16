@@ -1,27 +1,7 @@
 var searchData=
 [
-  ['i_0',['i',['../d4/dac/sceneserializer_8cpp.html#acb559820d9ca11295b4500f179ef6392',1,'sceneserializer.cpp']]],
-  ['if_1',['if',['../d4/dac/sceneserializer_8cpp.html#a93deb2f0f6a4c44e22bd49a7eed1590e',1,'if(fkey==NULL):&#160;sceneserializer.cpp'],['../d4/dac/sceneserializer_8cpp.html#a8796c18c8e7c0c830cb3561b82dc53f6',1,'if(fin==NULL):&#160;sceneserializer.cpp'],['../d4/dac/sceneserializer_8cpp.html#ac0af3988e0af425397bdb150975130cb',1,'if(!data[&quot;Scene&quot;]):&#160;sceneserializer.cpp'],['../d4/dac/sceneserializer_8cpp.html#a30856d68013cc764b1b39acc7bc9c1a2',1,'if(entities):&#160;sceneserializer.cpp']]],
-  ['imgui_5fclose_2',['ImGui_Close',['../d1/d52/classRenderer.html#a136ae28025b8802e6f63b76baf288e36',1,'Renderer']]],
-  ['imgui_5fcontent_3',['ImGui_Content',['../d1/d52/classRenderer.html#af1df06c1340ba4f80792c3da5dd535ac',1,'Renderer']]],
-  ['imgui_5fend_5fframe_4',['ImGui_End_Frame',['../d1/d52/classRenderer.html#a0087733bd01d2e282b26f3c91112638f',1,'Renderer']]],
-  ['imgui_5finit_5',['ImGui_Init',['../d1/d52/classRenderer.html#af359509c7e57700e03c93c347cbc3865',1,'Renderer']]],
-  ['imgui_5fstart_5fframe_6',['ImGui_Start_Frame',['../d1/d52/classRenderer.html#aea7fad4f1e5807117d98aaa78c4353d0',1,'Renderer']]],
-  ['imgui_5ftheme_7',['ImGui_Theme',['../d1/d52/classRenderer.html#ac1db89a329e0dc1c58cf94004f048ab4',1,'Renderer']]],
-  ['indexbuffer_8',['IndexBuffer',['../dd/df7/classIndexBuffer.html',1,'IndexBuffer'],['../dd/df7/classIndexBuffer.html#a9484706e14f9ab9dbcbb35c8f1b58d99',1,'IndexBuffer::IndexBuffer()']]],
-  ['indexbuffer_2ecpp_9',['indexbuffer.cpp',['../da/d70/indexbuffer_8cpp.html',1,'']]],
-  ['indexbuffer_2ed_10',['indexbuffer.d',['../d6/de1/indexbuffer_8d.html',1,'']]],
-  ['indexbuffer_2ehpp_11',['indexbuffer.hpp',['../d5/dc9/indexbuffer_8hpp.html',1,'']]],
-  ['initaudio_12',['InitAudio',['../d1/d71/audio_8hpp.html#aa02f7c9cede3094b896d573cd1f2016e',1,'InitAudio():&#160;audio.cpp'],['../d1/ddc/audio_8cpp.html#aa02f7c9cede3094b896d573cd1f2016e',1,'InitAudio():&#160;audio.cpp']]],
-  ['initglfwwindow_13',['InitGlfwWindow',['../de/d49/glfw_8hpp.html#adb180918d1d062e281e3dd4a59997a8c',1,'InitGlfwWindow(const char *window_name):&#160;glfw.cpp'],['../db/d91/glfw_8cpp.html#adb180918d1d062e281e3dd4a59997a8c',1,'InitGlfwWindow(const char *window_name):&#160;glfw.cpp'],['../d3/df3/namespaceWindow.html#aa44c2b4b33efffc870620c05b1aafea6',1,'Window::InitGlfwWindow()']]],
-  ['initializeproj_14',['InitializeProj',['../d1/df0/classCamera.html#a9f6cae59c47d1a26dfaac0727b8098d6',1,'Camera']]],
-  ['input_15',['Input',['../d5/d5b/classInput.html',1,'Input'],['../d5/d5b/classInput.html#a212fe61f708c212e8dac91d145146050',1,'Input::Input()']]],
-  ['input_16',['INPUT',['../d2/d5a/window_8hpp.html#ae59426895df9da73f376aa6d940174a7',1,'INPUT:&#160;window.cpp'],['../d8/d8e/window_8cpp.html#ae59426895df9da73f376aa6d940174a7',1,'INPUT:&#160;window.cpp']]],
-  ['input_2ecpp_17',['input.cpp',['../d8/d8c/input_8cpp.html',1,'']]],
-  ['input_2ed_18',['input.d',['../d4/dcf/input_8d.html',1,'']]],
-  ['input_2ehpp_19',['input.hpp',['../dd/d46/input_8hpp.html',1,'']]],
-  ['interpolate_20',['Interpolate',['../db/de2/entity_8hpp.html#a350b7821fd1aae9ecb31fe7906257e40',1,'entity.hpp']]],
-  ['isfullscreen_21',['ISFULLSCREEN',['../d2/d5a/window_8hpp.html#aa6768651109aee2bbfbba49394c74468',1,'ISFULLSCREEN:&#160;window.cpp'],['../d8/d8e/window_8cpp.html#aa6768651109aee2bbfbba49394c74468',1,'ISFULLSCREEN:&#160;window.cpp']]],
-  ['isfullscreen_22',['IsFullscreen',['../d3/df3/namespaceWindow.html#ad481e8e5c15f08cfd588ee1f665eb395',1,'Window']]],
-  ['isvsync_23',['IsVSync',['../d3/df3/namespaceWindow.html#a3c6de6b5a6aa116874bfa121141d21bd',1,'Window']]]
+  ['h_0',['h',['../dc/d15/structVec2.html#abc7ff526b66dd12a98e6bff55a676817',1,'Vec2']]],
+  ['handleinputs_1',['HandleInputs',['../df/d7b/application_8cpp.html#ab1fb2bfc41663f282c19951e43f136ef',1,'application.cpp']]],
+  ['height_2',['Height',['../d3/df3/namespaceWindow.html#a3e4f12e7755d9ae3254b61150cdf7a43',1,'Window']]],
+  ['highlightentity_3',['HighlightEntity',['../dd/dc3/classEditor.html#a8a18db138abd9d7e327d3269b3636285',1,'Editor']]]
 ];

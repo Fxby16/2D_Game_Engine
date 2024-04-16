@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['renderer_0',['Renderer',['../dd/dc3/classEditor.html#a70538530bc36e033e360880ef311df61',1,'Editor::Renderer'],['../d6/d97/classTexture.html#a70538530bc36e033e360880ef311df61',1,'Texture::Renderer'],['../db/d0b/classSpriteSheet.html#a70538530bc36e033e360880ef311df61',1,'SpriteSheet::Renderer']]]
+  ['fontmanager_0',['FontManager',['../d6/db3/classTextRenderer.html#a03f7887adc0b982b1900a4b92370f917',1,'TextRenderer']]]
 ];

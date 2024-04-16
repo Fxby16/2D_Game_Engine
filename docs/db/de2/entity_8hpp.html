@@ -86,6 +86,7 @@ $(function() {
 <div class="textblock"><code>#include &lt;<a class="el" href="../../d2/dc1/structs_8hpp_source.html">structs.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="../../d1/de0/texture_8hpp_source.html">texture.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="../../d2/d5a/window_8hpp_source.html">window.hpp</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../d1/db6/textrenderer_8hpp_source.html">textrenderer.hpp</a>&gt;</code><br />
 </div>
 <p><a href="../../db/de2/entity_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -107,6 +108,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dba/classNativeScriptComponent.html">NativeScriptComponent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d1b/classTextComponent.html">TextComponent</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d61/classEntity.html">Entity</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d51/classComponentManager.html">ComponentManager&lt; T, &gt;</a></td></tr>
@@ -114,19 +117,19 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a8c263fb75c207f7bb05d74fc5b1a9d78" id="r_a8c263fb75c207f7bb05d74fc5b1a9d78"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8c263fb75c207f7bb05d74fc5b1a9d78"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78">ComponentType</a></td></tr>
-<tr class="separator:a8c263fb75c207f7bb05d74fc5b1a9d78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4966d79b792e482e4256a29a3aa5c9b" id="r_aa4966d79b792e482e4256a29a3aa5c9b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa4966d79b792e482e4256a29a3aa5c9b"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa4966d79b792e482e4256a29a3aa5c9b">ComponentType</a></td></tr>
+<tr class="separator:aa4966d79b792e482e4256a29a3aa5c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2e2d4966bf174492a45da8ae723efaba" id="r_a2e2d4966bf174492a45da8ae723efaba"><td class="memTemplParams" colspan="2">template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78">ComponentType</a>&lt; T &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a2e2d4966bf174492a45da8ae723efaba" id="r_a2e2d4966bf174492a45da8ae723efaba"><td class="memTemplParams" colspan="2">template&lt;typename T , <a class="el" href="#aa4966d79b792e482e4256a29a3aa5c9b">ComponentType</a>&lt; T &gt;  = 0&gt; </td></tr>
 <tr class="memitem:a2e2d4966bf174492a45da8ae723efaba"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a2e2d4966bf174492a45da8ae723efaba">BinarySearch</a> (std::vector&lt; T &gt; &amp;v, uint32_t uid)</td></tr>
 <tr class="separator:a2e2d4966bf174492a45da8ae723efaba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02b1183665c6c9431ed4afc539914f35" id="r_a02b1183665c6c9431ed4afc539914f35"><td class="memTemplParams" colspan="2">template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78">ComponentType</a>&lt; T &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a02b1183665c6c9431ed4afc539914f35" id="r_a02b1183665c6c9431ed4afc539914f35"><td class="memTemplParams" colspan="2">template&lt;typename T , <a class="el" href="#aa4966d79b792e482e4256a29a3aa5c9b">ComponentType</a>&lt; T &gt;  = 0&gt; </td></tr>
 <tr class="memitem:a02b1183665c6c9431ed4afc539914f35"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a02b1183665c6c9431ed4afc539914f35">FirstGreaterThan</a> (std::vector&lt; T &gt; &amp;v, uint32_t uid)</td></tr>
 <tr class="separator:a02b1183665c6c9431ed4afc539914f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b419da2f9cee47cdfa0fda3067efdaf" id="r_a5b419da2f9cee47cdfa0fda3067efdaf"><td class="memTemplParams" colspan="2">template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78">ComponentType</a>&lt; T &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a5b419da2f9cee47cdfa0fda3067efdaf" id="r_a5b419da2f9cee47cdfa0fda3067efdaf"><td class="memTemplParams" colspan="2">template&lt;typename T , <a class="el" href="#aa4966d79b792e482e4256a29a3aa5c9b">ComponentType</a>&lt; T &gt;  = 0&gt; </td></tr>
 <tr class="memitem:a5b419da2f9cee47cdfa0fda3067efdaf"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5b419da2f9cee47cdfa0fda3067efdaf">RightShift</a> (std::vector&lt; T &gt; &amp;v, size_t idx)</td></tr>
 <tr class="separator:a5b419da2f9cee47cdfa0fda3067efdaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a350b7821fd1aae9ecb31fe7906257e40" id="r_a350b7821fd1aae9ecb31fe7906257e40"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a350b7821fd1aae9ecb31fe7906257e40">Interpolate</a> (float current, float previous)</td></tr>
@@ -146,8 +149,8 @@ Variables</h2></td></tr>
 <tr class="separator:a93c23238a6fb697425d7a300e55a1a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a8c263fb75c207f7bb05d74fc5b1a9d78" name="a8c263fb75c207f7bb05d74fc5b1a9d78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c263fb75c207f7bb05d74fc5b1a9d78">&#9670;&#160;</a></span>ComponentType</h2>
+<a id="aa4966d79b792e482e4256a29a3aa5c9b" name="aa4966d79b792e482e4256a29a3aa5c9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4966d79b792e482e4256a29a3aa5c9b">&#9670;&#160;</a></span>ComponentType</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -155,7 +158,7 @@ Variables</h2></td></tr>
 template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78">ComponentType</a></td>
+          <td class="memname">using <a class="el" href="#aa4966d79b792e482e4256a29a3aa5c9b">ComponentType</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -167,10 +170,11 @@ template&lt;typename T &gt; </div>
 <div class="line">    std::is_same&lt;T,BoxColliderComponent&gt;::value ||</div>
 <div class="line">    std::is_same&lt;T,CircleColliderComponent&gt;::value ||</div>
 <div class="line">    std::is_same&lt;T,LightComponent&gt;::value ||</div>
-<div class="line">    std::is_same&lt;T,NativeScriptComponent&gt;::value,</div>
+<div class="line">    std::is_same&lt;T,NativeScriptComponent&gt;::value ||</div>
+<div class="line">    std::is_same&lt;T,TextComponent&gt;::value,</div>
 <div class="line">    <span class="keywordtype">int</span>&gt;::type</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00021">21</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00023">23</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -203,7 +207,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Search for the entity with the given uid. </p><dl class="section return"><dt>Returns</dt><dd>a pointer to the entity with the given uid, or nullptr if not found </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00307">307</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00341">341</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -213,7 +217,7 @@ template&lt;typename T &gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78">ComponentType</a>&lt; T &gt;  = 0&gt; </div>
+template&lt;typename T , <a class="el" href="#aa4966d79b792e482e4256a29a3aa5c9b">ComponentType</a>&lt; T &gt;  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -237,7 +241,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </div><div class="memdoc">
 <p>Search for the component with the given uid. </p><dl class="section return"><dt>Returns</dt><dd>the index of the component with the given uid, or -1 if not found </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00037">37</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00040">40</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -247,7 +251,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78">ComponentType</a>&lt; T &gt;  = 0&gt; </div>
+template&lt;typename T , <a class="el" href="#aa4966d79b792e482e4256a29a3aa5c9b">ComponentType</a>&lt; T &gt;  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -271,7 +275,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </div><div class="memdoc">
 <p>Search for the first component with uid greater than the given uid. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00055">55</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00058">58</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -303,7 +307,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </div><div class="memdoc">
 <p>Interpolate between the current and previous value using <a class="el" href="../../d3/df3/namespaceWindow.html#afedb92a72cfc3fb1154127fe6330d3d9">Window::Alpha</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00080">80</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00083">83</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -326,7 +330,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/ddd/entity_8cpp_source.html#l00145">145</a> of file <a class="el" href="../../d9/ddd/entity_8cpp_source.html">entity.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/ddd/entity_8cpp_source.html#l00198">198</a> of file <a class="el" href="../../d9/ddd/entity_8cpp_source.html">entity.cpp</a>.</p>
 
 </div>
 </div>
@@ -336,7 +340,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78">ComponentType</a>&lt; T &gt;  = 0&gt; </div>
+template&lt;typename T , <a class="el" href="#aa4966d79b792e482e4256a29a3aa5c9b">ComponentType</a>&lt; T &gt;  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -365,7 +369,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00072">72</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00075">75</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -393,7 +397,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>the b2BodyType converted to a BodyType </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00412">412</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00446">446</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -421,7 +425,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>the body type converted to a b2BodyType </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00397">397</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/de2/entity_8hpp_source.html#l00431">431</a> of file <a class="el" href="../../db/de2/entity_8hpp_source.html">entity.hpp</a>.</p>
 
 </div>
 </div>
@@ -446,7 +450,7 @@ template&lt;typename T , <a class="el" href="#a8c263fb75c207f7bb05d74fc5b1a9d78"
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00472">472</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html#l00485">485</a> of file <a class="el" href="../../d4/dac/sceneserializer_8cpp_source.html">sceneserializer.cpp</a>.</p>
 
 </div>
 </div>

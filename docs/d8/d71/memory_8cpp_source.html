@@ -100,8 +100,9 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">    #ifdef DEBUG</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        printf(<span class="stringliteral">&quot;Freeing memory from %s:%d\n&quot;</span>,src.file_name(),src.line());</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">    #endif</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">operator</span> <span class="keyword">delete</span>(ptr);</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">if</span>(ptr!=<span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keyword">operator</span> <span class="keyword">delete</span>(ptr);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
 </div>
 <div class="ttc" id="amemory_8cpp_html_a6c23434e037abf48df5b894af2237961"><div class="ttname"><a href="../../d8/d71/memory_8cpp.html#a6c23434e037abf48df5b894af2237961">FreeMemory</a></div><div class="ttdeci">void FreeMemory(void *ptr, std::source_location src)</div><div class="ttdef"><b>Definition</b> <a href="#l00011">memory.cpp:11</a></div></div>
 <div class="ttc" id="amemory_8cpp_html_ab1e11c555e7b940f2eb5bb11da9778c6"><div class="ttname"><a href="../../d8/d71/memory_8cpp.html#ab1e11c555e7b940f2eb5bb11da9778c6">AllocateMemory</a></div><div class="ttdeci">void * AllocateMemory(size_t size, std::source_location src)</div><div class="ttdef"><b>Definition</b> <a href="#l00003">memory.cpp:3</a></div></div>

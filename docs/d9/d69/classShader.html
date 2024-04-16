@@ -85,8 +85,16 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a399bb2d0c75ad2ab849eb5c8a4d7575f" id="r_a399bb2d0c75ad2ab849eb5c8a4d7575f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a399bb2d0c75ad2ab849eb5c8a4d7575f">Shader</a> (const char *vertex_shader_path, const char *fragment_shader_path)</td></tr>
 <tr class="separator:a399bb2d0c75ad2ab849eb5c8a4d7575f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedc63e240e965b496f246ffc214918b4" id="r_aedc63e240e965b496f246ffc214918b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aedc63e240e965b496f246ffc214918b4">Shader</a> ()=default</td></tr>
+<tr class="separator:aedc63e240e965b496f246ffc214918b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff01df87e8a102f270b5b135a295e59d" id="r_aff01df87e8a102f270b5b135a295e59d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff01df87e8a102f270b5b135a295e59d">~Shader</a> ()</td></tr>
 <tr class="separator:aff01df87e8a102f270b5b135a295e59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67f3fdfca9aa7e4e75468d63ccaf35f7" id="r_a67f3fdfca9aa7e4e75468d63ccaf35f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67f3fdfca9aa7e4e75468d63ccaf35f7">Load</a> (const char *vertex_shader_path, const char *fragment_shader_path)</td></tr>
+<tr class="separator:a67f3fdfca9aa7e4e75468d63ccaf35f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98557bded3412ea4d7fb358004c09014" id="r_a98557bded3412ea4d7fb358004c09014"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98557bded3412ea4d7fb358004c09014">Unload</a> ()</td></tr>
+<tr class="separator:a98557bded3412ea4d7fb358004c09014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bda774e5ddcfa38aca7c3785f3db70c" id="r_a6bda774e5ddcfa38aca7c3785f3db70c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6bda774e5ddcfa38aca7c3785f3db70c">Reload</a> ()</td></tr>
+<tr class="separator:a6bda774e5ddcfa38aca7c3785f3db70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a5a24f72050f46f03cb839b41490527" id="r_a5a5a24f72050f46f03cb839b41490527"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a5a24f72050f46f03cb839b41490527">Bind</a> () const</td></tr>
 <tr class="separator:a5a5a24f72050f46f03cb839b41490527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebfe8baf7c63c605e0ed429085a4e06a" id="r_aebfe8baf7c63c605e0ed429085a4e06a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebfe8baf7c63c605e0ed429085a4e06a">Unbind</a> () const</td></tr>
@@ -120,7 +128,7 @@ Static Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="../../d9/d52/shader_8hpp_source.html#l00003">3</a> of file <a class="el" href="../../d9/d52/shader_8hpp_source.html">shader.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a399bb2d0c75ad2ab849eb5c8a4d7575f" name="a399bb2d0c75ad2ab849eb5c8a4d7575f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a399bb2d0c75ad2ab849eb5c8a4d7575f">&#9670;&#160;</a></span>Shader()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a399bb2d0c75ad2ab849eb5c8a4d7575f">&#9670;&#160;</a></span>Shader() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,6 +150,31 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aedc63e240e965b496f246ffc214918b4" name="aedc63e240e965b496f246ffc214918b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedc63e240e965b496f246ffc214918b4">&#9670;&#160;</a></span>Shader() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Shader::Shader </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aff01df87e8a102f270b5b135a295e59d" name="aff01df87e8a102f270b5b135a295e59d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff01df87e8a102f270b5b135a295e59d">&#9670;&#160;</a></span>~Shader()</h2>
 
@@ -157,7 +190,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00039">39</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00008">8</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -177,7 +210,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00043">43</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00068">68</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -204,7 +237,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d52/shader_8hpp_source.html#l00010">10</a> of file <a class="el" href="../../d9/d52/shader_8hpp_source.html">shader.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d52/shader_8hpp_source.html#l00015">15</a> of file <a class="el" href="../../d9/d52/shader_8hpp_source.html">shader.hpp</a>.</p>
 
 </div>
 </div>
@@ -235,7 +268,49 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00129">129</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00154">154</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a67f3fdfca9aa7e4e75468d63ccaf35f7" name="a67f3fdfca9aa7e4e75468d63ccaf35f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67f3fdfca9aa7e4e75468d63ccaf35f7">&#9670;&#160;</a></span>Load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Shader::Load </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>vertex_shader_path</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>fragment_shader_path</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00016">16</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6bda774e5ddcfa38aca7c3785f3db70c" name="a6bda774e5ddcfa38aca7c3785f3db70c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bda774e5ddcfa38aca7c3785f3db70c">&#9670;&#160;</a></span>Reload()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Shader::Reload </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00063">63</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -262,7 +337,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00138">138</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00163">163</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -285,7 +360,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00107">107</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00132">132</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -308,7 +383,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00115">115</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00140">140</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -336,7 +411,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00103">103</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00128">128</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -364,7 +439,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00099">99</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00124">124</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -397,7 +472,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00095">95</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00120">120</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -435,7 +510,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00091">91</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00116">116</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -463,7 +538,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00111">111</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00136">136</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -482,7 +557,26 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00072">72</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a98557bded3412ea4d7fb358004c09014" name="a98557bded3412ea4d7fb358004c09014"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98557bded3412ea4d7fb358004c09014">&#9670;&#160;</a></span>Unload()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Shader::Unload </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../dd/d1e/shader_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../dd/d1e/shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>2D_Game_Engine: editor/src/utilities.cpp Source File</title>
+<title>2D_Game_Engine: src/utilities.cpp Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -76,7 +76,7 @@ $(function() { codefold.init(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_bac5aa69239d34ac960582aca466258e.html">editor</a></li><li class="navelem"><a class="el" href="../../dir_b7d7d6b8a78807b328f73545b8904b59.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -107,21 +107,23 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="foldopen" id="foldopen00017" data-start="{" data-end="}">
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="../../dc/d5f/utilities_8hpp.html#aec3b54e6f2552524e08e7819f974a9a8">   17</a></span>std::string <a class="code hl_function" href="../../de/da5/utilities_8cpp.html#aec3b54e6f2552524e08e7819f974a9a8">ExecuteCommand</a>(<span class="keyword">const</span> std::string &amp;command){</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordtype">char</span> buffer[128];</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    std::string result;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    std::unique_ptr&lt;FILE,<span class="keyword">decltype</span>(&amp;pclose)&gt;pipe(popen(command.c_str(),<span class="stringliteral">&quot;r&quot;</span>),pclose);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordflow">if</span>(!pipe){</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        perror(<span class="stringliteral">&quot;popen failed&quot;</span>);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    }</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordflow">while</span>(fgets(buffer,128,pipe.get())!=<span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        result+=buffer;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    }</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>} </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    std::cout&lt;&lt;<span class="stringliteral">&quot;Executing &quot;</span>&lt;&lt;command&lt;&lt;std::endl;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">char</span> buffer[128];</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    std::string result;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    std::unique_ptr&lt;FILE,<span class="keyword">decltype</span>(&amp;pclose)&gt;pipe(popen(command.c_str(),<span class="stringliteral">&quot;r&quot;</span>),pclose);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">if</span>(!pipe){</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        perror(<span class="stringliteral">&quot;popen failed&quot;</span>);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordflow">while</span>(fgets(buffer,128,pipe.get())!=<span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        result+=buffer;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    }</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>} </div>
 </div>
-<div class="ttc" id="anamespaceWindow_html_a3e4f12e7755d9ae3254b61150cdf7a43"><div class="ttname"><a href="../../d3/df3/namespaceWindow.html#a3e4f12e7755d9ae3254b61150cdf7a43">Window::Height</a></div><div class="ttdeci">float Height</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d5a/window_8hpp_source.html#l00039">window.hpp:39</a></div></div>
-<div class="ttc" id="anamespaceWindow_html_aa8e76ae23ad376f39a8a8ce12370b639"><div class="ttname"><a href="../../d3/df3/namespaceWindow.html#aa8e76ae23ad376f39a8a8ce12370b639">Window::Width</a></div><div class="ttdeci">float Width</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d8e/window_8cpp_source.html#l00220">window.cpp:220</a></div></div>
+<div class="ttc" id="anamespaceWindow_html_a3e4f12e7755d9ae3254b61150cdf7a43"><div class="ttname"><a href="../../d3/df3/namespaceWindow.html#a3e4f12e7755d9ae3254b61150cdf7a43">Window::Height</a></div><div class="ttdeci">float Height</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d5a/window_8hpp_source.html#l00043">window.hpp:43</a></div></div>
+<div class="ttc" id="anamespaceWindow_html_aa8e76ae23ad376f39a8a8ce12370b639"><div class="ttname"><a href="../../d3/df3/namespaceWindow.html#aa8e76ae23ad376f39a8a8ce12370b639">Window::Width</a></div><div class="ttdeci">float Width</div><div class="ttdef"><b>Definition</b> <a href="../../d8/d8e/window_8cpp_source.html#l00227">window.cpp:227</a></div></div>
 <div class="ttc" id="autilities_8cpp_html_a01f6c7caadd865eda32cd7fbdef00416"><div class="ttname"><a href="../../de/da5/utilities_8cpp.html#a01f6c7caadd865eda32cd7fbdef00416">GetHeightPercentageInPx</a></div><div class="ttdeci">float GetHeightPercentageInPx(float percentage)</div><div class="ttdef"><b>Definition</b> <a href="#l00009">utilities.cpp:9</a></div></div>
 <div class="ttc" id="autilities_8cpp_html_a021b1277b14e98ceaabe8e6b9d396bfd"><div class="ttname"><a href="../../de/da5/utilities_8cpp.html#a021b1277b14e98ceaabe8e6b9d396bfd">StartNode</a></div><div class="ttdeci">bool StartNode(const std::string &amp;name, enum ImGuiTreeNodeFlags_ flags)</div><div class="ttdef"><b>Definition</b> <a href="#l00013">utilities.cpp:13</a></div></div>
 <div class="ttc" id="autilities_8cpp_html_ae4a949785c5fea12789793723796c367"><div class="ttname"><a href="../../de/da5/utilities_8cpp.html#ae4a949785c5fea12789793723796c367">GetWidthPercentageInPx</a></div><div class="ttdeci">float GetWidthPercentageInPx(float percentage)</div><div class="ttdef"><b>Definition</b> <a href="#l00005">utilities.cpp:5</a></div></div>

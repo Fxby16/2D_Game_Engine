@@ -76,7 +76,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">renderer.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -96,7 +98,104 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d52/classRenderer.html">Renderer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a2bb60c2ebfdf7db6c7aee48e3772012e" id="r_a2bb60c2ebfdf7db6c7aee48e3772012e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012e">TonemapType</a> { <br />
+&#160;&#160;<a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012ea6adf97f83acf6453d4a6a4b1070f3754">None</a> =0
+, <a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012ea9e6d3d22124e1f0626b77fa3b7994a9b">Reinhard</a> =1
+, <a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012ea54a029401a59d2e99c39c91c8a645fd7">Filmic</a> =2
+, <a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012ea2e5a7a8d4e40720151c049312bde8a96">Uncharted2</a> =3
+, <br />
+&#160;&#160;<a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012ea01ec90d9624dce53f3f3492882841fe6">ACES</a> =4
+, <a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012eac1e19c09f700938f0ff7f1fd4722a3ac">Exponential</a> =5
+, <a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012ea2f8e38ec1a5832670c5011a71603c929">Logarithmic</a> =6
+, <a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012ea3d3cc3f2926653d6886c200715a22e57">Mantiuk</a> =7
+<br />
+ }</td></tr>
+<tr class="separator:a2bb60c2ebfdf7db6c7aee48e3772012e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a519b0aba6744dca9aeddd6592394c58c" id="r_a519b0aba6744dca9aeddd6592394c58c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a519b0aba6744dca9aeddd6592394c58c">TonemapTypeToString</a> (<a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012e">TonemapType</a> type)</td></tr>
+<tr class="separator:a519b0aba6744dca9aeddd6592394c58c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fb1d4a3797bf9ac0676b495f5fefc4d" id="r_a5fb1d4a3797bf9ac0676b495f5fefc4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012e">TonemapType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fb1d4a3797bf9ac0676b495f5fefc4d">StringToTonemapType</a> (const std::string &amp;type)</td></tr>
+<tr class="separator:a5fb1d4a3797bf9ac0676b495f5fefc4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a2bb60c2ebfdf7db6c7aee48e3772012e" name="a2bb60c2ebfdf7db6c7aee48e3772012e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bb60c2ebfdf7db6c7aee48e3772012e">&#9670;&#160;</a></span>TonemapType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012e">TonemapType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2bb60c2ebfdf7db6c7aee48e3772012ea6adf97f83acf6453d4a6a4b1070f3754" name="a2bb60c2ebfdf7db6c7aee48e3772012ea6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2bb60c2ebfdf7db6c7aee48e3772012ea9e6d3d22124e1f0626b77fa3b7994a9b" name="a2bb60c2ebfdf7db6c7aee48e3772012ea9e6d3d22124e1f0626b77fa3b7994a9b"></a>Reinhard&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2bb60c2ebfdf7db6c7aee48e3772012ea54a029401a59d2e99c39c91c8a645fd7" name="a2bb60c2ebfdf7db6c7aee48e3772012ea54a029401a59d2e99c39c91c8a645fd7"></a>Filmic&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2bb60c2ebfdf7db6c7aee48e3772012ea2e5a7a8d4e40720151c049312bde8a96" name="a2bb60c2ebfdf7db6c7aee48e3772012ea2e5a7a8d4e40720151c049312bde8a96"></a>Uncharted2&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2bb60c2ebfdf7db6c7aee48e3772012ea01ec90d9624dce53f3f3492882841fe6" name="a2bb60c2ebfdf7db6c7aee48e3772012ea01ec90d9624dce53f3f3492882841fe6"></a>ACES&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2bb60c2ebfdf7db6c7aee48e3772012eac1e19c09f700938f0ff7f1fd4722a3ac" name="a2bb60c2ebfdf7db6c7aee48e3772012eac1e19c09f700938f0ff7f1fd4722a3ac"></a>Exponential&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2bb60c2ebfdf7db6c7aee48e3772012ea2f8e38ec1a5832670c5011a71603c929" name="a2bb60c2ebfdf7db6c7aee48e3772012ea2f8e38ec1a5832670c5011a71603c929"></a>Logarithmic&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2bb60c2ebfdf7db6c7aee48e3772012ea3d3cc3f2926653d6886c200715a22e57" name="a2bb60c2ebfdf7db6c7aee48e3772012ea3d3cc3f2926653d6886c200715a22e57"></a>Mantiuk&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="../../d1/dae/renderer_8hpp_source.html#l00026">26</a> of file <a class="el" href="../../d1/dae/renderer_8hpp_source.html">renderer.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a5fb1d4a3797bf9ac0676b495f5fefc4d" name="a5fb1d4a3797bf9ac0676b495f5fefc4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fb1d4a3797bf9ac0676b495f5fefc4d">&#9670;&#160;</a></span>StringToTonemapType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012e">TonemapType</a> StringToTonemapType </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>type</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00151">151</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a519b0aba6744dca9aeddd6592394c58c" name="a519b0aba6744dca9aeddd6592394c58c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a519b0aba6744dca9aeddd6592394c58c">&#9670;&#160;</a></span>TonemapTypeToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string TonemapTypeToString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a2bb60c2ebfdf7db6c7aee48e3772012e">TonemapType</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d6/d54/renderer_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../d6/d54/renderer_8cpp_source.html">renderer.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
