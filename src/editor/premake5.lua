@@ -62,7 +62,7 @@ project "2DGameEngineEditor"
     filter "configurations:Release"
         optimize "Full"
         symbols "Off"
-        defines { "EDITOR" }
+        defines { "RELEASE", "EDITOR" }
     
     filter "configurations:Profile"
         optimize "Full"

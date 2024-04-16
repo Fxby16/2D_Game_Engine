@@ -3,7 +3,7 @@
 #include <buttons.hpp>
 #include <utilities.hpp>
 
-Application::Application(const char *window_name,unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable,bool imgui){
+Application::Application(const char *window_name,unsigned int width,unsigned int height,unsigned int fullscreen_width,unsigned int fullscreen_height,bool resizable,bool imgui){
     m_WindowName=window_name;
     Window::BaseWidth=Window::Width=width;
     Window::BaseHeight=Window::Height=height;
