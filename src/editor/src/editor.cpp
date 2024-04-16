@@ -929,6 +929,10 @@ void Editor::SerializeProject(){
     out<<YAML::Key<<"FullscreenHeight"<<YAML::Value<<FULLSCREEN_HEIGHT;
     out<<YAML::Key<<"ScenePath"<<YAML::Value<<SCENE_PATH;
     out<<YAML::Key<<"Resizable"<<YAML::Value<<RESIZABLE;
+
+    out<<YAML::Key<<"ToneMap"<<YAML::Value<<TonemapTypeToString(RENDERER->GetTonemapType());
+    out<<YAML::Key<<"Gamma"<<YAML::Value<<RENDERER->GetGamma();
+    out<<YAML::Key<<"Exposure"<<YAML::Value<<RENDERER->GetExposure();
     out<<YAML::EndMap;
 
     FILE *fout=fopen(m_ProjectPath.c_str(),"w");
@@ -953,6 +957,12 @@ void Editor::DeserializeProject(){
     FULLSCREEN_HEIGHT=data["FullscreenHeight"].as<unsigned int>();
     SCENE_PATH=data["ScenePath"].as<std::string>();
     RESIZABLE=data["Resizable"].as<bool>();
+
+    RENDERER->SetTonemapType(StringToTonemapType(data["ToneMap"].as<std::string>()));
+    RENDERER->SetGamma(data["Gamma"].as<float>());
+    RENDERER->SetExposure(data["Exposure"].as<float>());
+
+    RENDERER->ReloadShaders();
 }
 
 void Editor::HandleInputs(){

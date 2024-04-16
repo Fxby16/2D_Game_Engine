@@ -6,7 +6,9 @@
 /**
  * generates the application source code
 */
-void GenerateApplication(std::vector<std::pair<std::string,uint32_t>>&script_components,std::string &window_name,unsigned int width,unsigned int height,unsigned int fullscreen_width,unsigned int fullscreen_height,std::string &scene_path,bool resizable=false){
+void GenerateApplication(std::vector<std::pair<std::string,uint32_t>>&script_components,
+    std::string &window_name,unsigned int width,unsigned int height,unsigned int fullscreen_width,
+    unsigned int fullscreen_height,std::string &scene_path,TonemapType tonemap,float gamma,float exposure,bool resizable=false){
     FILE *fdest=fopen("temp/data.cpp","w");
     if(fdest==NULL){
         perror("Failed to open file temp/data.cpp");
@@ -22,6 +24,9 @@ void GenerateApplication(std::vector<std::pair<std::string,uint32_t>>&script_com
     fprintf(fdest,"unsigned int FULLSCREEN_HEIGHT=%u;\n",fullscreen_height);
     fprintf(fdest,"std::string SCENE_PATH=\"%s\";\n",scene_path.c_str());
     fprintf(fdest,"bool RESIZABLE=%s;\n",((resizable)?"true":"false"));
+    fprintf(fdest,"TonemapType TONE_MAP_TYPE=TonemapType::%s;\n",TonemapTypeToString(tonemap).c_str());
+    fprintf(fdest,"float GAMMA=%f;\n",gamma);
+    fprintf(fdest,"float EXPOSURE=%f;\n",exposure);
 
     for(auto &[fn_name,id]:script_components){ //generate the function prototypes for the native scripts
         if(!fn_name.empty()){
@@ -57,7 +62,8 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
     applicationThread=std::thread([&isApplicationRunning,&script_components](){ //run the application in another thread
         std::string scene_path="test.scene";
         ExecuteCommand("mkdir -p temp");
-        GenerateApplication(script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,SCENE_PATH,RESIZABLE);
+        GenerateApplication(script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,
+            SCENE_PATH,RENDERER->GetTonemapType(),RENDERER->GetGamma(),RENDERER->GetExposure(),RESIZABLE);
         printf("%s\n",ExecuteCommand("cd application && premake5 gmake2 --file=application_premake.lua").c_str());
         #if defined(RELEASE)
             printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str());

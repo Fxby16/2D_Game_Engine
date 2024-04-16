@@ -9,6 +9,9 @@ extern unsigned int FULLSCREEN_WIDTH;
 extern unsigned int FULLSCREEN_HEIGHT;
 extern std::string SCENE_PATH;
 extern bool RESIZABLE;
+extern TonemapType TONE_MAP_TYPE;
+extern float GAMMA;
+extern float EXPOSURE;
 
 extern void LoadScripts(Scene *scene);
 
@@ -21,6 +24,12 @@ public:
         sceneserializer.Deserialize(scene_path);
 
         LoadScripts(m_Scene);
+
+        RENDERER->SetTonemapType(TONE_MAP_TYPE);
+        RENDERER->SetGamma(GAMMA);
+        RENDERER->SetExposure(EXPOSURE);
+
+        RENDERER->ReloadShaders();
     }
 
     void OnUpdate(double frame_time) override{
