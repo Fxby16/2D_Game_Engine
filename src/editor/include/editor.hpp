@@ -1,6 +1,7 @@
 #pragma once
 
 #include <camera.hpp>
+#include <gizmo.hpp>
 
 class Scene;
 class Framebuffer;
@@ -58,4 +59,6 @@ private:
 
     Vec2 m_ScenePos;
     Vec2 m_SceneSize;
+
+    Gizmo m_Gizmo;
 };

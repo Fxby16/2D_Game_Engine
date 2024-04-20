@@ -9,6 +9,7 @@
 #include <buttons.hpp>
 #include <global.hpp>
 #include <Instrumentor.h>
+#include <gizmo.hpp>
 
 #define baseFontSize 24.0f
 #define STRLEN 100
@@ -66,11 +67,6 @@ Editor::~Editor(){
 }
 
 void Editor::Run(){
-    
-
-    #ifdef ENABLE_PROFILING
-        
-    #endif
     while(!glfwWindowShouldClose(Window::Window)){
         glfwPollEvents();
 
@@ -87,12 +83,22 @@ void Editor::Run(){
             }
         #endif
 
+
         RENDERER->StartEditorScene(this);
         m_Camera.ResetSceneProj();
         OnSceneRender();
         m_Camera.DrawSceneProj();
         RENDERER->DrawEditorScene(m_SceneFramebuffer);
         HighlightEntity(m_SelectedEntity);
+
+        Entity *e=m_Scene->GetEntity(m_SelectedEntity);
+
+        if(e){
+            glm::mat4 matrix=glm::translate(glm::mat4(1.0f),glm::vec3(e->m_X,e->m_Y,0.0f));
+            m_Gizmo.Manipulate(matrix,m_Camera.GetViewMatrix(),m_Camera.GetProjMatrix());
+            e->m_X=matrix[3][0];
+            e->m_Y=matrix[3][1];
+        }
         
         RENDERER->StartScene();
         RENDERER->Clear({0.0,0.0,0.0,1.0});
@@ -118,7 +124,7 @@ void Editor::OnSceneRender(){
 }
 
 void Editor::HighlightEntity(uint32_t uid){
-auto e=m_Scene->GetEntity(uid);
+    auto e=m_Scene->GetEntity(uid);
 
     if(!e)
         return;
@@ -245,6 +251,8 @@ void Editor::OnImGuiUpdate(){
     m_ScenePos={GetWidthPercentageInPx(20)/Window::Width*Window::MAX_WIDTH,Window::MAX_HEIGHT-(tempvec.y/Window::Height*Window::MAX_HEIGHT)};
     m_SceneSize={tempf/Window::Width*Window::MAX_WIDTH,tempf*(Window::Height/Window::Width)/Window::Height*Window::MAX_HEIGHT};
     
+    m_Gizmo.SetViewPortPos(glm::vec2(GetWidthPercentageInPx(20),Window::Height-tempvec.y));
+    m_Gizmo.SetViewPortSize(glm::vec2(tempf,tempf*(Window::Height/Window::Width)));
     ImGui::Image((void*)m_SceneFramebuffer->GetColorbufferID(),ImGui::GetContentRegionAvail(),ImVec2(0,1),ImVec2(1,0));
     
     ImGui::SameLine();

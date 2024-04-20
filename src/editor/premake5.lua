@@ -56,7 +56,7 @@ project "2DGameEngineEditor"
 
     filter "configurations:Debug"
         optimize "Debug"
-        defines { "DEBUG","EDITOR" }
+        defines { "DEBUG", "EDITOR" }
         symbols "On"
 
     filter "configurations:Release"
