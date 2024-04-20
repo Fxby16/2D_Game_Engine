@@ -1,7 +1,7 @@
 Scene: ""
 ScalingFactor: 0.5
 Gravity: [0, 0]
-NextUID: 7
+NextUID: 8
 AmbientLight: [0.371769369, 0.339248776, 0.339248776]
 ClearColor: [0.280318081, 0.19338046, 0.19338046]
 Entities:
@@ -20,7 +20,7 @@ Entities:
       PlayAnimation: true
       LoopAnimation: true
       AnimationDelay: 0.100000001
-      AnimationIndex: 6
+      AnimationIndex: 4
       Width: 3
       Height: 3
       Layer: 0
@@ -71,6 +71,8 @@ Entities:
       Blur: 0.294999987
       Color: [1, 0.912785709, 0.256461203]
       LightType: LightAroundPos
+    NativeScriptComponent:
+      FunctionName: "Entity1Update\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
     NativeScriptComponent:
       FunctionName: "Entity1Update\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
   - Entity:
@@ -193,3 +195,36 @@ Entities:
       Blur: 0.164000005
       Color: [1, 0, 0]
       LightType: LightAroundPos
+  - Entity:
+      UID: 7
+      X: 3.45833278
+      Y: 0
+      PreviousX: 3.45833278
+      PreviousY: 0
+    TagComponent:
+      Tag: test gizmos
+    AnimatedTextureComponent:
+      Filepath: "resources/textures/Run1.png\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+      MagFilter: 9728
+      MinFilter: 9728
+      TileWidth: 128
+      TileHeight: 128
+      PlayAnimation: false
+      LoopAnimation: false
+      AnimationDelay: 0.100000001
+      AnimationIndex: 0
+      Width: 4
+      Height: 4
+      Layer: 0
+    RigidbodyComponent:
+      BodyType: Dynamic
+      FixedRotation: true
+    BoxColliderComponent:
+      XOffset: 0
+      YOffset: 0
+      Width: 3
+      Height: 3
+      Density: 1
+      Friction: 0
+      Restitution: 0
+      RestitutionThreshold: 0.5
