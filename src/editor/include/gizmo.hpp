@@ -2,8 +2,9 @@
 
 class Gizmo{
 public:
-    Gizmo(): m_MousePos(-1.0f,-1.0f){}
-    Gizmo(glm::vec2 viewport_pos,glm::vec2 viewport_size): m_MousePos(-1.0f,-1.0f),m_ViewPortPos(viewport_pos),m_ViewPortSize(viewport_size){}
+    Gizmo(): m_MousePos(std::numeric_limits<float>::min(),std::numeric_limits<float>::min()){}
+    Gizmo(glm::vec2 viewport_pos,glm::vec2 viewport_size): m_MousePos(std::numeric_limits<float>::min(),std::numeric_limits<float>::min()),
+        m_ViewPortPos(viewport_pos),m_ViewPortSize(viewport_size){}
     ~Gizmo()=default;
     
     void Manipulate(glm::mat4 &matrix,const glm::mat4 &view,const glm::mat4 &projection);
