@@ -29,3 +29,8 @@ std::string ExecuteCommand(const std::string &command){
     }
     return result;
 } 
+
+std::string ExtractFileName(const std::string &path){
+    std::filesystem::path p(path);
+    return p.filename().string();
+}

@@ -22,7 +22,7 @@ void GenerateApplication(std::vector<std::pair<std::string,uint32_t>>&script_com
     fprintf(fdest,"unsigned int WINDOW_HEIGHT=%u;\n",height);
     fprintf(fdest,"unsigned int FULLSCREEN_WIDTH=%u;\n",fullscreen_width);
     fprintf(fdest,"unsigned int FULLSCREEN_HEIGHT=%u;\n",fullscreen_height);
-    fprintf(fdest,"std::string SCENE_PATH=\"%s\";\n",scene_path.c_str());
+    fprintf(fdest,"std::string SCENE_PATH=\"resources/scenes/%s\";\n",scene_path.c_str());
     fprintf(fdest,"bool RESIZABLE=%s;\n",((resizable)?"true":"false"));
     fprintf(fdest,"TonemapType TONE_MAP_TYPE=TonemapType::%s;\n",TonemapTypeToString(tonemap).c_str());
     fprintf(fdest,"float GAMMA=%f;\n",gamma);
@@ -60,7 +60,6 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
     
     isApplicationRunning.store(true);
     applicationThread=std::thread([&isApplicationRunning,&script_components](){ //run the application in another thread
-        std::string scene_path="test.scene";
         ExecuteCommand("mkdir -p temp");
         GenerateApplication(script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,
             SCENE_PATH,RENDERER->GetTonemapType(),RENDERER->GetGamma(),RENDERER->GetExposure(),RESIZABLE);
@@ -70,13 +69,6 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
             printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str());
             ExecuteCommand("mkdir -p bin/Release/resources");
             ExecuteCommand("cp -r resources/* bin/Release/resources");
-            char command[256];
-            command[0]='\0';
-            strcat(command,"cp ");
-            strcat(command,SCENE_PATH.c_str());
-            strcat(command," bin/Release/");
-            strcat(command,SCENE_PATH.c_str());
-            printf("%s\n",ExecuteCommand(command).c_str());
             RENDERER->CreateShaders();
             system("cd bin/Release && ./Application");
         #elif defined(DEBUG)
@@ -84,13 +76,6 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
             printf("%s\n",ExecuteCommand("cd temp && make config=debug").c_str());
             ExecuteCommand("mkdir -p bin/Debug/resources");
             ExecuteCommand("cp -r resources/* bin/Debug/resources");
-            char command[256];
-            command[0]='\0';
-            strcat(command,"cp ");
-            strcat(command,SCENE_PATH.c_str());
-            strcat(command," bin/Debug/");
-            strcat(command,SCENE_PATH.c_str());
-            printf("%s\n",ExecuteCommand(command).c_str());
             RENDERER->CreateShaders();
             system("cd bin/Debug && ./Application");
         #elif defined(ENABLE_PROFILING)
@@ -98,13 +83,6 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
             printf("%s\n",ExecuteCommand("cd temp && make config=profile").c_str());
             ExecuteCommand("mkdir -p bin/Profile/resources");
             ExecuteCommand("cp -r resources/* bin/Profile/resources");
-            char command[256];
-            command[0]='\0';
-            strcat(command,"cp ");
-            strcat(command,SCENE_PATH.c_str());
-            strcat(command," bin/Profile/");
-            strcat(command,SCENE_PATH.c_str());
-            printf("%s\n",ExecuteCommand(command).c_str());
             RENDERER->CreateShaders();
             system("cd bin/Profile && ./Application");
         #endif

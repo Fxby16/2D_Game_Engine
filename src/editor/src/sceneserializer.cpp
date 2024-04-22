@@ -97,6 +97,8 @@ namespace YAML{
 }
 
 void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *scene,std::vector<std::pair<std::string,uint32_t>>&script_components){
+    try{
+    
     out<<YAML::BeginMap; //entity and components
     
     out<<YAML::Key<<"Entity";
@@ -260,9 +262,15 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         }
     }
     out<<YAML::EndMap; //entity and components
+
+    }catch(...){
+        printf("Failed to serialize entity\n");
+    }
 }
 
 void SceneSerializer::Serialize(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components){
+    try{
+    
     printf("Starting serialization of scene file %s\n",path.c_str());
     YAML::Emitter out;
     out<<YAML::BeginMap;
@@ -290,9 +298,15 @@ void SceneSerializer::Serialize(const std::string &path,std::vector<std::pair<st
     fprintf(fout,"%s",out.c_str());
     fclose(fout);
     printf("Serialization of scene file %s completed\n",path.c_str());
+
+    }catch(...){
+        printf("Failed to serialize scene\n");
+    }
 }
 
 void SceneSerializer::SerializeEncrypted(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components){
+    try{
+    
     printf("Starting binary serialization of scene file %s\n",path.c_str());
 
     Serialize(path,script_components);
@@ -334,6 +348,10 @@ void SceneSerializer::SerializeEncrypted(const std::string &path,std::vector<std
     }
 
     fclose(fin);
+
+    }catch(...){
+        printf("Failed to serialize scene\n");
+    }
 }
 
 std::string EncodeTexture(bool animated,const std::string &path,unsigned int *tile_width,unsigned int *tile_height,int mag_filter,int min_filter){
@@ -402,10 +420,13 @@ bool SceneSerializer::Deserialize(const std::string &path,std::vector<std::pair<
 #elif defined(APPLICATION)
 bool SceneSerializer::Deserialize(const std::string &path){
 #endif
-    YAML::Node data=YAML::LoadFile(path);
-
-    //missing error handling
-    
+    YAML::Node data;
+    try{
+        data=YAML::LoadFile(path);
+    }catch(...){
+        printf("Failed to load scene file %s\n",path.c_str());
+        return false;
+    }
     #ifdef EDITOR
         return DeserializeNode(data,script_components);
     #elif defined(APPLICATION)
@@ -420,6 +441,9 @@ bool SceneSerializer::DeserializeEncrypted(const std::string &path){
 #endif
     std::string file_content;
     std::string key;
+    YAML::Node data;
+
+    try{
 
     FILE *fkey=fopen("key.bin","rb");
     if(fkey==NULL){
@@ -457,9 +481,12 @@ bool SceneSerializer::DeserializeEncrypted(const std::string &path){
 
     fclose(fin);
 
-    YAML::Node data=YAML::Load(file_content);
+    data=YAML::Load(file_content);
 
-    //missing error handling
+    }catch(...){
+        printf("Failed to load scene file %s\n",path.c_str());
+        return false;
+    }
 
     #ifdef EDITOR
         return DeserializeNode(data,script_components);
@@ -473,6 +500,8 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data,std::vector<std::pa
 #elif defined(APPLICATION)
 bool SceneSerializer::DeserializeNode(const YAML::Node &data){
 #endif
+
+    try{
 
     if(!data["Scene"]){
         printf("Scene node is invalid\n");
@@ -607,6 +636,11 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
             }
             #endif
         }
+    }
+
+    }catch(...){
+        printf("Failed to deserialize scene\n");
+        return false;
     }
 
     return true;

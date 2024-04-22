@@ -74,7 +74,7 @@ project "Application"
 
     pchheader "pch.hpp"
 
-    files { "application_template.cpp", "../temp/data.cpp", "../scripts/**" }
+    files { "application_template.cpp", "../temp/data.cpp", "../resources/scripts/**" }
 
     libdirs { "lib" }
     links { "Engine" }

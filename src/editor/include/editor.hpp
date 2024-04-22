@@ -35,6 +35,7 @@ private:
     void FileBrowserMenu(ImVec2 pos);
 
     void HdrWindow(bool *open);
+    void ScenesWindow(bool *open);
 
     void SerializeProject();
     void DeserializeProject();
@@ -46,8 +47,11 @@ private:
     std::vector<std::pair<std::string,uint32_t>> m_ScriptComponents; ///< Function name and entity id. will be substituted by real script components when executing
     Framebuffer *m_SceneFramebuffer=nullptr;
     SceneSerializer *m_SceneSerializer;
-    std::string m_ScenePath="test.scene"; //cambialo fabio
-    std::string m_ProjectPath="test.proj"; //cambialo fabio
+
+    std::vector<std::string> m_ScenesPaths;
+    unsigned int m_SelectedScene=-1;
+    std::string m_ProjectPath;
+
     uint32_t m_SelectedEntity=std::numeric_limits<uint32_t>::max();
 
     std::string m_CurrentPath=std::filesystem::current_path().string();
@@ -56,6 +60,7 @@ private:
     bool m_UpdateFiles;
     
     bool m_HdrOpen;
+    bool m_ScenesOpen;
 
     Vec2 m_ScenePos;
     Vec2 m_SceneSize;

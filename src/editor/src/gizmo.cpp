@@ -115,6 +115,10 @@ void Gizmo::DrawGizmo(const glm::mat4 &matrix,bool vertical_arrow,bool horizonta
         RENDERER->DrawSolidQuad(Vec2(x+QUAD_OFFSET,y+QUAD_OFFSET),Vec2(QUAD_SIZE,QUAD_SIZE),Vec4(0.8f,0.8f,0.8f,0.7f),0);   
     }
 
+    #ifdef EDITOR
+        Window::VertexCount-=16;
+    #endif
+
     RENDERER->Render();
 
     RENDERER->SetLineWidth(line_width);

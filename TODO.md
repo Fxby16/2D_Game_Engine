@@ -6,8 +6,7 @@ Engine:
 - particle system
 --------------------------------------------------------------------------------------------------------------------
 Editor:
-- projects
-- project serializer (settings etc.)
+- make the editor build everything in the project folder, not in the editor folder
 - project export
 - file browser (textures preview)
 - tilemap editor

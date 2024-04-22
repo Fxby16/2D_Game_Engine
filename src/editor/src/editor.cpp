@@ -38,8 +38,8 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     m_SceneSerializer->SetScene(m_Scene);
     RENDERER->ImGui_Init();
 
-    m_SceneSerializer->Deserialize("test.scene",m_ScriptComponents);
-    DeserializeProject();
+    //m_SceneSerializer->Deserialize("test.scene",m_ScriptComponents);
+    //DeserializeProject();
     //m_SceneSerializer->SerializeEncrypted("test_encrypted.scene");
     //m_SceneSerializer->DeserializeEncrypted("test_encrypted.scene");
 
@@ -58,6 +58,8 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
 
     m_UpdateFiles=false;
     m_HdrOpen=false;
+
+    m_SelectedScene=-1;
 }
 
 Editor::~Editor(){
@@ -137,6 +139,8 @@ void Editor::HighlightEntity(uint32_t uid){
         RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+tc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)},{Interpolate(e->m_X,e->m_PreviousX)+tc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+tc->m_Height},{0,0,1,1},5);
         RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX)+tc->m_Width,Interpolate(e->m_Y,e->m_PreviousY)+tc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+tc->m_Height},{0,0,1,1},5);
         RENDERER->DrawLine({Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)+tc->m_Height},{Interpolate(e->m_X,e->m_PreviousX),Interpolate(e->m_Y,e->m_PreviousY)},{0,0,1,1},5);
+    
+        Window::VertexCount-=8;
     }
 
     auto atc=m_Scene->GetComponent<AnimatedTextureComponent>(uid);
@@ -180,34 +184,62 @@ void Editor::OnImGuiUpdate(){
         tempvec=ImGui::GetWindowSize();
         if(ImGui::BeginMenu("File")){
             if(ImGui::MenuItem("New")){
+                m_SelectedScene=-1;
+                m_SelectedEntity=std::numeric_limits<uint32_t>::max();
+                m_ScenesPaths.clear();
                 delete m_Scene;
                 m_Scene=new Scene;
-                m_SceneSerializer->SetScene(m_Scene);
+                m_ProjectPath="";
+                m_CurrentPath="";
+                m_ScriptComponents.clear();
+
+                WINDOW_NAME="";
+                WINDOW_NAME.resize(STRLEN);
+                WINDOW_WIDTH=0;
+                WINDOW_HEIGHT=0;
+                FULLSCREEN_WIDTH=0;
+                FULLSCREEN_HEIGHT=0;
+                SCENE_PATH="";
+                SCENE_PATH.resize(STRLEN);
+                RESIZABLE=false;
+
+                RENDERER->SetTonemapType(TonemapType::None);
+                RENDERER->SetGamma(0);
+                RENDERER->SetExposure(0);
+
+                NEXT_UID=0;
+                RENDERER->m_AmbientLight=Vec3(1.0f,1.0f,1.0f);
+                RENDERER->m_ClearColor=Vec3(0.0f,0.0f,0.0f);
             }
             if(ImGui::MenuItem("Open")){
                 nfdchar_t *outPath=NULL;
-                nfdresult_t result=NFD_OpenDialog("scene",NULL,&outPath);
+                nfdresult_t result=NFD_OpenDialog("proj",NULL,&outPath);
                     
                 if(result==NFD_OKAY){
-                    delete m_Scene;
-                    m_Scene=new Scene;
-                    m_SceneSerializer->SetScene(m_Scene);
-                    m_SceneSerializer->Deserialize((char*)outPath,m_ScriptComponents);
+                    m_ProjectPath=outPath;
+                    m_CurrentPath=std::filesystem::path(outPath).parent_path().string();
+                    DeserializeProject();
+                    // m_SceneSerializer->SetScene(m_Scene);
+                    // m_SceneSerializer->Deserialize((char*)outPath,m_ScriptComponents);
                 }else if(result==NFD_ERROR){
                     printf("Error: %s\n",NFD_GetError());
                 }
             }
             if(ImGui::MenuItem("Save")){
-                m_SceneSerializer->Serialize(m_ScenePath,m_ScriptComponents);
+                if(m_SelectedScene!=-1){
+                    m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+                }
                 SerializeProject();
             }
             if(ImGui::MenuItem("Save As")){
                 nfdchar_t *outPath=NULL;
-                nfdresult_t result=NFD_SaveDialog("scene",NULL,&outPath);
+                nfdresult_t result=NFD_SaveDialog("proj",NULL,&outPath);
                     
                 if(result==NFD_OKAY){
-                    m_SceneSerializer->Serialize((char*)outPath,m_ScriptComponents);
-                    m_ScenePath=(char*)outPath;
+                    m_ProjectPath=outPath;
+                    m_CurrentPath=std::filesystem::path(outPath).parent_path().string();
+                    SerializeProject();
+                    m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
                 }else if(result==NFD_ERROR){
                     printf("Error: %s\n",NFD_GetError());
                 }
@@ -232,9 +264,16 @@ void Editor::OnImGuiUpdate(){
             }
             ImGui::EndMenu();
         }
+        if(ImGui::BeginMenu("Scenes")){
+            m_ScenesOpen=true;
+            ImGui::EndMenu();
+        }
         ImGui::EndMainMenuBar();
         if(m_HdrOpen){
             HdrWindow(&m_HdrOpen);
+        }
+        if(m_ScenesOpen){
+            ScenesWindow(&m_ScenesOpen);
         }
     }
 
@@ -878,6 +917,7 @@ void Editor::OnImGuiRender(){
 }
 
 void Editor::HdrWindow(bool *open){
+    ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("HDR",open,ImGuiWindowFlags_NoCollapse);
 
     TonemapType tonemap=RENDERER->GetTonemapType();
@@ -925,8 +965,77 @@ void Editor::HdrWindow(bool *open){
     ImGui::End();
 }
 
+void Editor::ScenesWindow(bool *open){
+    ImGui::SetNextWindowSize(ImVec2(0,0));
+    ImGui::Begin("Scenes",open,ImGuiWindowFlags_NoCollapse);
+
+    ImGui::Text("Select scene:");
+    if(ImGui::BeginCombo("Scenes",m_SelectedScene==-1?"None":m_ScenesPaths[m_SelectedScene].c_str())){
+        for(int i=0;i<m_ScenesPaths.size();i++){
+            bool is_selected=(m_SelectedScene==i);
+
+            if(ImGui::Selectable(m_ScenesPaths[i].c_str(),is_selected)){
+                if(m_SelectedScene!=i){
+                    if(m_Scene!=nullptr){
+                        delete m_Scene;
+                    }
+                    m_Scene=new Scene(m_ScenesPaths[i]);
+                    m_SceneSerializer->SetScene(m_Scene);
+                    m_ScriptComponents.clear();
+                    m_SceneSerializer->Deserialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[i],m_ScriptComponents);
+                }
+                m_SelectedScene=i;
+            }
+            if(is_selected){
+                ImGui::SetItemDefaultFocus();
+            }
+        }
+        ImGui::EndCombo();
+    }
+
+    ImGui::NewLine();
+
+    static char sceneToAdd[STRLEN];
+    static char sceneToRemove[STRLEN];
+
+    ImGui::PushID(98234);
+    ImGui::InputText("",&sceneToAdd[0],STRLEN);
+    ImGui::SameLine();
+    if(ImGui::Button("Add")){
+        if(strlen(sceneToAdd)>0){
+            m_ScenesPaths.push_back(std::string(sceneToAdd));
+            memset(sceneToAdd,'\0',STRLEN);
+        }
+    }
+    ImGui::PopID();
+
+    ImGui::PushID(98235);
+    ImGui::InputText("",&sceneToRemove[0],STRLEN);
+    ImGui::SameLine();
+    if(ImGui::Button("Remove")){
+        int i;
+        for(i=0;i<m_ScenesPaths.size();i++){
+            if(m_ScenesPaths[i]==sceneToRemove){
+                m_ScenesPaths.erase(m_ScenesPaths.begin()+i);
+                break;
+            }
+        }
+        if(m_SelectedScene==i){
+            m_SelectedScene=-1;
+        }
+    }
+    ImGui::PopID();
+    ImGui::End();
+}
+
 void Editor::SerializeProject(){
+    if(m_ProjectPath.empty()){
+        return;   
+    }
+
     printf("Starting serialization of project in file %s\n",m_ProjectPath.c_str());
+
+    try{
 
     YAML::Emitter out;
     out<<YAML::BeginMap;
@@ -941,59 +1050,75 @@ void Editor::SerializeProject(){
     out<<YAML::Key<<"ToneMap"<<YAML::Value<<TonemapTypeToString(RENDERER->GetTonemapType());
     out<<YAML::Key<<"Gamma"<<YAML::Value<<RENDERER->GetGamma();
     out<<YAML::Key<<"Exposure"<<YAML::Value<<RENDERER->GetExposure();
+
+    out<<YAML::Key<<"ScenesPaths"<<YAML::Value<<YAML::BeginSeq;
+    for(const auto &path:m_ScenesPaths){
+        out<<path;
+    }
+    out<<YAML::EndSeq;
+
+    out<<YAML::Key<<"SelectedScene"<<YAML::Value<<m_SelectedScene;
     out<<YAML::EndMap;
+    
 
     FILE *fout=fopen(m_ProjectPath.c_str(),"w");
     if(fout==NULL){
-        printf("Failed to open scene file %s: %s\n",m_ProjectPath.c_str(),strerror(errno));
+        printf("Failed to open project file %s: %s\n",m_ProjectPath.c_str(),strerror(errno));
         return;
     }
     fprintf(fout,"%s",out.c_str());
     fclose(fout);
-    printf("Serialization of scene file %s completed\n",m_ProjectPath.c_str());
+
+    }catch(...){
+        printf("Failed to serialize project file %s\n",m_ProjectPath.c_str());
+        return;
+    }
+    
+    printf("Serialization of project file %s completed\n",m_ProjectPath.c_str());
 }
 
 void Editor::DeserializeProject(){
+    try{
+
     YAML::Node data=YAML::LoadFile(m_ProjectPath);
 
-    //to add: error handling
-
     WINDOW_NAME=data["WindowName"].as<std::string>();
+    WINDOW_NAME.resize(STRLEN);
     WINDOW_WIDTH=data["WindowWidth"].as<unsigned int>();
     WINDOW_HEIGHT=data["WindowHeight"].as<unsigned int>();
     FULLSCREEN_WIDTH=data["FullscreenWidth"].as<unsigned int>();
     FULLSCREEN_HEIGHT=data["FullscreenHeight"].as<unsigned int>();
     SCENE_PATH=data["ScenePath"].as<std::string>();
+    SCENE_PATH.resize(STRLEN);
     RESIZABLE=data["Resizable"].as<bool>();
 
     RENDERER->SetTonemapType(StringToTonemapType(data["ToneMap"].as<std::string>()));
     RENDERER->SetGamma(data["Gamma"].as<float>());
     RENDERER->SetExposure(data["Exposure"].as<float>());
 
+    m_ScenesPaths.clear();
+    for(const auto &path:data["ScenesPaths"]){
+        m_ScenesPaths.push_back(path.as<std::string>());
+    }
+
+    m_SelectedScene=data["SelectedScene"].as<int>();
+    if(m_Scene!=nullptr){
+        delete m_Scene;
+    }
+    m_Scene=new Scene;
+    m_SceneSerializer->SetScene(m_Scene);
+    m_ScriptComponents.clear();
+    m_SceneSerializer->Deserialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+
     RENDERER->ReloadShaders();
+
+    }catch(...){
+        printf("Failed to deserialize project file %s\n",m_ProjectPath.c_str());
+        return;
+    }
 }
 
 void Editor::HandleInputs(){
-    // KeyState left_arrow=INPUT->GetKey(KEY_LEFT);
-    // if(left_arrow.current==BUTTON_DOWN){
-    //     m_Camera.Move(-0.1f,0);
-    // }
-
-    // KeyState right_arrow=INPUT->GetKey(KEY_RIGHT);
-    // if(right_arrow.current==BUTTON_DOWN){
-    //     m_Camera.Move(0.1f,0);
-    // }
-
-    // KeyState up_arrow=INPUT->GetKey(KEY_UP);
-    // if(up_arrow.current==BUTTON_DOWN){
-    //     m_Camera.Move(0,0.1f);
-    // }
-
-    // KeyState down_arrow=INPUT->GetKey(KEY_DOWN);
-    // if(down_arrow.current==BUTTON_DOWN){
-    //     m_Camera.Move(0,-0.1f);
-    // }
-
     static Vec2 lastMousePos;
     static bool wheelPressed=false;
 
