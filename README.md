@@ -24,4 +24,4 @@ You can find the documentation [here](https://fxby16.github.io/2D_Game_Engine/).
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
 ## Images
-![Image 1](imgs/editor.png)
+![Image 1](imgs/editor.png?)
