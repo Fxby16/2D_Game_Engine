@@ -219,6 +219,7 @@ void Editor::OnImGuiUpdate(){
                     m_ProjectPath=outPath;
                     m_CurrentPath=std::filesystem::path(outPath).parent_path().string();
                     DeserializeProject();
+                    m_UpdateFiles=true;
                     // m_SceneSerializer->SetScene(m_Scene);
                     // m_SceneSerializer->Deserialize((char*)outPath,m_ScriptComponents);
                 }else if(result==NFD_ERROR){
@@ -240,6 +241,8 @@ void Editor::OnImGuiUpdate(){
                     m_CurrentPath=std::filesystem::path(outPath).parent_path().string();
                     SerializeProject();
                     m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+                    m_UpdateFiles=true;
+                    DeserializeProject();
                 }else if(result==NFD_ERROR){
                     printf("Error: %s\n",NFD_GetError());
                 }
@@ -1080,6 +1083,12 @@ void Editor::SerializeProject(){
 }
 
 void Editor::DeserializeProject(){
+    if(m_ProjectPath.empty()){
+        return;
+    }
+
+    printf("Starting deserialization of project in file %s\n",m_ProjectPath.c_str());
+
     try{
 
     YAML::Node data=YAML::LoadFile(m_ProjectPath);
@@ -1118,6 +1127,8 @@ void Editor::DeserializeProject(){
         printf("Failed to deserialize project file %s\n",m_ProjectPath.c_str());
         return;
     }
+
+    printf("Deserialization of project file %s completed\n",m_ProjectPath.c_str());
 }
 
 void Editor::HandleInputs(){
