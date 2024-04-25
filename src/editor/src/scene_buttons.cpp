@@ -6,12 +6,12 @@
 /**
  * generates the application source code
 */
-void GenerateApplication(std::vector<std::pair<std::string,uint32_t>>&script_components,
+void GenerateApplication(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components,
     std::string &window_name,unsigned int width,unsigned int height,unsigned int fullscreen_width,
     unsigned int fullscreen_height,std::string &scene_path,TonemapType tonemap,float gamma,float exposure,bool resizable=false){
-    FILE *fdest=fopen("temp/data.cpp","w");
+    FILE *fdest=fopen((path+"/temp/data.cpp").c_str(),"w");
     if(fdest==NULL){
-        perror("Failed to open file temp/data.cpp");
+        perror(("Failed to open file "+path+"/temp/data.cpp").c_str());
         return;
     }
     
@@ -50,7 +50,7 @@ void GenerateApplication(std::vector<std::pair<std::string,uint32_t>>&script_com
     fclose(fdest);
 }
 
-void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&script_components){
+void SceneButtons::PlayButton(const std::string &path,const std::string &editor_path,std::vector<std::pair<std::string,uint32_t>>&script_components){
     static std::thread applicationThread;
     static std::atomic<bool> isApplicationRunning=false;
 
@@ -59,32 +59,43 @@ void SceneButtons::PlayButton(std::vector<std::pair<std::string,uint32_t>>&scrip
     }
     
     isApplicationRunning.store(true);
-    applicationThread=std::thread([&isApplicationRunning,&script_components](){ //run the application in another thread
+    applicationThread=std::thread([&path,&editor_path,&isApplicationRunning,&script_components](){ //run the application in another thread
         ExecuteCommand("mkdir -p temp");
-        GenerateApplication(script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,
+        GenerateApplication(editor_path,script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,
             SCENE_PATH,RENDERER->GetTonemapType(),RENDERER->GetGamma(),RENDERER->GetExposure(),RESIZABLE);
         printf("%s\n",ExecuteCommand("cd application && premake5 gmake2 --file=application_premake.lua").c_str());
+        ExecuteCommand("rm -r resources/scripts/"); //remove all the previous scripts
+        ExecuteCommand("cp -r "+path+"/resources/scripts resources/scripts/"); //get all the scripts from the project
         #if defined(RELEASE)
-            printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str());
-            printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str());
-            ExecuteCommand("mkdir -p bin/Release/resources");
-            ExecuteCommand("cp -r resources/* bin/Release/resources");
-            RENDERER->CreateShaders();
-            system("cd bin/Release && ./Application");
+            printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str()); //compile the engine
+            printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str()); //compile the application
+            RENDERER->CreateShaders(); //generate the shaders
+            ExecuteCommand("rm -r "+path+"/resources/shaders/");
+            ExecuteCommand("cp -r resources/shaders/ "+path+"/resources/shaders/"); //copy the shaders to the project folder
+            ExecuteCommand("rm -r "+path+"/bin/Release/");
+            ExecuteCommand("mkdir -p "+path+"/bin/Release/");
+            ExecuteCommand("cp -r bin/Release/Application "+path+"/bin/Release/Application"); //copy the binaries to the project folder
+            system(("cd "+path+" && bin/Release/Application").c_str()); //run the application
         #elif defined(DEBUG)
-            printf("%s\n",ExecuteCommand("cd lib && make config=debug").c_str());
-            printf("%s\n",ExecuteCommand("cd temp && make config=debug").c_str());
-            ExecuteCommand("mkdir -p bin/Debug/resources");
-            ExecuteCommand("cp -r resources/* bin/Debug/resources");
-            RENDERER->CreateShaders();
-            system("cd bin/Debug && ./Application");
+            printf("%s\n",ExecuteCommand("cd lib && make config=debug").c_str()); //compile the engine
+            printf("%s\n",ExecuteCommand("cd temp && make config=debug").c_str()); //compile the application
+            RENDERER->CreateShaders(); //generate the shaders
+            ExecuteCommand("rm -r "+path+"/resources/shaders/");
+            ExecuteCommand("cp -r resources/shaders/ "+path+"/resources/shaders/"); //copy the shaders to the project folder
+            ExecuteCommand("rm -r "+path+"/bin/Debug/");
+            ExecuteCommand("mkdir -p "+path+"/bin/Debug/");
+            ExecuteCommand("cp -r bin/Debug/Application "+path+"/bin/Debug/Application"); //copy the binaries to the project folder
+            system(("cd "+path+" && bin/Debug/Application").c_str()); //run the application
         #elif defined(ENABLE_PROFILING)
-            printf("%s\n",ExecuteCommand("cd lib && make config=profile").c_str());
-            printf("%s\n",ExecuteCommand("cd temp && make config=profile").c_str());
-            ExecuteCommand("mkdir -p bin/Profile/resources");
-            ExecuteCommand("cp -r resources/* bin/Profile/resources");
-            RENDERER->CreateShaders();
-            system("cd bin/Profile && ./Application");
+            printf("%s\n",ExecuteCommand("cd lib && make config=profile").c_str()); //compile the engine
+            printf("%s\n",ExecuteCommand("cd temp && make config=profile").c_str()); //compile the application
+            RENDERER->CreateShaders(); //generate the shaders
+            ExecuteCommand("rm -r "+path+"/resources/shaders/");
+            ExecuteCommand("cp -r resources/shaders/ "+path+"/resources/shaders/"); //copy the shaders to the project folder
+            ExecuteCommand("rm -r "+path+"/bin/Profile/");
+            ExecuteCommand("mkdir -p "+path+"/bin/Profile/");
+            ExecuteCommand("cp -r bin/Profile/Application "+path+"/bin/Profile/Application"); //copy the binaries to the project folder
+            system(("cd "+path+" && bin/Profile/Application").c_str()); //run the application
         #endif
 
         isApplicationRunning.store(false);

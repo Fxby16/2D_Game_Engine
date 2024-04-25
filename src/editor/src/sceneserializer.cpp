@@ -133,7 +133,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         TextureComponent *texturecomponent=scene->GetComponent<TextureComponent>(entity.m_UID);
 
-        out<<YAML::Key<<"Filepath"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedFilePath;
+        out<<YAML::Key<<"Filepath"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedFilePath.substr(texturecomponent->m_Texture.get()->m_LoadedFilePath.find_last_of("/")+1);
         out<<YAML::Key<<"MagFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedMagFilter;
         out<<YAML::Key<<"MinFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedMinFilter;
 
@@ -150,7 +150,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         AnimatedTextureComponent *animatedtexturecomponent=scene->GetComponent<AnimatedTextureComponent>(entity.m_UID);
 
-        out<<YAML::Key<<"Filepath"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedFilePath;
+        out<<YAML::Key<<"Filepath"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedFilePath.substr(animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedFilePath.find_last_of("/")+1);
         out<<YAML::Key<<"MagFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedMagFilter;
         out<<YAML::Key<<"MinFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedMinFilter;
         
@@ -238,7 +238,13 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         TextComponent *textcomponent=scene->GetComponent<TextComponent>(entity.m_UID);
 
-        out<<YAML::Key<<"FontPath"<<YAML::Value<<textcomponent->m_TextRenderer->m_LoadedFontPath;
+        std::string fontpath=textcomponent->m_TextRenderer->m_LoadedFontPath;
+        size_t pos=fontpath.find("fonts/");
+        if(pos!=std::string::npos){
+            fontpath=fontpath.substr(pos+strlen("fonts/"));
+        }
+
+        out<<YAML::Key<<"FontPath"<<YAML::Value<<fontpath;
         out<<YAML::Key<<"GlyphSize"<<YAML::Value<<textcomponent->m_TextRenderer->m_LoadedGlyphSize;
         out<<YAML::Key<<"Fixed"<<YAML::Value<<textcomponent->m_TextRenderer->m_Fixed;
         out<<YAML::Key<<"Text"<<YAML::Value<<textcomponent->m_Text;
@@ -427,10 +433,25 @@ bool SceneSerializer::Deserialize(const std::string &path){
         printf("Failed to load scene file %s\n",path.c_str());
         return false;
     }
+
+    int count=0;
+    std::string dir;
+
+    for(int i=path.size()-1;i>=0;i--){
+        if(path[i]=='/'){
+            count++;
+        }
+
+        if(count==2){
+            dir=path.substr(0,i);
+            break;
+        }
+    }
+
     #ifdef EDITOR
-        return DeserializeNode(data,script_components);
+        return DeserializeNode(dir,data,script_components);
     #elif defined(APPLICATION)
-        return DeserializeNode(data);
+        return DeserializeNode(dir,data);
     #endif
 }
 
@@ -488,17 +509,31 @@ bool SceneSerializer::DeserializeEncrypted(const std::string &path){
         return false;
     }
 
+    int count=0;
+    std::string dir;
+
+    for(int i=path.size()-1;i>=0;i--){
+        if(path[i]=='/'){
+            count++;
+        }
+
+        if(count==2){
+            dir=path.substr(0,i);
+            break;
+        }
+    }
+
     #ifdef EDITOR
-        return DeserializeNode(data,script_components);
+        return DeserializeNode(dir,data,script_components);
     #elif defined(APPLICATION)
-        return DeserializeNode(data);
+        return DeserializeNode(dir,data);
     #endif
 }
 
 #ifdef EDITOR
-bool SceneSerializer::DeserializeNode(const YAML::Node &data,std::vector<std::pair<std::string,uint32_t>>&script_components){
+bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &data,std::vector<std::pair<std::string,uint32_t>>&script_components){
 #elif defined(APPLICATION)
-bool SceneSerializer::DeserializeNode(const YAML::Node &data){
+bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &data){
 #endif
 
     try{
@@ -535,7 +570,7 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
 
             auto texturecomponent=e["TextureComponent"];
             if(texturecomponent){
-                std::string filepath=texturecomponent["Filepath"].as<std::string>();
+                std::string filepath=path+"/textures/"+texturecomponent["Filepath"].as<std::string>();
                 int magfilter=texturecomponent["MagFilter"].as<int>();
                 int minfilter=texturecomponent["MinFilter"].as<int>();
                 int width=texturecomponent["Width"].as<int>();
@@ -548,7 +583,7 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
 
             auto animatedtexturecomponent=e["AnimatedTextureComponent"];
             if(animatedtexturecomponent){
-                std::string filepath=animatedtexturecomponent["Filepath"].as<std::string>();
+                std::string filepath=path+"/textures/"+animatedtexturecomponent["Filepath"].as<std::string>();
                 int magfilter=animatedtexturecomponent["MagFilter"].as<int>();
                 int minfilter=animatedtexturecomponent["MinFilter"].as<int>();
                 unsigned int tilewidth=animatedtexturecomponent["TileWidth"].as<unsigned int>();
@@ -614,7 +649,7 @@ bool SceneSerializer::DeserializeNode(const YAML::Node &data){
 
             auto textcomponent=e["TextComponent"];
             if(textcomponent){
-                std::string fontpath=textcomponent["FontPath"].as<std::string>();
+                std::string fontpath=path+"/fonts/"+textcomponent["FontPath"].as<std::string>();
                 float glyphsize=textcomponent["GlyphSize"].as<float>();
                 bool fixed=textcomponent["Fixed"].as<bool>();
                 std::string text=textcomponent["Text"].as<std::string>();

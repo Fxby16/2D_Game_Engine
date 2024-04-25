@@ -14,11 +14,11 @@ public:
     #ifdef EDITOR
     bool Deserialize(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components);
     bool DeserializeEncrypted(const std::string &path,std::vector<std::pair<std::string,uint32_t>>&script_components);
-    bool DeserializeNode(const YAML::Node &data,std::vector<std::pair<std::string,uint32_t>>&script_components);
+    bool DeserializeNode(const std::string &path,const YAML::Node &data,std::vector<std::pair<std::string,uint32_t>>&script_components);
     #elif defined(APPLICATION)
     bool Deserialize(const std::string &path);
     bool DeserializeEncrypted(const std::string &path);
-    bool DeserializeNode(const YAML::Node &data);
+    bool DeserializeNode(const std::string &path,const YAML::Node &data);
     #endif
 
 private:

@@ -298,7 +298,7 @@ void Editor::OnImGuiUpdate(){
     ImVec2 pos=ImGui::GetCursorPos();
     ImGui::SetCursorPos(ImVec2(pos.x-GetWidthPercentageInPx(60)/2.0f,pos.y+baseFontSize/2.0f));
     if(ImGui::Button(ICON_FA_PLAY,ImVec2(baseFontSize*1.5f,baseFontSize*1.5f))){
-        SceneButtons::PlayButton(m_ScriptComponents);
+        SceneButtons::PlayButton(m_CurrentPath,m_EditorPath,m_ScriptComponents);
     }
 
     Vec2 cameraPos=m_Camera.GetPosition();
@@ -405,7 +405,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
                 texture_component->m_Texture=TEXTURES_MANAGER->UpdateTexture(t->m_TexID,t->m_FilePath,t->m_MagFilter,t->m_MinFilter).second;   
             }
 
-            ImGui::InputText("Path",&texture_component->m_Texture.get()->m_FilePath[0],STRLEN);
+            ImGui::InputText("Path",&texture_component->m_Texture.get()->m_FilePath[texture_component->m_Texture.get()->m_FilePath.find_last_of('/')+1],texture_component->m_Texture.get()->m_FilePath.size());
 
             int selectedMagFilter,selectedMinFilter;
 
@@ -459,7 +459,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
                 animated_texture_component->m_AnimatedTexture=TEXTURES_MANAGER->UpdateSpriteSheet(s->m_TexID,s->m_FilePath,s->m_TileWidth,s->m_TileHeight,s->m_MagFilter,s->m_MinFilter).second;   
             }
 
-            ImGui::InputText("Path",&animated_texture_component->m_AnimatedTexture.get()->m_FilePath[0],STRLEN);
+            ImGui::InputText("Path",&animated_texture_component->m_AnimatedTexture.get()->m_FilePath[animated_texture_component->m_AnimatedTexture.get()->m_FilePath.find_last_of('/')+1],animated_texture_component->m_AnimatedTexture.get()->m_FilePath.size());
             
             int selectedMagFilter,selectedMinFilter;
 
@@ -664,7 +664,9 @@ void Editor::ComponentsMenu(ImVec2 pos){
     TextComponent *text_component=m_Scene->GetComponent<TextComponent>(m_SelectedEntity);
     if(text_component){
         if(StartNode("TextComponent")){
-            ImGui::InputText("Font Path",&text_component->m_TextRenderer->m_FontPath[0],text_component->m_TextRenderer->m_FontPath.size());
+            size_t pos=text_component->m_TextRenderer->m_FontPath.find("fonts/");
+
+            ImGui::InputText("Font Path",&text_component->m_TextRenderer->m_FontPath[pos],text_component->m_TextRenderer->m_FontPath.size());
             ImGui::SliderFloat("Font Size",&text_component->m_TextRenderer->m_GlyphSize,0,256);
             if(ImGui::Checkbox("Fixed Position",&text_component->m_TextRenderer->m_Fixed)){
                 glm::mat4 mat;
