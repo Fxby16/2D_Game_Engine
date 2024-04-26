@@ -66,5 +66,8 @@ private:
     Vec2 m_ScenePos;
     Vec2 m_SceneSize;
 
+    Vec2 m_LastMousePos;
+    bool m_WheelPressed=false;
+
     Gizmo m_Gizmo;
 };

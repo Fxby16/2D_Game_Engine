@@ -1132,24 +1132,22 @@ void Editor::DeserializeProject(){
 }
 
 void Editor::HandleInputs(){
-    static Vec2 lastMousePos;
-    static bool wheelPressed=false;
-
     KeyState wheel=INPUT->GetMouseButton(MOUSE_BUTTON_MIDDLE);
-    if(wheel.current && !wheel.previous){
-        lastMousePos=INPUT->GetMousePosition();
-        if(lastMousePos.x>=m_ScenePos.x && lastMousePos.x<=m_ScenePos.x+m_SceneSize.x && lastMousePos.y<=m_ScenePos.y && lastMousePos.y>=m_ScenePos.y-m_SceneSize.y){
-            wheelPressed=true;
+    KeyState left_alt=INPUT->GetKey(KEY_LEFT_ALT);
+    if((wheel.current && !wheel.previous) || (left_alt.current && !left_alt.previous)){
+        m_LastMousePos=INPUT->GetMousePosition();
+        if(m_LastMousePos.x>=m_ScenePos.x && m_LastMousePos.x<=m_ScenePos.x+m_SceneSize.x && m_LastMousePos.y<=m_ScenePos.y && m_LastMousePos.y>=m_ScenePos.y-m_SceneSize.y){
+            m_WheelPressed=true;
         }
     }
 
-    if(wheel.current && wheelPressed){
+    if((wheel.current && m_WheelPressed) || (left_alt.current && m_WheelPressed)){
         Vec2 currentMousePos=INPUT->GetMousePosition();
-        m_Camera.Move(lastMousePos.x-currentMousePos.x,lastMousePos.y-currentMousePos.y);
-        lastMousePos=currentMousePos;
+        m_Camera.Move(m_LastMousePos.x-currentMousePos.x,m_LastMousePos.y-currentMousePos.y);
+        m_LastMousePos=currentMousePos;
     }
 
-    if(!wheel.current && wheel.previous){
-        wheelPressed=false;
+    if((!wheel.current && wheel.previous) || (!left_alt.current && left_alt.previous)){
+        m_WheelPressed=false;
     }
 }
