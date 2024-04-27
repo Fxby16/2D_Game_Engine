@@ -245,7 +245,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         }
 
         out<<YAML::Key<<"FontPath"<<YAML::Value<<fontpath;
-        out<<YAML::Key<<"GlyphSize"<<YAML::Value<<textcomponent->m_TextRenderer->m_LoadedGlyphSize;
+        out<<YAML::Key<<"GlyphSize"<<YAML::Value<<textcomponent->m_TextRenderer->m_LoadedGlyphSize*100.0f/Window::Height;
         out<<YAML::Key<<"Fixed"<<YAML::Value<<textcomponent->m_TextRenderer->m_Fixed;
         out<<YAML::Key<<"Text"<<YAML::Value<<textcomponent->m_Text;
         out<<YAML::Key<<"Offset"<<YAML::Value<<textcomponent->m_Offset;
