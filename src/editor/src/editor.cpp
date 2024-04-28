@@ -405,7 +405,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
             if(ImGui::Button("Reload Texture")){
                 Texture *t=texture_component->m_Texture.get();
 
-                texture_component->m_Texture=TEXTURES_MANAGER->UpdateTexture(t->m_TexID,t->m_FilePath,t->m_MagFilter,t->m_MinFilter).second;   
+                texture_component->m_Texture=TEXTURES_MANAGER->UpdateTexture(t->m_TexID,m_CurrentPath+"/resources/textures/"+t->m_FilePath,t->m_MagFilter,t->m_MinFilter).second;   
             }
 
             ImGui::InputText("Path",&texture_component->m_Texture.get()->m_FilePath[texture_component->m_Texture.get()->m_FilePath.find_last_of('/')+1],texture_component->m_Texture.get()->m_FilePath.size());
@@ -459,7 +459,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
             if(ImGui::Button("Reload Texture")){
                 SpriteSheet *s=animated_texture_component->m_AnimatedTexture.get();
 
-                animated_texture_component->m_AnimatedTexture=TEXTURES_MANAGER->UpdateSpriteSheet(s->m_TexID,s->m_FilePath,s->m_TileWidth,s->m_TileHeight,s->m_MagFilter,s->m_MinFilter).second;   
+                animated_texture_component->m_AnimatedTexture=TEXTURES_MANAGER->UpdateSpriteSheet(s->m_TexID,m_CurrentPath+"/resources/textures/"+s->m_FilePath,s->m_TileWidth,s->m_TileHeight,s->m_MagFilter,s->m_MinFilter).second;   
             }
 
             ImGui::InputText("Path",&animated_texture_component->m_AnimatedTexture.get()->m_FilePath[animated_texture_component->m_AnimatedTexture.get()->m_FilePath.find_last_of('/')+1],animated_texture_component->m_AnimatedTexture.get()->m_FilePath.size());
@@ -683,7 +683,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
 
             if(ImGui::Button("Reload Font")){
                 TextRenderer *t=text_component->m_TextRenderer.get();
-                text_component->m_TextRenderer=FONT_MANAGER->UpdateFont(t->m_ID,t->m_FontPath,t->m_GlyphSize,t->m_Fixed).second;
+                text_component->m_TextRenderer=FONT_MANAGER->UpdateFont(t->m_ID,m_CurrentPath+"/resources/fonts/"+t->m_FontPath,t->m_GlyphSize,t->m_Fixed).second;
             }
 
             ImGui::InputTextMultiline("Text",&text_component->m_Text[0],text_component->m_Text.size());

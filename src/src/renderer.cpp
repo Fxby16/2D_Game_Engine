@@ -480,21 +480,27 @@ void Renderer::StartScene(){
 
 void Renderer::DrawScene(){
     PROFILE_FUNCTION();
-    
+
     #ifndef EDITOR
         m_SHdr.Bind();
-        m_Framebuffer->Bind();
+        m_TempFramebuffer->Bind();
         m_Lights.VAO.Bind();
         m_Lights.VBO.Bind();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
         glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+
+        m_Framebuffer->Unbind();
+        Clear();
+        DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_TempFramebuffer->GetColorbufferID());
+        Render(true);
+    #else
+        m_Framebuffer->Unbind();
+        Clear();
+        DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_Framebuffer->GetColorbufferID());
+        Render(true);
     #endif
 
-    m_Framebuffer->Unbind();
-    Clear();
-    DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_Framebuffer->GetColorbufferID());
-    Render(true);
     TEXT_QUEUE->Render(std::numeric_limits<int>::max()-1);
 }
 
@@ -550,13 +556,18 @@ void Renderer::DrawEditorScene(Framebuffer *framebuffer){
     
     Render();
     ApplyLight(framebuffer);
-    framebuffer->Bind();
+    m_TempFramebuffer->Bind();
     m_SHdr.Bind();
     m_Lights.VAO.Bind();
     m_Lights.VBO.Bind();
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,framebuffer->GetColorbufferID());
     glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+
+    framebuffer->Bind();
+    Clear();
+    DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_TempFramebuffer->GetColorbufferID());
+    Render();
 
     TEXT_QUEUE->Render(std::numeric_limits<int>::max()-1);
 }
@@ -933,7 +944,7 @@ void Renderer::ApplyLight(Framebuffer *framebuffer){
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D,m_LightingFramebuffer->GetColorbufferID());
     
-    framebuffer->Bind();
+    m_TempFramebuffer->Bind();
 
     m_Lights.VAO.Bind();
     m_Lights.VBO.Bind();
@@ -942,6 +953,11 @@ void Renderer::ApplyLight(Framebuffer *framebuffer){
     int sub_id=Shader::GetSubroutineIndex("Merge",m_Lights.S.getID());
     Shader::SetSubroutineUniform(sub_id);
     glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+
+    framebuffer->Bind();
+    Clear();
+    DrawTexture({0,0},{Window::MAX_WIDTH,Window::MAX_HEIGHT},0,m_TempFramebuffer->GetColorbufferID());
+    Render();
 }
 
 void Renderer::ReloadShaders(){

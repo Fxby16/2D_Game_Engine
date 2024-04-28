@@ -14,6 +14,8 @@ extern float GAMMA;
 extern float EXPOSURE;
 
 extern void LoadScripts(Scene *scene);
+extern void BeforeUpdate(double frame_time,Application *app);
+extern void AfterUpdate(double frame_time,Application *app);
 
 static SceneSerializer sceneserializer;
 
@@ -33,7 +35,9 @@ public:
     }
 
     void OnUpdate(double frame_time) override{
+        BeforeUpdate(frame_time,this);
         m_Scene->Update(frame_time);
+        AfterUpdate(frame_time,this);
     }
 
     void OnRender() override{
@@ -47,6 +51,15 @@ public:
         m_Scene->GetCamera().DrawSceneProj();
         RENDERER->DrawScene();
         m_Scene->GetCamera().ResetSceneProj();
+    }
+
+    void LoadScene(const std::string &scene_name) override{
+        if(m_Scene!=nullptr){
+            delete m_Scene;
+        }
+        m_Scene=new Scene(scene_name);
+        sceneserializer.SetScene(m_Scene);
+        sceneserializer.Deserialize("resources/scenes/"+scene_name);           
     }
 };
 

@@ -4,7 +4,7 @@
 #include <stb_image.h>
 
 Texture::Texture(const std::string &path,int mag_filter,int min_filter,uint32_t tex_id): m_ID(0),m_TexID(tex_id),m_MagFilter(mag_filter),m_MinFilter(min_filter),m_LocalBuffer(nullptr),m_Width(0),m_Height(0),m_BPP(0){
-    m_FilePath=path;
+    m_FilePath=path.find_last_of('/')!=std::string::npos?path.substr(path.find_last_of('/')+1):path;
     m_LoadedFilePath=path;
 
     m_FilePath.resize(100);

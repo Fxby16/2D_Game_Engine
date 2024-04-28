@@ -106,7 +106,7 @@ namespace Window{
         glViewport(0,0,Width,Height);
 
         RENDERER=new Renderer;
-        TEXT_RENDERER=new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",64,true);
+        TEXT_RENDERER=new TextRenderer("resources/fonts/open-sans/OpenSans-Regular.ttf",10,true);
         INPUT=new Input;
         TEXTURES_MANAGER=new TexturesManager;
         FONT_MANAGER=new FontManager;

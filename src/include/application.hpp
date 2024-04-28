@@ -14,6 +14,7 @@ public:
     ~Application();
 
     void Run();
+    virtual void LoadScene(const std::string &scene_name)=0;
 
     /**
      * This function is called every m_FixedTimeStep seconds. It's independent from the framerate.
