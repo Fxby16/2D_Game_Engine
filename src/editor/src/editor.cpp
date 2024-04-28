@@ -908,6 +908,12 @@ void Editor::FileBrowserMenu(ImVec2 pos){
     ImGui::PushStyleColor(ImGuiCol_Border,IM_COL32(0,0,0,0));
     ImGui::BeginChild("FileBrowserChild",ImVec2(0,0),true);
         static bool isFileContentOpen=false;
+        static bool isImageOpen=false;
+        static std::pair<uint32_t,std::shared_ptr<Texture>> texture={std::numeric_limits<uint32_t>::max(),nullptr};
+        static int scaling=100;
+        char *filters[2]={"LINEAR","NEAREST"};
+        static int selectedFilter=0;
+
         for(auto &entry:m_CurrentEntries){
             if(entry.is_directory()){ 
                 if(ImGui::Selectable((ICON_FA_FOLDER+entry.path().filename().string()).c_str())){
@@ -920,25 +926,60 @@ void Editor::FileBrowserMenu(ImVec2 pos){
                     FILE *file=fopen(entry.path().string().c_str(),"r");
 
                     if(file){
-                        char ch;
-                        m_SelectedFileContent.clear();
-                        while((ch=fgetc(file))!=EOF){
-                            m_SelectedFileContent+=ch;
+                        std::string ext=entry.path().extension().string().substr(1);
+                        m_SelectedFile=entry.path().string(); 
+                        for(auto &c:ext){
+                            c=std::tolower(c);
                         }
-                        fclose(file);
 
-                        isFileContentOpen=true;
+                        if(ext!="png" && ext!="jpg" && ext!="jpeg"){
+                            char ch;
+                            m_SelectedFileContent.clear();
+                            while((ch=fgetc(file))!=EOF){
+                                m_SelectedFileContent+=ch;
+                            }
+                            fclose(file);
+                            isFileContentOpen=true;
+                        }else{
+                            fclose(file);
+                            if(selectedFilter==0){
+                                texture=TEXTURES_MANAGER->GetTexture(entry.path().string(),GL_LINEAR,GL_LINEAR);
+                            }else{
+                                texture=TEXTURES_MANAGER->GetTexture(entry.path().string(),GL_NEAREST,GL_NEAREST);
+                            }
+                            isImageOpen=true;
+                        }
                     }
                 }   
             }
         }
 
         if(isFileContentOpen && !m_SelectedFileContent.empty()){
-            ImGui::Begin("File Content",&isFileContentOpen);
+            ImGui::Begin(m_SelectedFile.c_str(),&isFileContentOpen);
             ImGui::Text("%s",m_SelectedFileContent.c_str());
             ImGui::End();
         }else if(!m_SelectedFileContent.empty()){
             m_SelectedFileContent.clear();
+        }else if(isImageOpen && texture.second!=nullptr){
+            ImGui::SetNextWindowSize(ImVec2(0,0));
+            ImGui::Begin(m_SelectedFile.c_str(),&isImageOpen,ImGuiWindowFlags_NoResize);
+            ImGui::Image((void*)texture.second->GetTexID(),ImVec2(texture.second->GetWidth()*scaling/100.0f,texture.second->GetHeight()*scaling/100.0f),ImVec2(0,1),ImVec2(1,0));
+            ImGui::SetNextItemWidth(std::min(150,(int)ImGui::GetWindowWidth()-10));
+            ImGui::InputInt("Scaling",&scaling);
+            ImGui::SetNextItemWidth(std::min(150,(int)ImGui::GetWindowWidth()-10));
+            if(ImGui::Combo("Filter",&selectedFilter,filters,2)){
+                TEXTURES_MANAGER->ReleaseTexture(texture.first);
+                texture={std::numeric_limits<uint32_t>::max(),nullptr};
+                if(selectedFilter==0){
+                    texture=TEXTURES_MANAGER->GetTexture(m_SelectedFile,GL_LINEAR,GL_LINEAR);
+                }else{
+                    texture=TEXTURES_MANAGER->GetTexture(m_SelectedFile,GL_NEAREST,GL_NEAREST);
+                }
+            }
+            ImGui::End();
+        }else if(texture.second!=nullptr){
+            TEXTURES_MANAGER->ReleaseTexture(texture.first);
+            texture={std::numeric_limits<uint32_t>::max(),nullptr};
         }
     ImGui::EndChild();
 

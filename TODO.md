@@ -1,5 +1,4 @@
 Engine:
-- scale the text appropriately corresponding to the window size
 - collision callbacks
 - rotated quads (and triangles)
 - directional light
@@ -7,7 +6,6 @@ Engine:
 --------------------------------------------------------------------------------------------------------------------
 Editor:
 - project export
-- file browser (textures preview)
 - tilemap editor
 - camera (zoom)
 

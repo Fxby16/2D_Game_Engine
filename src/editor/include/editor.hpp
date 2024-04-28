@@ -59,6 +59,7 @@ private:
     std::string m_EditorPath=std::filesystem::current_path().string();
     std::vector<std::filesystem::directory_entry> m_CurrentEntries;
     std::string m_SelectedFileContent;
+    std::string m_SelectedFile;
     bool m_UpdateFiles;
     
     bool m_HdrOpen;
