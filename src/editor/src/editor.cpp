@@ -301,7 +301,36 @@ void Editor::OnImGuiUpdate(){
     ImVec2 pos=ImGui::GetCursorPos();
     ImGui::SetCursorPos(ImVec2(pos.x-GetWidthPercentageInPx(60)/2.0f,pos.y+baseFontSize/2.0f));
     if(ImGui::Button(ICON_FA_PLAY,ImVec2(baseFontSize*1.5f,baseFontSize*1.5f))){
-        SceneButtons::PlayButton(m_CurrentPath,m_EditorPath,m_ScriptComponents);
+        m_AllScriptComponents.clear();
+
+        for(auto &path:m_ScenesPaths){
+            std::vector<std::pair<std::string,uint32_t>> script_components;
+            
+            YAML::Node data;
+            try{
+                data=YAML::LoadFile(m_CurrentPath+"/resources/scenes/"+path);
+            }catch(...){
+                continue;
+            }
+
+            auto entities=data["Entities"];
+            if(entities){
+                for(auto e:entities){
+                    auto nativescriptcomponent=e["NativeScriptComponent"];
+                    if(nativescriptcomponent){
+                        std::string functionname=nativescriptcomponent["FunctionName"].as<std::string>();
+                        uint32_t uid=e["Entity"]["UID"].as<uint32_t>();
+                        script_components.push_back(std::make_pair(functionname,uid));
+                    }
+                }
+            }else{  
+                continue;
+            }
+
+            m_AllScriptComponents.push_back(script_components);
+        }
+
+        SceneButtons::PlayButton(m_CurrentPath,m_EditorPath,m_ScenesPaths,m_AllScriptComponents);
     }
 
     Vec2 cameraPos=m_Camera.GetPosition();
@@ -376,6 +405,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
     Entity *e=m_Scene->GetEntity(m_SelectedEntity);
     if(e){
         ImGui::Text("Entity: %s",(m_Scene->GetComponent<TagComponent>(m_SelectedEntity))?m_Scene->GetComponent<TagComponent>(m_SelectedEntity)->m_Tag.c_str():"");
+        ImGui::Text("UID: %d",m_SelectedEntity);
         ImGui::SliderFloat("X",&e->m_X,-30.0f,30.0f);
         ImGui::SliderFloat("Y",&e->m_Y,-30.0f,30.0f);
         e->m_PreviousX=e->m_X;

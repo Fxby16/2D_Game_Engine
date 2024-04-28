@@ -49,6 +49,7 @@ private:
     SceneSerializer *m_SceneSerializer;
 
     std::vector<std::string> m_ScenesPaths;
+    std::vector<std::vector<std::pair<std::string,uint32_t>>> m_AllScriptComponents;
     unsigned int m_SelectedScene=-1;
     std::string m_ProjectPath;
 

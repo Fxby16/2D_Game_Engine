@@ -24,6 +24,8 @@ public:
     ApplicationTemplate(const char *window_name,unsigned int width,unsigned int height,unsigned int fullscreen_width,unsigned int fullscreen_height,std::string &scene_path,bool resizable=false,bool imgui=false): Application(window_name,width,height,fullscreen_width,fullscreen_height,resizable,imgui){
         sceneserializer.SetScene(m_Scene);
         sceneserializer.Deserialize(scene_path);
+        m_SceneName=scene_path.find_last_of('/')!=std::string::npos?scene_path.substr(scene_path.find_last_of('/')+1):scene_path;
+        m_Scene->SetName(m_SceneName);
 
         LoadScripts(m_Scene);
 
@@ -59,7 +61,10 @@ public:
         }
         m_Scene=new Scene(scene_name);
         sceneserializer.SetScene(m_Scene);
-        sceneserializer.Deserialize("resources/scenes/"+scene_name);           
+        sceneserializer.Deserialize("resources/scenes/"+scene_name); 
+        m_SceneName=scene_name;
+
+        LoadScripts(m_Scene);          
     }
 };
 

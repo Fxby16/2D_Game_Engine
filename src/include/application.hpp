@@ -29,12 +29,15 @@ public:
     virtual void OnImGuiUpdate();
     virtual void OnImGuiRender();
 
+    inline std::string &GetSceneName(){ return m_SceneName; }
+
 protected:
     const char *m_WindowName;
     float m_FixedTimeStep=1.0f/60.0f; ///<Physics update time
     float m_Accumulator=0.0f;
     bool m_ImGui; ///<Enable or disable imgui
     Scene *m_Scene;
+    std::string m_SceneName;
 
     #ifdef DEBUG
         double last_time;

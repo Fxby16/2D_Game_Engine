@@ -19,6 +19,7 @@ public:
     Scene(const std::string &name);
 
     std::string &GetName();
+    void SetName(const std::string &name);
     /**
      * Set the scaling factor for the scene. 
      * Default value is 0.5 (1 meter = 0.5 units)

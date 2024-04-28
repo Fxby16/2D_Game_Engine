@@ -25,6 +25,10 @@ std::string &Scene::GetName(){
     return m_Name;
 }
 
+void Scene::SetName(const std::string &name){
+    m_Name=name;
+}
+
 void Scene::SetScalingFactor(float scaling_factor){
     m_ScalingFactor=scaling_factor;
 }
