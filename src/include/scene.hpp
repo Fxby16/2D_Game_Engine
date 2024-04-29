@@ -113,6 +113,8 @@ public:
             fixture_def.friction=temp.m_Friction;
             fixture_def.restitution=temp.m_Restitution;
             fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
+            fixture_def.filter.categoryBits=temp.m_CategoryBits;
+            fixture_def.filter.maskBits=temp.m_MaskBits;
             temp.m_RuntimeFixture=rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
         }else if constexpr(std::is_same<T,CircleColliderComponent>::value){
             RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
@@ -131,6 +133,8 @@ public:
             fixture_def.friction=temp.m_Friction;
             fixture_def.restitution=temp.m_Restitution;
             fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
+            fixture_def.filter.categoryBits=temp.m_CategoryBits;
+            fixture_def.filter.maskBits=temp.m_MaskBits;
             temp.m_RuntimeFixture=rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
         }
 

@@ -195,6 +195,8 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"Friction"<<YAML::Value<<boxcollidercomponent->m_Friction;
         out<<YAML::Key<<"Restitution"<<YAML::Value<<boxcollidercomponent->m_Restitution;
         out<<YAML::Key<<"RestitutionThreshold"<<YAML::Value<<boxcollidercomponent->m_RestitutionThreshold;
+        out<<YAML::Key<<"CategoryBits"<<YAML::Value<<boxcollidercomponent->m_CategoryBits;
+        out<<YAML::Key<<"MaskBits"<<YAML::Value<<boxcollidercomponent->m_MaskBits;
 
         out<<YAML::EndMap; //box collider component
     }
@@ -212,6 +214,8 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"Friction"<<YAML::Value<<circlecollidercomponent->m_Friction;
         out<<YAML::Key<<"Restitution"<<YAML::Value<<circlecollidercomponent->m_Restitution;
         out<<YAML::Key<<"RestitutionThreshold"<<YAML::Value<<circlecollidercomponent->m_RestitutionThreshold;
+        out<<YAML::Key<<"CategoryBits"<<YAML::Value<<circlecollidercomponent->m_CategoryBits;
+        out<<YAML::Key<<"MaskBits"<<YAML::Value<<circlecollidercomponent->m_MaskBits;
 
         out<<YAML::EndMap; //circle collider component
     }
@@ -358,67 +362,6 @@ void SceneSerializer::SerializeEncrypted(const std::string &path,std::vector<std
     }catch(...){
         printf("Failed to serialize scene\n");
     }
-}
-
-std::string EncodeTexture(bool animated,const std::string &path,unsigned int *tile_width,unsigned int *tile_height,int mag_filter,int min_filter){
-    std::string encoded;
-    encoded+=std::to_string(animated)+";";
-    encoded+=path+";";
-    encoded+=std::to_string(mag_filter)+";";
-    encoded+=std::to_string(min_filter)+";";
-    if(animated){
-        #ifdef DEBUG
-            assert(tile_width!=nullptr);
-            assert(tile_height!=nullptr);
-        #endif
-        encoded+=std::to_string(*tile_width)+";";
-        encoded+=std::to_string(*tile_height)+";";
-    }
-    return encoded;
-}
-
-bool GetTextureType(const std::string &encoded){
-    std::vector<std::string> tokens;
-    std::string token;
-    std::istringstream tokenstream(encoded);
-    std::getline(tokenstream,token,';');
-    return std::stoi(token);
-}
-
-void DecodeTexture(const std::string &encoded,std::string &path,unsigned int &tile_width,unsigned int &tile_height,int &mag_filter,int &min_filter){
-    std::vector<std::string> tokens;
-    std::string token;
-    std::istringstream tokenstream(encoded);
-    while(std::getline(tokenstream,token,';')){
-        tokens.push_back(token);
-    }
-    if(tokens.size()<6){
-        printf("Invalid encoded animated texture\n");
-        printf("%s\n",encoded.c_str());
-        return;
-    }
-    path=tokens[1];
-    mag_filter=std::stoi(tokens[2]);
-    min_filter=std::stoi(tokens[3]);
-    tile_width=std::stoi(tokens[4]);
-    tile_height=std::stoi(tokens[5]);
-}
-
-void DecodeTexture(const std::string &encoded,std::string &path,int &mag_filter,int &min_filter){
-    std::vector<std::string> tokens;
-    std::string token;
-    std::istringstream tokenstream(encoded);
-    while(std::getline(tokenstream,token,';')){
-        tokens.push_back(token);
-    }
-    if(tokens.size()<4){
-        printf("Invalid encoded texture\n");
-        printf("%s\n",encoded.c_str());
-        return;
-    }
-    path=tokens[1];
-    mag_filter=std::stoi(tokens[2]);
-    min_filter=std::stoi(tokens[3]);
 }
 
 #ifdef EDITOR
@@ -618,8 +561,10 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 float friction=boxcollidercomponent["Friction"].as<float>();
                 float restitution=boxcollidercomponent["Restitution"].as<float>();
                 float restitutionthreshold=boxcollidercomponent["RestitutionThreshold"].as<float>();
+                uint16_t categorybits=boxcollidercomponent["CategoryBits"].as<uint16_t>();
+                uint16_t maskbits=boxcollidercomponent["MaskBits"].as<uint16_t>();
 
-                m_Scene->AddComponent<BoxColliderComponent>(uid,xoffset,yoffset,width,height,density,friction,restitution,restitutionthreshold);
+                m_Scene->AddComponent<BoxColliderComponent>(uid,xoffset,yoffset,width,height,density,friction,restitution,restitutionthreshold,categorybits,maskbits);
             }
 
             auto circlecollidercomponent=e["CircleColliderComponent"];
@@ -631,8 +576,10 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 float friction=circlecollidercomponent["Friction"].as<float>();
                 float restitution=circlecollidercomponent["Restitution"].as<float>();
                 float restitutionthreshold=circlecollidercomponent["RestitutionThreshold"].as<float>();
+                uint16_t categorybits=circlecollidercomponent["CategoryBits"].as<uint16_t>();
+                uint16_t maskbits=circlecollidercomponent["MaskBits"].as<uint16_t>();
 
-                m_Scene->AddComponent<CircleColliderComponent>(uid,xoffset,yoffset,radius,density,friction,restitution,restitutionthreshold);
+                m_Scene->AddComponent<CircleColliderComponent>(uid,xoffset,yoffset,radius,density,friction,restitution,restitutionthreshold,categorybits,maskbits);
             }
 
             auto lightcomponent=e["LightComponent"];

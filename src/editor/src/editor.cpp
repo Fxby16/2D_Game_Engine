@@ -602,6 +602,16 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Friction",&box_collider_component->m_Friction,0.0f,10.0f);
             ImGui::SliderFloat("Restitution",&box_collider_component->m_Restitution,0.0f,10.0f);
             ImGui::SliderFloat("Restitution Threshold",&box_collider_component->m_RestitutionThreshold,0.0f,10.0f);
+
+            int categoryBits=box_collider_component->m_CategoryBits;
+            int maskBits=box_collider_component->m_MaskBits;
+
+            ImGui::SliderInt("Category Bits",&categoryBits,0,65535);
+            ImGui::SliderInt("Mask Bits",&maskBits,0,65535);
+
+            box_collider_component->m_CategoryBits=static_cast<uint16_t>(categoryBits);
+            box_collider_component->m_MaskBits=static_cast<uint16_t>(maskBits);
+
             ImGui::TreePop();
         }
         ImGui::OpenPopupOnItemClick("BoxColliderComponentPopup",ImGuiPopupFlags_MouseButtonRight);
@@ -623,6 +633,16 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Friction",&circle_collider_component->m_Friction,0.0f,10.0f);
             ImGui::SliderFloat("Restitution",&circle_collider_component->m_Restitution,0.0f,10.0f);
             ImGui::SliderFloat("Restitution Threshold",&circle_collider_component->m_RestitutionThreshold,0.0f,10.0f);
+            
+            int categoryBits=circle_collider_component->m_CategoryBits;
+            int maskBits=circle_collider_component->m_MaskBits;
+            
+            ImGui::SliderInt("Category Bits",&categoryBits,0,65535);
+            ImGui::SliderInt("Mask Bits",&maskBits,0,65535);
+
+            circle_collider_component->m_CategoryBits=static_cast<uint16_t>(categoryBits);
+            circle_collider_component->m_MaskBits=static_cast<uint16_t>(maskBits);  
+
             ImGui::TreePop();
         }
         ImGui::OpenPopupOnItemClick("CircleColliderComponentPopup",ImGuiPopupFlags_MouseButtonRight);
