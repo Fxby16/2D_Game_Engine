@@ -30,6 +30,7 @@ public:
     virtual void OnImGuiRender();
 
     inline std::string &GetSceneName(){ return m_SceneName; }
+    inline Scene *GetScene(){ return m_Scene; }
 
 protected:
     const char *m_WindowName;

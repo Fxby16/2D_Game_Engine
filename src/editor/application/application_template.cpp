@@ -16,6 +16,8 @@ extern float EXPOSURE;
 extern void LoadScripts(Scene *scene);
 extern void BeforeUpdate(double frame_time,Application *app);
 extern void AfterUpdate(double frame_time,Application *app);
+extern void OnCreate(Application *app);
+extern void OnDestroy(Application *app);
 
 static SceneSerializer sceneserializer;
 
@@ -34,6 +36,13 @@ public:
         RENDERER->SetExposure(EXPOSURE);
 
         RENDERER->ReloadShaders();
+
+        OnCreate(this);
+    }
+
+    ~ApplicationTemplate(){
+        OnDestroy(this);
+        delete m_Scene;
     }
 
     void OnUpdate(double frame_time) override{

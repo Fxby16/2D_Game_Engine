@@ -1,7 +1,26 @@
+#include <pch.hpp>
 #include <scene.hpp>
 #include <buttons.hpp>
 #include <window.hpp>
 #include <application.hpp>
+
+class ContactListener : public b2ContactListener{
+    void BeginContact(b2Contact *contact) override{
+        uint32_t uid1=(uint32_t)contact->GetFixtureA()->GetUserData().pointer;
+        uint32_t uid2=(uint32_t)contact->GetFixtureB()->GetUserData().pointer;
+
+        printf("Entity %d started colliding with entity %d\n",uid1,uid2);
+    }
+
+    void EndContact(b2Contact *contact) override{
+        uint32_t uid1=(uint32_t)contact->GetFixtureA()->GetUserData().pointer;
+        uint32_t uid2=(uint32_t)contact->GetFixtureB()->GetUserData().pointer;
+
+        printf("Entity %d stopped colliding with entity %d\n",uid1,uid2);
+    }
+};
+
+ContactListener contact_listener;
 
 using namespace Window;
 
@@ -34,4 +53,12 @@ void BeforeUpdate(double frame_time,Application *app){
 
 void AfterUpdate(double frame_time,Application *app){
     
+}
+
+void OnCreate(Application *app){
+    app->GetScene()->GetPhysicsWorld()->SetContactListener(&contact_listener);
+}
+
+void OnDestroy(Application *app){
+
 }
