@@ -43,13 +43,21 @@ void Scene::SetGravity(Vec2 gravity){
     m_PhysicsWorld->SetGravity(b2Vec2(gravity.x,gravity.y));
 }
 
-uint32_t Scene::AddEntity(){
-    m_Entities.push_back(Entity());
+uint32_t Scene::AddEntity(uint32_t parent){
+    m_Entities.push_back(Entity(parent));
+    if(parent!=std::numeric_limits<uint32_t>::max()){
+        m_Hierarchy[parent].insert(m_Entities.back().m_UID);
+    }
+    m_Hierarchy.insert({m_Entities.back().m_UID,{}});
     return m_Entities.back().m_UID;
 }
 
-void Scene::AddEntity(uint32_t uid){
-    m_Entities.push_back(Entity(uid));
+void Scene::AddEntity(uint32_t uid,uint32_t parent){
+    if(parent!=std::numeric_limits<uint32_t>::max()){
+        m_Hierarchy[parent].insert(uid);
+    }
+    m_Hierarchy.insert({uid,{}});
+    m_Entities.push_back(Entity(uid,parent));
 }
 
 Entity* Scene::GetEntity(uint32_t uid){
@@ -64,20 +72,44 @@ Entity* Scene::GetEntity(uint32_t uid){
 void Scene::RemoveEntity(uint32_t uid){
     PROFILE_FUNCTION();
 
-    m_TagComponents.RemoveComponent(uid);
-    m_TextureComponents.RemoveComponent(uid);
-    m_AnimatedTextureComponents.RemoveComponent(uid);
-    m_LightComponents.RemoveComponent(uid);
-    m_BoxColliderComponents.RemoveComponent(uid);
-    m_CircleColliderComponents.RemoveComponent(uid);
-    m_RigidbodyComponents.RemoveComponent(uid);
-    m_NativeScriptComponents.RemoveComponent(uid);
-    m_TextComponents.RemoveComponent(uid);
+    std::stack<uint32_t> entities;
+    std::vector<uint32_t> to_remove;
+    
+    entities.push(uid);
+    to_remove.push_back(uid);
 
-    int idx=BinarySearchi(m_Entities,uid);
-    if(idx==-1)
-        return;
-    m_Entities.erase(m_Entities.begin()+idx);
+    while(!entities.empty()){
+
+        uint32_t current_uid=entities.top();
+        entities.pop();
+    
+        m_TagComponents.RemoveComponent(current_uid);
+        m_TextureComponents.RemoveComponent(current_uid);
+        m_AnimatedTextureComponents.RemoveComponent(current_uid);
+        m_LightComponents.RemoveComponent(current_uid);
+        m_BoxColliderComponents.RemoveComponent(current_uid);
+        m_CircleColliderComponents.RemoveComponent(current_uid);
+        m_RigidbodyComponents.RemoveComponent(current_uid);
+        m_NativeScriptComponents.RemoveComponent(current_uid);
+        m_TextComponents.RemoveComponent(current_uid);
+
+        for(auto derived:m_Hierarchy[current_uid]){ //add to the stack all the derived entities that must be removed
+            entities.push(derived);
+            to_remove.push_back(derived);
+        }
+
+        m_Hierarchy.erase(current_uid);
+        int idx=BinarySearchi(m_Entities,current_uid);
+        if(idx!=-1){
+            m_Entities.erase(m_Entities.begin()+idx);
+        }
+    }
+
+    for(auto &entity:m_Hierarchy){
+        for(auto &derived:to_remove){
+            entity.second.erase(derived);
+        }
+    }
 }
 
 template<>
@@ -147,6 +179,11 @@ void Scene::SetEntityPosition(uint32_t uid,float x,float y){
     Entity *entity=GetEntity(uid);
     if(entity==nullptr)
         return;
+
+    while(entity->m_Parent!=std::numeric_limits<uint32_t>::max()){
+        entity=GetEntity(entity->m_Parent);
+    }
+
     entity->m_X=x;
     entity->m_PreviousX=x;
     entity->m_Y=y;
@@ -301,6 +338,13 @@ void Scene::MoveEntity(uint32_t uid,float x_offset,float y_offset){
         return;
     }
     Entity *entity=GetEntity(uid);
+    if(entity==nullptr){
+        return;
+    }
+
+    while(entity->m_Parent!=std::numeric_limits<uint32_t>::max()){
+        entity=GetEntity(entity->m_Parent);
+    }
 
     const b2Vec2 &vel=rigidbody->m_RuntimeBody->GetLinearVelocity();
     float mass=rigidbody->m_RuntimeBody->GetMass();
@@ -340,6 +384,62 @@ void Scene::OnPhysicsStop(){
 
 std::vector<Entity> &Scene::GetEntities(){
     return m_Entities;
+}
+
+std::pair<float,float> Scene::GetEntityXY(uint32_t uid){
+    return {GetEntityX(uid),GetEntityY(uid)};
+}
+
+std::pair<float,float> Scene::GetEntityPreviousXY(uint32_t uid){
+    return {GetEntityPreviousX(uid),GetEntityPreviousY(uid)};
+}
+
+float Scene::GetEntityX(uint32_t uid){
+    Entity *entity=GetEntity(uid);
+    if(entity==nullptr)
+        return 0.0f;
+    
+    while(entity->m_Parent!=std::numeric_limits<uint32_t>::max()){
+        entity=GetEntity(entity->m_Parent);
+    }
+
+    return entity->m_X;
+}
+
+float Scene::GetEntityY(uint32_t uid){
+    Entity *entity=GetEntity(uid);
+    if(entity==nullptr)
+        return 0.0f;
+    
+    while(entity->m_Parent!=std::numeric_limits<uint32_t>::max()){
+        entity=GetEntity(entity->m_Parent);
+    }
+
+    return entity->m_Y;
+}
+
+float Scene::GetEntityPreviousX(uint32_t uid){
+    Entity *entity=GetEntity(uid);
+    if(entity==nullptr)
+        return 0.0f;
+    
+    while(entity->m_Parent!=std::numeric_limits<uint32_t>::max()){
+        entity=GetEntity(entity->m_Parent);
+    }
+
+    return entity->m_PreviousX;
+}
+
+float Scene::GetEntityPreviousY(uint32_t uid){
+    Entity *entity=GetEntity(uid);
+    if(entity==nullptr)
+        return 0.0f;
+    
+    while(entity->m_Parent!=std::numeric_limits<uint32_t>::max()){
+        entity=GetEntity(entity->m_Parent);
+    }
+
+    return entity->m_PreviousY;
 }
 
 template<>
@@ -389,16 +489,24 @@ void Scene::DebugDraw(){
     for(auto &entity:m_Entities){
         BoxColliderComponent *box_collider=GetComponent<BoxColliderComponent>(entity.m_UID);
         if(box_collider!=nullptr){
-            RENDERER->DrawLine({Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)},{Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)},{0,1,0.75f,1},5);
-            RENDERER->DrawLine({Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)},{Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height},{0,1,0.75f,1},5);
-            RENDERER->DrawLine({Interpolate(entity.m_X,entity.m_PreviousX)+box_collider->m_Width,Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height},{Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height},{0,1,0.75f,1},5);
-            RENDERER->DrawLine({Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)+box_collider->m_Height},{Interpolate(entity.m_X,entity.m_PreviousX),Interpolate(entity.m_Y,entity.m_PreviousY)},{0,1,0.75f,1},5);
+            float m_X=GetEntityX(entity.m_UID);
+            float m_Y=GetEntityY(entity.m_UID);
+            float m_PreviousX=GetEntityPreviousX(entity.m_UID);
+            float m_PreviousY=GetEntityPreviousY(entity.m_UID);
+            RENDERER->DrawLine({Interpolate(m_X,m_PreviousX),Interpolate(m_Y,m_PreviousY)},{Interpolate(m_X,m_PreviousX)+box_collider->m_Width,Interpolate(m_Y,m_PreviousY)},{0,1,0.75f,1},5);
+            RENDERER->DrawLine({Interpolate(m_X,m_PreviousX)+box_collider->m_Width,Interpolate(m_Y,m_PreviousY)},{Interpolate(m_X,m_PreviousX)+box_collider->m_Width,Interpolate(m_Y,m_PreviousY)+box_collider->m_Height},{0,1,0.75f,1},5);
+            RENDERER->DrawLine({Interpolate(m_X,m_PreviousX)+box_collider->m_Width,Interpolate(m_Y,m_PreviousY)+box_collider->m_Height},{Interpolate(m_X,m_PreviousX),Interpolate(m_Y,m_PreviousY)+box_collider->m_Height},{0,1,0.75f,1},5);
+            RENDERER->DrawLine({Interpolate(m_X,m_PreviousX),Interpolate(m_Y,m_PreviousY)+box_collider->m_Height},{Interpolate(m_X,m_PreviousX),Interpolate(m_Y,m_PreviousY)},{0,1,0.75f,1},5);
         }
         CircleColliderComponent *circle_collider=GetComponent<CircleColliderComponent>(entity.m_UID);
         if(circle_collider!=nullptr){
             float current_point_size=RENDERER->GetPointSize();
+            float m_X=GetEntityX(entity.m_UID);
+            float m_Y=GetEntityY(entity.m_UID);
+            float m_PreviousX=GetEntityPreviousX(entity.m_UID);
+            float m_PreviousY=GetEntityPreviousY(entity.m_UID);
             RENDERER->SetPointSize(circle_collider->m_Radius*2);
-            RENDERER->DrawCircle({Interpolate(entity.m_X,entity.m_PreviousX)+circle_collider->m_XOffset,Interpolate(entity.m_Y,entity.m_PreviousY)+circle_collider->m_YOffset},{0,1,0.75f,0.5f},0.2f,5);
+            RENDERER->DrawCircle({Interpolate(m_X,m_PreviousX)+circle_collider->m_XOffset,Interpolate(m_Y,m_PreviousY)+circle_collider->m_YOffset},{0,1,0.75f,0.5f},0.2f,5);
             RENDERER->Render();
             RENDERER->SetPointSize(current_point_size);
         }

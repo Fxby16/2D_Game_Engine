@@ -38,11 +38,6 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     m_SceneSerializer->SetScene(m_Scene);
     RENDERER->ImGui_Init();
 
-    //m_SceneSerializer->Deserialize("test.scene",m_ScriptComponents);
-    //DeserializeProject();
-    //m_SceneSerializer->SerializeEncrypted("test_encrypted.scene");
-    //m_SceneSerializer->DeserializeEncrypted("test_encrypted.scene");
-
     ImGuiIO &io=ImGui::GetIO();
     io.Fonts->AddFontDefault();
     float iconFontSize=baseFontSize*2.0f/3.0f;
@@ -96,10 +91,12 @@ void Editor::Run(){
         Entity *e=m_Scene->GetEntity(m_SelectedEntity);
 
         if(e){
-            glm::mat4 matrix=glm::translate(glm::mat4(1.0f),glm::vec3(e->m_X,e->m_Y,0.0f));
-            m_Gizmo.Manipulate(matrix,m_Camera.GetViewMatrix(),m_Camera.GetProjMatrix());
-            e->m_X=matrix[3][0];
-            e->m_Y=matrix[3][1];
+            if(e->m_Parent==std::numeric_limits<uint32_t>::max()){
+                glm::mat4 matrix=glm::translate(glm::mat4(1.0f),glm::vec3(e->m_X,e->m_Y,0.0f));
+                m_Gizmo.Manipulate(matrix,m_Camera.GetViewMatrix(),m_Camera.GetProjMatrix());
+                e->m_X=matrix[3][0];
+                e->m_Y=matrix[3][1];
+            }
         }
         
         RENDERER->StartScene();
@@ -352,21 +349,42 @@ void Editor::EntitiesMenu(ImVec2 pos){
     ImGui::SetWindowPos(pos);
     ImGui::SetWindowSize(ImVec2(GetWidthPercentageInPx(20),(Window::Height-pos.y)/2.0f));
 
-    auto entities=m_Scene->GetEntities();
+    std::unordered_map<uint32_t,std::set<uint32_t>> &hierarchy=m_Scene->GetHierarchy();
     int k=0;
-    for(auto &e:entities){
+
+    std::stack<std::pair<uint32_t,std::string>> s;
+
+    for(auto &[parent,derived]:hierarchy){
+        s.push({parent,""});
+    }
+
+    while(!s.empty()){
+        uint32_t uid=s.top().first;
+        std::string prefix=s.top().second;
+        s.pop();
+
+        if(hierarchy.find(uid)==hierarchy.end()){
+            continue;
+        }
+
+        Entity *e=m_Scene->GetEntity(uid);
+
         std::string name;
-        if(m_Scene->GetComponent<TagComponent>(e.m_UID)!=nullptr){
-            name=m_Scene->GetComponent<TagComponent>(e.m_UID)->m_Tag;
+        if(m_Scene->GetComponent<TagComponent>(e->m_UID)!=nullptr){
+            name=prefix+m_Scene->GetComponent<TagComponent>(e->m_UID)->m_Tag;
         }else{
-            name="Entity "+std::to_string(k);
+            name=prefix+"Entity "+std::to_string(k);
+        }
+
+        for(auto &derived:hierarchy[uid]){
+            s.push({derived,prefix+"  "});
         }
 
         ImGui::PushID(k);
 
         if(ImGui::Selectable(name.c_str())){
-            if(m_SelectedEntity!=e.m_UID){
-                m_SelectedEntity=e.m_UID;
+            if(m_SelectedEntity!=e->m_UID){
+                m_SelectedEntity=e->m_UID;
             }else{
                 m_SelectedEntity=std::numeric_limits<uint32_t>::max();
             }
@@ -374,7 +392,13 @@ void Editor::EntitiesMenu(ImVec2 pos){
         ImGui::OpenPopupOnItemClick("EntityPopup",ImGuiPopupFlags_MouseButtonRight);
         if(ImGui::BeginPopupContextItem("EntityPopup")){
             if(ImGui::MenuItem("Remove Entity")){
-                m_Scene->RemoveEntity(e.m_UID);
+                if(m_SelectedEntity==e->m_UID){
+                    m_SelectedEntity=std::numeric_limits<uint32_t>::max();
+                }
+                m_Scene->RemoveEntity(e->m_UID);
+            }
+            if(ImGui::MenuItem("Add Child")){
+                m_Scene->AddEntity(uid);
             }
             ImGui::EndPopup();
         }
@@ -406,10 +430,12 @@ void Editor::ComponentsMenu(ImVec2 pos){
     if(e){
         ImGui::Text("Entity: %s",(m_Scene->GetComponent<TagComponent>(m_SelectedEntity))?m_Scene->GetComponent<TagComponent>(m_SelectedEntity)->m_Tag.c_str():"");
         ImGui::Text("UID: %d",m_SelectedEntity);
-        ImGui::SliderFloat("X",&e->m_X,-30.0f,30.0f);
-        ImGui::SliderFloat("Y",&e->m_Y,-30.0f,30.0f);
-        e->m_PreviousX=e->m_X;
-        e->m_PreviousY=e->m_Y;
+        if(e->m_Parent==std::numeric_limits<uint32_t>::max()){
+            ImGui::SliderFloat("X",&e->m_X,-30.0f,30.0f);
+            ImGui::SliderFloat("Y",&e->m_Y,-30.0f,30.0f);
+            e->m_PreviousX=e->m_X;
+            e->m_PreviousY=e->m_Y;
+        }
     }
 
     ImGui::PushItemWidth(ImGui::GetWindowWidth()*0.5f);

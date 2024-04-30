@@ -105,6 +105,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
     out<<YAML::BeginMap; //entity
 
     out<<YAML::Key<<"UID"<<YAML::Value<<entity.m_UID;
+    out<<YAML::Key<<"Parent"<<YAML::Value<<entity.m_Parent;
     out<<YAML::Key<<"X"<<YAML::Value<<entity.m_X;   
     out<<YAML::Key<<"Y"<<YAML::Value<<entity.m_Y;
     out<<YAML::Key<<"PreviousX"<<YAML::Value<<entity.m_PreviousX;
@@ -498,7 +499,8 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
         for(auto e:entities){
             auto ent=e["Entity"];
             uint32_t uid=ent["UID"].as<uint32_t>();
-            m_Scene->AddEntity(uid);
+            uint32_t parent=ent["Parent"].as<uint32_t>();
+            m_Scene->AddEntity(uid,parent);
             auto entity=m_Scene->GetEntity(uid);
             entity->m_X=ent["X"].as<float>();
             entity->m_Y=ent["Y"].as<float>();

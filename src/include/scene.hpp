@@ -45,13 +45,13 @@ public:
      * Add an entity to the scene
      * \return the entity uid
     */
-    [[nodiscard]] uint32_t AddEntity();
+    [[nodiscard]] uint32_t AddEntity(uint32_t parent=std::numeric_limits<uint32_t>::max());
     /**
      * Add an entity to the scene. 
      * Used when deserializing a scene. 
      * \param uid the entity uid
     */
-    void AddEntity(uint32_t uid);
+    void AddEntity(uint32_t uid,uint32_t parent);
     /**
      * Get an entity from the scene
      * \param uid the entity uid
@@ -187,6 +187,15 @@ public:
      * \return a reference to the entities vector
     */
     std::vector<Entity> &GetEntities();
+
+    //use this function to get the entity position instead of directly accessing the entity members
+    std::pair<float,float> GetEntityXY(uint32_t uid);
+    std::pair<float,float> GetEntityPreviousXY(uint32_t uid);
+    float GetEntityX(uint32_t uid);
+    float GetEntityY(uint32_t uid);
+    float GetEntityPreviousX(uint32_t uid);
+    float GetEntityPreviousY(uint32_t uid);
+
     /**
      * Get the components vector
      * \return a reference to the components vector
@@ -197,6 +206,8 @@ public:
     inline Camera &GetCamera(){ return m_Camera; }
 
     inline b2World *GetPhysicsWorld(){ return m_PhysicsWorld; }
+
+    inline std::unordered_map<uint32_t,std::set<uint32_t>> &GetHierarchy(){ return m_Hierarchy; }
 
     void DebugDraw();
 private:
@@ -218,6 +229,7 @@ private:
     Camera m_Camera;
 
     std::vector<Entity> m_Entities;
+    std::unordered_map<uint32_t,std::set<uint32_t>> m_Hierarchy;
     ComponentManager<TagComponent> m_TagComponents;
     ComponentManager<TextureComponent> m_TextureComponents;
     ComponentManager<AnimatedTextureComponent> m_AnimatedTextureComponents;

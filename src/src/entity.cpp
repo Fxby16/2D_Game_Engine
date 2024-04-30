@@ -7,9 +7,9 @@
 
 uint32_t NEXT_UID=0;
 
-Entity::Entity(): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(NEXT_UID++){}
-Entity::Entity(float x,float y): m_X(x),m_Y(y),m_PreviousX(x),m_PreviousY(y),m_UID(NEXT_UID++){}
-Entity::Entity(uint32_t uid): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(uid){}
+Entity::Entity(uint32_t parent): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(NEXT_UID++),m_Parent(parent){}
+Entity::Entity(float x,float y): m_X(x),m_Y(y),m_PreviousX(x),m_PreviousY(y),m_UID(NEXT_UID++),m_Parent(std::numeric_limits<uint32_t>::max()){}
+Entity::Entity(uint32_t uid,uint32_t parent): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(uid),m_Parent(parent){}
 
 Entity::Entity(const Entity &other){
     m_X=other.m_X;
@@ -17,6 +17,7 @@ Entity::Entity(const Entity &other){
     m_PreviousX=other.m_PreviousX;
     m_PreviousY=other.m_PreviousY;
     m_UID=other.m_UID;
+    m_Parent=other.m_Parent;
 }
 
 Entity::Entity(Entity &&other){
@@ -25,6 +26,7 @@ Entity::Entity(Entity &&other){
     m_PreviousX=other.m_PreviousX;
     m_PreviousY=other.m_PreviousY;
     m_UID=other.m_UID;
+    m_Parent=other.m_Parent;
 }
 
 Entity &Entity::operator=(const Entity &other){
@@ -33,6 +35,7 @@ Entity &Entity::operator=(const Entity &other){
     m_PreviousX=other.m_PreviousX;
     m_PreviousY=other.m_PreviousY;
     m_UID=other.m_UID;
+    m_Parent=other.m_Parent;
     return *this;
 }
 
@@ -42,6 +45,7 @@ Entity &Entity::operator=(Entity &&other){
     m_PreviousX=other.m_PreviousX;
     m_PreviousY=other.m_PreviousY;
     m_UID=other.m_UID;
+    m_Parent=other.m_Parent;
     return *this;
 }
 
@@ -240,11 +244,16 @@ template<>
 void ComponentManager<TextureComponent>::Render(Scene *scene){
     PROFILE_FUNCTION();
 
+    float m_X,m_Y,m_PreviousX,m_PreviousY;
+
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
-        entity=scene->GetEntity(m_Components[i].m_UID);
+        m_X=scene->GetEntityX(m_Components[i].m_UID);
+        m_Y=scene->GetEntityY(m_Components[i].m_UID);
+        m_PreviousX=scene->GetEntityPreviousX(m_Components[i].m_UID);
+        m_PreviousY=scene->GetEntityPreviousY(m_Components[i].m_UID);
         if(m_Components[i].m_Texture.get()->GetTexID()!=std::numeric_limits<uint32_t>::max()){
-            RENDERER->DrawTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,*m_Components[i].m_Texture);
+            RENDERER->DrawTexture({Interpolate(m_X,m_PreviousX),Interpolate(m_Y,m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,*m_Components[i].m_Texture);
         }
     }
 }
@@ -253,11 +262,16 @@ template<>
 void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
     PROFILE_FUNCTION();
 
+    float m_X,m_Y,m_PreviousX,m_PreviousY;
+
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
-        entity=scene->GetEntity(m_Components[i].m_UID);
+        m_X=scene->GetEntityX(m_Components[i].m_UID);
+        m_Y=scene->GetEntityY(m_Components[i].m_UID);
+        m_PreviousX=scene->GetEntityPreviousX(m_Components[i].m_UID);
+        m_PreviousY=scene->GetEntityPreviousY(m_Components[i].m_UID);
         if(m_Components[i].m_AnimatedTexture.get()->GetTexID()!=std::numeric_limits<uint32_t>::max()){
-            RENDERER->DrawAnimatedTexture({Interpolate(entity->m_X,entity->m_PreviousX),Interpolate(entity->m_Y,entity->m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,*m_Components[i].m_AnimatedTexture,
+            RENDERER->DrawAnimatedTexture({Interpolate(m_X,m_PreviousX),Interpolate(m_Y,m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,*m_Components[i].m_AnimatedTexture,
                 m_Components[i].m_PlayAnimation,m_Components[i].m_LoopAnimation,m_Components[i].m_AnimationDelay,m_Components[i].m_LastAnimationTime,m_Components[i].m_AnimationIndex);  
         }
     }
@@ -267,10 +281,15 @@ template<>
 void ComponentManager<LightComponent>::Render(Scene *scene){
     PROFILE_FUNCTION();
 
+    float m_X,m_Y,m_PreviousX,m_PreviousY;  
+
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
-        entity=scene->GetEntity(m_Components[i].m_UID);
-        RENDERER->DrawLight({Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_XOffset,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_YOffset},Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
+        m_X=scene->GetEntityX(m_Components[i].m_UID);
+        m_Y=scene->GetEntityY(m_Components[i].m_UID);
+        m_PreviousX=scene->GetEntityPreviousX(m_Components[i].m_UID);
+        m_PreviousY=scene->GetEntityPreviousY(m_Components[i].m_UID);
+        RENDERER->DrawLight({Interpolate(m_X,m_PreviousX)+m_Components[i].m_XOffset,Interpolate(m_Y,m_PreviousY)+m_Components[i].m_YOffset},Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
     }
 }
 
@@ -278,10 +297,15 @@ template<>
 void ComponentManager<TextComponent>::Render(Scene *scene){
     PROFILE_FUNCTION();
 
+    float m_X,m_Y,m_PreviousX,m_PreviousY;
+
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
-        entity=scene->GetEntity(m_Components[i].m_UID);
+        m_X=scene->GetEntityX(m_Components[i].m_UID);
+        m_Y=scene->GetEntityY(m_Components[i].m_UID);
+        m_PreviousX=scene->GetEntityPreviousX(m_Components[i].m_UID);
+        m_PreviousY=scene->GetEntityPreviousY(m_Components[i].m_UID);
         if(m_Components[i].m_TextRenderer!=nullptr)
-            m_Components[i].m_TextRenderer->DrawText(m_Components[i].m_Text,Interpolate(entity->m_X,entity->m_PreviousX)+m_Components[i].m_Offset.x,Interpolate(entity->m_Y,entity->m_PreviousY)+m_Components[i].m_Offset.y,m_Components[i].m_Scale,(m_Components[i].m_IgnoreLighting?std::numeric_limits<int>::max()-1:m_Components[i].m_Layer),m_Components[i].m_Color);
+            m_Components[i].m_TextRenderer->DrawText(m_Components[i].m_Text,Interpolate(m_X,m_PreviousX)+m_Components[i].m_Offset.x,Interpolate(m_Y,m_PreviousY)+m_Components[i].m_Offset.y,m_Components[i].m_Scale,(m_Components[i].m_IgnoreLighting?std::numeric_limits<int>::max()-1:m_Components[i].m_Layer),m_Components[i].m_Color);
     }
 }

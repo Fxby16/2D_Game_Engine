@@ -43,6 +43,8 @@
 #include <atomic>
 #include <filesystem>
 #include <queue>
+#include <stack>
+#include <set>
 
 #include <memory.hpp>
 

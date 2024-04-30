@@ -323,15 +323,16 @@ public:
 
 class Entity{
 public:
-    Entity();
+    Entity(uint32_t parent=std::numeric_limits<uint32_t>::max());
     Entity(float x,float y);
-    Entity(uint32_t uid);
+    Entity(uint32_t uid,uint32_t parent);
     Entity(const Entity &other);
     Entity(Entity &&other);
     Entity &operator=(const Entity &other);
     Entity &operator=(Entity &&other);
 
     uint32_t m_UID;
+    uint32_t m_Parent;
     float m_X,m_Y;
     float m_PreviousX,m_PreviousY;
 };
