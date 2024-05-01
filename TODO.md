@@ -1,3 +1,5 @@
+General:
+- clean up the code since it has become very messy
 Engine:
 - buttons
 - rotated quads (and triangles)

@@ -68,7 +68,7 @@ void Editor::Run(){
         glfwPollEvents();
 
         if(Window::ProjUpdate){
-            m_Camera.InitializeProj();
+            m_Scene->GetCamera().InitializeProj();
         }
 
         INPUT->UpdateStates();
@@ -82,9 +82,9 @@ void Editor::Run(){
 
 
         RENDERER->StartEditorScene(this);
-        m_Camera.ResetSceneProj();
+        m_Scene->GetCamera().ResetSceneProj();
         OnSceneRender();
-        m_Camera.DrawSceneProj();
+        m_Scene->GetCamera().DrawSceneProj();
         RENDERER->DrawEditorScene(m_SceneFramebuffer);
         HighlightEntity(m_SelectedEntity);
 
@@ -93,7 +93,7 @@ void Editor::Run(){
         if(e){
             if(e->m_Parent==std::numeric_limits<uint32_t>::max()){
                 glm::mat4 matrix=glm::translate(glm::mat4(1.0f),glm::vec3(e->m_X,e->m_Y,0.0f));
-                m_Gizmo.Manipulate(matrix,m_Camera.GetViewMatrix(),m_Camera.GetProjMatrix());
+                m_Gizmo.Manipulate(matrix,m_Scene->GetCamera().GetViewMatrix(),m_Scene->GetCamera().GetProjMatrix());
                 e->m_X=matrix[3][0];
                 e->m_Y=matrix[3][1];
             }
@@ -330,13 +330,13 @@ void Editor::OnImGuiUpdate(){
         SceneButtons::PlayButton(m_CurrentPath,m_EditorPath,m_ScenesPaths,m_AllScriptComponents);
     }
 
-    Vec2 cameraPos=m_Camera.GetPosition();
+    Vec2 cameraPos=m_Scene->GetCamera().GetPosition();
 
     ImGui::SetCursorPos({10,10});
     ImGui::Text("(%.2f, %.2f)",cameraPos.x,cameraPos.y);
     ImGui::SameLine();
     if(ImGui::Button("Reset")){
-        m_Camera.SetPosition({0,0});
+        m_Scene->GetCamera().SetPosition({0,0});
     }
     
     ImGui::End();
@@ -761,9 +761,9 @@ void Editor::ComponentsMenu(ImVec2 pos){
             if(ImGui::Checkbox("Fixed Position",&text_component->m_TextRenderer->m_Fixed)){
                 glm::mat4 mat;
                 if(text_component->m_TextRenderer->m_Fixed){
-                    mat=m_Camera.GetProjMatrix();
+                    mat=m_Scene->GetCamera().GetProjMatrix();
                 }else{
-                    mat=m_Camera.GetViewProjMatrix();
+                    mat=m_Scene->GetCamera().GetViewProjMatrix();
                 }
                 text_component->m_TextRenderer->UpdateProjMat(mat);
             }
@@ -1263,7 +1263,7 @@ void Editor::HandleInputs(){
 
     if((wheel.current && m_WheelPressed) || (left_alt.current && m_WheelPressed)){
         Vec2 currentMousePos=INPUT->GetMousePosition();
-        m_Camera.Move(m_LastMousePos.x-currentMousePos.x,m_LastMousePos.y-currentMousePos.y);
+        m_Scene->GetCamera().Move(m_LastMousePos.x-currentMousePos.x,m_LastMousePos.y-currentMousePos.y);
         m_LastMousePos=currentMousePos;
     }
 

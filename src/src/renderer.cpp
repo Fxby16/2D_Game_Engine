@@ -3,6 +3,8 @@
 #include <window.hpp>
 
 #ifdef EDITOR
+    #include <scene.hpp>
+
     extern bool ANIMATIONS_PREVIEW;
 #endif
 
@@ -512,7 +514,7 @@ void Renderer::StartEditorScene(Editor *editor){
     Window::DrawCalls=0;
     
     if(Window::ProjUpdate){
-        editor->m_Camera.InitializeProj();
+        editor->m_Scene->GetCamera().InitializeProj();
         Window::ProjUpdate=false;
     }
 

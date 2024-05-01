@@ -254,6 +254,8 @@ void ComponentManager<TextureComponent>::Render(Scene *scene){
     PROFILE_FUNCTION();
 
     float m_X,m_Y,m_PreviousX,m_PreviousY;
+    float InterpolatedX,InterpolatedY;
+    Vec2 camera_pos=scene->GetCamera().GetPosition();
 
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
@@ -265,8 +267,17 @@ void ComponentManager<TextureComponent>::Render(Scene *scene){
         m_Y=scene->GetEntityY(m_Components[i].m_UID);
         m_PreviousX=scene->GetEntityPreviousX(m_Components[i].m_UID);
         m_PreviousY=scene->GetEntityPreviousY(m_Components[i].m_UID);
+
+        InterpolatedX=Interpolate(m_X,m_PreviousX);
+        InterpolatedY=Interpolate(m_Y,m_PreviousY);
+
+        if(InterpolatedX+m_Components[i].m_Width<camera_pos.x || InterpolatedX>camera_pos.x+Window::MAX_WIDTH ||
+            InterpolatedY+m_Components[i].m_Height<camera_pos.y || InterpolatedY>camera_pos.y+Window::MAX_HEIGHT){
+            continue;
+        }
+
         if(m_Components[i].m_Texture.get()->GetTexID()!=std::numeric_limits<uint32_t>::max()){
-            RENDERER->DrawTexture({Interpolate(m_X,m_PreviousX),Interpolate(m_Y,m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,*m_Components[i].m_Texture);
+            RENDERER->DrawTexture({InterpolatedX,InterpolatedY},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,*m_Components[i].m_Texture);
         }
     }
 }
@@ -276,6 +287,8 @@ void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
     PROFILE_FUNCTION();
 
     float m_X,m_Y,m_PreviousX,m_PreviousY;
+    float InterpolatedX,InterpolatedY;
+    Vec2 camera_pos=scene->GetCamera().GetPosition();
 
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
@@ -287,8 +300,17 @@ void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
         m_Y=scene->GetEntityY(m_Components[i].m_UID);
         m_PreviousX=scene->GetEntityPreviousX(m_Components[i].m_UID);
         m_PreviousY=scene->GetEntityPreviousY(m_Components[i].m_UID);
+
+        InterpolatedX=Interpolate(m_X,m_PreviousX);
+        InterpolatedY=Interpolate(m_Y,m_PreviousY);
+
+        if(InterpolatedX+m_Components[i].m_Width<camera_pos.x || InterpolatedX>camera_pos.x+Window::MAX_WIDTH ||
+            InterpolatedY+m_Components[i].m_Height<camera_pos.y || InterpolatedY>camera_pos.y+Window::MAX_HEIGHT){
+            continue;
+        }
+
         if(m_Components[i].m_AnimatedTexture.get()->GetTexID()!=std::numeric_limits<uint32_t>::max()){
-            RENDERER->DrawAnimatedTexture({Interpolate(m_X,m_PreviousX),Interpolate(m_Y,m_PreviousY)},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,*m_Components[i].m_AnimatedTexture,
+            RENDERER->DrawAnimatedTexture({InterpolatedX,InterpolatedY},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,*m_Components[i].m_AnimatedTexture,
                 m_Components[i].m_PlayAnimation,m_Components[i].m_LoopAnimation,m_Components[i].m_AnimationDelay,m_Components[i].m_LastAnimationTime,m_Components[i].m_AnimationRow,m_Components[i].m_AnimationIndex);  
         }
     }
@@ -298,7 +320,12 @@ template<>
 void ComponentManager<LightComponent>::Render(Scene *scene){
     PROFILE_FUNCTION();
 
-    float m_X,m_Y,m_PreviousX,m_PreviousY;  
+    float m_X,m_Y,m_PreviousX,m_PreviousY; 
+    float InterpolatedX,InterpolatedY;
+    float ClosestX,ClosestY;
+    float DistanceX,DistanceY;
+    float DistanceSquared;
+    Vec2 camera_pos=scene->GetCamera().GetPosition();
 
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
@@ -306,7 +333,21 @@ void ComponentManager<LightComponent>::Render(Scene *scene){
         m_Y=scene->GetEntityY(m_Components[i].m_UID);
         m_PreviousX=scene->GetEntityPreviousX(m_Components[i].m_UID);
         m_PreviousY=scene->GetEntityPreviousY(m_Components[i].m_UID);
-        RENDERER->DrawLight({Interpolate(m_X,m_PreviousX)+m_Components[i].m_XOffset,Interpolate(m_Y,m_PreviousY)+m_Components[i].m_YOffset},Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
+
+        InterpolatedX=Interpolate(m_X,m_PreviousX)+m_Components[i].m_XOffset;
+        InterpolatedY=Interpolate(m_Y,m_PreviousY)+m_Components[i].m_YOffset;
+
+        ClosestX=glm::clamp(InterpolatedX,camera_pos.x,camera_pos.x+Window::MAX_WIDTH);
+        ClosestY=glm::clamp(InterpolatedY,camera_pos.y,camera_pos.y+Window::MAX_HEIGHT);
+        
+        DistanceX=InterpolatedX-ClosestX;
+        DistanceY=InterpolatedY-ClosestY;
+
+        DistanceSquared=(DistanceX*DistanceX)+(DistanceY*DistanceY);
+
+        if(DistanceSquared<=m_Components[i].m_Radius*m_Components[i].m_Radius){
+            RENDERER->DrawLight({InterpolatedX,InterpolatedY},Vec4(m_Components[i].m_Color.r,m_Components[i].m_Color.g,m_Components[i].m_Color.b,1.0f),m_Components[i].m_Type,m_Components[i].m_Radius,m_Components[i].m_Blur);
+        }
     }
 }
 
@@ -315,6 +356,9 @@ void ComponentManager<TextComponent>::Render(Scene *scene){
     PROFILE_FUNCTION();
 
     float m_X,m_Y,m_PreviousX,m_PreviousY;
+    float InterpolatedX,InterpolatedY;
+    std::pair<float,float> size;
+    Vec2 camera_pos=scene->GetCamera().GetPosition();
 
     Entity *entity=nullptr;
     for(int i=0;i<m_Components.size();i++){
@@ -322,7 +366,22 @@ void ComponentManager<TextComponent>::Render(Scene *scene){
         m_Y=scene->GetEntityY(m_Components[i].m_UID);
         m_PreviousX=scene->GetEntityPreviousX(m_Components[i].m_UID);
         m_PreviousY=scene->GetEntityPreviousY(m_Components[i].m_UID);
-        if(m_Components[i].m_TextRenderer!=nullptr)
-            m_Components[i].m_TextRenderer->DrawText(m_Components[i].m_Text,Interpolate(m_X,m_PreviousX)+m_Components[i].m_Offset.x,Interpolate(m_Y,m_PreviousY)+m_Components[i].m_Offset.y,m_Components[i].m_Scale,(m_Components[i].m_IgnoreLighting?std::numeric_limits<int>::max()-1:m_Components[i].m_Layer),m_Components[i].m_Color);
+
+        InterpolatedX=Interpolate(m_X,m_PreviousX)+m_Components[i].m_Offset.x;
+        InterpolatedY=Interpolate(m_Y,m_PreviousY)+m_Components[i].m_Offset.y;
+
+        if(m_Components[i].m_TextRenderer==nullptr){
+            continue;
+        }
+
+        size=m_Components[i].m_TextRenderer->GetTextSize(m_Components[i].m_Text,m_Components[i].m_Scale);
+
+        if((InterpolatedX+size.first<camera_pos.x || InterpolatedX>camera_pos.x+Window::MAX_WIDTH ||
+            InterpolatedY+size.second<camera_pos.y || InterpolatedY>camera_pos.y+Window::MAX_HEIGHT)
+            && !m_Components[i].m_TextRenderer->m_Fixed){
+            continue;
+        }
+
+        m_Components[i].m_TextRenderer->DrawText(m_Components[i].m_Text,InterpolatedX,InterpolatedY,m_Components[i].m_Scale,(m_Components[i].m_IgnoreLighting?std::numeric_limits<int>::max()-1:m_Components[i].m_Layer),m_Components[i].m_Color);
     }
 }
