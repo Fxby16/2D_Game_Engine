@@ -1,5 +1,4 @@
 Engine:
-- box2d sensors
 - buttons
 - rotated quads (and triangles)
 - directional light

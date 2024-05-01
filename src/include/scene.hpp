@@ -115,6 +115,7 @@ public:
             fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
             fixture_def.filter.categoryBits=temp.m_CategoryBits;
             fixture_def.filter.maskBits=temp.m_MaskBits;
+            fixture_def.isSensor=temp.m_IsSensor;
             fixture_def.userData.pointer=uid;
             temp.m_RuntimeFixture=rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
         }else if constexpr(std::is_same<T,CircleColliderComponent>::value){
@@ -136,6 +137,7 @@ public:
             fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
             fixture_def.filter.categoryBits=temp.m_CategoryBits;
             fixture_def.filter.maskBits=temp.m_MaskBits;
+            fixture_def.isSensor=temp.m_IsSensor;
             fixture_def.userData.pointer=uid;
             temp.m_RuntimeFixture=rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
         }

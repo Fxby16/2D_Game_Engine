@@ -231,8 +231,8 @@ public:
     BoxColliderComponent(){ m_UID=std::numeric_limits<uint32_t>::max(); }
     BoxColliderComponent(uint32_t uid): m_UID(uid){}
     BoxColliderComponent(float x_offset,float y_offset,float width,float height,float density,float friction,
-    float restitution,float restitution_threshold,uint16_t category_bits,uint16_t mask_bits,uint32_t uid): m_XOffset(x_offset),m_YOffset(y_offset),m_Width(width),m_Height(height),
-    m_Density(density),m_Friction(friction),m_Restitution(restitution),m_RestitutionThreshold(restitution_threshold),m_CategoryBits(category_bits),m_MaskBits(mask_bits),m_UID(uid){}
+    float restitution,float restitution_threshold,uint16_t category_bits,uint16_t mask_bits,bool is_sensor,uint32_t uid): m_XOffset(x_offset),m_YOffset(y_offset),m_Width(width),m_Height(height),
+    m_Density(density),m_Friction(friction),m_Restitution(restitution),m_RestitutionThreshold(restitution_threshold),m_CategoryBits(category_bits),m_MaskBits(mask_bits),m_IsSensor(is_sensor),m_UID(uid){}
 
     float m_XOffset=0.0f,m_YOffset=0.0f;
     float m_Width=0.0f,m_Height=0.0f;
@@ -241,7 +241,9 @@ public:
     float m_Friction=0.0f;
     float m_Restitution=0.0f;
     float m_RestitutionThreshold=0.5f;
-    uint16_t m_CategoryBits=1,m_MaskBits=0xFFFF;
+    uint16_t m_CategoryBits=1;
+    uint16_t m_MaskBits=0xFFFF;
+    bool m_IsSensor=false;
 
     b2Fixture *m_RuntimeFixture=nullptr;
 
@@ -253,8 +255,8 @@ public:
     CircleColliderComponent(){ m_UID=std::numeric_limits<uint32_t>::max(); } 
     CircleColliderComponent(uint32_t uid): m_UID(uid){}
     CircleColliderComponent(float x_offset,float y_offset,float radius,float density,float friction,
-    float restitution,float restitution_threshold,uint16_t category_bits,uint16_t mask_bits,uint32_t uid): m_XOffset(x_offset),m_YOffset(y_offset),m_Radius(radius),
-    m_Density(density),m_Friction(friction),m_Restitution(restitution),m_RestitutionThreshold(restitution_threshold),m_CategoryBits(category_bits),m_MaskBits(mask_bits),m_UID(uid){}
+    float restitution,float restitution_threshold,uint16_t category_bits,uint16_t mask_bits,bool is_sensor,uint32_t uid): m_XOffset(x_offset),m_YOffset(y_offset),m_Radius(radius),
+    m_Density(density),m_Friction(friction),m_Restitution(restitution),m_RestitutionThreshold(restitution_threshold),m_CategoryBits(category_bits),m_MaskBits(mask_bits),m_IsSensor(is_sensor),m_UID(uid){}
 
     float m_XOffset=0.0f,m_YOffset=0.0f;
     float m_Radius=0.0f;
@@ -263,7 +265,9 @@ public:
     float m_Friction=0.0f;
     float m_Restitution=0.0f;
     float m_RestitutionThreshold=0.5f;
-    uint16_t m_CategoryBits=1,m_MaskBits=0xFFFF;
+    uint16_t m_CategoryBits=1;
+    uint16_t m_MaskBits=0xFFFF;
+    bool m_IsSensor=false;
 
     b2Fixture *m_RuntimeFixture=nullptr;
 

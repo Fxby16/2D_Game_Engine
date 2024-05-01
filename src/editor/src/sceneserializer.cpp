@@ -201,6 +201,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"RestitutionThreshold"<<YAML::Value<<boxcollidercomponent->m_RestitutionThreshold;
         out<<YAML::Key<<"CategoryBits"<<YAML::Value<<boxcollidercomponent->m_CategoryBits;
         out<<YAML::Key<<"MaskBits"<<YAML::Value<<boxcollidercomponent->m_MaskBits;
+        out<<YAML::Key<<"IsSensor"<<YAML::Value<<boxcollidercomponent->m_IsSensor;
 
         out<<YAML::EndMap; //box collider component
     }
@@ -220,6 +221,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"RestitutionThreshold"<<YAML::Value<<circlecollidercomponent->m_RestitutionThreshold;
         out<<YAML::Key<<"CategoryBits"<<YAML::Value<<circlecollidercomponent->m_CategoryBits;
         out<<YAML::Key<<"MaskBits"<<YAML::Value<<circlecollidercomponent->m_MaskBits;
+        out<<YAML::Key<<"IsSensor"<<YAML::Value<<circlecollidercomponent->m_IsSensor;
 
         out<<YAML::EndMap; //circle collider component
     }
@@ -578,8 +580,9 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 float restitutionthreshold=boxcollidercomponent["RestitutionThreshold"].as<float>();
                 uint16_t categorybits=boxcollidercomponent["CategoryBits"].as<uint16_t>();
                 uint16_t maskbits=boxcollidercomponent["MaskBits"].as<uint16_t>();
+                bool issensor=boxcollidercomponent["IsSensor"].as<bool>();
 
-                m_Scene->AddComponent<BoxColliderComponent>(uid,xoffset,yoffset,width,height,density,friction,restitution,restitutionthreshold,categorybits,maskbits);
+                m_Scene->AddComponent<BoxColliderComponent>(uid,xoffset,yoffset,width,height,density,friction,restitution,restitutionthreshold,categorybits,maskbits,issensor);
             }
 
             auto circlecollidercomponent=e["CircleColliderComponent"];
@@ -593,8 +596,9 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 float restitutionthreshold=circlecollidercomponent["RestitutionThreshold"].as<float>();
                 uint16_t categorybits=circlecollidercomponent["CategoryBits"].as<uint16_t>();
                 uint16_t maskbits=circlecollidercomponent["MaskBits"].as<uint16_t>();
+                bool issensor=circlecollidercomponent["IsSensor"].as<bool>();
 
-                m_Scene->AddComponent<CircleColliderComponent>(uid,xoffset,yoffset,radius,density,friction,restitution,restitutionthreshold,categorybits,maskbits);
+                m_Scene->AddComponent<CircleColliderComponent>(uid,xoffset,yoffset,radius,density,friction,restitution,restitutionthreshold,categorybits,maskbits,issensor);
             }
 
             auto lightcomponent=e["LightComponent"];

@@ -369,6 +369,10 @@ void Editor::EntitiesMenu(ImVec2 pos){
 
         Entity *e=m_Scene->GetEntity(uid);
 
+        if(prefix=="" && e->m_Parent!=std::numeric_limits<uint32_t>::max()){
+            continue;
+        }
+
         std::string name;
         if(m_Scene->GetComponent<TagComponent>(e->m_UID)!=nullptr){
             name=prefix+m_Scene->GetComponent<TagComponent>(e->m_UID)->m_Tag;
@@ -641,6 +645,8 @@ void Editor::ComponentsMenu(ImVec2 pos){
             box_collider_component->m_CategoryBits=static_cast<uint16_t>(categoryBits);
             box_collider_component->m_MaskBits=static_cast<uint16_t>(maskBits);
 
+            ImGui::Checkbox("Is Sensor",&box_collider_component->m_IsSensor);
+
             ImGui::TreePop();
         }
         ImGui::OpenPopupOnItemClick("BoxColliderComponentPopup",ImGuiPopupFlags_MouseButtonRight);
@@ -671,6 +677,8 @@ void Editor::ComponentsMenu(ImVec2 pos){
 
             circle_collider_component->m_CategoryBits=static_cast<uint16_t>(categoryBits);
             circle_collider_component->m_MaskBits=static_cast<uint16_t>(maskBits);  
+
+            ImGui::Checkbox("Is Sensor",&circle_collider_component->m_IsSensor);
 
             ImGui::TreePop();
         }
