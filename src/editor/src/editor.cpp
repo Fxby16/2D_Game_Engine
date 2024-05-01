@@ -498,6 +498,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Width",&texture_component->m_Width,0.0f,30.0f);
             ImGui::SliderFloat("Height",&texture_component->m_Height,0.0f,30.0f);
             ImGui::SliderInt("Layer",&texture_component->m_Layer,-100,100);
+            ImGui::Checkbox("Visible",&texture_component->m_Visible);
             ImGui::TreePop();
         }
         ImGui::OpenPopupOnItemClick("TextureComponentPopup",ImGuiPopupFlags_MouseButtonRight);
@@ -555,11 +556,13 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Width",&animated_texture_component->m_Width,0.0f,30.0f);
             ImGui::SliderFloat("Height",&animated_texture_component->m_Height,0.0f,30.0f);
             ImGui::SliderInt("Layer",&animated_texture_component->m_Layer,-100,100);
+            ImGui::Checkbox("Visible",&animated_texture_component->m_Visible);
 
             SpriteSheet *s=animated_texture_component->m_AnimatedTexture.get();
             ImGui::Checkbox("Play Animation",&animated_texture_component->m_PlayAnimation);
             ImGui::Checkbox("Loop Animation",&animated_texture_component->m_LoopAnimation);
             ImGui::SliderFloat("Animation Delay",&animated_texture_component->m_AnimationDelay,0.0f,10.0f);
+            ImGui::SliderInt("Animation Row",&animated_texture_component->m_AnimationRow,0,ceil(((float)s->m_Height)/((float)s->m_TileHeight))-1);
             ImGui::SliderInt("Animation Index",&animated_texture_component->m_AnimationIndex,0,ceil(((float)s->m_Width)/((float)s->m_TileWidth))-1);
             ImGui::TreePop();
         }
@@ -936,7 +939,7 @@ void Editor::FileBrowserMenu(ImVec2 pos){
 
         std::sort(m_CurrentEntries.begin(),m_CurrentEntries.end(), 
             [](const std::filesystem::directory_entry &a,const std::filesystem::directory_entry &b){
-                if(a.is_directory()&&!b.is_directory()){
+                if(a.is_directory() && !b.is_directory()){
                     return true;
                 }
                 if(!a.is_directory() && b.is_directory()){
@@ -957,7 +960,7 @@ void Editor::FileBrowserMenu(ImVec2 pos){
         static bool isImageOpen=false;
         static std::pair<uint32_t,std::shared_ptr<Texture>> texture={std::numeric_limits<uint32_t>::max(),nullptr};
         static int scaling=100;
-        char *filters[2]={"LINEAR","NEAREST"};
+        const char *filters[2]={"LINEAR","NEAREST"};
         static int selectedFilter=0;
 
         for(auto &entry:m_CurrentEntries){
@@ -1169,10 +1172,6 @@ void Editor::SerializeProject(){
     out<<YAML::Key<<"ScenePath"<<YAML::Value<<SCENE_PATH;
     out<<YAML::Key<<"Resizable"<<YAML::Value<<RESIZABLE;
 
-    out<<YAML::Key<<"ToneMap"<<YAML::Value<<TonemapTypeToString(RENDERER->GetTonemapType());
-    out<<YAML::Key<<"Gamma"<<YAML::Value<<RENDERER->GetGamma();
-    out<<YAML::Key<<"Exposure"<<YAML::Value<<RENDERER->GetExposure();
-
     out<<YAML::Key<<"ScenesPaths"<<YAML::Value<<YAML::BeginSeq;
     for(const auto &path:m_ScenesPaths){
         out<<path;
@@ -1219,10 +1218,6 @@ void Editor::DeserializeProject(){
     SCENE_PATH=data["ScenePath"].as<std::string>();
     SCENE_PATH.resize(STRLEN);
     RESIZABLE=data["Resizable"].as<bool>();
-
-    RENDERER->SetTonemapType(StringToTonemapType(data["ToneMap"].as<std::string>()));
-    RENDERER->SetGamma(data["Gamma"].as<float>());
-    RENDERER->SetExposure(data["Exposure"].as<float>());
 
     m_ScenesPaths.clear();
     for(const auto &path:data["ScenesPaths"]){

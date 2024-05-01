@@ -141,6 +141,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"Width"<<YAML::Value<<texturecomponent->m_Width;
         out<<YAML::Key<<"Height"<<YAML::Value<<texturecomponent->m_Height;
         out<<YAML::Key<<"Layer"<<YAML::Value<<texturecomponent->m_Layer;
+        out<<YAML::Key<<"Visible"<<YAML::Value<<texturecomponent->m_Visible;
 
         out<<YAML::EndMap; //texture component
     }
@@ -161,11 +162,13 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"PlayAnimation"<<YAML::Value<<animatedtexturecomponent->m_PlayAnimation;
         out<<YAML::Key<<"LoopAnimation"<<YAML::Value<<animatedtexturecomponent->m_LoopAnimation;
         out<<YAML::Key<<"AnimationDelay"<<YAML::Value<<animatedtexturecomponent->m_AnimationDelay;
+        out<<YAML::Key<<"AnimationRow"<<YAML::Value<<animatedtexturecomponent->m_AnimationRow;
         out<<YAML::Key<<"AnimationIndex"<<YAML::Value<<animatedtexturecomponent->m_AnimationIndex;
 
         out<<YAML::Key<<"Width"<<YAML::Value<<animatedtexturecomponent->m_Width;
         out<<YAML::Key<<"Height"<<YAML::Value<<animatedtexturecomponent->m_Height;
-        out<<YAML::Key<<"Layer"<<YAML::Value<<animatedtexturecomponent->m_Layer;
+        out<<YAML::Key<<"Layer"<<YAML::Value<<animatedtexturecomponent->m_Layer;    
+        out<<YAML::Key<<"Visible"<<YAML::Value<<animatedtexturecomponent->m_Visible;
 
         out<<YAML::EndMap; //animated texture component
     }
@@ -291,6 +294,10 @@ void SceneSerializer::Serialize(const std::string &path,std::vector<std::pair<st
     out<<YAML::Key<<"NextUID"<<YAML::Value<<NEXT_UID;
     out<<YAML::Key<<"AmbientLight"<<YAML::Value<<RENDERER->m_AmbientLight;
     out<<YAML::Key<<"ClearColor"<<YAML::Value<<RENDERER->m_ClearColor;
+    out<<YAML::Key<<"ToneMap"<<YAML::Value<<TonemapTypeToString(RENDERER->GetTonemapType());
+    out<<YAML::Key<<"Gamma"<<YAML::Value<<RENDERER->GetGamma();
+    out<<YAML::Key<<"Exposure"<<YAML::Value<<RENDERER->GetExposure();
+
     out<<YAML::Key<<"Entities"<<YAML::Value<<YAML::BeginSeq;
 
     std::vector<Entity>& entities=m_Scene->GetEntities();
@@ -493,6 +500,9 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
     NEXT_UID=data["NextUID"].as<uint32_t>();
     RENDERER->m_AmbientLight=data["AmbientLight"].as<Vec3>();
     RENDERER->m_ClearColor=data["ClearColor"].as<Vec3>();
+    RENDERER->SetTonemapType(StringToTonemapType(data["ToneMap"].as<std::string>()));
+    RENDERER->SetGamma(data["Gamma"].as<float>());
+    RENDERER->SetExposure(data["Exposure"].as<float>());
 
     auto entities=data["Entities"];
     if(entities){
@@ -521,9 +531,10 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 int width=texturecomponent["Width"].as<int>();
                 int height=texturecomponent["Height"].as<int>();
                 int layer=texturecomponent["Layer"].as<int>();
+                bool visible=texturecomponent["Visible"].as<bool>();
                 
                 auto [id,texture]=TEXTURES_MANAGER->GetTexture(filepath,magfilter,minfilter);
-                m_Scene->AddComponent<TextureComponent>(uid,texture,width,height,layer);
+                m_Scene->AddComponent<TextureComponent>(uid,texture,width,height,layer,visible);
             }
 
             auto animatedtexturecomponent=e["AnimatedTextureComponent"];
@@ -536,13 +547,15 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 bool playanimation=animatedtexturecomponent["PlayAnimation"].as<bool>();
                 bool loopanimation=animatedtexturecomponent["LoopAnimation"].as<bool>();
                 float animationdelay=animatedtexturecomponent["AnimationDelay"].as<float>();
+                int animationrow=animatedtexturecomponent["AnimationRow"].as<int>();
                 int animationindex=animatedtexturecomponent["AnimationIndex"].as<int>();
                 int width=animatedtexturecomponent["Width"].as<float>();
                 int height=animatedtexturecomponent["Height"].as<float>();
                 int layer=animatedtexturecomponent["Layer"].as<int>();
+                bool visible=animatedtexturecomponent["Visible"].as<bool>();
                 
                 auto [id,texture]=TEXTURES_MANAGER->GetSpriteSheet(filepath,tilewidth,tileheight,magfilter,minfilter);
-                m_Scene->AddComponent<AnimatedTextureComponent>(uid,texture,width,height,layer,playanimation,loopanimation,animationdelay,animationindex);
+                m_Scene->AddComponent<AnimatedTextureComponent>(uid,texture,width,height,layer,playanimation,loopanimation,animationdelay,animationrow,animationindex,visible);
             }
 
             auto rigidbodycomponent=e["RigidbodyComponent"];

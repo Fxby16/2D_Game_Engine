@@ -117,7 +117,7 @@ public:
      * \param last_animation_time the last time the animation was updated
      * \param animation_index the current animation index
     */
-    void DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index);
+    void DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int animation_row,int &animation_index);
     /**
      * Draw a triangle
      * \param pos1 Position of the first vertex

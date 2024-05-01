@@ -318,7 +318,7 @@ void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,int layer,
         Render();
 }
 
-void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int &animation_index){
+void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int animation_row,int &animation_index){
     PROFILE_FUNCTION();
 
     #ifndef EDITOR
@@ -338,7 +338,7 @@ void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,b
         }
     }
 
-    DrawSpriteSheet(pos,size,ceil((float)s.m_Height/(float)s.m_TileHeight)-1,animation_index,layer,s);
+    DrawSpriteSheet(pos,size,animation_row,animation_index,layer,s);
 }
 
 
