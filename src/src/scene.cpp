@@ -52,12 +52,12 @@ uint32_t Scene::AddEntity(uint32_t parent){
     return m_Entities.back().m_UID;
 }
 
-void Scene::AddEntity(uint32_t uid,uint32_t parent){
+void Scene::AddEntity(uint32_t uid,uint32_t parent,uint32_t group){
     if(parent!=std::numeric_limits<uint32_t>::max()){
         m_Hierarchy[parent].insert(uid);
     }
     m_Hierarchy.insert({uid,{}});
-    m_Entities.push_back(Entity(uid,parent));
+    m_Entities.push_back(Entity(uid,parent,group));
 }
 
 uint32_t Scene::DuplicateEntity(uint32_t uid,uint32_t parent){

@@ -51,7 +51,7 @@ public:
      * Used when deserializing a scene. 
      * \param uid the entity uid
     */
-    void AddEntity(uint32_t uid,uint32_t parent);
+    void AddEntity(uint32_t uid,uint32_t parent,uint32_t group);
     /**
      * Duplicate the entity with the given UID
      * \return the UID of the new entity

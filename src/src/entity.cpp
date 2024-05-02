@@ -7,9 +7,9 @@
 
 uint32_t NEXT_UID=0;
 
-Entity::Entity(uint32_t parent): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(NEXT_UID++),m_Parent(parent){}
-Entity::Entity(float x,float y): m_X(x),m_Y(y),m_PreviousX(x),m_PreviousY(y),m_UID(NEXT_UID++),m_Parent(std::numeric_limits<uint32_t>::max()){}
-Entity::Entity(uint32_t uid,uint32_t parent): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(uid),m_Parent(parent){}
+Entity::Entity(uint32_t parent): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(NEXT_UID++),m_Parent(parent),m_Group(0){}
+Entity::Entity(float x,float y): m_X(x),m_Y(y),m_PreviousX(x),m_PreviousY(y),m_UID(NEXT_UID++),m_Parent(std::numeric_limits<uint32_t>::max()),m_Group(0){}
+Entity::Entity(uint32_t uid,uint32_t parent,uint32_t group): m_X(0.0f),m_Y(0.0f),m_PreviousX(0.0f),m_PreviousY(0.0f),m_UID(uid),m_Parent(parent),m_Group(group){}
 
 Entity::Entity(const Entity &other){
     m_X=other.m_X;
@@ -18,6 +18,7 @@ Entity::Entity(const Entity &other){
     m_PreviousY=other.m_PreviousY;
     m_UID=other.m_UID;
     m_Parent=other.m_Parent;
+    m_Group=other.m_Group;
 }
 
 Entity::Entity(Entity &&other){
@@ -27,6 +28,7 @@ Entity::Entity(Entity &&other){
     m_PreviousY=other.m_PreviousY;
     m_UID=other.m_UID;
     m_Parent=other.m_Parent;
+    m_Group=other.m_Group;
 }
 
 Entity &Entity::operator=(const Entity &other){
@@ -36,6 +38,7 @@ Entity &Entity::operator=(const Entity &other){
     m_PreviousY=other.m_PreviousY;
     m_UID=other.m_UID;
     m_Parent=other.m_Parent;
+    m_Group=other.m_Group;
     return *this;
 }
 
@@ -46,6 +49,7 @@ Entity &Entity::operator=(Entity &&other){
     m_PreviousY=other.m_PreviousY;
     m_UID=other.m_UID;
     m_Parent=other.m_Parent;
+    m_Group=other.m_Group;
     return *this;
 }
 

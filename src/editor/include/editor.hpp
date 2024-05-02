@@ -36,6 +36,9 @@ private:
 
     void HdrWindow(bool *open);
     void ScenesWindow(bool *open);
+    void GridWindow(bool *open);
+
+    void DrawGrid();
 
     void SerializeProject();
     void DeserializeProject();
@@ -63,12 +66,18 @@ private:
     
     bool m_HdrOpen;
     bool m_ScenesOpen;
+    bool m_GridOpen;
 
     Vec2 m_ScenePos;
     Vec2 m_SceneSize;
 
     Vec2 m_LastMousePos;
     bool m_WheelPressed=false;
+
+    bool m_ShowGrid=false;
+    bool m_SnapEnabled=false;
+    float m_CellSize=1.0f;
+    Vec4 m_GridColor=Vec4(0.5f,0.5f,0.5f,1.0f);
 
     Gizmo m_Gizmo;
 };

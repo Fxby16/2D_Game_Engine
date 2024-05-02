@@ -22,6 +22,38 @@ unsigned int FULLSCREEN_HEIGHT;
 std::string SCENE_PATH;
 bool RESIZABLE;
 
+namespace YAML{
+    Emitter& operator<<(Emitter &out,const Vec4 &rhs){
+        out<<Flow;
+        out<<BeginSeq<<rhs.r<<rhs.g<<rhs.b<<rhs.a<<EndSeq;
+        return out;
+    }
+
+    template<>
+    struct convert<Vec4>{
+        static Node encode(const Vec4 &rhs){
+            Node node;
+            node.push_back(rhs.r);
+            node.push_back(rhs.g);
+            node.push_back(rhs.b);
+            node.push_back(rhs.a);
+            return node;
+        }
+
+        static bool decode(const Node &node,Vec4 &rhs) {
+            if(!node.IsSequence() || node.size()!=4){
+                return false;
+            }
+
+            rhs.r=node[0].as<float>();
+            rhs.g=node[1].as<float>();
+            rhs.b=node[2].as<float>();
+            rhs.a=node[3].as<float>();
+            return true;
+        }
+    };
+}
+
 Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,float fullscreen_height,bool resizable){
     Window::BaseWidth=Window::Width=width;
     Window::BaseHeight=Window::Height=height;
@@ -53,6 +85,8 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
 
     m_UpdateFiles=false;
     m_HdrOpen=false;
+    m_ScenesOpen=false;
+    m_GridOpen=false;
 
     m_SelectedScene=-1;
 }
@@ -87,6 +121,9 @@ void Editor::Run(){
 
         RENDERER->StartEditorScene(this);
         m_Scene->GetCamera().ResetSceneProj();
+        if(m_ShowGrid){
+            DrawGrid();
+        }
         OnSceneRender();
         m_Scene->GetCamera().DrawSceneProj();
         RENDERER->DrawEditorScene(m_SceneFramebuffer);
@@ -100,6 +137,11 @@ void Editor::Run(){
                 m_Gizmo.Manipulate(matrix,m_Scene->GetCamera().GetViewMatrix(),m_Scene->GetCamera().GetProjMatrix());
                 e->m_X=matrix[3][0];
                 e->m_Y=matrix[3][1];
+
+                if(m_SnapEnabled && !INPUT->GetMouseButton(MOUSE_BUTTON_LEFT).current && INPUT->GetMouseButton(MOUSE_BUTTON_LEFT).previous){
+                    e->m_X=round(e->m_X/m_CellSize)*m_CellSize;
+                    e->m_Y=round(e->m_Y/m_CellSize)*m_CellSize;
+                }
             }
         }
         
@@ -120,6 +162,30 @@ void Editor::Run(){
             }
         #endif
     }
+}
+
+void Editor::DrawGrid(){
+    float line_width=RENDERER->GetLineWidth();
+    RENDERER->SetLineWidth(0.01f);
+
+    Vec2 camera_pos=m_Scene->GetCamera().GetPosition();
+
+    camera_pos.x=round(camera_pos.x/m_CellSize)*m_CellSize;
+    camera_pos.y=round(camera_pos.y/m_CellSize)*m_CellSize;
+
+    for(float i=camera_pos.y-m_CellSize;i<camera_pos.y+Window::MAX_HEIGHT+m_CellSize;i+=m_CellSize){
+        for(float j=camera_pos.x-m_CellSize;j<camera_pos.x+Window::MAX_WIDTH+m_CellSize;j+=m_CellSize){
+            RENDERER->DrawLine({j,i},{j,i+Window::MAX_HEIGHT},m_GridColor,0);
+            RENDERER->DrawLine({j,i},{j+Window::MAX_WIDTH,i},m_GridColor,0);
+
+            Window::VertexCount-=4;
+        }
+    }
+
+    RENDERER->Render();
+    Window::DrawCalls--;
+
+    RENDERER->SetLineWidth(line_width);
 }
 
 void Editor::OnSceneRender(){
@@ -282,12 +348,19 @@ void Editor::OnImGuiUpdate(){
             m_ScenesOpen=true;
             ImGui::EndMenu();
         }
+        if(ImGui::BeginMenu("Grid")){
+            m_GridOpen=true;
+            ImGui::EndMenu();
+        }
         ImGui::EndMainMenuBar();
         if(m_HdrOpen){
             HdrWindow(&m_HdrOpen);
         }
         if(m_ScenesOpen){
             ScenesWindow(&m_ScenesOpen);
+        }
+        if(m_GridOpen){
+            GridWindow(&m_GridOpen);
         }
     }
 
@@ -467,6 +540,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
             e->m_PreviousX=e->m_X;
             e->m_PreviousY=e->m_Y;
         }
+        ImGui::InputInt("Group",(int*)&e->m_Group);
     }
 
     ImGui::PushItemWidth(ImGui::GetWindowWidth()*0.5f);
@@ -1193,6 +1267,18 @@ void Editor::ScenesWindow(bool *open){
     ImGui::End();
 }
 
+void Editor::GridWindow(bool *open){
+    ImGui::SetNextWindowSize(ImVec2(0,0));
+    ImGui::Begin("Grid",open,ImGuiWindowFlags_NoCollapse);
+
+    ImGui::Checkbox("Show Grid",&m_ShowGrid);
+    ImGui::SliderFloat("Cell Size",&m_CellSize,0.001,10);
+    ImGui::Checkbox("Snap to Grid",&m_SnapEnabled);
+    ImGui::ColorEdit4("Grid Color",(float*)&m_GridColor);
+
+    ImGui::End();
+}
+
 void Editor::SerializeProject(){
     if(m_ProjectPath.empty()){
         return;   
@@ -1219,6 +1305,10 @@ void Editor::SerializeProject(){
     out<<YAML::EndSeq;
 
     out<<YAML::Key<<"SelectedScene"<<YAML::Value<<m_SelectedScene;
+    out<<YAML::Key<<"ShowGrid"<<YAML::Value<<m_ShowGrid;
+    out<<YAML::Key<<"SnapEnabled"<<YAML::Value<<m_SnapEnabled;
+    out<<YAML::Key<<"CellSize"<<YAML::Value<<m_CellSize;
+    out<<YAML::Key<<"GridColor"<<YAML::Value<<m_GridColor;
     out<<YAML::EndMap;
     
 
@@ -1265,6 +1355,12 @@ void Editor::DeserializeProject(){
     }
 
     m_SelectedScene=data["SelectedScene"].as<int>();
+
+    m_ShowGrid=data["ShowGrid"].as<bool>();
+    m_SnapEnabled=data["SnapEnabled"].as<bool>();
+    m_CellSize=data["CellSize"].as<float>();
+    m_GridColor=data["GridColor"].as<Vec4>();
+
     if(m_Scene!=nullptr){
         delete m_Scene;
     }
