@@ -53,6 +53,11 @@ public:
     */
     void AddEntity(uint32_t uid,uint32_t parent);
     /**
+     * Duplicate the entity with the given UID
+     * \return the UID of the new entity
+    */
+   [[nodiscard]] uint32_t DuplicateEntity(uint32_t uid,uint32_t parent=std::numeric_limits<uint32_t>::max());
+    /**
      * Get an entity from the scene
      * \param uid the entity uid
      * \return a pointer to the entity or nullptr if the entity does not exist
@@ -153,12 +158,41 @@ public:
     void RemoveComponent(uint32_t uid);
 
     /**
-     * Get a component from an entity
-     * \param uid the entity uid
-     * \return a pointer to the component or nullptr if the component does not exist
+     * Get a component from the container relative to its type
     */
     template<typename T>
-    T* GetComponent(uint32_t uid);
+    T* GetComponent(uint32_t uid){
+        PROFILE_FUNCTION();
+        
+        if constexpr(std::is_same<T,TagComponent>::value){
+            return m_TagComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,TextureComponent>::value){
+            return m_TextureComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,AnimatedTextureComponent>::value){
+            return m_AnimatedTextureComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,LightComponent>::value){
+            return m_LightComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,RigidbodyComponent>::value){
+            return m_RigidbodyComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,BoxColliderComponent>::value){
+            return m_BoxColliderComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,CircleColliderComponent>::value){
+            return m_CircleColliderComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,NativeScriptComponent>::value){
+            return m_NativeScriptComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,TextComponent>::value){
+            return m_TextComponents.GetComponent(uid);
+        }
+        return nullptr;
+    }
 
     /**
      * Starts the physics simulation

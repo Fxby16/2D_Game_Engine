@@ -60,6 +60,67 @@ void Scene::AddEntity(uint32_t uid,uint32_t parent){
     m_Entities.push_back(Entity(uid,parent));
 }
 
+uint32_t Scene::DuplicateEntity(uint32_t uid,uint32_t parent){
+    uint32_t new_entity=AddEntity();
+    Entity *to_duplicate=GetEntity(uid);
+    Entity *duplicated=GetEntity(new_entity);
+    *duplicated=*to_duplicate;
+    duplicated->m_UID=new_entity;
+
+    if(parent!=std::numeric_limits<uint32_t>::max()){
+        duplicated->m_Parent=parent;
+    }
+
+    m_Hierarchy.insert({new_entity,{}});
+    if(duplicated->m_Parent!=std::numeric_limits<uint32_t>::max()){
+        m_Hierarchy[duplicated->m_Parent].insert(new_entity);
+    }
+
+    TagComponent *tag=GetComponent<TagComponent>(uid);
+    TextureComponent *tc=GetComponent<TextureComponent>(uid);
+    AnimatedTextureComponent *atc=GetComponent<AnimatedTextureComponent>(uid);
+    RigidbodyComponent *rbc=GetComponent<RigidbodyComponent>(uid);
+    BoxColliderComponent *bcc=GetComponent<BoxColliderComponent>(uid);
+    CircleColliderComponent *ccc=GetComponent<CircleColliderComponent>(uid);
+    LightComponent *lc=GetComponent<LightComponent>(uid);
+    NativeScriptComponent *nsc=GetComponent<NativeScriptComponent>(uid);
+    TextComponent *ttc=GetComponent<TextComponent>(uid);
+
+    if(tag!=nullptr){
+        AddComponent<TagComponent>(new_entity,tag->m_Tag);
+    }
+    if(tc!=nullptr){
+        AddComponent<TextureComponent>(new_entity,tc->m_Texture->m_LoadedFilePath,tc->m_Texture->m_LoadedMagFilter,tc->m_Texture->m_LoadedMinFilter,tc->m_Width,tc->m_Height,tc->m_Layer,tc->m_Visible);
+    }
+    if(atc!=nullptr){
+        AddComponent<AnimatedTextureComponent>(new_entity,atc->m_AnimatedTexture->m_LoadedFilePath,atc->m_AnimatedTexture->m_TileWidth,atc->m_AnimatedTexture->m_TileHeight,atc->m_AnimatedTexture->m_LoadedMagFilter,atc->m_AnimatedTexture->m_LoadedMinFilter,atc->m_Width,atc->m_Height,atc->m_Layer,atc->m_PlayAnimation,atc->m_LoopAnimation,atc->m_AnimationDelay,atc->m_AnimationRow,atc->m_AnimationIndex,atc->m_Visible);
+    }
+    if(rbc!=nullptr){
+        AddComponent<RigidbodyComponent>(new_entity,rbc->m_BodyType,rbc->m_FixedRotation);
+    }
+    if(bcc!=nullptr){
+        AddComponent<BoxColliderComponent>(new_entity,bcc->m_XOffset,bcc->m_YOffset,bcc->m_Width,bcc->m_Height,bcc->m_Density,bcc->m_Friction,bcc->m_Restitution,bcc->m_RestitutionThreshold,bcc->m_CategoryBits,bcc->m_MaskBits,bcc->m_IsSensor);
+    }
+    if(ccc!=nullptr){
+        AddComponent<CircleColliderComponent>(new_entity,ccc->m_XOffset,ccc->m_YOffset,ccc->m_Radius,ccc->m_Density,ccc->m_Friction,ccc->m_Restitution,ccc->m_RestitutionThreshold,ccc->m_CategoryBits,ccc->m_MaskBits,ccc->m_IsSensor);
+    }
+    if(lc!=nullptr){
+        AddComponent<LightComponent>(new_entity,lc->m_XOffset,lc->m_YOffset,lc->m_Radius,lc->m_Blur,lc->m_Color,lc->m_Type);
+    }
+    if(nsc!=nullptr){
+        AddComponent<NativeScriptComponent>(new_entity);
+    }
+    if(ttc!=nullptr){
+        AddComponent<TextComponent>(new_entity,ttc->m_TextRenderer->m_LoadedFontPath,ttc->m_TextRenderer->m_LoadedGlyphSize,ttc->m_TextRenderer->m_Fixed,ttc->m_Text,ttc->m_Offset,ttc->m_Color,ttc->m_Scale,ttc->m_Layer,ttc->m_IgnoreLighting);
+    }
+
+    for(auto &entity:m_Hierarchy[uid]){
+        DuplicateEntity(entity,new_entity);
+    }
+
+    return new_entity;
+}
+
 Entity* Scene::GetEntity(uint32_t uid){
     PROFILE_FUNCTION();
 
@@ -110,69 +171,6 @@ void Scene::RemoveEntity(uint32_t uid){
             entity.second.erase(derived);
         }
     }
-}
-
-template<>
-TagComponent* Scene::GetComponent<TagComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_TagComponents.GetComponent(uid);
-}
-
-template<>
-TextureComponent* Scene::GetComponent<TextureComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_TextureComponents.GetComponent(uid);
-}
-
-template<>
-AnimatedTextureComponent* Scene::GetComponent<AnimatedTextureComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_AnimatedTextureComponents.GetComponent(uid);
-}
-
-template<>
-LightComponent* Scene::GetComponent<LightComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_LightComponents.GetComponent(uid);
-}
-
-template<>
-RigidbodyComponent* Scene::GetComponent<RigidbodyComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-    
-    return m_RigidbodyComponents.GetComponent(uid);
-}
-
-template<>
-BoxColliderComponent* Scene::GetComponent<BoxColliderComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-
-    return m_BoxColliderComponents.GetComponent(uid);
-}
-
-template<>
-CircleColliderComponent* Scene::GetComponent<CircleColliderComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-
-    return m_CircleColliderComponents.GetComponent(uid);
-}
-
-template<>
-NativeScriptComponent* Scene::GetComponent<NativeScriptComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-
-    return m_NativeScriptComponents.GetComponent(uid);
-}
-
-template<>
-TextComponent* Scene::GetComponent<TextComponent>(uint32_t uid){
-    PROFILE_FUNCTION();
-
-    return m_TextComponents.GetComponent(uid);
 }
 
 void Scene::SetEntityPosition(uint32_t uid,float x,float y){

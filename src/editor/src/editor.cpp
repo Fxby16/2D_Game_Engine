@@ -395,6 +395,19 @@ void Editor::EntitiesMenu(ImVec2 pos){
         }
         ImGui::OpenPopupOnItemClick("EntityPopup",ImGuiPopupFlags_MouseButtonRight);
         if(ImGui::BeginPopupContextItem("EntityPopup")){
+            if(ImGui::MenuItem("Duplicate Entity")){
+                m_Scene->DuplicateEntity(uid);
+                std::string function_name;
+                for(auto &[name,id]:m_ScriptComponents){
+                    if(id==uid){
+                        function_name=name;
+                        break;
+                    }
+                }
+                if(!function_name.empty()){
+                    m_ScriptComponents.push_back({function_name,uid});
+                }
+            }
             if(ImGui::MenuItem("Remove Entity")){
                 if(m_SelectedEntity==e->m_UID){
                     m_SelectedEntity=std::numeric_limits<uint32_t>::max();

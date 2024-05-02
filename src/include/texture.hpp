@@ -68,6 +68,7 @@ protected:
     friend class Renderer;
     friend class TexturesManager;
     friend class SceneSerializer;
+    friend class Scene;
 
     #ifdef EDITOR
         friend class Editor;
@@ -137,11 +138,8 @@ private:
     friend class Renderer;
     friend class TexturesManager;
     friend class SceneSerializer;
+    friend class Scene;
     #if defined(EDITOR) || defined(APPLICATION)
-        friend class Editor;
-    #endif
-
-    #ifdef EDITOR
         friend class Editor;
     #endif
 

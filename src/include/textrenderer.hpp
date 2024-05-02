@@ -62,6 +62,7 @@ public:
 private:
     friend class SceneSerializer;
     friend class FontManager;
+    friend class Scene;
 
     struct Character{
         unsigned int TexID;     // ID of the glyph texture       
