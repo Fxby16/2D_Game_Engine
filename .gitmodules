@@ -16,9 +16,6 @@
 [submodule "src/vendor/genie"]
 	path = src/vendor/genie
 	url = https://github.com/bkaradzic/GENie.git
-[submodule "src/editor/vendor/NativeFileDialog"]
-	path = src/editor/vendor/NativeFileDialog
-	url = https://github.com/Fxby16/nativefiledialog.git
 [submodule "src/vendor/box2d"]
 	path = src/vendor/box2d
 	url = https://github.com/erincatto/box2d.git
@@ -28,3 +25,6 @@
 [submodule "src/editor/vendor/yaml-cpp"]
 	path = src/editor/vendor/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "src/editor/vendor/NativeFileDialog"]
+	path = src/editor/vendor/NativeFileDialog
+	url = https://github.com/Fxby16/nativefiledialog.git
