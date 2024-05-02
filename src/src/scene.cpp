@@ -90,10 +90,10 @@ uint32_t Scene::DuplicateEntity(uint32_t uid,uint32_t parent){
         AddComponent<TagComponent>(new_entity,tag->m_Tag);
     }
     if(tc!=nullptr){
-        AddComponent<TextureComponent>(new_entity,tc->m_Texture->m_LoadedFilePath,tc->m_Texture->m_LoadedMagFilter,tc->m_Texture->m_LoadedMinFilter,tc->m_Width,tc->m_Height,tc->m_Layer,tc->m_Visible);
+        AddComponent<TextureComponent>(new_entity,tc->m_Texture->m_LoadedFilePath,tc->m_Texture->m_LoadedMagFilter,tc->m_Texture->m_LoadedMinFilter,tc->m_Width,tc->m_Height,tc->m_Layer,tc->m_Visible,tc->m_FlipX,tc->m_FlipY);
     }
     if(atc!=nullptr){
-        AddComponent<AnimatedTextureComponent>(new_entity,atc->m_AnimatedTexture->m_LoadedFilePath,atc->m_AnimatedTexture->m_TileWidth,atc->m_AnimatedTexture->m_TileHeight,atc->m_AnimatedTexture->m_LoadedMagFilter,atc->m_AnimatedTexture->m_LoadedMinFilter,atc->m_Width,atc->m_Height,atc->m_Layer,atc->m_PlayAnimation,atc->m_LoopAnimation,atc->m_AnimationDelay,atc->m_AnimationRow,atc->m_AnimationIndex,atc->m_Visible);
+        AddComponent<AnimatedTextureComponent>(new_entity,atc->m_AnimatedTexture->m_LoadedFilePath,atc->m_AnimatedTexture->m_TileWidth,atc->m_AnimatedTexture->m_TileHeight,atc->m_AnimatedTexture->m_LoadedMagFilter,atc->m_AnimatedTexture->m_LoadedMinFilter,atc->m_Width,atc->m_Height,atc->m_Layer,atc->m_PlayAnimation,atc->m_LoopAnimation,atc->m_AnimationDelay,atc->m_AnimationRow,atc->m_AnimationIndex,atc->m_Visible,atc->m_FlipX,atc->m_FlipY);
     }
     if(rbc!=nullptr){
         AddComponent<RigidbodyComponent>(new_entity,rbc->m_BodyType,rbc->m_FixedRotation);

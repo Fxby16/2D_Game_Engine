@@ -58,6 +58,10 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
 }
 
 Editor::~Editor(){
+    SerializeProject();
+    if(m_SelectedScene!=-1){
+        m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+    }
     delete m_Scene;
     delete m_SceneFramebuffer;
     RENDERER->ImGui_Close();
@@ -181,6 +185,11 @@ void Editor::OnImGuiUpdate(){
         tempvec=ImGui::GetWindowSize();
         if(ImGui::BeginMenu("File")){
             if(ImGui::MenuItem("New")){
+                SerializeProject();
+                if(m_SelectedScene!=-1){
+                    m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+                }
+
                 m_SelectedScene=-1;
                 m_SelectedEntity=std::numeric_limits<uint32_t>::max();
                 m_ScenesPaths.clear();
@@ -213,6 +222,11 @@ void Editor::OnImGuiUpdate(){
                 nfdresult_t result=NFD_OpenDialog("proj",NULL,&outPath);
                     
                 if(result==NFD_OKAY){
+                    SerializeProject();
+                    if(m_SelectedScene!=-1){
+                        m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+                    }
+
                     m_ProjectPath=outPath;
                     m_CurrentPath=std::filesystem::path(outPath).parent_path().string();
                     DeserializeProject();
@@ -516,6 +530,8 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Height",&texture_component->m_Height,0.0f,30.0f);
             ImGui::SliderInt("Layer",&texture_component->m_Layer,-100,100);
             ImGui::Checkbox("Visible",&texture_component->m_Visible);
+            ImGui::Checkbox("FlipX",&texture_component->m_FlipX);
+            ImGui::Checkbox("FlipY",&texture_component->m_FlipY);
             ImGui::TreePop();
         }
         ImGui::OpenPopupOnItemClick("TextureComponentPopup",ImGuiPopupFlags_MouseButtonRight);
@@ -581,6 +597,9 @@ void Editor::ComponentsMenu(ImVec2 pos){
             ImGui::SliderFloat("Animation Delay",&animated_texture_component->m_AnimationDelay,0.0f,10.0f);
             ImGui::SliderInt("Animation Row",&animated_texture_component->m_AnimationRow,0,ceil(((float)s->m_Height)/((float)s->m_TileHeight))-1);
             ImGui::SliderInt("Animation Index",&animated_texture_component->m_AnimationIndex,0,ceil(((float)s->m_Width)/((float)s->m_TileWidth))-1);
+            ImGui::Checkbox("FlipX",&animated_texture_component->m_FlipX);
+            ImGui::Checkbox("FlipY",&animated_texture_component->m_FlipY);
+
             ImGui::TreePop();
         }
         ImGui::OpenPopupOnItemClick("AnimatedTextureComponentPopup",ImGuiPopupFlags_MouseButtonRight);

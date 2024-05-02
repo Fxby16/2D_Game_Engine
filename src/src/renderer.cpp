@@ -302,7 +302,7 @@ void Renderer::DrawTexture(Vec2 pos,Vec2 size,bool reverse_x,bool reverse_y,int 
         DrawTexture(pos,size,layer,texture.GetTexID());
 }
 
-void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,int layer,SpriteSheet &s){
+void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,bool flipx,bool flipy,float row,float col,int layer,SpriteSheet &s){
     PROFILE_FUNCTION();
 
     #ifdef EDITOR
@@ -310,6 +310,17 @@ void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,int layer,
     #endif
     
     std::array<Vertex,4>quad=s.CreateQuadSpriteSheet(pos.x,pos.y,size.w,size.h,row,col,layer,s.GetTexID());
+    
+    if(flipx){
+        std::swap(quad[1].texcoords.x,quad[2].texcoords.x);
+        std::swap(quad[0].texcoords.x,quad[3].texcoords.x);
+    }
+
+    if(flipy){
+        std::swap(quad[0].texcoords.y,quad[1].texcoords.y);
+        std::swap(quad[3].texcoords.y,quad[2].texcoords.y);
+    }
+
     m_BufferT[m_Textures.NumVertices]=quad[0];
     m_BufferT[m_Textures.NumVertices+1]=quad[1];
     m_BufferT[m_Textures.NumVertices+2]=quad[2];
@@ -320,7 +331,7 @@ void Renderer::DrawSpriteSheet(Vec2 pos,Vec2 size,float row,float col,int layer,
         Render();
 }
 
-void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int animation_row,int &animation_index){
+void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,bool reverse_x,bool reverse_y,SpriteSheet &s,bool &play_animation,bool loop_animation,float animation_delay,float &last_animation_time,int animation_row,int &animation_index){
     PROFILE_FUNCTION();
 
     #ifndef EDITOR
@@ -340,7 +351,7 @@ void Renderer::DrawAnimatedTexture(Vec2 pos,Vec2 size,int layer,SpriteSheet &s,b
         }
     }
 
-    DrawSpriteSheet(pos,size,animation_row,animation_index,layer,s);
+    DrawSpriteSheet(pos,size,reverse_x,reverse_y,animation_row,animation_index,layer,s);
 }
 
 

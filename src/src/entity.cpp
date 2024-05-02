@@ -59,31 +59,31 @@ TagComponent::TagComponent(TagComponent &&other){
     m_UID=other.m_UID;
 }
 
-TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,bool visible,uint32_t uid):
-    m_Width(width),m_Height(height),m_Layer(layer),m_Visible(visible),m_UID(uid){
+TextureComponent::TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,bool visible,bool flipx,bool flipy,uint32_t uid):
+    m_Width(width),m_Height(height),m_Layer(layer),m_Visible(visible),m_FlipX(flipx),m_FlipY(flipy),m_UID(uid){
     
     m_Texture=TEXTURES_MANAGER->GetTexture(path,mag_filter,min_filter).second;
 }
 
-TextureComponent::TextureComponent(std::shared_ptr<Texture>t,float width,float height,int layer,bool visible,uint32_t uid):
-    m_Texture(t),m_Width(width),m_Height(height),m_Layer(layer),m_Visible(visible),m_UID(uid){}
+TextureComponent::TextureComponent(std::shared_ptr<Texture>t,float width,float height,int layer,bool visible,bool flipx,bool flipy,uint32_t uid):
+    m_Texture(t),m_Width(width),m_Height(height),m_Layer(layer),m_Visible(visible),m_FlipX(flipx),m_FlipY(flipy),m_UID(uid){}
 
 AnimatedTextureComponent::AnimatedTextureComponent(const std::string &path,unsigned int tile_width,
     unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer,bool play_animation,
-    bool loop_animation,float animation_delay,int animation_row,int animation_index,bool visible,uint32_t uid):
+    bool loop_animation,float animation_delay,int animation_row,int animation_index,bool visible,bool flipx,bool flipy,uint32_t uid):
     
     m_Width(width),m_Height(height),m_Layer(layer),m_PlayAnimation(play_animation),
     m_LoopAnimation(loop_animation),m_AnimationDelay(animation_delay),m_AnimationRow(animation_row),
-    m_AnimationIndex(animation_index),m_Visible(visible),m_LastAnimationTime(0),m_UID(uid){
+    m_AnimationIndex(animation_index),m_LastAnimationTime(0),m_Visible(visible),m_FlipX(flipx),m_FlipY(flipy),m_UID(uid){
 
     m_AnimatedTexture=TEXTURES_MANAGER->GetSpriteSheet(path,tile_width,tile_height,mag_filter,min_filter).second;
 }
 
 AnimatedTextureComponent::AnimatedTextureComponent(std::shared_ptr<SpriteSheet>t,float width,float height,int layer,
-    bool play_animation,bool loop_animation,float animation_delay,int animation_row,int animation_index,bool visible,uint32_t uid):
+    bool play_animation,bool loop_animation,float animation_delay,int animation_row,int animation_index,bool visible,bool flipx,bool flipy,uint32_t uid):
     m_AnimatedTexture(t),m_Width(width),m_Height(height),m_Layer(layer),m_PlayAnimation(play_animation),
     m_LoopAnimation(loop_animation),m_AnimationDelay(animation_delay),m_AnimationRow(animation_row),
-    m_AnimationIndex(animation_index),m_Visible(visible),m_LastAnimationTime(0),m_UID(uid){}
+    m_AnimationIndex(animation_index),m_LastAnimationTime(0),m_Visible(visible),m_FlipX(flipx),m_FlipY(flipy),m_UID(uid){}
 
 TextureComponent::TextureComponent(TextureComponent &other){
     m_Texture=other.m_Texture;
@@ -91,6 +91,8 @@ TextureComponent::TextureComponent(TextureComponent &other){
     m_Height=other.m_Height;
     m_Layer=other.m_Layer;
     m_Visible=other.m_Visible;
+    m_FlipX=other.m_FlipX;
+    m_FlipY=other.m_FlipY;
     m_UID=other.m_UID;
 }
 
@@ -100,6 +102,8 @@ TextureComponent::TextureComponent(TextureComponent &&other){
     m_Height=other.m_Height;
     m_Layer=other.m_Layer;
     m_Visible=other.m_Visible;
+    m_FlipX=other.m_FlipX;
+    m_FlipY=other.m_FlipY;
     m_UID=other.m_UID;
 }
 
@@ -115,6 +119,8 @@ AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &oth
     m_AnimationIndex=other.m_AnimationIndex;
     m_LastAnimationTime=other.m_LastAnimationTime;
     m_Visible=other.m_Visible;
+    m_FlipX=other.m_FlipX;
+    m_FlipY=other.m_FlipY;
     m_UID=other.m_UID;
 }
 
@@ -130,6 +136,8 @@ AnimatedTextureComponent::AnimatedTextureComponent(AnimatedTextureComponent &&ot
     m_AnimationIndex=other.m_AnimationIndex;
     m_LastAnimationTime=other.m_LastAnimationTime;
     m_Visible=other.m_Visible;
+    m_FlipX=other.m_FlipX;
+    m_FlipY=other.m_FlipY;
     m_UID=other.m_UID;
 }
 
@@ -277,7 +285,7 @@ void ComponentManager<TextureComponent>::Render(Scene *scene){
         }
 
         if(m_Components[i].m_Texture.get()->GetTexID()!=std::numeric_limits<uint32_t>::max()){
-            RENDERER->DrawTexture({InterpolatedX,InterpolatedY},{m_Components[i].m_Width,m_Components[i].m_Height},false,false,m_Components[i].m_Layer,*m_Components[i].m_Texture);
+            RENDERER->DrawTexture({InterpolatedX,InterpolatedY},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_FlipX,m_Components[i].m_FlipY,m_Components[i].m_Layer,*m_Components[i].m_Texture);
         }
     }
 }
@@ -310,7 +318,7 @@ void ComponentManager<AnimatedTextureComponent>::Render(Scene *scene){
         }
 
         if(m_Components[i].m_AnimatedTexture.get()->GetTexID()!=std::numeric_limits<uint32_t>::max()){
-            RENDERER->DrawAnimatedTexture({InterpolatedX,InterpolatedY},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,*m_Components[i].m_AnimatedTexture,
+            RENDERER->DrawAnimatedTexture({InterpolatedX,InterpolatedY},{m_Components[i].m_Width,m_Components[i].m_Height},m_Components[i].m_Layer,m_Components[i].m_FlipX,m_Components[i].m_FlipY,*m_Components[i].m_AnimatedTexture,
                 m_Components[i].m_PlayAnimation,m_Components[i].m_LoopAnimation,m_Components[i].m_AnimationDelay,m_Components[i].m_LastAnimationTime,m_Components[i].m_AnimationRow,m_Components[i].m_AnimationIndex);  
         }
     }

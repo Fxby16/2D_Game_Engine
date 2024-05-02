@@ -114,10 +114,10 @@ public:
 
 class TextureComponent{
 public:
-    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,bool visible,uint32_t uid);
-    TextureComponent(std::shared_ptr<Texture>t,float width,float height,int layer,bool visible,uint32_t uid);
-    TextureComponent(): m_Texture(std::make_shared<Texture>()),m_Width(0),m_Height(0),m_Layer(0),m_Visible(false),m_UID(std::numeric_limits<uint32_t>::max()){}
-    TextureComponent(uint32_t uid): m_Texture(std::make_shared<Texture>()),m_Width(0),m_Height(0),m_Layer(0),m_Visible(false),m_UID(uid){}
+    TextureComponent(const std::string &path,int mag_filter,int min_filter,float width,float height,int layer,bool visible,bool flipx,bool flipy,uint32_t uid);
+    TextureComponent(std::shared_ptr<Texture>t,float width,float height,int layer,bool visible,bool flipx,bool flipy,uint32_t uid);
+    TextureComponent(): m_Texture(std::make_shared<Texture>()),m_Width(0),m_Height(0),m_Layer(0),m_Visible(false),m_FlipX(false),m_FlipY(false),m_UID(std::numeric_limits<uint32_t>::max()){}
+    TextureComponent(uint32_t uid): m_Texture(std::make_shared<Texture>()),m_Width(0),m_Height(0),m_Layer(0),m_Visible(false),m_FlipX(false),m_FlipY(false),m_UID(uid){}
     TextureComponent(TextureComponent &other);
     TextureComponent(TextureComponent &&other);
     
@@ -127,6 +127,8 @@ public:
         m_Height=b.m_Height;
         m_Layer=b.m_Layer;
         m_Visible=b.m_Visible;
+        m_FlipX=b.m_FlipX;
+        m_FlipY=b.m_FlipY;
         m_UID=b.m_UID;
         return *this;
     }
@@ -137,6 +139,8 @@ public:
             m_Height=b.m_Height;
             m_Layer=b.m_Layer;
             m_Visible=b.m_Visible;
+            m_FlipX=b.m_FlipX;
+            m_FlipY=b.m_FlipY;
             m_UID=b.m_UID;
         }
         return *this;
@@ -146,15 +150,17 @@ public:
     float m_Width,m_Height;
     int m_Layer;
     bool m_Visible;
+    bool m_FlipX;
+    bool m_FlipY;
     uint32_t m_UID;
 };
 
 class AnimatedTextureComponent{
 public:
-    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer,bool play_animation,bool loop_animation,float animation_delay,int animation_row,int animation_index,bool visible,uint32_t uid);
-    AnimatedTextureComponent(std::shared_ptr<SpriteSheet>t,float width,float height,int layer,bool play_animation,bool loop_animation,float animation_delay,int animation_row,int animation_index,bool visible,uint32_t uid);
-    AnimatedTextureComponent(): m_AnimatedTexture(std::make_shared<SpriteSheet>()),m_Width(0),m_Height(0),m_Layer(0),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0),m_AnimationRow(0),m_AnimationIndex(0),m_LastAnimationTime(0),m_Visible(false),m_UID(std::numeric_limits<uint32_t>::max()){}
-    AnimatedTextureComponent(uint32_t uid): m_AnimatedTexture(std::make_shared<SpriteSheet>()),m_Width(0),m_Height(0),m_Layer(0),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0),m_AnimationRow(0),m_AnimationIndex(0),m_LastAnimationTime(0),m_Visible(false),m_UID(uid){}
+    AnimatedTextureComponent(const std::string &path,unsigned int tile_width,unsigned int tile_height,int mag_filter,int min_filter,float width,float height,int layer,bool play_animation,bool loop_animation,float animation_delay,int animation_row,int animation_index,bool visible,bool flipx,bool flipy,uint32_t uid);
+    AnimatedTextureComponent(std::shared_ptr<SpriteSheet>t,float width,float height,int layer,bool play_animation,bool loop_animation,float animation_delay,int animation_row,int animation_index,bool visible,bool flipx,bool flipy,uint32_t uid);
+    AnimatedTextureComponent(): m_AnimatedTexture(std::make_shared<SpriteSheet>()),m_Width(0),m_Height(0),m_Layer(0),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0),m_AnimationRow(0),m_AnimationIndex(0),m_LastAnimationTime(0),m_Visible(false),m_FlipX(false),m_FlipY(false),m_UID(std::numeric_limits<uint32_t>::max()){}
+    AnimatedTextureComponent(uint32_t uid): m_AnimatedTexture(std::make_shared<SpriteSheet>()),m_Width(0),m_Height(0),m_Layer(0),m_PlayAnimation(false),m_LoopAnimation(false),m_AnimationDelay(0),m_AnimationRow(0),m_AnimationIndex(0),m_LastAnimationTime(0),m_Visible(false),m_FlipX(false),m_FlipY(false),m_UID(uid){}
     AnimatedTextureComponent(AnimatedTextureComponent &other);
     AnimatedTextureComponent(AnimatedTextureComponent &&other);
 
@@ -170,6 +176,8 @@ public:
         m_AnimationIndex=b.m_AnimationIndex;
         m_LastAnimationTime=b.m_LastAnimationTime;
         m_Visible=b.m_Visible;
+        m_FlipX=b.m_FlipX;
+        m_FlipY=b.m_FlipY;
         m_UID=b.m_UID;
         return *this;
     }
@@ -186,6 +194,8 @@ public:
             m_AnimationIndex=b.m_AnimationIndex;
             m_LastAnimationTime=b.m_LastAnimationTime;
             m_Visible=b.m_Visible;
+            m_FlipX=b.m_FlipX;
+            m_FlipY=b.m_FlipY;
             m_UID=b.m_UID;
         }
         return *this;
@@ -202,6 +212,8 @@ public:
     int m_AnimationRow;
     float m_LastAnimationTime;
     bool m_Visible;
+    bool m_FlipX;
+    bool m_FlipY;
     uint32_t m_UID;
 };
 

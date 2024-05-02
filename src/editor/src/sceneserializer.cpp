@@ -142,6 +142,8 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"Height"<<YAML::Value<<texturecomponent->m_Height;
         out<<YAML::Key<<"Layer"<<YAML::Value<<texturecomponent->m_Layer;
         out<<YAML::Key<<"Visible"<<YAML::Value<<texturecomponent->m_Visible;
+        out<<YAML::Key<<"FlipX"<<YAML::Value<<texturecomponent->m_FlipX;
+        out<<YAML::Key<<"FlipY"<<YAML::Value<<texturecomponent->m_FlipY;
 
         out<<YAML::EndMap; //texture component
     }
@@ -169,6 +171,8 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::Key<<"Height"<<YAML::Value<<animatedtexturecomponent->m_Height;
         out<<YAML::Key<<"Layer"<<YAML::Value<<animatedtexturecomponent->m_Layer;    
         out<<YAML::Key<<"Visible"<<YAML::Value<<animatedtexturecomponent->m_Visible;
+        out<<YAML::Key<<"FlipX"<<YAML::Value<<animatedtexturecomponent->m_FlipX;
+        out<<YAML::Key<<"FlipY"<<YAML::Value<<animatedtexturecomponent->m_FlipY;
 
         out<<YAML::EndMap; //animated texture component
     }
@@ -534,9 +538,11 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 int height=texturecomponent["Height"].as<int>();
                 int layer=texturecomponent["Layer"].as<int>();
                 bool visible=texturecomponent["Visible"].as<bool>();
+                bool flipx=texturecomponent["FlipX"].as<bool>();
+                bool flipy=texturecomponent["FlipY"].as<bool>();
                 
                 auto [id,texture]=TEXTURES_MANAGER->GetTexture(filepath,magfilter,minfilter);
-                m_Scene->AddComponent<TextureComponent>(uid,texture,width,height,layer,visible);
+                m_Scene->AddComponent<TextureComponent>(uid,texture,width,height,layer,visible,flipx,flipy);
             }
 
             auto animatedtexturecomponent=e["AnimatedTextureComponent"];
@@ -555,9 +561,12 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 int height=animatedtexturecomponent["Height"].as<float>();
                 int layer=animatedtexturecomponent["Layer"].as<int>();
                 bool visible=animatedtexturecomponent["Visible"].as<bool>();
+                bool flipx=animatedtexturecomponent["FlipX"].as<bool>();
+                bool flipy=animatedtexturecomponent["FlipY"].as<bool>();
                 
                 auto [id,texture]=TEXTURES_MANAGER->GetSpriteSheet(filepath,tilewidth,tileheight,magfilter,minfilter);
-                m_Scene->AddComponent<AnimatedTextureComponent>(uid,texture,width,height,layer,playanimation,loopanimation,animationdelay,animationrow,animationindex,visible);
+                m_Scene->AddComponent<AnimatedTextureComponent>(uid,texture,width,height,layer,playanimation,loopanimation,
+                    animationdelay,animationrow,animationindex,visible,flipx,flipy);
             }
 
             auto rigidbodycomponent=e["RigidbodyComponent"];
