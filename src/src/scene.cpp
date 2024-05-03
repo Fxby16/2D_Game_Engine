@@ -351,7 +351,7 @@ void Scene::MoveEntity(uint32_t uid,float x_offset,float y_offset){
 }
 
 void Scene::OnPhysicsStart(){
-    m_PhysicsWorld=new b2World(b2Vec2(0.0f,-0.3f));
+    m_PhysicsWorld=new b2World(b2Vec2(m_Gravity.x,m_Gravity.y));
 }
 
 void Scene::OnPhysicsUpdate(double frame_time){

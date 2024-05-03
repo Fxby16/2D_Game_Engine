@@ -495,13 +495,15 @@ void Renderer::DrawScene(){
     PROFILE_FUNCTION();
 
     #ifndef EDITOR
-        m_SHdr.Bind();
-        m_TempFramebuffer->Bind();
-        m_Lights.VAO.Bind();
-        m_Lights.VBO.Bind();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
-        glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+        if(m_TonemapType!=TonemapType::None){
+            m_SHdr.Bind();
+            m_TempFramebuffer->Bind();
+            m_Lights.VAO.Bind();
+            m_Lights.VBO.Bind();
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D,m_Framebuffer->GetColorbufferID());
+            glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+        }
 
         m_Framebuffer->Unbind();
         Clear();
@@ -569,13 +571,15 @@ void Renderer::DrawEditorScene(Framebuffer *framebuffer){
     
     Render();
     ApplyLight(framebuffer);
-    m_TempFramebuffer->Bind();
-    m_SHdr.Bind();
-    m_Lights.VAO.Bind();
-    m_Lights.VBO.Bind();
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,framebuffer->GetColorbufferID());
-    glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+    if(m_TonemapType!=TonemapType::None){
+        m_TempFramebuffer->Bind();
+        m_SHdr.Bind();
+        m_Lights.VAO.Bind();
+        m_Lights.VBO.Bind();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D,framebuffer->GetColorbufferID());
+        glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+    }
 
     framebuffer->Bind();
     Clear();

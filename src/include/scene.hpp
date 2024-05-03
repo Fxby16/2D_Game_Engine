@@ -250,6 +250,10 @@ private:
     friend class SceneSerializer;
     friend class Application;
 
+    #ifdef EDITOR
+        friend class Editor;
+    #endif
+
     /**
      * Add a component to the container relative to its type
      * \param component the component

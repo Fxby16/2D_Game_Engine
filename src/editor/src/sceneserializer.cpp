@@ -503,13 +503,15 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
 
     m_Scene->m_Name=data["Scene"].as<std::string>();
     m_Scene->m_ScalingFactor=data["ScalingFactor"].as<float>();
-    m_Scene->m_Gravity=data["Gravity"].as<Vec2>();
+    m_Scene->SetGravity(data["Gravity"].as<Vec2>());
     NEXT_UID=data["NextUID"].as<uint32_t>();
     RENDERER->m_AmbientLight=data["AmbientLight"].as<Vec3>();
     RENDERER->m_ClearColor=data["ClearColor"].as<Vec3>();
     RENDERER->SetTonemapType(StringToTonemapType(data["ToneMap"].as<std::string>()));
     RENDERER->SetGamma(data["Gamma"].as<float>());
     RENDERER->SetExposure(data["Exposure"].as<float>());
+
+    RENDERER->ReloadShaders();
 
     auto entities=data["Entities"];
     if(entities){

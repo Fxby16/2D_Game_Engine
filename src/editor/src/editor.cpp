@@ -1006,6 +1006,8 @@ void Editor::VariablesMenu(ImVec2 pos){
     ImGui::ColorEdit3("Clear Color",(float*)&RENDERER->m_ClearColor);
     ImGui::ColorEdit3("Ambient Light",(float*)&RENDERER->m_AmbientLight);
     ImGui::Checkbox("Animations Preview",&ANIMATIONS_PREVIEW);
+    ImGui::InputFloat2("Gravity",&m_Scene->m_Gravity.x);
+    ImGui::InputFloat("Scaling Factor",&m_Scene->m_ScalingFactor);
 
     ImGui::Dummy(ImVec2(0.0f,ImGui::GetTextLineHeight()));
 
@@ -1159,14 +1161,10 @@ void Editor::HdrWindow(bool *open){
     ImGui::SetNextWindowSize(ImVec2(0,0));
     ImGui::Begin("HDR",open,ImGuiWindowFlags_NoCollapse);
 
-    TonemapType tonemap=RENDERER->GetTonemapType();
-    float gamma=RENDERER->GetGamma();
-    float exposure=RENDERER->GetExposure();
-
-    const char *items[]={"Reinhard","Filmic","Uncharted2","ACES","Exponential","Logarithmic","Mantiuk"};
+    const char *items[]={"None","Reinhard","Filmic","Uncharted2","ACES","Exponential","Logarithmic","Mantiuk"};
     static int current_item;
 
-    std::string tonemapName=TonemapTypeToString(tonemap);
+    std::string tonemapName=TonemapTypeToString(RENDERER->m_TonemapType);
     for(int i=0;i<IM_ARRAYSIZE(items);i++){
         if(tonemapName==items[i]){
             current_item=i;
@@ -1181,19 +1179,17 @@ void Editor::HdrWindow(bool *open){
     bool update=false;
 
     if(current_item!=old_item){
-        tonemap=StringToTonemapType(items[current_item]);
+        TonemapType tonemap=StringToTonemapType(items[current_item]);
         old_item=current_item;
         RENDERER->SetTonemapType(tonemap);
         update=true;
     }
 
-    if(ImGui::SliderFloat("Gamma",&gamma,0.0f,10.0f)){
-        RENDERER->SetGamma(gamma);
+    if(ImGui::SliderFloat("Gamma",&RENDERER->m_Gamma,0.0f,10.0f)){
         update=true;
     }
 
-    if(ImGui::SliderFloat("Exposure",&exposure,0.0f,10.0f)){
-        RENDERER->SetExposure(exposure);
+    if(ImGui::SliderFloat("Exposure",&RENDERER->m_Exposure,0.0f,10.0f)){
         update=true;
     }
 
