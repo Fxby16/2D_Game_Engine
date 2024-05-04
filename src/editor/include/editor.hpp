@@ -54,6 +54,7 @@ private:
     std::vector<std::vector<std::pair<std::string,uint32_t>>> m_AllScriptComponents;
     unsigned int m_SelectedScene=-1;
     std::string m_ProjectPath;
+    std::string m_CWD;
 
     uint32_t m_SelectedEntity=std::numeric_limits<uint32_t>::max();
 

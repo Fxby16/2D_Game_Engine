@@ -94,7 +94,7 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
 Editor::~Editor(){
     SerializeProject();
     if(m_SelectedScene!=-1){
-        m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+        m_SceneSerializer->Serialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
     }
     delete m_Scene;
     delete m_SceneFramebuffer;
@@ -253,7 +253,7 @@ void Editor::OnImGuiUpdate(){
             if(ImGui::MenuItem("New")){
                 SerializeProject();
                 if(m_SelectedScene!=-1){
-                    m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+                    m_SceneSerializer->Serialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
                 }
 
                 m_SelectedScene=-1;
@@ -262,6 +262,7 @@ void Editor::OnImGuiUpdate(){
                 delete m_Scene;
                 m_Scene=new Scene;
                 m_ProjectPath="";
+                m_CWD="";
                 m_CurrentPath="";
                 m_ScriptComponents.clear();
 
@@ -290,10 +291,11 @@ void Editor::OnImGuiUpdate(){
                 if(result==NFD_OKAY){
                     SerializeProject();
                     if(m_SelectedScene!=-1){
-                        m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+                        m_SceneSerializer->Serialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
                     }
 
                     m_ProjectPath=outPath;
+                    m_CWD=std::string(outPath).substr(0,std::string(outPath).find_last_of('/'));
                     m_CurrentPath=std::filesystem::path(outPath).parent_path().string();
                     DeserializeProject();
                     m_UpdateFiles=true;
@@ -305,7 +307,7 @@ void Editor::OnImGuiUpdate(){
             }
             if(ImGui::MenuItem("Save")){
                 if(m_SelectedScene!=-1){
-                    m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+                    m_SceneSerializer->Serialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
                 }
                 SerializeProject();
             }
@@ -315,9 +317,10 @@ void Editor::OnImGuiUpdate(){
                     
                 if(result==NFD_OKAY){
                     m_ProjectPath=outPath;
+                    m_CWD=std::string(outPath).substr(0,std::string(outPath).find_last_of('/'));
                     m_CurrentPath=std::filesystem::path(outPath).parent_path().string();
                     SerializeProject();
-                    m_SceneSerializer->Serialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+                    m_SceneSerializer->Serialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
                     m_UpdateFiles=true;
                     DeserializeProject();
                 }else if(result==NFD_ERROR){
@@ -392,7 +395,7 @@ void Editor::OnImGuiUpdate(){
             
             YAML::Node data;
             try{
-                data=YAML::LoadFile(m_CurrentPath+"/resources/scenes/"+path);
+                data=YAML::LoadFile(m_CWD+"/resources/scenes/"+path);
             }catch(...){
                 continue;
             }
@@ -414,7 +417,7 @@ void Editor::OnImGuiUpdate(){
             m_AllScriptComponents.push_back(script_components);
         }
 
-        SceneButtons::PlayButton(m_CurrentPath,m_EditorPath,m_ScenesPaths,m_AllScriptComponents);
+        SceneButtons::PlayButton(m_CWD,m_EditorPath,m_ScenesPaths,m_AllScriptComponents);
     }
 
     Vec2 cameraPos=m_Scene->GetCamera().GetPosition();
@@ -566,7 +569,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
             if(ImGui::Button("Reload Texture")){
                 Texture *t=texture_component->m_Texture.get();
 
-                texture_component->m_Texture=TEXTURES_MANAGER->UpdateTexture(t->m_TexID,m_CurrentPath+"/resources/textures/"+t->m_FilePath,t->m_MagFilter,t->m_MinFilter).second;   
+                texture_component->m_Texture=TEXTURES_MANAGER->UpdateTexture(t->m_TexID,m_CWD+"/resources/textures/"+t->m_FilePath,t->m_MagFilter,t->m_MinFilter).second;   
             }
 
             ImGui::InputText("Path",&texture_component->m_Texture.get()->m_FilePath[texture_component->m_Texture.get()->m_FilePath.find_last_of('/')+1],texture_component->m_Texture.get()->m_FilePath.size());
@@ -623,7 +626,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
             if(ImGui::Button("Reload Texture")){
                 SpriteSheet *s=animated_texture_component->m_AnimatedTexture.get();
 
-                animated_texture_component->m_AnimatedTexture=TEXTURES_MANAGER->UpdateSpriteSheet(s->m_TexID,m_CurrentPath+"/resources/textures/"+s->m_FilePath,s->m_TileWidth,s->m_TileHeight,s->m_MagFilter,s->m_MinFilter).second;   
+                animated_texture_component->m_AnimatedTexture=TEXTURES_MANAGER->UpdateSpriteSheet(s->m_TexID,m_CWD+"/resources/textures/"+s->m_FilePath,s->m_TileWidth,s->m_TileHeight,s->m_MagFilter,s->m_MinFilter).second;   
             }
 
             ImGui::InputText("Path",&animated_texture_component->m_AnimatedTexture.get()->m_FilePath[animated_texture_component->m_AnimatedTexture.get()->m_FilePath.find_last_of('/')+1],animated_texture_component->m_AnimatedTexture.get()->m_FilePath.size());
@@ -876,7 +879,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
 
             if(ImGui::Button("Reload Font")){
                 TextRenderer *t=text_component->m_TextRenderer.get();
-                text_component->m_TextRenderer=FONT_MANAGER->UpdateFont(t->m_ID,m_CurrentPath+"/resources/fonts/"+t->m_FontPath,t->m_GlyphSize,t->m_Fixed).second;
+                text_component->m_TextRenderer=FONT_MANAGER->UpdateFont(t->m_ID,m_CWD+"/resources/fonts/"+t->m_FontPath,t->m_GlyphSize,t->m_Fixed).second;
             }
 
             ImGui::InputTextMultiline("Text",&text_component->m_Text[0],text_component->m_Text.size());
@@ -1217,7 +1220,7 @@ void Editor::ScenesWindow(bool *open){
                     m_Scene=new Scene(m_ScenesPaths[i]);
                     m_SceneSerializer->SetScene(m_Scene);
                     m_ScriptComponents.clear();
-                    m_SceneSerializer->Deserialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[i],m_ScriptComponents);
+                    m_SceneSerializer->Deserialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[i],m_ScriptComponents);
                 }
                 m_SelectedScene=i;
             }
@@ -1363,7 +1366,7 @@ void Editor::DeserializeProject(){
     m_Scene=new Scene;
     m_SceneSerializer->SetScene(m_Scene);
     m_ScriptComponents.clear();
-    m_SceneSerializer->Deserialize(m_CurrentPath+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+    m_SceneSerializer->Deserialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
 
     RENDERER->ReloadShaders();
 

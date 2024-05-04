@@ -538,8 +538,8 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 std::string filepath=path+"/textures/"+texturecomponent["Filepath"].as<std::string>();
                 int magfilter=texturecomponent["MagFilter"].as<int>();
                 int minfilter=texturecomponent["MinFilter"].as<int>();
-                int width=texturecomponent["Width"].as<int>();
-                int height=texturecomponent["Height"].as<int>();
+                float width=texturecomponent["Width"].as<float>();
+                float height=texturecomponent["Height"].as<float>();
                 int layer=texturecomponent["Layer"].as<int>();
                 bool visible=texturecomponent["Visible"].as<bool>();
                 bool flipx=texturecomponent["FlipX"].as<bool>();
@@ -561,8 +561,8 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 float animationdelay=animatedtexturecomponent["AnimationDelay"].as<float>();
                 int animationrow=animatedtexturecomponent["AnimationRow"].as<int>();
                 int animationindex=animatedtexturecomponent["AnimationIndex"].as<int>();
-                int width=animatedtexturecomponent["Width"].as<float>();
-                int height=animatedtexturecomponent["Height"].as<float>();
+                float width=animatedtexturecomponent["Width"].as<float>();
+                float height=animatedtexturecomponent["Height"].as<float>();
                 int layer=animatedtexturecomponent["Layer"].as<int>();
                 bool visible=animatedtexturecomponent["Visible"].as<bool>();
                 bool flipx=animatedtexturecomponent["FlipX"].as<bool>();

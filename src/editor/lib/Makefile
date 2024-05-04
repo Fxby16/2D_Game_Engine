@@ -93,7 +93,6 @@ GENERATED += $(OBJDIR)/sceneserializer.o
 GENERATED += $(OBJDIR)/shader.o
 GENERATED += $(OBJDIR)/stb_image.o
 GENERATED += $(OBJDIR)/structs.o
-GENERATED += $(OBJDIR)/test.o
 GENERATED += $(OBJDIR)/textqueue.o
 GENERATED += $(OBJDIR)/textrenderer.o
 GENERATED += $(OBJDIR)/texture.o
@@ -125,7 +124,6 @@ OBJECTS += $(OBJDIR)/sceneserializer.o
 OBJECTS += $(OBJDIR)/shader.o
 OBJECTS += $(OBJDIR)/stb_image.o
 OBJECTS += $(OBJDIR)/structs.o
-OBJECTS += $(OBJDIR)/test.o
 OBJECTS += $(OBJDIR)/textqueue.o
 OBJECTS += $(OBJDIR)/textrenderer.o
 OBJECTS += $(OBJDIR)/texture.o
@@ -277,9 +275,6 @@ $(OBJDIR)/glad.o: ../../vendor/glad/src/glad.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) -include $(PCH_PLACEHOLDER) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/application_template.o: ../application/application_template.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/test.o: ../resources/scripts/test.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/gizmo.o: ../src/gizmo.cpp
