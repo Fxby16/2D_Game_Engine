@@ -79,6 +79,7 @@ GENERATED += $(OBJDIR)/entity.o
 GENERATED += $(OBJDIR)/entrypoint.o
 GENERATED += $(OBJDIR)/fontmanager.o
 GENERATED += $(OBJDIR)/framebuffer.o
+GENERATED += $(OBJDIR)/generate_ground.o
 GENERATED += $(OBJDIR)/gizmo.o
 GENERATED += $(OBJDIR)/glad.o
 GENERATED += $(OBJDIR)/glfw.o
@@ -110,6 +111,7 @@ OBJECTS += $(OBJDIR)/entity.o
 OBJECTS += $(OBJDIR)/entrypoint.o
 OBJECTS += $(OBJDIR)/fontmanager.o
 OBJECTS += $(OBJDIR)/framebuffer.o
+OBJECTS += $(OBJDIR)/generate_ground.o
 OBJECTS += $(OBJDIR)/gizmo.o
 OBJECTS += $(OBJDIR)/glad.o
 OBJECTS += $(OBJDIR)/glfw.o
@@ -275,6 +277,9 @@ $(OBJDIR)/glad.o: ../../vendor/glad/src/glad.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) -include $(PCH_PLACEHOLDER) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/application_template.o: ../application/application_template.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/generate_ground.o: ../resources/scripts/generate_ground.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/gizmo.o: ../src/gizmo.cpp

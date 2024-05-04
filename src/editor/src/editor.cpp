@@ -92,10 +92,6 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
 }
 
 Editor::~Editor(){
-    SerializeProject();
-    if(m_SelectedScene!=-1){
-        m_SceneSerializer->Serialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
-    }
     delete m_Scene;
     delete m_SceneFramebuffer;
     RENDERER->ImGui_Close();
@@ -190,6 +186,7 @@ void Editor::DrawGrid(){
 
 void Editor::OnSceneRender(){
     m_Scene->Render();
+    RENDERER->Render();
 }
 
 void Editor::HighlightEntity(uint32_t uid){

@@ -19,7 +19,7 @@ extern void AfterUpdate(double frame_time,Application *app);
 extern void OnCreate(Application *app);
 extern void OnDestroy(Application *app);
 
-static SceneSerializer sceneserializer;
+SceneSerializer sceneserializer;
 
 class ApplicationTemplate : public Application{
 public:
