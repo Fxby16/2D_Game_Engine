@@ -28,7 +28,6 @@ public:
     /**
      * Set the gravity for the scene (m/s^2). 
      * Should be called after OnPhysicsStart(). 
-     * Default value is (0,-0.3). 
      * Adjust the gravity according to the scaling factor. 
     */
     void SetGravity(float x,float y);
@@ -36,7 +35,6 @@ public:
     /**
      * Set the gravity for the scene (m/s^2). 
      * Should be called after OnPhysicsStart(). 
-     * Default value is (0,-0.3). 
      * Adjust the gravity according to the scaling factor. 
     */
     void SetGravity(Vec2 gravity);
