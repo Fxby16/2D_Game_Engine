@@ -336,6 +336,13 @@ void Editor::OnImGuiUpdate(){
             if(ImGui::MenuItem("Reload Shaders")){
                 RENDERER->ReloadShaders();
             }
+            if(ImGui::MenuItem("Reload Scene")){
+                m_ScriptComponents.clear();
+                m_SceneSerializer->Deserialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
+            }
+            if(ImGui::MenuItem("Reload Project")){
+                DeserializeProject();
+            }
             ImGui::EndMenu();
         }
         if(ImGui::BeginMenu("Effects")){
@@ -436,6 +443,12 @@ void Editor::EntitiesMenu(ImVec2 pos){
     ImGui::SetWindowPos(pos);
     ImGui::SetWindowSize(ImVec2(GetWidthPercentageInPx(20),(Window::Height-pos.y)/2.0f));
 
+    if(ImGui::Button("Create Entity")){
+        m_Scene->AddEntity();
+    }
+
+    ImGui::BeginChild("EntitiesList",ImVec2(0,0),true,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoTitleBar);
+
     std::unordered_map<uint32_t,std::set<uint32_t>> &hierarchy=m_Scene->GetHierarchy();
     int k=0;
 
@@ -522,6 +535,7 @@ void Editor::EntitiesMenu(ImVec2 pos){
         ImGui::EndPopup();
     }
 
+    ImGui::EndChild();
     ImGui::End();
 }
 
@@ -535,8 +549,8 @@ void Editor::ComponentsMenu(ImVec2 pos){
         ImGui::Text("Entity: %s",(m_Scene->GetComponent<TagComponent>(m_SelectedEntity))?m_Scene->GetComponent<TagComponent>(m_SelectedEntity)->m_Tag.c_str():"");
         ImGui::Text("UID: %d",m_SelectedEntity);
         if(e->m_Parent==std::numeric_limits<uint32_t>::max()){
-            ImGui::SliderFloat("X",&e->m_X,-30.0f,30.0f);
-            ImGui::SliderFloat("Y",&e->m_Y,-30.0f,30.0f);
+            ImGui::InputFloat("X",&e->m_X,-30.0f,30.0f);
+            ImGui::InputFloat("Y",&e->m_Y,-30.0f,30.0f);
             e->m_PreviousX=e->m_X;
             e->m_PreviousY=e->m_Y;
         }
@@ -1364,8 +1378,6 @@ void Editor::DeserializeProject(){
     m_SceneSerializer->SetScene(m_Scene);
     m_ScriptComponents.clear();
     m_SceneSerializer->Deserialize(m_CWD+"/resources/scenes/"+m_ScenesPaths[m_SelectedScene],m_ScriptComponents);
-
-    RENDERER->ReloadShaders();
 
     }catch(...){
         printf("Failed to deserialize project file %s\n",m_ProjectPath.c_str());

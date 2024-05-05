@@ -71,15 +71,16 @@ void SceneButtons::PlayButton(const std::string &path,const std::string &editor_
     if(isApplicationRunning.load()){ //application is already running, return
         return;
     }
+
     
     isApplicationRunning.store(true);
-    applicationThread=std::thread([&path,&editor_path,&isApplicationRunning,&scene_names,&script_components](){ //run the application in another thread
-        ExecuteCommand("mkdir -p temp");
+    applicationThread=std::thread([&path,&editor_path,&isApplicationRunning,&script_components,&scene_names](){ //run the application in another thread
         GenerateApplication(editor_path,scene_names,script_components,WINDOW_NAME,WINDOW_WIDTH,WINDOW_HEIGHT,FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT,
             SCENE_PATH,RENDERER->GetTonemapType(),RENDERER->GetGamma(),RENDERER->GetExposure(),RESIZABLE);
-        printf("%s\n",ExecuteCommand("cd application && premake5 gmake2 --file=application_premake.lua").c_str());
         ExecuteCommand("rm -r resources/scripts/"); //remove all the previous scripts
         ExecuteCommand("cp -r "+path+"/resources/scripts resources/scripts/"); //get all the scripts from the project
+        printf("%s\n",ExecuteCommand("cd application && premake5 gmake2 --file=application_premake.lua").c_str());
+        ExecuteCommand("mkdir -p temp");
         #if defined(RELEASE)
             printf("%s\n",ExecuteCommand("cd lib && make config=release").c_str()); //compile the engine
             printf("%s\n",ExecuteCommand("cd temp && make config=release").c_str()); //compile the application
