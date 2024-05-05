@@ -7,7 +7,6 @@ Engine:
 - particle system
 --------------------------------------------------------------------------------------------------------------------
 Editor:
-- check scripts recompilation since it's not working
 - project export
 - tilemap editor
 - camera (zoom)
