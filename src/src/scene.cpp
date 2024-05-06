@@ -279,7 +279,9 @@ void Scene::RemoveComponent<LightComponent>(uint32_t uid){
 template<>
 void Scene::RemoveComponent<RigidbodyComponent>(uint32_t uid){
     PROFILE_FUNCTION();
-    
+    m_BoxColliderComponents.RemoveComponent(uid);
+    m_CircleColliderComponents.RemoveComponent(uid);
+
     m_RigidbodyComponents.RemoveComponent(uid);
 }
 

@@ -87,6 +87,7 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     m_HdrOpen=false;
     m_ScenesOpen=false;
     m_GridOpen=false;
+    m_CameraOpen=false;
 
     m_SelectedScene=-1;
 }
@@ -359,6 +360,10 @@ void Editor::OnImGuiUpdate(){
             m_GridOpen=true;
             ImGui::EndMenu();
         }
+        if(ImGui::BeginMenu("Camera")){
+            m_CameraOpen=true;
+            ImGui::EndMenu();
+        }
         ImGui::EndMainMenuBar();
         if(m_HdrOpen){
             HdrWindow(&m_HdrOpen);
@@ -368,6 +373,9 @@ void Editor::OnImGuiUpdate(){
         }
         if(m_GridOpen){
             GridWindow(&m_GridOpen);
+        }
+        if(m_CameraOpen){
+            CameraWindow(&m_CameraOpen);
         }
     }
 
@@ -496,16 +504,12 @@ void Editor::EntitiesMenu(ImVec2 pos){
         ImGui::OpenPopupOnItemClick("EntityPopup",ImGuiPopupFlags_MouseButtonRight);
         if(ImGui::BeginPopupContextItem("EntityPopup")){
             if(ImGui::MenuItem("Duplicate Entity")){
-                m_Scene->DuplicateEntity(uid);
-                std::string function_name;
-                for(auto &[name,id]:m_ScriptComponents){
-                    if(id==uid){
-                        function_name=name;
-                        break;
+                uint32_t new_entity=m_Scene->DuplicateEntity(uid);
+
+                for(auto &[fn_name,e_uid]:m_ScriptComponents){
+                    if(e_uid==uid){
+                        m_ScriptComponents.push_back({fn_name,new_entity});
                     }
-                }
-                if(!function_name.empty()){
-                    m_ScriptComponents.push_back({function_name,uid});
                 }
             }
             if(ImGui::MenuItem("Remove Entity")){
@@ -614,9 +618,9 @@ void Editor::ComponentsMenu(ImVec2 pos){
                 texture_component->m_Texture.get()->m_MinFilter=GL_NEAREST;
             }
 
-            ImGui::SliderFloat("Width",&texture_component->m_Width,0.0f,30.0f);
-            ImGui::SliderFloat("Height",&texture_component->m_Height,0.0f,30.0f);
-            ImGui::SliderInt("Layer",&texture_component->m_Layer,-100,100);
+            ImGui::InputFloat("Width",&texture_component->m_Width,0.0f,30.0f);
+            ImGui::InputFloat("Height",&texture_component->m_Height,0.0f,30.0f);
+            ImGui::InputInt("Layer",&texture_component->m_Layer,-100,100);
             ImGui::Checkbox("Visible",&texture_component->m_Visible);
             ImGui::Checkbox("FlipX",&texture_component->m_FlipX);
             ImGui::Checkbox("FlipY",&texture_component->m_FlipY);
@@ -671,20 +675,20 @@ void Editor::ComponentsMenu(ImVec2 pos){
                 animated_texture_component->m_AnimatedTexture.get()->m_MinFilter=GL_NEAREST;
             }
 
-            ImGui::SliderInt("Tile Width",(int*)&animated_texture_component->m_AnimatedTexture.get()->m_TileWidth,0,500);
-            ImGui::SliderInt("Tile Height",(int*)&animated_texture_component->m_AnimatedTexture.get()->m_TileHeight,0,500);
+            ImGui::InputInt("Tile Width",(int*)&animated_texture_component->m_AnimatedTexture.get()->m_TileWidth,0,500);
+            ImGui::InputInt("Tile Height",(int*)&animated_texture_component->m_AnimatedTexture.get()->m_TileHeight,0,500);
 
-            ImGui::SliderFloat("Width",&animated_texture_component->m_Width,0.0f,30.0f);
-            ImGui::SliderFloat("Height",&animated_texture_component->m_Height,0.0f,30.0f);
-            ImGui::SliderInt("Layer",&animated_texture_component->m_Layer,-100,100);
+            ImGui::InputFloat("Width",&animated_texture_component->m_Width,0.0f,30.0f);
+            ImGui::InputFloat("Height",&animated_texture_component->m_Height,0.0f,30.0f);
+            ImGui::InputInt("Layer",&animated_texture_component->m_Layer,-100,100);
             ImGui::Checkbox("Visible",&animated_texture_component->m_Visible);
 
             SpriteSheet *s=animated_texture_component->m_AnimatedTexture.get();
             ImGui::Checkbox("Play Animation",&animated_texture_component->m_PlayAnimation);
             ImGui::Checkbox("Loop Animation",&animated_texture_component->m_LoopAnimation);
-            ImGui::SliderFloat("Animation Delay",&animated_texture_component->m_AnimationDelay,0.0f,10.0f);
-            ImGui::SliderInt("Animation Row",&animated_texture_component->m_AnimationRow,0,ceil(((float)s->m_Height)/((float)s->m_TileHeight))-1);
-            ImGui::SliderInt("Animation Index",&animated_texture_component->m_AnimationIndex,0,ceil(((float)s->m_Width)/((float)s->m_TileWidth))-1);
+            ImGui::InputFloat("Animation Delay",&animated_texture_component->m_AnimationDelay,0.0f,10.0f);
+            ImGui::InputInt("Animation Row",&animated_texture_component->m_AnimationRow,0,ceil(((float)s->m_Height)/((float)s->m_TileHeight))-1);
+            ImGui::InputInt("Animation Index",&animated_texture_component->m_AnimationIndex,0,ceil(((float)s->m_Width)/((float)s->m_TileWidth))-1);
             ImGui::Checkbox("FlipX",&animated_texture_component->m_FlipX);
             ImGui::Checkbox("FlipY",&animated_texture_component->m_FlipY);
 
@@ -747,20 +751,20 @@ void Editor::ComponentsMenu(ImVec2 pos){
     BoxColliderComponent *box_collider_component=m_Scene->GetComponent<BoxColliderComponent>(m_SelectedEntity);
     if(box_collider_component){
         if(StartNode("BoxColliderComponent")){
-            ImGui::SliderFloat("X Offset",&box_collider_component->m_XOffset,-30.0f,30.0f);
-            ImGui::SliderFloat("Y Offset",&box_collider_component->m_YOffset,-30.0f,30.0f);
-            ImGui::SliderFloat("Width",&box_collider_component->m_Width,0.0f,30.0f);
-            ImGui::SliderFloat("Height",&box_collider_component->m_Height,0.0f,30.0f);
-            ImGui::SliderFloat("Density",&box_collider_component->m_Density,0.0f,10.0f);
-            ImGui::SliderFloat("Friction",&box_collider_component->m_Friction,0.0f,10.0f);
-            ImGui::SliderFloat("Restitution",&box_collider_component->m_Restitution,0.0f,10.0f);
-            ImGui::SliderFloat("Restitution Threshold",&box_collider_component->m_RestitutionThreshold,0.0f,10.0f);
+            ImGui::InputFloat("X Offset",&box_collider_component->m_XOffset,-30.0f,30.0f);
+            ImGui::InputFloat("Y Offset",&box_collider_component->m_YOffset,-30.0f,30.0f);
+            ImGui::InputFloat("Width",&box_collider_component->m_Width,0.0f,30.0f);
+            ImGui::InputFloat("Height",&box_collider_component->m_Height,0.0f,30.0f);
+            ImGui::InputFloat("Density",&box_collider_component->m_Density,0.0f,10.0f);
+            ImGui::InputFloat("Friction",&box_collider_component->m_Friction,0.0f,10.0f);
+            ImGui::InputFloat("Restitution",&box_collider_component->m_Restitution,0.0f,10.0f);
+            ImGui::InputFloat("Restitution Threshold",&box_collider_component->m_RestitutionThreshold,0.0f,10.0f);
 
             int categoryBits=box_collider_component->m_CategoryBits;
             int maskBits=box_collider_component->m_MaskBits;
 
-            ImGui::SliderInt("Category Bits",&categoryBits,0,65535);
-            ImGui::SliderInt("Mask Bits",&maskBits,0,65535);
+            ImGui::InputInt("Category Bits",&categoryBits,0,65535);
+            ImGui::InputInt("Mask Bits",&maskBits,0,65535);
 
             box_collider_component->m_CategoryBits=static_cast<uint16_t>(categoryBits);
             box_collider_component->m_MaskBits=static_cast<uint16_t>(maskBits);
@@ -781,19 +785,19 @@ void Editor::ComponentsMenu(ImVec2 pos){
     CircleColliderComponent *circle_collider_component=m_Scene->GetComponent<CircleColliderComponent>(m_SelectedEntity);
     if(circle_collider_component){
         if(StartNode("CircleColliderComponent")){
-            ImGui::SliderFloat("X Offset",&circle_collider_component->m_XOffset,-30.0f,30.0f);
-            ImGui::SliderFloat("Y Offset",&circle_collider_component->m_YOffset,-30.0f,30.0f);
-            ImGui::SliderFloat("Radius",&circle_collider_component->m_Radius,0.0f,30.0f);
-            ImGui::SliderFloat("Density",&circle_collider_component->m_Density,0.0f,10.0f);
-            ImGui::SliderFloat("Friction",&circle_collider_component->m_Friction,0.0f,10.0f);
-            ImGui::SliderFloat("Restitution",&circle_collider_component->m_Restitution,0.0f,10.0f);
-            ImGui::SliderFloat("Restitution Threshold",&circle_collider_component->m_RestitutionThreshold,0.0f,10.0f);
+            ImGui::InputFloat("X Offset",&circle_collider_component->m_XOffset,-30.0f,30.0f);
+            ImGui::InputFloat("Y Offset",&circle_collider_component->m_YOffset,-30.0f,30.0f);
+            ImGui::InputFloat("Radius",&circle_collider_component->m_Radius,0.0f,30.0f);
+            ImGui::InputFloat("Density",&circle_collider_component->m_Density,0.0f,10.0f);
+            ImGui::InputFloat("Friction",&circle_collider_component->m_Friction,0.0f,10.0f);
+            ImGui::InputFloat("Restitution",&circle_collider_component->m_Restitution,0.0f,10.0f);
+            ImGui::InputFloat("Restitution Threshold",&circle_collider_component->m_RestitutionThreshold,0.0f,10.0f);
             
             int categoryBits=circle_collider_component->m_CategoryBits;
             int maskBits=circle_collider_component->m_MaskBits;
             
-            ImGui::SliderInt("Category Bits",&categoryBits,0,65535);
-            ImGui::SliderInt("Mask Bits",&maskBits,0,65535);
+            ImGui::InputInt("Category Bits",&categoryBits,0,65535);
+            ImGui::InputInt("Mask Bits",&maskBits,0,65535);
 
             circle_collider_component->m_CategoryBits=static_cast<uint16_t>(categoryBits);
             circle_collider_component->m_MaskBits=static_cast<uint16_t>(maskBits);  
@@ -814,10 +818,10 @@ void Editor::ComponentsMenu(ImVec2 pos){
     LightComponent *light_component=m_Scene->GetComponent<LightComponent>(m_SelectedEntity);
     if(light_component){
         if(StartNode("LightComponent")){
-            ImGui::SliderFloat("X Offset",&light_component->m_XOffset,-30.0f,30.0f);
-            ImGui::SliderFloat("Y Offset",&light_component->m_YOffset,-30.0f,30.0f);
-            ImGui::SliderFloat("Radius",&light_component->m_Radius,0.0f,30.0f);
-            ImGui::SliderFloat("Blur",&light_component->m_Blur,0.0f,1.0f);
+            ImGui::InputFloat("X Offset",&light_component->m_XOffset,-30.0f,30.0f);
+            ImGui::InputFloat("Y Offset",&light_component->m_YOffset,-30.0f,30.0f);
+            ImGui::InputFloat("Radius",&light_component->m_Radius,0.0f,30.0f);
+            ImGui::InputFloat("Blur",&light_component->m_Blur,0.0f,1.0f);
             ImGui::ColorEdit3("Color",&light_component->m_Color.r);
 
             const char *lightTypes[]={"All Light","Spot Light","Spot Light (Collisions on)"};
@@ -877,7 +881,7 @@ void Editor::ComponentsMenu(ImVec2 pos){
             size_t pos=text_component->m_TextRenderer->m_FontPath.find("fonts/");
 
             ImGui::InputText("Font Path",&text_component->m_TextRenderer->m_FontPath[pos],text_component->m_TextRenderer->m_FontPath.size());
-            ImGui::SliderFloat("Font Size",&text_component->m_TextRenderer->m_GlyphSize,0,256);
+            ImGui::InputFloat("Font Size",&text_component->m_TextRenderer->m_GlyphSize,0,256);
             if(ImGui::Checkbox("Fixed Position",&text_component->m_TextRenderer->m_Fixed)){
                 glm::mat4 mat;
                 if(text_component->m_TextRenderer->m_Fixed){
@@ -894,8 +898,8 @@ void Editor::ComponentsMenu(ImVec2 pos){
             }
 
             ImGui::InputTextMultiline("Text",&text_component->m_Text[0],text_component->m_Text.size());
-            ImGui::SliderFloat("X Offset",&text_component->m_Offset.x,-10.0f,10.0f);
-            ImGui::SliderFloat("Y Offset",&text_component->m_Offset.y,-10.0f,10.0f);
+            ImGui::InputFloat("X Offset",&text_component->m_Offset.x,-10.0f,10.0f);
+            ImGui::InputFloat("Y Offset",&text_component->m_Offset.y,-10.0f,10.0f);
             if(ImGui::Button("Center Text")){
                 TextureComponent *texture_component=m_Scene->GetComponent<TextureComponent>(m_SelectedEntity);
                 if(texture_component){
@@ -907,11 +911,11 @@ void Editor::ComponentsMenu(ImVec2 pos){
                     }
                 }
             }
-            ImGui::SliderFloat("Scale",&text_component->m_Scale,0.0f,10.0f);
+            ImGui::InputFloat("Scale",&text_component->m_Scale,0.0f,10.0f);
             ImGui::ColorEdit3("Color",&text_component->m_Color.r);
             ImGui::Checkbox("Ignore Lighting",&text_component->m_IgnoreLighting);
             if(!text_component->m_IgnoreLighting){
-                ImGui::SliderInt("Layer",&text_component->m_Layer,-100,100);
+                ImGui::InputInt("Layer",&text_component->m_Layer,-100,100);
             }
             ImGui::TreePop();
         }
@@ -1199,11 +1203,11 @@ void Editor::HdrWindow(bool *open){
         update=true;
     }
 
-    if(ImGui::SliderFloat("Gamma",&RENDERER->m_Gamma,0.0f,10.0f)){
+    if(ImGui::InputFloat("Gamma",&RENDERER->m_Gamma,0.0f,10.0f)){
         update=true;
     }
 
-    if(ImGui::SliderFloat("Exposure",&RENDERER->m_Exposure,0.0f,10.0f)){
+    if(ImGui::InputFloat("Exposure",&RENDERER->m_Exposure,0.0f,10.0f)){
         update=true;
     }
 
@@ -1282,9 +1286,23 @@ void Editor::GridWindow(bool *open){
     ImGui::Begin("Grid",open,ImGuiWindowFlags_NoCollapse);
 
     ImGui::Checkbox("Show Grid",&m_ShowGrid);
-    ImGui::SliderFloat("Cell Size",&m_CellSize,0.001,10);
+    ImGui::InputFloat("Cell Size",&m_CellSize,0.001,10);
     ImGui::Checkbox("Snap to Grid",&m_SnapEnabled);
     ImGui::ColorEdit4("Grid Color",(float*)&m_GridColor);
+
+    ImGui::End();
+}
+
+void Editor::CameraWindow(bool *open){
+    ImGui::SetNextWindowSize(ImVec2(0,0));
+    ImGui::Begin("Camera",open,ImGuiWindowFlags_NoCollapse);
+
+    m_CameraPos=m_Scene->GetCamera().GetPosition();
+
+    ImGui::InputFloat("Camera X",&m_CameraPos.x);
+    ImGui::InputFloat("Camera Y",&m_CameraPos.y);
+
+    m_ChangedCamera=true;
 
     ImGui::End();
 }
@@ -1405,5 +1423,10 @@ void Editor::HandleInputs(){
 
     if((!wheel.current && wheel.previous) || (!left_alt.current && left_alt.previous)){
         m_WheelPressed=false;
+    }
+
+    if(m_ChangedCamera){
+        m_ChangedCamera=false;
+        m_Scene->GetCamera().SetPosition(m_CameraPos);
     }
 }

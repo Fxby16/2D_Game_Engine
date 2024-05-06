@@ -37,6 +37,7 @@ private:
     void HdrWindow(bool *open);
     void ScenesWindow(bool *open);
     void GridWindow(bool *open);
+    void CameraWindow(bool *open);
 
     void DrawGrid();
 
@@ -68,6 +69,10 @@ private:
     bool m_HdrOpen;
     bool m_ScenesOpen;
     bool m_GridOpen;
+    bool m_CameraOpen;
+
+    Vec2 m_CameraPos;
+    bool m_ChangedCamera=false;
 
     Vec2 m_ScenePos;
     Vec2 m_SceneSize;
