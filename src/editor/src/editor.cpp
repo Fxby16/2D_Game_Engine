@@ -132,6 +132,7 @@ void Editor::Run(){
             if(e->m_Parent==std::numeric_limits<uint32_t>::max()){
                 glm::mat4 matrix=glm::translate(glm::mat4(1.0f),glm::vec3(e->m_X,e->m_Y,0.0f));
                 m_Gizmo.Manipulate(matrix,m_Scene->GetCamera().GetViewMatrix(),m_Scene->GetCamera().GetProjMatrix());
+                
                 e->m_X=matrix[3][0];
                 e->m_Y=matrix[3][1];
 
