@@ -57,6 +57,8 @@ private:
     std::string m_ProjectPath;
     std::string m_CWD;
 
+    std::string m_SearchBarText;
+
     uint32_t m_SelectedEntity=std::numeric_limits<uint32_t>::max();
 
     std::string m_CurrentPath=std::filesystem::current_path().string();

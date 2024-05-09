@@ -39,12 +39,12 @@ class ContactListener : public b2ContactListener{
         Entity *entity_a=scene->GetEntity(uid_a);
         Entity *entity_b=scene->GetEntity(uid_b);
 
-        if(uid_a->m_Group==UNDER_MAP_GROUP){
+        if(entity_a->m_Group==UNDER_MAP_GROUP){
             entities_to_destroy.push(uid_a);
             return;
         }
 
-        if(uid_b->m_Group==UNDER_MAP_GROUP){
+        if(entity_b->m_Group==UNDER_MAP_GROUP){
             entities_to_destroy.push(uid_b);
             return;
         }
@@ -201,10 +201,10 @@ void MarioUpdate(Scene *scene,NativeScriptComponent *nsc,float frame_time){
         rb->m_RuntimeBody->ApplyLinearImpulseToCenter(b2Vec2(impulse.x,0.0f),true);
     }
 
-    //scene->GetCamera().SetPosition({std::clamp(e->m_X-5.0f+atc->m_Width/2.0f,0.0f,MAP_WIDTH-Window::MAX_WIDTH),scene->GetCamera().GetPosition().y});
+    scene->GetCamera().SetPosition({std::clamp(e->m_X-5.0f+atc->m_Width/2.0f,0.0f,MAP_WIDTH-Window::MAX_WIDTH),scene->GetCamera().GetPosition().y});
     
     //for debugging. to remove later
-    static float camera_x=48.0f;
+    /*static float camera_x=48.0f;
     
     scene->GetCamera().SetPosition({camera_x,scene->GetCamera().GetPosition().y});
 
@@ -213,7 +213,7 @@ void MarioUpdate(Scene *scene,NativeScriptComponent *nsc,float frame_time){
     }
     if(INPUT->GetKey(KEY_RIGHT).current==BUTTON_DOWN){
         camera_x+=0.1f;
-    }
+    }*/
 }
 
 void GoombaUpdate(Scene *scene,NativeScriptComponent *nsc,float frame_time){

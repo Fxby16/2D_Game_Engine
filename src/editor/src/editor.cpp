@@ -90,6 +90,8 @@ Editor::Editor(unsigned int width,unsigned int height,float fullscreen_width,flo
     m_CameraOpen=false;
 
     m_SelectedScene=-1;
+
+    m_SearchBarText.resize(STRLEN,'\0');
 }
 
 Editor::~Editor(){
@@ -456,6 +458,8 @@ void Editor::EntitiesMenu(ImVec2 pos){
         m_Scene->AddEntity();
     }
 
+    ImGui::InputText("Search",&m_SearchBarText[0],m_SearchBarText.size());
+
     ImGui::BeginChild("EntitiesList",ImVec2(0,0),true,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoTitleBar);
 
     std::unordered_map<uint32_t,std::set<uint32_t>> &hierarchy=m_Scene->GetHierarchy();
@@ -477,20 +481,56 @@ void Editor::EntitiesMenu(ImVec2 pos){
         }
 
         Entity *e=m_Scene->GetEntity(uid);
+        TagComponent *tc=nullptr;
+
+        if(e){
+            tc=m_Scene->GetComponent<TagComponent>(uid);
+        }
+
+        bool skip=false;
+
+        if(tc){
+            if(strlen(m_SearchBarText.c_str())>strlen(tc->m_Tag.c_str())){
+                continue;
+            }else{
+                for(int i=0;i<strlen(m_SearchBarText.c_str());i++){
+                    if(m_SearchBarText[i]!=tc->m_Tag[i]){
+                        skip=true;
+                        break;
+                    }    
+                }
+            }
+        }else{
+            std::string name="Entity "+std::to_string(k);
+            if(strlen(m_SearchBarText.c_str())>strlen(name.c_str())){
+                continue;
+            }else{
+                for(int i=0;i<strlen(m_SearchBarText.c_str());i++){
+                    if(m_SearchBarText[i]!=name[i]){
+                        skip=true;
+                        break;
+                    }    
+                }
+            }
+        }
 
         if(prefix=="" && e->m_Parent!=std::numeric_limits<uint32_t>::max()){
             continue;
         }
 
         std::string name;
-        if(m_Scene->GetComponent<TagComponent>(e->m_UID)!=nullptr){
-            name=prefix+m_Scene->GetComponent<TagComponent>(e->m_UID)->m_Tag;
+        if(tc!=nullptr){
+            name=prefix+tc->m_Tag;
         }else{
             name=prefix+"Entity "+std::to_string(k);
         }
 
         for(auto &derived:hierarchy[uid]){
             s.push({derived,prefix+"  "});
+        }
+
+        if(skip){
+            continue;
         }
 
         ImGui::PushID(k);

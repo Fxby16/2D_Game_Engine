@@ -120,10 +120,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         TagComponent *tagcomponent=scene->GetComponent<TagComponent>(entity.m_UID);
 
-        std::string tag=tagcomponent->m_Tag;
-        tag.erase(std::remove(tag.begin(),tag.end(),'\0'),tag.end());
-
-        out<<YAML::Key<<"Tag"<<YAML::Value<<tag;
+        out<<YAML::Key<<"Tag"<<YAML::Value<<tagcomponent->m_Tag.c_str();
 
         out<<YAML::EndMap; //tag component
     }
@@ -135,7 +132,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         TextureComponent *texturecomponent=scene->GetComponent<TextureComponent>(entity.m_UID);
 
-        out<<YAML::Key<<"Filepath"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedFilePath.substr(texturecomponent->m_Texture.get()->m_LoadedFilePath.find_last_of("/")+1);
+        out<<YAML::Key<<"Filepath"<<YAML::Value<<(texturecomponent->m_Texture.get()->m_LoadedFilePath.substr(texturecomponent->m_Texture.get()->m_LoadedFilePath.find_last_of("/")+1).c_str());
         out<<YAML::Key<<"MagFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedMagFilter;
         out<<YAML::Key<<"MinFilter"<<YAML::Value<<texturecomponent->m_Texture.get()->m_LoadedMinFilter;
 
@@ -155,7 +152,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
 
         AnimatedTextureComponent *animatedtexturecomponent=scene->GetComponent<AnimatedTextureComponent>(entity.m_UID);
 
-        out<<YAML::Key<<"Filepath"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedFilePath.substr(animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedFilePath.find_last_of("/")+1);
+        out<<YAML::Key<<"Filepath"<<YAML::Value<<(animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedFilePath.substr(animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedFilePath.find_last_of("/")+1).c_str());
         out<<YAML::Key<<"MagFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedMagFilter;
         out<<YAML::Key<<"MinFilter"<<YAML::Value<<animatedtexturecomponent->m_AnimatedTexture.get()->m_LoadedMinFilter;
         
@@ -259,10 +256,10 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
             fontpath=fontpath.substr(pos+strlen("fonts/"));
         }
 
-        out<<YAML::Key<<"FontPath"<<YAML::Value<<fontpath;
+        out<<YAML::Key<<"FontPath"<<YAML::Value<<fontpath.c_str();
         out<<YAML::Key<<"GlyphSize"<<YAML::Value<<textcomponent->m_TextRenderer->m_LoadedGlyphSize*100.0f/Window::Height;
         out<<YAML::Key<<"Fixed"<<YAML::Value<<textcomponent->m_TextRenderer->m_Fixed;
-        out<<YAML::Key<<"Text"<<YAML::Value<<textcomponent->m_Text;
+        out<<YAML::Key<<"Text"<<YAML::Value<<textcomponent->m_Text.c_str();
         out<<YAML::Key<<"Offset"<<YAML::Value<<textcomponent->m_Offset;
         out<<YAML::Key<<"Color"<<YAML::Value<<textcomponent->m_Color;
         out<<YAML::Key<<"Scale"<<YAML::Value<<textcomponent->m_Scale;
@@ -277,7 +274,7 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
             if(!fn_name.empty()){
                 out<<YAML::Key<<"NativeScriptComponent";
                 out<<YAML::BeginMap; //native script component
-                out<<YAML::Key<<"FunctionName"<<YAML::Value<<fn_name;
+                out<<YAML::Key<<"FunctionName"<<YAML::Value<<fn_name.c_str();
                 out<<YAML::EndMap; //native script component
             }
         }
@@ -295,7 +292,7 @@ void SceneSerializer::Serialize(const std::string &path,std::vector<std::pair<st
     printf("Starting serialization of scene file %s\n",path.c_str());
     YAML::Emitter out;
     out<<YAML::BeginMap;
-    out<<YAML::Key<<"Scene"<<YAML::Value<<m_Scene->m_Name;
+    out<<YAML::Key<<"Scene"<<YAML::Value<<m_Scene->m_Name.c_str();
     out<<YAML::Key<<"ScalingFactor"<<YAML::Value<<m_Scene->m_ScalingFactor;
     out<<YAML::Key<<"Gravity"<<YAML::Value<<m_Scene->m_Gravity;
     out<<YAML::Key<<"NextUID"<<YAML::Value<<NEXT_UID;
