@@ -8,9 +8,6 @@ std::pair<uint32_t,std::shared_ptr<Texture>> TexturesManager::GetTexture(const s
 
         if(tex.m_LoadedMagFilter==mag_filter && tex.m_LoadedMinFilter==min_filter && strcmp(tex.m_LoadedFilePath.c_str(),path.c_str())==0){
             texture.copies++;
-            #ifdef DEBUG
-                printf("Returning texture with id %d\n",id);
-            #endif
             return {id,texture.texture};
         }
     }
@@ -19,9 +16,6 @@ std::pair<uint32_t,std::shared_ptr<Texture>> TexturesManager::GetTexture(const s
     std::shared_ptr<Texture> tex=std::make_shared<Texture>(path,mag_filter,min_filter,id);
 
     m_Textures[id]=TextureInfo(tex);
-    #ifdef DEBUG
-        printf("Created texture with id %d\n",id);
-    #endif
     
     return {id,tex};
 }
@@ -42,9 +36,6 @@ std::pair<uint32_t,std::shared_ptr<SpriteSheet>> TexturesManager::GetSpriteSheet
 
         if(tex.m_LoadedMagFilter==mag_filter && tex.m_LoadedMinFilter==min_filter && tex.m_TileWidth==tile_width && tex.m_TileHeight==tile_height && strcmp(tex.m_LoadedFilePath.c_str(),path.c_str())==0){
             texture.copies++;
-            #ifdef DEBUG
-                printf("Returning spritesheet with id %d\n",id);
-            #endif
             return {id,texture.texture};
         }
     }
@@ -53,9 +44,6 @@ std::pair<uint32_t,std::shared_ptr<SpriteSheet>> TexturesManager::GetSpriteSheet
     std::shared_ptr<SpriteSheet> tex=std::make_shared<SpriteSheet>(path,tile_width,tile_height,mag_filter,min_filter,id);
 
     m_SpriteSheets[id]=SpriteSheetInfo(tex);
-    #ifdef DEBUG
-        printf("Created spritesheet with id %d\n",id);
-    #endif
 
     return {id,tex};
 }

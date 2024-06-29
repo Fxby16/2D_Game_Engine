@@ -17,6 +17,7 @@ class CircleColliderComponent;
 class LightComponent;
 class NativeScriptComponent;
 class TextComponent;
+class StaticColliderComponent;
 class Scene;
 
 template<typename T>
@@ -29,7 +30,8 @@ using ComponentType=typename std::enable_if<
     std::is_same<T,CircleColliderComponent>::value ||
     std::is_same<T,LightComponent>::value ||
     std::is_same<T,NativeScriptComponent>::value ||
-    std::is_same<T,TextComponent>::value,
+    std::is_same<T,TextComponent>::value ||
+    std::is_same<T,StaticColliderComponent>::value,
     int>::type;
 
 /**
@@ -262,6 +264,64 @@ public:
     uint32_t m_UID;
 };
 
+//this class is used by the static collider component, so the uid is set by the static collider component
+/*
+    v1.x > v2.x ---> normal is pointing up
+    v1.x < v2.x ---> normal is pointing down
+*/
+class EdgeShape{
+public:
+    EdgeShape()=default;
+    EdgeShape(Vec2 v1,Vec2 v2,uint32_t uid): m_V1(v1),m_V2(v2),m_GhostVertices(0),m_UID(uid){}
+    EdgeShape(Vec2 v0,Vec2 v1,Vec2 v2,Vec2 v3,uint32_t uid): m_V0(v0),m_V1(v1),m_V2(v2),m_V3(v3),m_GhostVertices(3),m_UID(uid){}
+    EdgeShape(Vec2 vk,Vec2 v1,Vec2 v2,bool is_0,uint32_t uid): m_V1(v1),m_V2(v2),m_UID(uid){
+        if(is_0){
+            m_V0=vk;
+            m_GhostVertices=1;
+        }else{
+            m_V3=vk;
+            m_GhostVertices=2;
+        }
+    }
+
+    float m_XOffset=0.0f,m_YOffset=0.0f;
+    float m_Width=0.0f,m_Height=0.0f;
+
+    b2Fixture *m_RuntimeFixture=nullptr;
+    Vec2 m_V0,m_V1,m_V2,m_V3;
+    uint8_t m_GhostVertices=0;
+private:
+    friend class StaticColliderComponent;
+
+    uint32_t m_UID=m_UID=std::numeric_limits<uint32_t>::max();
+};
+
+class StaticColliderComponent{
+public:
+    StaticColliderComponent(){ m_UID=std::numeric_limits<uint32_t>::max(); }
+    StaticColliderComponent(uint32_t uid): m_UID(uid){}
+    StaticColliderComponent(float density,float friction,float restitution,float restitution_threshold,
+        uint16_t category_bits,uint16_t mask_bits,bool is_sensor,uint32_t uid): m_Density(density),
+        m_Friction(friction),m_Restitution(restitution),m_RestitutionThreshold(restitution_threshold),
+        m_CategoryBits(category_bits),m_MaskBits(mask_bits),m_IsSensor(is_sensor),m_UID(uid){}
+    StaticColliderComponent(const std::vector<std::shared_ptr<EdgeShape>> &shapes,float density,float friction,float restitution,float restitution_threshold,
+        uint16_t category_bits,uint16_t mask_bits,bool is_sensor,uint32_t uid): m_Shapes(shapes),m_Density(density),
+        m_Friction(friction),m_Restitution(restitution),m_RestitutionThreshold(restitution_threshold),
+        m_CategoryBits(category_bits),m_MaskBits(mask_bits),m_IsSensor(is_sensor),m_UID(uid){}
+
+    float m_Density=1.0f;
+    float m_Friction=0.0f;
+    float m_Restitution=0.0f;
+    float m_RestitutionThreshold=0.5f;
+    uint16_t m_CategoryBits=1;
+    uint16_t m_MaskBits=0xFFFF;
+    bool m_IsSensor=false;
+
+    uint32_t m_UID;
+
+    std::vector<std::shared_ptr<EdgeShape>> m_Shapes;
+};
+
 class CircleColliderComponent{
 public:
     CircleColliderComponent(){ m_UID=std::numeric_limits<uint32_t>::max(); } 
@@ -408,6 +468,11 @@ public:
                 m_Components[idx].m_RuntimeFixture->GetBody()->DestroyFixture(m_Components[idx].m_RuntimeFixture);
             if constexpr(std::is_same<T,CircleColliderComponent>::value)
                 m_Components[idx].m_RuntimeFixture->GetBody()->DestroyFixture(m_Components[idx].m_RuntimeFixture);
+            if constexpr(std::is_same<T,StaticColliderComponent>::value){
+                for(std::shared_ptr<EdgeShape> &es:m_Components[idx].m_Shapes){
+                    es->m_RuntimeFixture->GetBody()->DestroyFixture(es->m_RuntimeFixture);
+                }
+            }
             m_Components.erase(m_Components.begin()+idx);
         }
     }

@@ -228,6 +228,35 @@ void SceneSerializer::SerializeEntity(YAML::Emitter &out,Entity &entity,Scene *s
         out<<YAML::EndMap; //circle collider component
     }
 
+    if(scene->GetComponent<StaticColliderComponent>(entity.m_UID)!=nullptr){
+        out<<YAML::Key<<"StaticColliderComponent";
+        out<<YAML::BeginMap; //static collider component
+
+        StaticColliderComponent *staticcollidercomponent=scene->GetComponent<StaticColliderComponent>(entity.m_UID);
+
+        out<<YAML::Key<<"Density"<<YAML::Value<<staticcollidercomponent->m_Density;
+        out<<YAML::Key<<"Friction"<<YAML::Value<<staticcollidercomponent->m_Friction;
+        out<<YAML::Key<<"Restitution"<<YAML::Value<<staticcollidercomponent->m_Restitution;
+        out<<YAML::Key<<"RestitutionThreshold"<<YAML::Value<<staticcollidercomponent->m_RestitutionThreshold;
+        out<<YAML::Key<<"CategoryBits"<<YAML::Value<<staticcollidercomponent->m_CategoryBits;
+        out<<YAML::Key<<"MaskBits"<<YAML::Value<<staticcollidercomponent->m_MaskBits;
+        out<<YAML::Key<<"IsSensor"<<YAML::Value<<staticcollidercomponent->m_IsSensor;
+
+        out<<YAML::Key<<"Edges"<<YAML::Value<<YAML::BeginSeq;
+        for(auto edge:staticcollidercomponent->m_Shapes){
+            out<<YAML::BeginMap;
+            out<<YAML::Key<<"GhostVertices"<<YAML::Value<<(int)edge->m_GhostVertices;
+            out<<YAML::Key<<"V0"<<YAML::Value<<edge->m_V0;
+            out<<YAML::Key<<"V1"<<YAML::Value<<edge->m_V1;
+            out<<YAML::Key<<"V2"<<YAML::Value<<edge->m_V2;
+            out<<YAML::Key<<"V3"<<YAML::Value<<edge->m_V3;
+            out<<YAML::EndMap;
+        }
+        out<<YAML::EndSeq;
+
+        out<<YAML::EndMap; //static collider component
+    }
+
     if(scene->GetComponent<LightComponent>(entity.m_UID)!=nullptr){
         out<<YAML::Key<<"LightComponent";
         out<<YAML::BeginMap; //light component
@@ -493,6 +522,8 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
 
     try{
 
+    printf("Starting deserialization of scene %s\n",path.c_str());
+
     if(!data["Scene"]){
         printf("Scene node is invalid\n");
         return false;
@@ -611,6 +642,49 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
                 m_Scene->AddComponent<CircleColliderComponent>(uid,xoffset,yoffset,radius,density,friction,restitution,restitutionthreshold,categorybits,maskbits,issensor);
             }
 
+            auto staticcollidercomponent=e["StaticColliderComponent"];
+            if(staticcollidercomponent){
+                float density=staticcollidercomponent["Density"].as<float>();
+                float friction=staticcollidercomponent["Friction"].as<float>();
+                float restitution=staticcollidercomponent["Restitution"].as<float>();
+                float restitutionthreshold=staticcollidercomponent["RestitutionThreshold"].as<float>();
+                uint16_t categorybits=staticcollidercomponent["CategoryBits"].as<uint16_t>();
+                uint16_t maskbits=staticcollidercomponent["MaskBits"].as<uint16_t>();
+                bool issensor=staticcollidercomponent["IsSensor"].as<bool>();
+            
+                std::vector<std::shared_ptr<EdgeShape>> edges;
+
+                auto edgesdata=staticcollidercomponent["Edges"];
+                for(auto edge:edgesdata){
+                    uint8_t ghost_vertices=edge["GhostVertices"].as<uint8_t>();
+
+                    Vec2 v0,v3;
+
+                    if(ghost_vertices & 1){
+                        v0=edge["V0"].as<Vec2>();
+                    }
+
+                    if(ghost_vertices & 2){
+                        v3=edge["V3"].as<Vec2>();
+                    }
+
+                    Vec2 v1=edge["V1"].as<Vec2>();
+                    Vec2 v2=edge["V2"].as<Vec2>();
+                
+                    if(ghost_vertices & 1){
+                        edges.push_back(std::make_shared<EdgeShape>(v0,v1,v2,true,uid));
+                    }else if(ghost_vertices & 2){
+                        edges.push_back(std::make_shared<EdgeShape>(v3,v1,v2,false,uid));
+                    }else if(ghost_vertices==0){
+                        edges.push_back(std::make_shared<EdgeShape>(v1,v2,uid));
+                    }else{
+                        edges.push_back(std::make_shared<EdgeShape>(v0,v1,v2,v3,uid));
+                    }
+                }
+
+                m_Scene->AddComponent<StaticColliderComponent>(uid,edges,density,friction,restitution,restitutionthreshold,categorybits,maskbits,issensor);
+            }
+
             auto lightcomponent=e["LightComponent"];
             if(lightcomponent){
                 float xoffset=lightcomponent["XOffset"].as<float>();
@@ -648,6 +722,8 @@ bool SceneSerializer::DeserializeNode(const std::string &path,const YAML::Node &
             #endif
         }
     }
+
+    printf("Scene %s deserialized\n",path.c_str());
 
     }catch(...){
         printf("Failed to deserialize scene\n");

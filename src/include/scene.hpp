@@ -143,6 +143,44 @@ public:
             fixture_def.isSensor=temp.m_IsSensor;
             fixture_def.userData.pointer=uid;
             temp.m_RuntimeFixture=rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
+        }else if constexpr(std::is_same<T,StaticColliderComponent>::value){
+            RigidbodyComponent *rigidbody=GetComponent<RigidbodyComponent>(uid);
+            if(rigidbody==nullptr){
+                printf("Entity %d does not have a rigidbody\n",uid);
+                return;
+            }
+
+            std::vector<std::shared_ptr<EdgeShape>> &edge_shapes=temp.m_Shapes;
+
+            for(std::shared_ptr<EdgeShape> &es:edge_shapes){
+                b2EdgeShape edge_shape;
+
+                if(!(es->m_GhostVertices & 2)){
+                    es->m_V3=es->m_V2;
+                }
+
+                if(!(es->m_GhostVertices & 1)){
+                    es->m_V0=es->m_V1;
+                }
+
+                edge_shape.SetOneSided({es->m_V0.x*m_ScalingFactor,es->m_V0.y*m_ScalingFactor},
+                                       {es->m_V1.x*m_ScalingFactor,es->m_V1.y*m_ScalingFactor},
+                                       {es->m_V2.x*m_ScalingFactor,es->m_V2.y*m_ScalingFactor},
+                                       {es->m_V3.x*m_ScalingFactor,es->m_V3.y*m_ScalingFactor});
+
+                b2FixtureDef fixture_def;
+                fixture_def.shape=&edge_shape;
+                fixture_def.density=temp.m_Density;
+                fixture_def.friction=temp.m_Friction;
+                fixture_def.restitution=temp.m_Restitution;
+                fixture_def.restitutionThreshold=temp.m_RestitutionThreshold;
+                fixture_def.filter.categoryBits=temp.m_CategoryBits;
+                fixture_def.filter.maskBits=temp.m_MaskBits;
+                fixture_def.isSensor=temp.m_IsSensor;
+                fixture_def.userData.pointer=uid;
+
+                es->m_RuntimeFixture=rigidbody->m_RuntimeBody->CreateFixture(&fixture_def);
+            }
         }
 
         AddComponentToContainer<T>(temp,uid);
@@ -182,6 +220,9 @@ public:
         }
         if constexpr(std::is_same<T,CircleColliderComponent>::value){
             return m_CircleColliderComponents.GetComponent(uid);
+        }
+        if constexpr(std::is_same<T,StaticColliderComponent>::value){
+            return m_StaticColliderComponents.GetComponent(uid);
         }
         if constexpr(std::is_same<T,NativeScriptComponent>::value){
             return m_NativeScriptComponents.GetComponent(uid);
@@ -274,6 +315,7 @@ private:
     ComponentManager<RigidbodyComponent> m_RigidbodyComponents;
     ComponentManager<BoxColliderComponent> m_BoxColliderComponents;
     ComponentManager<CircleColliderComponent> m_CircleColliderComponents;
+    ComponentManager<StaticColliderComponent> m_StaticColliderComponents;
     ComponentManager<LightComponent> m_LightComponents;
     ComponentManager<NativeScriptComponent> m_NativeScriptComponents;
     ComponentManager<TextComponent> m_TextComponents;

@@ -230,6 +230,7 @@ void Editor::HighlightEntity(uint32_t uid){
     
         Window::VertexCount-=8;
     }
+
     auto cc=m_Scene->GetComponent<CircleColliderComponent>(uid);
     if(cc){
         float current_point_size=RENDERER->GetPointSize();
@@ -239,6 +240,24 @@ void Editor::HighlightEntity(uint32_t uid){
         RENDERER->SetPointSize(current_point_size);
 
         Window::VertexCount-=1;
+    }
+
+    auto scc=m_Scene->GetComponent<StaticColliderComponent>(uid);
+    if(scc){
+        float current_line_width=RENDERER->GetLineWidth();
+        RENDERER->SetLineWidth(0.05f);
+
+        for(std::shared_ptr<EdgeShape> &es:scc->m_Shapes){
+            RENDERER->DrawLine({es->m_V0.x,es->m_V0.y},{es->m_V1.x,es->m_V1.y},{1,0,0,1},0);
+            RENDERER->DrawLine({es->m_V1.x,es->m_V1.y},{es->m_V2.x,es->m_V2.y},{1,0,0,1},0);
+            RENDERER->DrawLine({es->m_V2.x,es->m_V2.y},{es->m_V3.x,es->m_V3.y},{1,0,0,1},0);
+
+            RENDERER->Render();
+
+            Window::VertexCount-=6;
+        }
+
+        RENDERER->SetLineWidth(current_line_width);
     }
 
     RENDERER->Render();
@@ -856,6 +875,78 @@ void Editor::ComponentsMenu(ImVec2 pos){
         }
     }
 
+    StaticColliderComponent *static_collider_component=m_Scene->GetComponent<StaticColliderComponent>(m_SelectedEntity);
+    if(static_collider_component){
+        if(StartNode("StaticColliderComponent")){
+            ImGui::InputFloat("Density",&static_collider_component->m_Density,0.0f,10.0f);
+            ImGui::InputFloat("Friction",&static_collider_component->m_Friction,0.0f,10.0f);
+            ImGui::InputFloat("Restitution",&static_collider_component->m_Restitution,0.0f,10.0f);
+            ImGui::InputFloat("Restitution Threshold",&static_collider_component->m_RestitutionThreshold,0.0f,10.0f);
+            
+            int categoryBits=static_collider_component->m_CategoryBits;
+            int maskBits=static_collider_component->m_MaskBits;
+
+            ImGui::InputInt("Category Bits",&categoryBits,0,65535);
+            ImGui::InputInt("Mask Bits",&maskBits,0,65535);
+
+            static_collider_component->m_CategoryBits=static_cast<uint16_t>(categoryBits);
+            static_collider_component->m_MaskBits=static_cast<uint16_t>(maskBits);
+
+            ImGui::Checkbox("Is Sensor",&static_collider_component->m_IsSensor);
+
+            if(ImGui::Button("Add Edge Shape")){
+                if(static_collider_component->m_Shapes.size()<4){
+                    static_collider_component->m_Shapes.push_back(std::make_shared<EdgeShape>());
+                }
+            }
+
+            int k=0;
+            for(std::shared_ptr<EdgeShape> &es:static_collider_component->m_Shapes){
+                if(StartNode("EdgeShape "+std::to_string(k++))){
+                    int ghost_vertices=es->m_GhostVertices;
+
+                    ImGui::InputInt("Ghost Vertices",&ghost_vertices,0,3);
+
+                    es->m_GhostVertices=(uint8_t)ghost_vertices;
+
+                    ImGui::Text("Vertex 0");
+                    ImGui::SameLine();
+                    ImGui::InputFloat("X##0",&es->m_V0.x,-30.0f,30.0f);
+                    ImGui::SameLine();
+                    ImGui::InputFloat("Y##0",&es->m_V0.y,-30.0f,30.0f);
+
+                    ImGui::Text("Vertex 1");
+                    ImGui::SameLine();
+                    ImGui::InputFloat("X##1",&es->m_V1.x,-30.0f,30.0f);
+                    ImGui::SameLine();
+                    ImGui::InputFloat("Y##1",&es->m_V1.y,-30.0f,30.0f);
+
+                    ImGui::Text("Vertex 2");
+                    ImGui::SameLine();
+                    ImGui::InputFloat("X##2",&es->m_V2.x,-30.0f,30.0f);
+                    ImGui::SameLine();
+                    ImGui::InputFloat("Y##2",&es->m_V2.y,-30.0f,30.0f);
+
+                    ImGui::Text("Vertex 3");
+                    ImGui::SameLine();
+                    ImGui::InputFloat("X##3",&es->m_V3.x,-30.0f,30.0f);
+                    ImGui::SameLine();
+                    ImGui::InputFloat("Y##3",&es->m_V3.y,-30.0f,30.0f);
+
+                    ImGui::TreePop();
+                }
+            }
+            ImGui::TreePop();
+        }
+        ImGui::OpenPopupOnItemClick("StaticColliderComponentPopup",ImGuiPopupFlags_MouseButtonRight);
+        if(ImGui::BeginPopupContextItem("StaticColliderComponentPopup")){
+            if(ImGui::MenuItem("Remove Component")){
+                m_Scene->RemoveComponent<StaticColliderComponent>(m_SelectedEntity);
+            }
+            ImGui::EndPopup();
+        }
+    }
+
     LightComponent *light_component=m_Scene->GetComponent<LightComponent>(m_SelectedEntity);
     if(light_component){
         if(StartNode("LightComponent")){
@@ -1021,6 +1112,11 @@ void Editor::ComponentsMenu(ImVec2 pos){
             if(ImGui::MenuItem("Circle Collider Component")){
                 if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<CircleColliderComponent>(m_SelectedEntity)==nullptr){
                     m_Scene->AddComponent<CircleColliderComponent>(m_SelectedEntity);
+                }
+            }
+            if(ImGui::MenuItem("Static Collider Component")){
+                if(m_SelectedEntity!=std::numeric_limits<uint32_t>::max() && m_Scene->GetComponent<StaticColliderComponent>(m_SelectedEntity)==nullptr){
+                    m_Scene->AddComponent<StaticColliderComponent>(m_SelectedEntity);
                 }
             }
             if(ImGui::MenuItem("Light Component")){

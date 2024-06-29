@@ -82,6 +82,7 @@ uint32_t Scene::DuplicateEntity(uint32_t uid,uint32_t parent){
     RigidbodyComponent *rbc=GetComponent<RigidbodyComponent>(uid);
     BoxColliderComponent *bcc=GetComponent<BoxColliderComponent>(uid);
     CircleColliderComponent *ccc=GetComponent<CircleColliderComponent>(uid);
+    StaticColliderComponent *scc=GetComponent<StaticColliderComponent>(uid);
     LightComponent *lc=GetComponent<LightComponent>(uid);
     NativeScriptComponent *nsc=GetComponent<NativeScriptComponent>(uid);
     TextComponent *ttc=GetComponent<TextComponent>(uid);
@@ -103,6 +104,9 @@ uint32_t Scene::DuplicateEntity(uint32_t uid,uint32_t parent){
     }
     if(ccc!=nullptr){
         AddComponent<CircleColliderComponent>(new_entity,ccc->m_XOffset,ccc->m_YOffset,ccc->m_Radius,ccc->m_Density,ccc->m_Friction,ccc->m_Restitution,ccc->m_RestitutionThreshold,ccc->m_CategoryBits,ccc->m_MaskBits,ccc->m_IsSensor);
+    }
+    if(scc!=nullptr){
+        AddComponent<StaticColliderComponent>(new_entity,scc->m_Shapes,scc->m_Density,scc->m_Friction,scc->m_Restitution,scc->m_RestitutionThreshold,scc->m_CategoryBits,scc->m_MaskBits,scc->m_IsSensor);
     }
     if(lc!=nullptr){
         AddComponent<LightComponent>(new_entity,lc->m_XOffset,lc->m_YOffset,lc->m_Radius,lc->m_Blur,lc->m_Color,lc->m_Type);
@@ -150,6 +154,7 @@ void Scene::RemoveEntity(uint32_t uid){
         m_LightComponents.RemoveComponent(current_uid);
         m_BoxColliderComponents.RemoveComponent(current_uid);
         m_CircleColliderComponents.RemoveComponent(current_uid);
+        m_StaticColliderComponents.RemoveComponent(current_uid);
         m_RigidbodyComponents.RemoveComponent(current_uid);
         m_NativeScriptComponents.RemoveComponent(current_uid);
         m_TextComponents.RemoveComponent(current_uid);
@@ -237,6 +242,12 @@ void Scene::AddComponentToContainer<CircleColliderComponent>(CircleColliderCompo
 }
 
 template<>
+void Scene::AddComponentToContainer<StaticColliderComponent>(StaticColliderComponent &component,uint32_t uid){
+    PROFILE_FUNCTION();
+    m_StaticColliderComponents.AddComponent(component,uid);
+}
+
+template<>
 void Scene::AddComponentToContainer<NativeScriptComponent>(NativeScriptComponent &component,uint32_t uid){
     PROFILE_FUNCTION();
     m_NativeScriptComponents.AddComponent(component,uid);
@@ -281,6 +292,7 @@ void Scene::RemoveComponent<RigidbodyComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     m_BoxColliderComponents.RemoveComponent(uid);
     m_CircleColliderComponents.RemoveComponent(uid);
+    m_StaticColliderComponents.RemoveComponent(uid);
 
     m_RigidbodyComponents.RemoveComponent(uid);
 }
@@ -297,6 +309,13 @@ void Scene::RemoveComponent<CircleColliderComponent>(uint32_t uid){
     PROFILE_FUNCTION();
     
     m_CircleColliderComponents.RemoveComponent(uid);
+}
+
+template<>
+void Scene::RemoveComponent<StaticColliderComponent>(uint32_t uid){
+    PROFILE_FUNCTION();
+
+    m_StaticColliderComponents.RemoveComponent(uid);
 }
 
 template<>
@@ -473,6 +492,11 @@ std::vector<CircleColliderComponent> &Scene::GetComponents<CircleColliderCompone
 }
 
 template<>
+std::vector<StaticColliderComponent> &Scene::GetComponents<StaticColliderComponent>(){
+    return m_StaticColliderComponents.m_Components;
+}
+
+template<>
 std::vector<NativeScriptComponent> &Scene::GetComponents<NativeScriptComponent>(){
     return m_NativeScriptComponents.m_Components;
 }
@@ -509,6 +533,15 @@ void Scene::DebugDraw(){
             RENDERER->DrawCircle({Interpolate(m_X,m_PreviousX)+circle_collider->m_XOffset,Interpolate(m_Y,m_PreviousY)+circle_collider->m_YOffset},{0,1,0.75f,0.5f},0.2f,5);
             RENDERER->Render();
             RENDERER->SetPointSize(current_point_size);
+        }
+        StaticColliderComponent *static_collider=GetComponent<StaticColliderComponent>(entity.m_UID);
+        if(static_collider!=nullptr){
+            for(auto &shape:static_collider->m_Shapes){
+                RENDERER->DrawLine({shape->m_V0.x,shape->m_V0.y},{shape->m_V1.x,shape->m_V1.y},{0,1,0.75f,1},0);
+                RENDERER->DrawLine({shape->m_V1.x,shape->m_V1.y},{shape->m_V2.x,shape->m_V2.y},{0,0.5f,0.75f,1},0); 
+                RENDERER->DrawLine({shape->m_V2.x,shape->m_V2.y},{shape->m_V3.x,shape->m_V3.y},{0,0.5f,0.75f,1},0); 
+                RENDERER->Render();
+            }
         }
     }
 
